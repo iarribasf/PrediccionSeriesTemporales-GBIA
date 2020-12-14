@@ -1,0 +1,249 @@
+---
+title: "Pernoctaciones en alojamientos turísticos de turistas extranjeros"
+subtitle: "Método ingenuo"
+author: "Iván Arribas (Depto. Análisis Económico. Universitat de València)"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: pygments 
+    fig_caption: false
+    df_print: kable
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    self_contained: true
+    code_download: true
+---
+
+```{r chunk_setup, echo = FALSE}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      comment = "",
+                      fig.align = "center", 
+                      fig.show = "hold",
+                      fig.height = 4,
+                      fig.width = 8,
+                      out.width = "80%") 
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r librerias, echo = FALSE}
+library(forecast)
+library(ggplot2); theme_set(theme_bw())
+library(gridExtra)
+library(grid)
+```
+
+\
+\
+
+# Introducción
+
+Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.
+
+La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.
+
+```{r}
+
+Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", header = TRUE)
+Pernoctaciones <- ts(Pernoctaciones[, 2], start = 2000, frequency = 12)
+```
+
+```{r}
+autoplot(Pernoctaciones/1000000,
+         xlab = "",
+         ylab = "Noches (millones)",
+         main = "Figura 1. Pernoctaciones") +
+  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+```
+
+Vamos a ajustar y predecir esta serie por métodos sencillos. La calidad de ajuste que obtengamos y la capacidad predictiva serán el punto de referencia cuando apliquemos metodologías más complejas de predicción.
+
+\
+\
+
+# Predicción por métodos simples para la serie anual
+
+Vamos a empezar considerando la serie anual de Pernoctaciones, en millones, para identificar el método sencillo de predicción más adecuado.
+
+```{r}
+PernoctacionesAnual = aggregate(Pernoctaciones/1000000, FUN = sum)
+
+autoplot(PernoctacionesAnual,
+         xlab = "",
+         ylab = "Noches (millones)",
+         main = "Figura 2. Pernoctaciones") +
+  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+```
+
+## Identificación del método sencillo con mejor ajuste
+
+Para series sin estacionalidad tenemos tres aproximaciones por métodos sencillos: media simple, método ingenuo I y método de la deriva. Veamos en primer lugar cual de ellos ajusta mejor a los datos, es decir, cual ofrece las mejores predicciones intra-muestrales a un periodo vista.
+
+```{r}
+mediaPernoctaciones <- meanf(PernoctacionesAnual, h = 5)
+naivePernoctaciones <- naive(PernoctacionesAnual, h = 5)
+derivaPernoctaciones <- rwf(PernoctacionesAnual,  h = 5, drift = TRUE)
+
+autoplot(PernoctacionesAnual, series = "Pernoctaciones",
+                xlab = "",
+                ylab = "Noches (millones)",
+                main = "Figura 3. Pernoctaciones y predicción por métodos sencillos") +
+  autolayer(mediaPernoctaciones, series="Media", PI = FALSE) +
+  autolayer(naivePernoctaciones, series="Ingenuo", PI = FALSE) +
+  autolayer(derivaPernoctaciones, series="Deriva", PI = FALSE) +
+  scale_colour_discrete(limits=c("Pernoctaciones", "Media", "Ingenuo", "Deriva")) +
+  guides(colour = guide_legend(title = "Métodos")) + 
+  theme(legend.position=c(0.02,0.98), legend.justification=c(0,1))
+```
+
+La figura 3 muestra que solo el método con deriva captura la tendencia decreciente observada en los últimos años. Veamos la capacidad de ajuste de cada método
+
+```{r}
+tmp <- rbind(
+  accuracy(mediaPernoctaciones),
+  accuracy(naivePernoctaciones),
+  accuracy(derivaPernoctaciones)
+)
+tmp <- round(tmp,2)
+rownames(tmp) <- c("Media","Ingenuo I","Deriva")
+tmp
+```
+
+Tanto el método ingenuo I, como el método de la deriva resultan igualmente buenos respecto a su ajuste a los datos (MAPE de 4.4%. El primero, porque repetir el último dato siempre es una buena estrategia para series que no cambian bruscamente de nivel. El segundo, porque considerar la pendiente media pasada es también una buena estrategia, que solo fallará en los periodos de cambio de tendencia.
+
+\
+
+## Identificación del método sencillo con mejor predicción extra-muestral
+
+Ya hemos visto que para los dos mejores métodos el error es próximo al 4.4%. Este valor es la estimación del _error en la previsión intra-muestral y a un periodo vista_. A fin de poder estimar mejor la capacidad predictiva de los dos métodos vamos a aplicar el método de __origen de predicción móvil__ para obtener los errores extra-muestrales según el horizonte de previsión.
+
+Asumiremos que necesitamos 10 años para obtener un buena estimación. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde 1 mes hasta 5 meses.
+
+```{r}
+k <- 10                  #Minimo numero de datos para estimar
+h <- 5                   #Horizonte de las prediciciones
+TT <- length(PernoctacionesAnual) #Longitud serie
+s <- TT - k - h           #Total de estimaciones
+
+mapeNaiveI <- matrix(NA, s + 1, h)
+mapeDeriva <- matrix(NA, s + 1, h)
+
+for (i in 0:s) {
+  train.set <- subset(PernoctacionesAnual, start = i + 1, end = i + k)
+  test.set <-  subset(PernoctacionesAnual, start = i + k + 1, end = i + k + h)
+  
+  fcast <- naive(train.set, h = h)
+  mapeNaiveI[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fcast <- rwf(train.set, h = h,  drift = TRUE)
+  mapeDeriva[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+}
+
+mapeNaiveI <- colMeans(mapeNaiveI)
+mapeDeriva <- colMeans(mapeDeriva)
+
+mapeNaiveI
+mapeDeriva
+```
+
+La conclusión es clara, con independencia del horizonte temporal, el método Ingenuo I es el que ofrece las mejores predicciones.
+
+Para el método Ingenuo I, el error de previsión extra-muestral a un periodo (3%) es menor que el error de ajuste (4.4%). Por otro lado, no parece aconsejable utilizar este método para predicciones más allá de dos años vista porque el error porcentual crece rápidamente.
+
+\
+
+## Predicciones
+
+Una vez identificado el mejor método sencillo de ajuste para la serie anual, mostramos las predicciones numéricamente.
+```{r}
+naivePernoctaciones
+```
+
+**Nota:** la Covid-19 ha supuesto un _shock_ de una magnitud inesperada en todos los aspectos de la sociedad a nivel mundial y, en concreto, para el turismo nacional e internacional. Es por ello que todas las predicciones que aparecen en este ejemplo de aplicación y los siguientes sobre-estimarán enormemente las cifras de Pernoctaciones reales. Cualquier método de predicción asume que las condiciones del entorno en que se aplica no van a cambiar en el futuro.
+
+
+\
+\
+
+# Predicción por el método ingenuo con estacionalidad
+
+Vamos ahora a ajustar y predecir la serie mensual de pernoctaciones por el método más sencillo posible, el método ingenuo con estacionalidad. Recordemos que en este modelo la predicción para un mes consiste en la última observación del mismo mes disponible.
+
+Solicitaremos un horizonte de predicciones de 36 meses `h = 36` (aunque solo mostramos los 12 primeros meses).
+
+```{r, eval = FALSE}
+PernoctacionesPre <- snaive(Pernoctaciones, h = 36, level = 0.95)
+PernoctacionesPre
+```
+
+```{r, echo = FALSE}
+PernoctacionesPre <- snaive(Pernoctaciones, h = 12, level = 0.95)
+PernoctacionesPre
+PernoctacionesPre <- snaive(Pernoctaciones, h = 36, level = 0.95)
+```
+
+La calidad del ajuste es bastante buena, con un MAPE de 5.3% y un RMSE de 400 mil pernoctaciones (o 300 mil si usamos el MAE). Sin embargo, el ACF1, cercano a uno es 1, indica que hay mucho rango de mejora en la predicción por intervalo.
+ 
+```{r}
+accuracy(PernoctacionesPre)
+```
+ 
+\
+\
+
+La figura 4 muestra los valores de predicción para los próximos tres años. Observa que las predicciones para 2020 se mantienen constantes y son iguales a las pernoctaciones de 2019.
+
+```{r}
+autoplot(PernoctacionesPre,
+         xlab = "",
+         ylab = "Noches",
+         main = "Figura 4. Pernoctaciones (2000-2019) y predicción (2020-2022)",
+         PI = FALSE)
+```
+
+\
+
+## Validación
+
+Vamos de nuevo a aplicar el método de __origen de predicción móvil__ para obtener los errores extra-muestrales según el horizonte de previsión.
+
+Asumimos que se precisan diez años para hacer una buena estimación, $k=120$, y que el horizonte temporal es un año, $h = 12$ meses.
+  
+```{r}  
+k <- 120                 #Minimo numero de datos para estimar
+h <- 12                  #Horizonte de las predicicones
+TT <- length(Pernoctaciones)  #Longitud serie
+s <- TT - k - h          #Total de estimaciones
+
+mapeSnaive <- matrix(NA, s + 1, h)
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  
+  fit <- snaive(train.set, h = h)
+  mapeSnaive[i + 1,] <- 100*abs(test.set - fit$mean)/test.set
+}
+
+mapeSnaive <- colMeans(mapeSnaive)
+mapeSnaive
+
+ggplot() +
+  geom_line(aes(x = 1:12, y = mapeSnaive)) +
+  ggtitle("Figura 5. Error de predicción según horizonte temporal") +
+  xlab("Horizonte temporal de predicción") +
+  ylab("MAPE") +
+  scale_x_continuous(breaks= 1:12)
+```
+
+La figura 5 muestra el error de previsión extra-muestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve entre el 4.6% y el 4.9%.
+
+\
+\
+\
+\
+

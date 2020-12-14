@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
+
+
+<title>Pernoctaciones en alojamientos turísticos de turistas extranjeros</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="01-Guia-curso.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Guía del curso
+  </a>
+</li>
+<li>
+  <a href="02-Logistica.html">
+    <span class="fa fa-laptop"></span>
+     
+    Logística
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Diapos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Teoría</li>
+    <li>
+      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
+    </li>
+    <li>
+      <a href="03-02-Tema2.html">Tema 2: Definición</a>
+    </li>
+    <li>
+      <a href="03-03-Tema3.html">Tema 3: Métodos sencillos</a>
+    </li>
+    <li>
+      <a href="03-04-Tema4.html">Tema 4: Media móvil</a>
+    </li>
+    <li>
+      <a href="03-05-Tema5.html">Tema 5: Alisado</a>
+    </li>
+    <li>
+      <a href="03-06-Tema6.html">Tema 6: ARIMA</a>
+    </li>
+    <li>
+      <a href="03-07-Tema7.html">Tema 7: SARIMA</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ejemplo de aplicación</li>
+    <li>
+      <a href="03-08-Ejemplo2.html">Ejemplo Tema 2</a>
+    </li>
+    <li>
+      <a href="03-09-Ejemplo3.html">Ejemplo Tema 3</a>
+    </li>
+    <li>
+      <a href="03-10-Ejemplo4.html">Ejemplo Tema 4</a>
+    </li>
+    <li>
+      <a href="03-11-Ejemplo5.html">Ejemplo Tema 5</a>
+    </li>
+    <li>
+      <a href="03-12-Ejemplo6.html">Ejemplo Tema 6</a>
+    </li>
+    <li>
+      <a href="03-13-Ejemplo7.html">Ejemplo Tema 7</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otro ejemplo</li>
+    <li>
+      <a href="03-14-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="04-Recursos-R.html">
+    <span class="fa fa-code"></span>
+     
+    Recursos de R
+  </a>
+</li>
+<li>
+  <a href="05-Practica.html">
+    <span class="fa fa-edit"></span>
+     
+    Practica
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-download"></span>
+     
+    Más
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">R</li>
+    <li>
+      <a href="https://cran.r-project.org">Dónde está R</a>
+    </li>
+    <li>
+      <a href="https://rstudio.com">Donde está RStudio</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Markdown</li>
+    <li>
+      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otros</li>
+    <li>
+      <a href="https://www.r-bloggers.com">Blog sobre R</a>
+    </li>
+    <li>
+      <a href="https://bookdown.org">Libros online que debes conocer</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Pernoctaciones en alojamientos turísticos de turistas extranjeros</h1>
+<h3 class="subtitle">Procesos ARIMA (sin estacionalidad)</h3>
+<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introducción"><span class="toc-section-number">1</span> Introducción</a></li>
+<li><a href="#transformación-de-la-serie"><span class="toc-section-number">2</span> Transformación de la serie</a></li>
+<li><a href="#análisis-de-la-serie-pernoctaciones-sim-i0"><span class="toc-section-number">3</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(0)\)</span></a><ul>
+<li><a href="#identificación"><span class="toc-section-number">3.1</span> Identificación</a></li>
+<li><a href="#validación"><span class="toc-section-number">3.2</span> Validación</a></li>
+</ul></li>
+<li><a href="#análisis-de-la-serie-pernoctaciones-sim-i1"><span class="toc-section-number">4</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(1)\)</span></a><ul>
+<li><a href="#identificación-1"><span class="toc-section-number">4.1</span> Identificación</a></li>
+<li><a href="#validación-1"><span class="toc-section-number">4.2</span> Validación</a></li>
+</ul></li>
+<li><a href="#comparativa-entre-modelos"><span class="toc-section-number">5</span> Comparativa entre modelos</a></li>
+<li><a href="#interpretación-del-modelo"><span class="toc-section-number">6</span> Interpretación del modelo</a></li>
+<li><a href="#predicción"><span class="toc-section-number">7</span> Predicción</a></li>
+</ul>
+</div>
+
+<p><br />
+<br />
+</p>
+<div id="introducción" class="section level1">
+<h1><span class="header-section-number">1</span> Introducción</h1>
+<p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
+<p>Para su análisis por modelos ARIMA sin estacionalidad vamos a anualizarla (20 años) y a dividirla por un millón para cambiar las unidades.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">ts</span>(Pernoctaciones[,<span class="dv">2</span>], <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">frequency =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">aggregate</span>(Pernoctaciones<span class="op">/</span><span class="dv">10</span><span class="op">^</span><span class="dv">6</span>, <span class="dt">FUN =</span> sum)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">autoplot</span>(Pernoctaciones,</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">         <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">         <span class="dt">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>))  </a></code></pre></div>
+<p><img src="03-12-Ejemplo6_files/figure-html/unnamed-chunk-1-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="transformación-de-la-serie" class="section level1">
+<h1><span class="header-section-number">2</span> Transformación de la serie</h1>
+<p>La figura 2 no deja claro si la serie original es ya estacionaria, pero sí los es su primera diferencia. Por otro lado, la función <code>ndiffs</code> (que realiza un contraste formal de estacionariedad), indica que no es necesaria realizar ninguna diferenciación.</p>
+<p>Ante esta situación se opta por explorar ambas opciones. Es decir, analizaremos la serie <span class="math inline">\(Pernoctaciones \sim I(0)\)</span> así como la serie <span class="math inline">\(Pernoctaciones \sim I(1)\)</span> y veremos cual de las dos nos ofrece mejores predicciones.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">autoplot</span>(Pernoctaciones, <span class="dt">xlab =</span> <span class="st">&quot;Serie original&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">autoplot</span>(<span class="kw">diff</span>(Pernoctaciones), <span class="dt">xlab =</span> <span class="st">&quot;Serie diferenciada&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">ggAcf</span>(Pernoctaciones, <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;FAC&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">ggAcf</span>(<span class="kw">diff</span>(Pernoctaciones), <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>, <span class="dt">ylab =</span> <span class="st">&quot;FAC&quot;</span>, <span class="dt">main =</span> <span class="st">&quot;&quot;</span>)</a></code></pre></div>
+<p><img src="03-12-Ejemplo6_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">ndiffs</span>(Pernoctaciones)</a></code></pre></div>
+<pre><code>[1] 0</code></pre>
+<p><br />
+<br />
+</p>
+</div>
+<div id="análisis-de-la-serie-pernoctaciones-sim-i0" class="section level1">
+<h1><span class="header-section-number">3</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(0)\)</span></h1>
+<p>En este epígrafe asumiremos que la serie Pernoctaciones es estacionaria.</p>
+<p><br />
+</p>
+<div id="identificación" class="section level2">
+<h2><span class="header-section-number">3.1</span> Identificación</h2>
+<p>Vamos a identificar los valores de <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> a partir de <code>auto.arima</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">auto.arima</span>(Pernoctaciones, <span class="dt">d =</span> <span class="dv">0</span>)</a></code></pre></div>
+<pre><code>Series: Pernoctaciones 
+ARIMA(2,0,0) with non-zero mean 
+
+Coefficients:
+         ar1      ar2     mean
+      1.3559  -0.4894  75.6030
+s.e.  0.1874   0.2004   5.1908
+
+sigma^2 estimated as 12.45:  log likelihood=-53.13
+AIC=114.25   AICc=116.92   BIC=118.24</code></pre>
+<p>Se identifica un proceso ARIMA(2, 0, 0) con constante. La estimación de este modelo muestra que los dos coeficientes estimados son aparentemente significativos y el análisis del error revela un valor que supera las 2.5 desviaciones típicas en el año 2009 (figura 3).</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">arima200 &lt;-<span class="st"> </span><span class="kw">Arima</span>(Pernoctaciones, </a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">                  <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">                  <span class="dt">include.mean =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">error &lt;-<span class="st"> </span><span class="kw">residuals</span>(arima200)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">sderror &lt;-<span class="st"> </span><span class="kw">sd</span>(error)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="kw">autoplot</span>(error, <span class="dt">series=</span><span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">         <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">         <span class="dt">ylab =</span> <span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">         <span class="dt">main =</span> <span class="st">&quot;Figura 3. Error + Intervención&quot;) +</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="st">  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, </span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="st">             colour = c(&quot;</span>red<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>red<span class="st">&quot;), </span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="st">             lty = 2) + </span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="st">  geom_point() +</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="st">  scale_x_continuous(breaks= seq(2000, 2020, 2)) </span></a></code></pre></div>
+<p><img src="03-12-Ejemplo6_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Creamos una variable ficticia para el año 2009 y la incluimos en el modelo. Ahora ya no se identifican más valores atípicos (figura 4).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">d2009 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">time</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">2009</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">arima200 &lt;-<span class="st"> </span><span class="kw">Arima</span>(Pernoctaciones, </a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">                  <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">                  <span class="dt">include.mean =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">                  <span class="dt">xreg =</span> d2009)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">arima200</a></code></pre></div>
+<pre><code>Series: Pernoctaciones 
+Regression with ARIMA(2,0,0) errors 
+
+Coefficients:
+         ar1      ar2  intercept     xreg
+      1.4486  -0.5742    75.5041  -3.9615
+s.e.  0.1749   0.1885     4.8489   1.5168
+
+sigma^2 estimated as 9.794:  log likelihood=-50.3
+AIC=110.61   AICc=114.89   BIC=115.58</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">error &lt;-<span class="st"> </span><span class="kw">residuals</span>(arima200)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">sderror &lt;-<span class="st"> </span><span class="kw">sd</span>(error)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw">autoplot</span>(error, <span class="dt">series=</span><span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">         <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">         <span class="dt">ylab =</span> <span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">         <span class="dt">main =</span> <span class="st">&quot;Figura 4. Error + Intervención&quot;) +</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, </span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="st">             colour = c(&quot;</span>red<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>red<span class="st">&quot;), </span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">             lty = 2) + </span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">  geom_point() +</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="st">  scale_x_continuous(breaks= seq(2000, 2020, 2)) </span></a></code></pre></div>
+<p><img src="03-12-Ejemplo6_files/figure-html/unnamed-chunk-7-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+</p>
+</div>
+<div id="validación" class="section level2">
+<h2><span class="header-section-number">3.2</span> Validación</h2>
+<div id="variables-son-significativas" class="section level3 unnumbered">
+<h3>Variables son significativas</h3>
+<p>Todos dos coeficientes estimados (<span class="math inline">\(\phi_1\)</span>, <span class="math inline">\(\phi_2\)</span>, <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\gamma_{d2009}\)</span>) son significativos.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="co"># H0: phi1 = 0</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="kw">wald.test</span>(<span class="dt">b =</span> <span class="kw">coef</span>(arima200), <span class="dt">Sigma =</span> <span class="kw">vcov</span>(arima200), <span class="dt">Terms =</span> <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>Wald test:
+----------
+
+Chi-squared test:
+X2 = 68.6, df = 1, P(&gt; X2) = 0.00000000000000011</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># H0: phi2 = 0</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw">wald.test</span>(<span class="dt">b =</span> <span class="kw">coef</span>(arima200), <span class="dt">Sigma =</span> <span class="kw">vcov</span>(arima200), <span class="dt">Terms =</span> <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>Wald test:
+----------
+
+Chi-squared test:
+X2 = 9.3, df = 1, P(&gt; X2) = 0.0023</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># H0: constante = 0</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw">wald.test</span>(<span class="dt">b =</span> <span class="kw">coef</span>(arima200), <span class="dt">Sigma =</span> <span class="kw">vcov</span>(arima200), <span class="dt">Terms =</span> <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>Wald test:
+----------
+
+Chi-squared test:
+X2 = 242.5, df = 1, P(&gt; X2) = 0.0</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># H0: d2009 =  0</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">wald.test</span>(<span class="dt">b =</span> <span class="kw">coef</span>(arima200), <span class="dt">Sigma =</span> <span class="kw">vcov</span>(arima200), <span class="dt">Terms =</span> <span class="dv">4</span>)</a></code></pre></div>
+<pre><code>Wald test:
+----------
+
+Chi-squared test:
+X2 = 6.8, df = 1, P(&gt; X2) = 0.009</code></pre>
+<p><br />
+</p>
+</div>
+<div id="medidas-de-error" class="section level3 unnumbered">
+<h3>Medidas de error</h3>
+<p>El error medio es 3 defunciones (RMSE) y el error porcentual medio es 2.96% (MAPE).</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">accuracy</span>(arima200)</a></code></pre></div>
+<pre><code>                ME RMSE  MAE   MPE MAPE MASE ACF1
+Training set -0.38  2.8 2.12 -0.66 2.96 0.66 -0.1</code></pre>
+</div>
+<div id="error-de-previsión-extra-muestral-según-horizonte-temporal" class="section level3 unnumbered">
+<h3>Error de previsión extra-muestral según horizonte temporal</h3>
+<p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=10\)</span>, y que el horizonte temporal es tres años vista, <span class="math inline">\(h = 5\)</span>. Por simplicidad, no incluiremos la intervención.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">k &lt;-<span class="st"> </span><span class="dv">10</span>                 <span class="co">#Minimo numero de datos para estimar</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">h &lt;-<span class="st"> </span><span class="dv">5</span>                  <span class="co">#Horizonte de las predicicones</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">TT &lt;-<span class="st"> </span><span class="kw">length</span>(Pernoctaciones)  <span class="co">#Longitud serie</span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">s &lt;-<span class="st"> </span>TT <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span>h          <span class="co">#Total de estimaciones</span></a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6">mapeArima200 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span>s) {</a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">  train.set &lt;-<span class="st"> </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k)</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">  test.set &lt;-<span class="st">  </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h)</a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">  train.xreg &lt;-<span class="st"> </span>d2009[(i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)<span class="op">:</span>(i <span class="op">+</span><span class="st"> </span>k)] </a>
+<a class="sourceLine" id="cb21-11" data-line-number="11">  test.xreg &lt;-<span class="st"> </span>d2009[(i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)<span class="op">:</span>(i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h)]</a>
+<a class="sourceLine" id="cb21-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb21-13" data-line-number="13">  fit &lt;-<span class="st"> </span><span class="kw">Arima</span>(train.set, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">include.mean =</span> <span class="ot">TRUE</span>, <span class="dt">xreg =</span> train.xreg)</a>
+<a class="sourceLine" id="cb21-14" data-line-number="14">  fcast &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> h, <span class="dt">xreg =</span> test.xreg)</a>
+<a class="sourceLine" id="cb21-15" data-line-number="15">  mapeArima200[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, ] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb21-16" data-line-number="16">}</a>
+<a class="sourceLine" id="cb21-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb21-18" data-line-number="18">mapeArima200 &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeArima200)</a>
+<a class="sourceLine" id="cb21-19" data-line-number="19">mapeArima200</a></code></pre></div>
+<pre><code>[1]  5.971604  8.114061 11.216683 12.208794 10.009389</code></pre>
+<p>Si bien el error de previsión a un periodo vista se mantiene razonablemente bajo, para previsiones a 2 o más años vista el error se incrementa hasta el 12%.</p>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+</div>
+<div id="análisis-de-la-serie-pernoctaciones-sim-i1" class="section level1">
+<h1><span class="header-section-number">4</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(1)\)</span></h1>
+<p>En este epígrafe asumiremos que la serie Pernoctaciones no es estacionaria, pero su primera diferencia sí es estacionaria.</p>
+<p><br />
+</p>
+<div id="identificación-1" class="section level2">
+<h2><span class="header-section-number">4.1</span> Identificación</h2>
+<p>Identificaremos los valores de <span class="math inline">\(p\)</span> y <span class="math inline">\(q\)</span> a partir de <code>auto.arima</code>.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">auto.arima</span>(Pernoctaciones, <span class="dt">d =</span> <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>Series: Pernoctaciones 
+ARIMA(0,1,0) 
+
+sigma^2 estimated as 14.66:  log likelihood=-52.47
+AIC=106.94   AICc=107.18   BIC=107.89</code></pre>
+<p>Se identifica un proceso ARIMA(0, 1, 0) sin deriva, es decir un paseo aleatorio o método Ingenuo I. Tras estimar el modelo, el análisis del error no revela ningún valor atípico (figura 5).</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">arima010 &lt;-<span class="st"> </span><span class="kw">Arima</span>(Pernoctaciones, </a>
+<a class="sourceLine" id="cb25-2" data-line-number="2">                  <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</a>
+<a class="sourceLine" id="cb25-3" data-line-number="3">                  <span class="dt">include.constant =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb25-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb25-5" data-line-number="5">error &lt;-<span class="st"> </span><span class="kw">residuals</span>(arima010)</a>
+<a class="sourceLine" id="cb25-6" data-line-number="6">sderror &lt;-<span class="st"> </span><span class="kw">sd</span>(error)</a>
+<a class="sourceLine" id="cb25-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb25-8" data-line-number="8"><span class="kw">autoplot</span>(error, <span class="dt">series=</span><span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb25-9" data-line-number="9">         <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb25-10" data-line-number="10">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb25-11" data-line-number="11">         <span class="dt">ylab =</span> <span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb25-12" data-line-number="12">         <span class="dt">main =</span> <span class="st">&quot;Figura 5. Error + Intervención&quot;) +</span></a>
+<a class="sourceLine" id="cb25-13" data-line-number="13"><span class="st">  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, </span></a>
+<a class="sourceLine" id="cb25-14" data-line-number="14"><span class="st">             colour = c(&quot;</span>red<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>red<span class="st">&quot;), </span></a>
+<a class="sourceLine" id="cb25-15" data-line-number="15"><span class="st">             lty = 2) + </span></a>
+<a class="sourceLine" id="cb25-16" data-line-number="16"><span class="st">  geom_point() +</span></a>
+<a class="sourceLine" id="cb25-17" data-line-number="17"><span class="st">  scale_x_continuous(breaks= seq(2000, 2020, 2)) </span></a></code></pre></div>
+<p><img src="03-12-Ejemplo6_files/figure-html/unnamed-chunk-13-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+</p>
+</div>
+<div id="validación-1" class="section level2">
+<h2><span class="header-section-number">4.2</span> Validación</h2>
+<div id="medidas-de-error-1" class="section level3 unnumbered">
+<h3>Medidas de error</h3>
+<p>El error medio es 3.7 defunciones (RMSE) y el error porcentual medio es 4.24% (MAPE).</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">accuracy</span>(arima010)</a></code></pre></div>
+<pre><code>                ME RMSE  MAE   MPE MAPE MASE ACF1
+Training set -0.72 3.73 3.03 -1.01 4.24 0.95 0.41</code></pre>
+</div>
+<div id="error-de-previsión-extra-muestral-según-horizonte-temporal-1" class="section level3 unnumbered">
+<h3>Error de previsión extra-muestral según horizonte temporal</h3>
+<p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=10\)</span>, y que el horizonte temporal es tres años vista, <span class="math inline">\(h = 3\)</span>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">k &lt;-<span class="st"> </span><span class="dv">10</span>                 <span class="co">#Minimo numero de datos para estimar</span></a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">h &lt;-<span class="st"> </span><span class="dv">5</span>                  <span class="co">#Horizonte de las predicicones</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">TT &lt;-<span class="st"> </span><span class="kw">length</span>(Pernoctaciones)  <span class="co">#Longitud serie</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">s &lt;-<span class="st"> </span>TT <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span>h          <span class="co">#Total de estimaciones</span></a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">mapeArima010 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span>s) {</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">  train.set &lt;-<span class="st"> </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k)</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">  test.set &lt;-<span class="st">  </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h)</a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb28-11" data-line-number="11">  fit &lt;-<span class="st"> </span><span class="kw">Arima</span>(train.set, <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>), <span class="dt">include.mean =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb28-12" data-line-number="12">  fcast &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> h)</a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">  mapeArima010[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, ] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14">}</a>
+<a class="sourceLine" id="cb28-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb28-16" data-line-number="16">mapeArima010 &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeArima010)</a>
+<a class="sourceLine" id="cb28-17" data-line-number="17">mapeArima010</a></code></pre></div>
+<pre><code>[1]  2.985332  7.049167 10.655383 13.277976 14.983711</code></pre>
+<p>El error de previsión a un periodo es muy bueno (por debajo del 3%), pero para previsiones a 2 o más años este error se incrementa notablemente.</p>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+</div>
+<div id="comparativa-entre-modelos" class="section level1">
+<h1><span class="header-section-number">5</span> Comparativa entre modelos</h1>
+<p>Si atendemos a los indicadores de calidad de ajuste de ambos modelos, todos apuntan al proceso ARIMA(2, 0, 0) como el que mejor ajusta a los datos. El error medio (RMSE) para AR(2) es casi un millón de pernoctaciones menor que para ARIMA(0, 1, 0) y el error relativo es más de un punto porcentual menor.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">accuracy</span>(arima200)</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="kw">accuracy</span>(arima100)</a></code></pre></div>
+<pre><code>                ME RMSE  MAE   MPE MAPE MASE ACF1
+Training set -0.38  2.8 2.12 -0.66 2.96 0.66 -0.1</code></pre>
+<pre><code>                ME RMSE  MAE   MPE MAPE MASE ACF1
+Training set -0.72 3.73 3.03 -1.01 4.24 0.95 0.41</code></pre>
+<p>Si atendemos a los errores de previsión extra-muestrales, el mejor proceso depende del horizonte temporal:</p>
+<ul>
+<li>para previsiones de uno a tres periodos vista el proceso ARIMA(0, 1, 0) es superior al error del proceso AR(2).</li>
+<li>para previsiones a 4 y 5 periodos vista el proceso AR(2) es el mejor.</li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">mapeArima200</a></code></pre></div>
+<pre><code>[1]  5.971604  8.114061 11.216683 12.208794 10.009389</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">mapeArima010</a></code></pre></div>
+<pre><code>[1]  2.985332  7.049167 10.655383 13.277976 14.983711</code></pre>
+<p>Otro ejemplo más de que mejor ajuste no implica mejor predicción. En este caso el modelo AR(2) sobreajusta (<em>overfitting</em>) los datos y genera peores predicciones a corto plazo.</p>
+<p>Asumimos que se da más peso a las predicciones a corto plazo y concluimos que el mejor modelo con propósitos predictivos es <span class="math inline">\(Pernoctaciones \sim ARIMA(0, 1, 0)\)</span>.</p>
+<p><strong>Nota:</strong> Es la tercera vez que el método Ingenuo I (paseo aleatorio) aparece como el más adecuado para predecir la serie anual de pernoctaciones. Era el mejor de entre los métodos simples. Al elegir dentro de la familia de Alisado Exponencial, también fue el mejor. Ahora, es el proceso ARIMA más adecuado. Para esta serie, que es corta y aparentemente sencilla, ninguna aproximación compleja mejora el método Ingenuo I, más fácil de obtener e interpretar.</p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="interpretación-del-modelo" class="section level1">
+<h1><span class="header-section-number">6</span> Interpretación del modelo</h1>
+<p>El proceso es un paseo aleatorio (ingenuo I) <span class="math inline">\(Pernoctaciones \sim ARIMA(0, 1, 0)\)</span>: <span class="math display">\[(1 - L) Pernoctaciones_t =  \varepsilon_t\]</span> o <span class="math display">\[Pernoctaciones_t = Pernoctaciones_{t-1} + \varepsilon_t.\]</span> El modelo estimado queda: <span class="math display">\[\widehat{Pernoctaciones}_t = Pernoctaciones_{t-1}.\]</span> Cada año el número de pernoctaciones previsto es el mismo que el del año previo.</p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="predicción" class="section level1">
+<h1><span class="header-section-number">7</span> Predicción</h1>
+<p>Podemos usar el modelo estimado para predecir los casos pernoctaciones para los próximos 5 años.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">parima010 &lt;-<span class="st"> </span><span class="kw">forecast</span>(arima010, </a>
+<a class="sourceLine" id="cb37-2" data-line-number="2">                      <span class="dt">h =</span> <span class="dv">5</span>, </a>
+<a class="sourceLine" id="cb37-3" data-line-number="3">                      <span class="dt">level =</span> <span class="dv">95</span>)</a>
+<a class="sourceLine" id="cb37-4" data-line-number="4">parima010</a></code></pre></div>
+<pre><code>     Point Forecast    Lo 95    Hi 95
+2020       75.70578 68.20043 83.21113
+2021       75.70578 65.09161 86.31994
+2022       75.70578 62.70613 88.70542
+2023       75.70578 60.69508 90.71648
+2024       75.70578 58.92331 92.48825</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">autoplot</span>(parima010, </a>
+<a class="sourceLine" id="cb39-2" data-line-number="2">     <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
+<a class="sourceLine" id="cb39-3" data-line-number="3">     <span class="dt">main =</span> <span class="st">&quot;Figura 6. Pernoctaciones&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2022</span>, <span class="dv">2</span>)) </a></code></pre></div>
+<p><img src="03-12-Ejemplo6_files/figure-html/unnamed-chunk-21-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+<br />
+<br />
+<br />
+</p>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIlByb2Nlc29zIEFSSU1BIChzaW4gZXN0YWNpb25hbGlkYWQpIgphdXRob3I6ICJJdsOhbiBBcnJpYmFzIChEZXB0by4gQW7DoWxpc2lzIEVjb27Ds21pY28uIFVuaXZlcnNpdGF0IGRlIFZhbMOobmNpYSkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIHRoZW1lOiBjZXJ1bGVhbgogICAgaGlnaGxpZ2h0OiBweWdtZW50cyAKICAgIGZpZ19jYXB0aW9uOiBmYWxzZQogICAgZGZfcHJpbnQ6IGthYmxlCiAgICB0b2M6IHRydWUKICAgIHRvY19kZXB0aDogMgogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlCiAgICBzZWxmX2NvbnRhaW5lZDogdHJ1ZQogICAgY29kZV9kb3dubG9hZDogdHJ1ZQotLS0KCmBgYHtyIGNodW5rX3NldHVwLCBlY2hvID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCh3YXJuaW5nID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgbWVzc2FnZSA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5hbGlnbiA9ICJjZW50ZXIiLCAKICAgICAgICAgICAgICAgICAgICAgIGZpZy5zaG93ID0gImhvbGQiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmhlaWdodCA9IDQsCiAgICAgICAgICAgICAgICAgICAgICBmaWcud2lkdGggPSA4LAogICAgICAgICAgICAgICAgICAgICAgb3V0LndpZHRoID0gIjgwJSIpIApgYGAKCmBgYHtyIG9wdGlvbnNfc2V0dXAsIGVjaG8gPSBGQUxTRX0KI29wdGlvbnMoc2NpcGVuID0gOTk5KSAjLSBwYXJhIHF1aXRhciBsYSBub3RhY2lvbiBjaWVudGlmaWNhCmBgYAoKYGBge3IgbGlicmVyaWFzLCBlY2hvID0gRkFMU0V9CmxpYnJhcnkoZm9yZWNhc3QpCmxpYnJhcnkoZ2dwbG90Mik7IHRoZW1lX3NldCh0aGVtZV9idygpKQpsaWJyYXJ5KGdyaWRFeHRyYSkKbGlicmFyeShncmlkKQpsaWJyYXJ5KGFvZCkKYGBgCgpcClwKCiMgSW50cm9kdWNjacOzbgoKQ29uc2lkZXJlbW9zIGRlIG51ZXZvIGxhIHNlcmllIHRlbXBvcmFsIGNvcnJlc3BvbmRpZW50ZSBhbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzIHF1ZSBsb3MgdHVyaXN0YXMgZXh0cmFuamVyb3MgcmVhbGl6YW4gZW4gRXNwYcOxYSBlbiBhbG9qYW1pZW50b3MgdHVyw61zdGljb3MgYXV0b3JpemFkb3MgKHF1ZSBsbGFtYXJlbW9zIFBlcm5vY3RhY2lvbmVzIGVuIGFkZWxhbnRlKS4gRXN0YSBzZXJpZSBlc3TDoSBkaXNwb25pYmxlIGVuIEV1cm9zdGF0IGRlc2RlIGVuZXJvIGRlIDIwMDAgaGFzdGEgZGljaWVtYnJlIGRlIDIwMTksIHVuIHRvdGFsIGRlIDIwIGHDsW9zIHkgMjQwIG9ic2VydmFjaW9uZXMuCgpQYXJhIHN1IGFuw6FsaXNpcyBwb3IgbW9kZWxvcyBBUklNQSBzaW4gZXN0YWNpb25hbGlkYWQgdmFtb3MgYSBhbnVhbGl6YXJsYSAoMjAgYcOxb3MpIHkgYSBkaXZpZGlybGEgcG9yIHVuIG1pbGzDs24gcGFyYSBjYW1iaWFyIGxhcyB1bmlkYWRlcy4KCmBgYHtyfQpQZXJub2N0YWNpb25lcyA8LSByZWFkLmNzdjIoIi4vc2VyaWVzL1Blcm5vY3RhY2lvbmVzLmNzdiIsIGhlYWRlciA9IFRSVUUpClBlcm5vY3RhY2lvbmVzIDwtIHRzKFBlcm5vY3RhY2lvbmVzWywyXSwgc3RhcnQgPSAyMDAwLCBmcmVxdWVuY3kgPSAxMikKUGVybm9jdGFjaW9uZXMgPC0gYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLzEwXjYsIEZVTiA9IHN1bSkKCmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiTm9jaGVzIChtaWxsb25lcykiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSAxLiBQZXJub2N0YWNpb25lcyIpICsKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSBzZXEoMjAwMCwgMjAyMCwgMikpICAKYGBgCgpcClwKCiMgVHJhbnNmb3JtYWNpw7NuIGRlIGxhIHNlcmllCgpMYSBmaWd1cmEgMiBubyBkZWphIGNsYXJvIHNpIGxhIHNlcmllIG9yaWdpbmFsIGVzIHlhIGVzdGFjaW9uYXJpYSwgcGVybyBzw60gbG9zIGVzIHN1IHByaW1lcmEgZGlmZXJlbmNpYS4gUG9yIG90cm8gbGFkbywgbGEgZnVuY2nDs24gYG5kaWZmc2AgKHF1ZSByZWFsaXphIHVuIGNvbnRyYXN0ZSBmb3JtYWwgZGUgZXN0YWNpb25hcmllZGFkKSwgaW5kaWNhIHF1ZSBubyBlcyBuZWNlc2FyaWEgcmVhbGl6YXIgbmluZ3VuYSBkaWZlcmVuY2lhY2nDs24uCgpBbnRlIGVzdGEgc2l0dWFjacOzbiBzZSBvcHRhIHBvciBleHBsb3JhciBhbWJhcyBvcGNpb25lcy4gRXMgZGVjaXIsIGFuYWxpemFyZW1vcyBsYSBzZXJpZSAkUGVybm9jdGFjaW9uZXMgXHNpbSBJKDApJCBhc8OtIGNvbW8gbGEgc2VyaWUgJFBlcm5vY3RhY2lvbmVzIFxzaW0gSSgxKSQgeSB2ZXJlbW9zIGN1YWwgZGUgbGFzIGRvcyBub3Mgb2ZyZWNlIG1lam9yZXMgcHJlZGljY2lvbmVzLgoKCmBgYHtyLCBldmFsID0gRkFMU0V9CmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLCB4bGFiID0gIlNlcmllIG9yaWdpbmFsIiwgeWxhYiA9ICIiLCBtYWluID0gIiIpCmF1dG9wbG90KGRpZmYoUGVybm9jdGFjaW9uZXMpLCB4bGFiID0gIlNlcmllIGRpZmVyZW5jaWFkYSIsIHlsYWIgPSAiIiwgbWFpbiA9ICIiKQpnZ0FjZihQZXJub2N0YWNpb25lcywgeGxhYiA9ICIiLCB5bGFiID0gIkZBQyIsIG1haW4gPSAiIikKZ2dBY2YoZGlmZihQZXJub2N0YWNpb25lcyksIHhsYWIgPSAiIiwgeWxhYiA9ICJGQUMiLCBtYWluID0gIiIpCmBgYAoKYGBge3IsIGVjaG8gPSBGQUxTRX0KZ3JpZC5hcnJhbmdlKAogIGF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLCB4bGFiID0gIlNlcmllIG9yaWdpbmFsIiwgeWxhYiA9ICIiLCBtYWluID0gIkZpZ3VyYSAyLiBQZXJub2N0YWNpb25lcyIpLAogIGF1dG9wbG90KGRpZmYoUGVybm9jdGFjaW9uZXMpLCB4bGFiID0gIlNlcmllIGRpZmVyZW5jaWFkYSIsIHlsYWIgPSAiIiwgbWFpbiA9ICIiKSwKICBnZ0FjZihQZXJub2N0YWNpb25lcywgeGxhYiA9ICIiLCB5bGFiID0gIkZBQyIsIG1haW4gPSAiIiksCiAgZ2dBY2YoZGlmZihQZXJub2N0YWNpb25lcyksIHhsYWIgPSAiIiwgeWxhYiA9ICJGQUMiLCBtYWluID0gIiIpLAogIG5yb3cgPSAyCikKYGBgCgpgYGB7cn0KbmRpZmZzKFBlcm5vY3RhY2lvbmVzKQpgYGAKClwKXAoKIyBBbsOhbGlzaXMgZGUgbGEgc2VyaWUgUGVybm9jdGFjaW9uZXMgJFxzaW0gSSgwKSQKCkVuIGVzdGUgZXDDrWdyYWZlIGFzdW1pcmVtb3MgcXVlIGxhIHNlcmllIFBlcm5vY3RhY2lvbmVzIGVzIGVzdGFjaW9uYXJpYS4KClwKCiMjIElkZW50aWZpY2FjacOzbgoKVmFtb3MgYSBpZGVudGlmaWNhciBsb3MgdmFsb3JlcyBkZSAkcCQgeSAkcSQgYSBwYXJ0aXIgZGUgYGF1dG8uYXJpbWFgLgoKYGBge3J9IAphdXRvLmFyaW1hKFBlcm5vY3RhY2lvbmVzLCBkID0gMCkKYGBgCgpTZSBpZGVudGlmaWNhIHVuIHByb2Nlc28gQVJJTUEoMiwgMCwgMCkgY29uIGNvbnN0YW50ZS4gTGEgZXN0aW1hY2nDs24gZGUgZXN0ZSBtb2RlbG8gbXVlc3RyYSBxdWUgbG9zIGRvcyBjb2VmaWNpZW50ZXMgZXN0aW1hZG9zIHNvbiBhcGFyZW50ZW1lbnRlIHNpZ25pZmljYXRpdm9zIHkgZWwgYW7DoWxpc2lzIGRlbCBlcnJvciByZXZlbGEgdW4gdmFsb3IgcXVlIHN1cGVyYSBsYXMgMi41IGRlc3ZpYWNpb25lcyB0w61waWNhcyBlbiBlbCBhw7FvIDIwMDkgKGZpZ3VyYSAzKS4KCmBgYHtyfQphcmltYTIwMCA8LSBBcmltYShQZXJub2N0YWNpb25lcywgCiAgICAgICAgICAgICAgICAgIG9yZGVyID0gYygyLCAwLCAwKSwKICAgICAgICAgICAgICAgICAgaW5jbHVkZS5tZWFuID0gVFJVRSkKCmVycm9yIDwtIHJlc2lkdWFscyhhcmltYTIwMCkKc2RlcnJvciA8LSBzZChlcnJvcikKCmF1dG9wbG90KGVycm9yLCBzZXJpZXM9IkVycm9yIiwKICAgICAgICAgY29sb3VyID0gImJsYWNrIiwKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIkVycm9yIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgMy4gRXJyb3IgKyBJbnRlcnZlbmNpw7NuIikgKwogIGdlb21faGxpbmUoeWludGVyY2VwdCA9IGMoLTMsIC0yLCAyLCAzKSpzZGVycm9yLCAKICAgICAgICAgICAgIGNvbG91ciA9IGMoInJlZCIsICJncmVlbiIsICJncmVlbiIsICJyZWQiKSwgCiAgICAgICAgICAgICBsdHkgPSAyKSArIAogIGdlb21fcG9pbnQoKSArCiAgc2NhbGVfeF9jb250aW51b3VzKGJyZWFrcz0gc2VxKDIwMDAsIDIwMjAsIDIpKSAKYGBgCgpDcmVhbW9zIHVuYSB2YXJpYWJsZSBmaWN0aWNpYSBwYXJhIGVsIGHDsW8gMjAwOSB5IGxhIGluY2x1aW1vcyBlbiBlbCBtb2RlbG8uIEFob3JhIHlhIG5vIHNlIGlkZW50aWZpY2FuIG3DoXMgdmFsb3JlcyBhdMOtcGljb3MgKGZpZ3VyYSA0KS4KCmBgYHtyfQpkMjAwOSA8LSAxKih0aW1lKFBlcm5vY3RhY2lvbmVzKSA9PSAyMDA5KQphcmltYTIwMCA8LSBBcmltYShQZXJub2N0YWNpb25lcywgCiAgICAgICAgICAgICAgICAgIG9yZGVyID0gYygyLCAwLCAwKSwKICAgICAgICAgICAgICAgICAgaW5jbHVkZS5tZWFuID0gVFJVRSwKICAgICAgICAgICAgICAgICAgeHJlZyA9IGQyMDA5KQphcmltYTIwMAoKZXJyb3IgPC0gcmVzaWR1YWxzKGFyaW1hMjAwKQpzZGVycm9yIDwtIHNkKGVycm9yKQoKYXV0b3Bsb3QoZXJyb3IsIHNlcmllcz0iRXJyb3IiLAogICAgICAgICBjb2xvdXIgPSAiYmxhY2siLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiRXJyb3IiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSA0LiBFcnJvciArIEludGVydmVuY2nDs24iKSArCiAgZ2VvbV9obGluZSh5aW50ZXJjZXB0ID0gYygtMywgLTIsIDIsIDMpKnNkZXJyb3IsIAogICAgICAgICAgICAgY29sb3VyID0gYygicmVkIiwgImdyZWVuIiwgImdyZWVuIiwgInJlZCIpLCAKICAgICAgICAgICAgIGx0eSA9IDIpICsgCiAgZ2VvbV9wb2ludCgpICsKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSBzZXEoMjAwMCwgMjAyMCwgMikpIApgYGAKClwKCiMjIFZhbGlkYWNpw7NuCgojIyMgVmFyaWFibGVzIHNvbiBzaWduaWZpY2F0aXZhcyB7LX0KClRvZG9zIGRvcyBjb2VmaWNpZW50ZXMgZXN0aW1hZG9zICgkXHBoaV8xJCwgJFxwaGlfMiQsICRcbXUkIHkgJFxnYW1tYV97ZDIwMDl9JCkgc29uIHNpZ25pZmljYXRpdm9zLgoKYGBge3J9CiMgSDA6IHBoaTEgPSAwCndhbGQudGVzdChiID0gY29lZihhcmltYTIwMCksIFNpZ21hID0gdmNvdihhcmltYTIwMCksIFRlcm1zID0gMSkKIyBIMDogcGhpMiA9IDAKd2FsZC50ZXN0KGIgPSBjb2VmKGFyaW1hMjAwKSwgU2lnbWEgPSB2Y292KGFyaW1hMjAwKSwgVGVybXMgPSAyKQojIEgwOiBjb25zdGFudGUgPSAwCndhbGQudGVzdChiID0gY29lZihhcmltYTIwMCksIFNpZ21hID0gdmNvdihhcmltYTIwMCksIFRlcm1zID0gMykKIyBIMDogZDIwMDkgPSAgMAp3YWxkLnRlc3QoYiA9IGNvZWYoYXJpbWEyMDApLCBTaWdtYSA9IHZjb3YoYXJpbWEyMDApLCBUZXJtcyA9IDQpCgpgYGAKClwKCiMjIyBNZWRpZGFzIGRlIGVycm9yIHstfQoKRWwgZXJyb3IgbWVkaW8gZXMgYHIgcm91bmQoYWNjdXJhY3koYXJpbWEyMDApWzJdLDApYCBkZWZ1bmNpb25lcyAoUk1TRSkgeSBlbCBlcnJvciBwb3JjZW50dWFsIG1lZGlvIGVzIGByIHJvdW5kKGFjY3VyYWN5KGFyaW1hMjAwKVs1XSwyKWAlIChNQVBFKS4KCmBgYHtyLCBldmFsPUZBTFNFfQphY2N1cmFjeShhcmltYTIwMCkKYGBgCgpgYGB7cixlY2hvPUZBTFNFfQpyb3VuZChhY2N1cmFjeShhcmltYTIwMCksMikKYGBgCgojIyMgRXJyb3IgZGUgcHJldmlzacOzbiBleHRyYS1tdWVzdHJhbCBzZWfDum4gaG9yaXpvbnRlIHRlbXBvcmFsIHstfQoKQXN1bWltb3MgcXVlIHNlIHByZWNpc2FuIGRpZXogYcOxb3MgcGFyYSBoYWNlciB1bmEgYnVlbmEgZXN0aW1hY2nDs24sICRrPTEwJCwgeSBxdWUgZWwgaG9yaXpvbnRlIHRlbXBvcmFsIGVzIHRyZXMgYcOxb3MgdmlzdGEsICRoID0gNSQuIFBvciBzaW1wbGljaWRhZCwgbm8gaW5jbHVpcmVtb3MgbGEgaW50ZXJ2ZW5jacOzbi4KICAKYGBge3J9ICAKayA8LSAxMCAgICAgICAgICAgICAgICAgI01pbmltbyBudW1lcm8gZGUgZGF0b3MgcGFyYSBlc3RpbWFyCmggPC0gNSAgICAgICAgICAgICAgICAgICNIb3Jpem9udGUgZGUgbGFzIHByZWRpY2ljb25lcwpUVCA8LSBsZW5ndGgoUGVybm9jdGFjaW9uZXMpICAjTG9uZ2l0dWQgc2VyaWUKcyA8LSBUVCAtIGsgLSBoICAgICAgICAgICNUb3RhbCBkZSBlc3RpbWFjaW9uZXMKCm1hcGVBcmltYTIwMCA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQpmb3IgKGkgaW4gMDpzKSB7CiAgdHJhaW4uc2V0IDwtIHN1YnNldChQZXJub2N0YWNpb25lcywgc3RhcnQgPSBpICsgMSwgZW5kID0gaSArIGspCiAgdGVzdC5zZXQgPC0gIHN1YnNldChQZXJub2N0YWNpb25lcywgc3RhcnQgPSBpICsgayArIDEsIGVuZCA9IGkgKyBrICsgaCkKICB0cmFpbi54cmVnIDwtIGQyMDA5WyhpICsgMSk6KGkgKyBrKV0gCiAgdGVzdC54cmVnIDwtIGQyMDA5WyhpICsgayArIDEpOihpICsgayArIGgpXQogIAogIGZpdCA8LSBBcmltYSh0cmFpbi5zZXQsIG9yZGVyID0gYygyLCAwLCAwKSwgaW5jbHVkZS5tZWFuID0gVFJVRSwgeHJlZyA9IHRyYWluLnhyZWcpCiAgZmNhc3QgPC0gZm9yZWNhc3QoZml0LCBoID0gaCwgeHJlZyA9IHRlc3QueHJlZykKICBtYXBlQXJpbWEyMDBbaSArIDEsIF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGZjYXN0JG1lYW4pL3Rlc3Quc2V0Cn0KCm1hcGVBcmltYTIwMCA8LSBjb2xNZWFucyhtYXBlQXJpbWEyMDApCm1hcGVBcmltYTIwMApgYGAKClNpIGJpZW4gZWwgZXJyb3IgZGUgcHJldmlzacOzbiBhIHVuIHBlcmlvZG8gdmlzdGEgc2UgbWFudGllbmUgcmF6b25hYmxlbWVudGUgYmFqbywgcGFyYSBwcmV2aXNpb25lcyBhIDIgbyBtw6FzIGHDsW9zIHZpc3RhIGVsIGVycm9yIHNlIGluY3JlbWVudGEgaGFzdGEgZWwgMTIlLgoKXApcCgojIEFuw6FsaXNpcyBkZSBsYSBzZXJpZSBQZXJub2N0YWNpb25lcyAkXHNpbSBJKDEpJAoKRW4gZXN0ZSBlcMOtZ3JhZmUgYXN1bWlyZW1vcyBxdWUgbGEgc2VyaWUgUGVybm9jdGFjaW9uZXMgbm8gZXMgZXN0YWNpb25hcmlhLCBwZXJvIHN1IHByaW1lcmEgZGlmZXJlbmNpYSBzw60gZXMgZXN0YWNpb25hcmlhLgoKXAoKIyMgSWRlbnRpZmljYWNpw7NuCgpJZGVudGlmaWNhcmVtb3MgbG9zIHZhbG9yZXMgZGUgJHAkIHkgJHEkIGEgcGFydGlyIGRlIGBhdXRvLmFyaW1hYC4KCmBgYHtyfSAKYXV0by5hcmltYShQZXJub2N0YWNpb25lcywgZCA9IDEpCmBgYAoKU2UgaWRlbnRpZmljYSB1biBwcm9jZXNvIEFSSU1BKDAsIDEsIDApIHNpbiBkZXJpdmEsIGVzIGRlY2lyIHVuIHBhc2VvIGFsZWF0b3JpbyBvIG3DqXRvZG8gSW5nZW51byBJLiBUcmFzIGVzdGltYXIgZWwgbW9kZWxvLCBlbCBhbsOhbGlzaXMgZGVsIGVycm9yIG5vIHJldmVsYSBuaW5nw7puIHZhbG9yIGF0w61waWNvIChmaWd1cmEgNSkuCgpgYGB7cn0KYXJpbWEwMTAgPC0gQXJpbWEoUGVybm9jdGFjaW9uZXMsIAogICAgICAgICAgICAgICAgICBvcmRlciA9IGMoMCwgMSwgMCksCiAgICAgICAgICAgICAgICAgIGluY2x1ZGUuY29uc3RhbnQgPSBGQUxTRSkKCmVycm9yIDwtIHJlc2lkdWFscyhhcmltYTAxMCkKc2RlcnJvciA8LSBzZChlcnJvcikKCmF1dG9wbG90KGVycm9yLCBzZXJpZXM9IkVycm9yIiwKICAgICAgICAgY29sb3VyID0gImJsYWNrIiwKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIkVycm9yIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgNS4gRXJyb3IgKyBJbnRlcnZlbmNpw7NuIikgKwogIGdlb21faGxpbmUoeWludGVyY2VwdCA9IGMoLTMsIC0yLCAyLCAzKSpzZGVycm9yLCAKICAgICAgICAgICAgIGNvbG91ciA9IGMoInJlZCIsICJncmVlbiIsICJncmVlbiIsICJyZWQiKSwgCiAgICAgICAgICAgICBsdHkgPSAyKSArIAogIGdlb21fcG9pbnQoKSArCiAgc2NhbGVfeF9jb250aW51b3VzKGJyZWFrcz0gc2VxKDIwMDAsIDIwMjAsIDIpKSAKYGBgCgpcCgojIyBWYWxpZGFjacOzbgoKIyMjIE1lZGlkYXMgZGUgZXJyb3Igey19CgpFbCBlcnJvciBtZWRpbyBlcyBgciByb3VuZChhY2N1cmFjeShhcmltYTAxMClbMl0sMSlgIGRlZnVuY2lvbmVzIChSTVNFKSB5IGVsIGVycm9yIHBvcmNlbnR1YWwgbWVkaW8gZXMgYHIgcm91bmQoYWNjdXJhY3koYXJpbWEwMTApWzVdLDIpYCUgKE1BUEUpLgoKYGBge3IsIGV2YWw9RkFMU0V9CmFjY3VyYWN5KGFyaW1hMDEwKQpgYGAKCmBgYHtyLGVjaG89RkFMU0V9CnJvdW5kKGFjY3VyYWN5KGFyaW1hMDEwKSwyKQpgYGAKCiMjIyBFcnJvciBkZSBwcmV2aXNpw7NuIGV4dHJhLW11ZXN0cmFsIHNlZ8O6biBob3Jpem9udGUgdGVtcG9yYWwgey19CgpBc3VtaW1vcyBxdWUgc2UgcHJlY2lzYW4gZGlleiBhw7FvcyBwYXJhIGhhY2VyIHVuYSBidWVuYSBlc3RpbWFjacOzbiwgJGs9MTAkLCB5IHF1ZSBlbCBob3Jpem9udGUgdGVtcG9yYWwgZXMgdHJlcyBhw7FvcyB2aXN0YSwgJGggPSAzJC4KICAKYGBge3J9ICAKayA8LSAxMCAgICAgICAgICAgICAgICAgI01pbmltbyBudW1lcm8gZGUgZGF0b3MgcGFyYSBlc3RpbWFyCmggPC0gNSAgICAgICAgICAgICAgICAgICNIb3Jpem9udGUgZGUgbGFzIHByZWRpY2ljb25lcwpUVCA8LSBsZW5ndGgoUGVybm9jdGFjaW9uZXMpICAjTG9uZ2l0dWQgc2VyaWUKcyA8LSBUVCAtIGsgLSBoICAgICAgICAgICNUb3RhbCBkZSBlc3RpbWFjaW9uZXMKCm1hcGVBcmltYTAxMCA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQpmb3IgKGkgaW4gMDpzKSB7CiAgdHJhaW4uc2V0IDwtIHN1YnNldChQZXJub2N0YWNpb25lcywgc3RhcnQgPSBpICsgMSwgZW5kID0gaSArIGspCiAgdGVzdC5zZXQgPC0gIHN1YnNldChQZXJub2N0YWNpb25lcywgc3RhcnQgPSBpICsgayArIDEsIGVuZCA9IGkgKyBrICsgaCkKICAKICBmaXQgPC0gQXJpbWEodHJhaW4uc2V0LCBvcmRlciA9IGMoMCwgMSwgMCksIGluY2x1ZGUubWVhbiA9IFRSVUUpCiAgZmNhc3QgPC0gZm9yZWNhc3QoZml0LCBoID0gaCkKICBtYXBlQXJpbWEwMTBbaSArIDEsIF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGZjYXN0JG1lYW4pL3Rlc3Quc2V0Cn0KCm1hcGVBcmltYTAxMCA8LSBjb2xNZWFucyhtYXBlQXJpbWEwMTApCm1hcGVBcmltYTAxMApgYGAKCkVsIGVycm9yIGRlIHByZXZpc2nDs24gYSB1biBwZXJpb2RvIGVzIG11eSBidWVubyAocG9yIGRlYmFqbyBkZWwgMyUpLCBwZXJvIHBhcmEgcHJldmlzaW9uZXMgYSAyIG8gbcOhcyBhw7FvcyBlc3RlIGVycm9yIHNlIGluY3JlbWVudGEgbm90YWJsZW1lbnRlLgoKXApcCgojIENvbXBhcmF0aXZhIGVudHJlIG1vZGVsb3MKClNpIGF0ZW5kZW1vcyBhIGxvcyBpbmRpY2Fkb3JlcyBkZSBjYWxpZGFkIGRlIGFqdXN0ZSBkZSBhbWJvcyBtb2RlbG9zLCB0b2RvcyBhcHVudGFuIGFsIHByb2Nlc28gQVJJTUEoMiwgMCwgMCkgY29tbyBlbCBxdWUgbWVqb3IgYWp1c3RhIGEgbG9zIGRhdG9zLiBFbCBlcnJvciBtZWRpbyAoUk1TRSkgcGFyYSBBUigyKSBlcyBjYXNpIHVuIG1pbGzDs24gZGUgcGVybm9jdGFjaW9uZXMgbWVub3IgcXVlIHBhcmEgQVJJTUEoMCwgMSwgMCkgeSBlbCBlcnJvciByZWxhdGl2byBlcyBtw6FzIGRlIHVuIHB1bnRvIHBvcmNlbnR1YWwgbWVub3IuCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQphY2N1cmFjeShhcmltYTIwMCkKYWNjdXJhY3koYXJpbWExMDApCmBgYAoKYGBge3IsIGVjaG8gPSBGQUxTRX0Kcm91bmQoYWNjdXJhY3koYXJpbWEyMDApLCAyKQpyb3VuZChhY2N1cmFjeShhcmltYTAxMCksIDIpCmBgYAoKU2kgYXRlbmRlbW9zIGEgbG9zIGVycm9yZXMgZGUgcHJldmlzacOzbiBleHRyYS1tdWVzdHJhbGVzLCBlbCBtZWpvciBwcm9jZXNvIGRlcGVuZGUgZGVsIGhvcml6b250ZSB0ZW1wb3JhbDoKCiogcGFyYSBwcmV2aXNpb25lcyBkZSB1bm8gYSB0cmVzIHBlcmlvZG9zIHZpc3RhIGVsIHByb2Nlc28gQVJJTUEoMCwgMSwgMCkgZXMgc3VwZXJpb3IgYWwgZXJyb3IgZGVsIHByb2Nlc28gQVIoMikuIAoqIHBhcmEgcHJldmlzaW9uZXMgYSA0IHkgNSBwZXJpb2RvcyB2aXN0YSBlbCBwcm9jZXNvIEFSKDIpIGVzIGVsIG1lam9yLgoKYGBge3J9Cm1hcGVBcmltYTIwMAptYXBlQXJpbWEwMTAKYGBgCgpPdHJvIGVqZW1wbG8gbcOhcyBkZSBxdWUgbWVqb3IgYWp1c3RlIG5vIGltcGxpY2EgbWVqb3IgcHJlZGljY2nDs24uIEVuIGVzdGUgY2FzbyBlbCBtb2RlbG8gQVIoMikgc29icmVhanVzdGEgKF9vdmVyZml0dGluZ18pIGxvcyBkYXRvcyB5IGdlbmVyYSBwZW9yZXMgcHJlZGljY2lvbmVzIGEgY29ydG8gcGxhem8uCgpBc3VtaW1vcyBxdWUgc2UgZGEgbcOhcyBwZXNvIGEgbGFzIHByZWRpY2Npb25lcyBhIGNvcnRvIHBsYXpvIHkgY29uY2x1aW1vcyBxdWUgZWwgbWVqb3IgbW9kZWxvIGNvbiBwcm9ww7NzaXRvcyBwcmVkaWN0aXZvcyBlcyAkUGVybm9jdGFjaW9uZXMgXHNpbSBBUklNQSgwLCAxLCAwKSQuCgoqKk5vdGE6KiogRXMgbGEgdGVyY2VyYSB2ZXogcXVlIGVsIG3DqXRvZG8gSW5nZW51byBJIChwYXNlbyBhbGVhdG9yaW8pIGFwYXJlY2UgY29tbyBlbCBtw6FzIGFkZWN1YWRvIHBhcmEgcHJlZGVjaXIgbGEgc2VyaWUgYW51YWwgZGUgcGVybm9jdGFjaW9uZXMuIEVyYSBlbCBtZWpvciBkZSBlbnRyZSBsb3MgbcOpdG9kb3Mgc2ltcGxlcy4gQWwgZWxlZ2lyIGRlbnRybyBkZSBsYSBmYW1pbGlhIGRlIEFsaXNhZG8gRXhwb25lbmNpYWwsIHRhbWJpw6luIGZ1ZSBlbCBtZWpvci4gQWhvcmEsIGVzIGVsIHByb2Nlc28gQVJJTUEgbcOhcyBhZGVjdWFkby4gUGFyYSBlc3RhIHNlcmllLCBxdWUgZXMgY29ydGEgeSBhcGFyZW50ZW1lbnRlIHNlbmNpbGxhLCBuaW5ndW5hIGFwcm94aW1hY2nDs24gY29tcGxlamEgbWVqb3JhIGVsIG3DqXRvZG8gSW5nZW51byBJLCBtw6FzIGbDoWNpbCBkZSBvYnRlbmVyIGUgaW50ZXJwcmV0YXIuCiAKXApcCgojIEludGVycHJldGFjacOzbiBkZWwgbW9kZWxvCgpFbCBwcm9jZXNvIGVzIHVuIHBhc2VvIGFsZWF0b3JpbyAoaW5nZW51byBJKSAkUGVybm9jdGFjaW9uZXMgXHNpbSBBUklNQSgwLCAxLCAwKSQ6CiQkKDEgLSBMKSBQZXJub2N0YWNpb25lc190ID0gIFx2YXJlcHNpbG9uX3QkJApvCiQkUGVybm9jdGFjaW9uZXNfdCA9IFBlcm5vY3RhY2lvbmVzX3t0LTF9ICsgXHZhcmVwc2lsb25fdC4kJApFbCBtb2RlbG8gZXN0aW1hZG8gcXVlZGE6CiQkXHdpZGVoYXR7UGVybm9jdGFjaW9uZXN9X3QgPSBQZXJub2N0YWNpb25lc197dC0xfS4kJApDYWRhIGHDsW8gZWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBwcmV2aXN0byBlcyBlbCBtaXNtbyBxdWUgZWwgZGVsIGHDsW8gcHJldmlvLgoKCgpcClwKCiMgUHJlZGljY2nDs24KClBvZGVtb3MgdXNhciBlbCBtb2RlbG8gZXN0aW1hZG8gcGFyYSBwcmVkZWNpciBsb3MgY2Fzb3MgcGVybm9jdGFjaW9uZXMgcGFyYSBsb3MgcHLDs3hpbW9zIDUgYcOxb3MuCgpgYGB7cn0KcGFyaW1hMDEwIDwtIGZvcmVjYXN0KGFyaW1hMDEwLCAKICAgICAgICAgICAgICAgICAgICAgIGggPSA1LCAKICAgICAgICAgICAgICAgICAgICAgIGxldmVsID0gOTUpCnBhcmltYTAxMApgYGAKCmBgYHtyfQphdXRvcGxvdChwYXJpbWEwMTAsIAogICAgIHlsYWIgPSAiTm9jaGVzIChtaWxsb25lcykiLAogICAgIG1haW4gPSAiRmlndXJhIDYuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIyLCAyKSkgCmBgYAoKXApcClwKXAoKCgoKCgo=</div>
+<footer class="footer">
+  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+<br>
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
+  
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("03-12-Ejemplo6.Rmd");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

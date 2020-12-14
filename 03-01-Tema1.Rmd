@@ -1,0 +1,170 @@
+---
+title: "Introducción"
+author: "Iván Arribas (Depto. Análisis Económico. Universitat de València)"
+subtitle: "Previsión con Datos Temporales (GBIA)"
+output:
+  html_document:
+    code_download: yes
+    df_print: kable
+    fig_caption: no
+    highlight: pygments
+    number_sections: yes
+    self_contained: yes
+    theme: cerulean
+    toc: yes
+    toc_depth: 2
+    toc_float:
+      collapsed: yes
+
+---
+
+```{r chunk_setup, echo = FALSE}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      comment = "",
+                      fig.align = "center", 
+                      fig.show = "hold",
+                      fig.height = 4,
+                      fig.width = 8,
+                      out.width = "80%") 
+```
+
+
+# Introducción
+
+>"Hacer previsiones supone realizar la mejor apreciación posible de algún suceso futuro." Holton y Keating (1996).
+
+>"Time series are analysed to understand the past and to predict the future." Metcalfe y Cowpertwait (2009)
+
+Los datos temporales, __series temporales__, se analizan para entender el pasado y predecir el futuro posibilitando a los agentes tomar decisiones adecuadamente informados.
+
+\
+
+## La previsión en el ámbito de los negocios
+
+En prácticamente todas las áreas funcionales de una empresa o negocio se realiza algún tipo de previsión.
+
+* Las cabeceras de prensa determinan el número de ejemplares a imprimir cada día analizando la demanda pasada de su diario.
+
+* Los supermercados predicen la demanda de sus principales referencias (productos) a fin de ajustar su flujo logístico y evitar que se agoten en el lineal o que caduquen. 
+
+* Los directores de producción han de basarse en predicciones para ajustar las necesidades de materias primas y el nivel de existencias de los productos elaborados.
+
+* Los directores financieros hacen previsiones de los flujos de caja para evitar tensiones en la tesorería.
+
+\
+\
+
+Predecir es fácil y cuando se acierta puede parecer cosa de suerte o una gran intuición. Cuando se fracasa, puede ser un desastre.
+
+* _Creo que hay mercado mundial para tal vez cinco ordenadores._ (Presidente de IBM, 1943)
+* _Los ordenadores en el futuro no pesarán más de 1.5 toneladas._ (Popular Mechanics, 1949)
+* _No hay razón para que cada uno quiera un ordenador en su casa_. (Presidente de DEC, 1977; tres años después IBM lanzaba al mercado el primer PC)
+
+\
+
+## La previsión en el sector público
+
+Los presupuestos generales del estado se establecen en base a un amplio conjunto de previsiones (ingresos, consumo, tipos de interés...) En general, todos los organismos y empresas públicas precisan de las predicciones en su gestión diaria.
+
+* [Red Eléctrica Española](https://demanda.ree.es/demanda.html) predice el consumo eléctrico hora a hora para ajustar la oferta a la demanda.
+
+* El [Instituto Nacional de Estadística](http://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&cid=1254736176953&menu=ultiDatos&idp=1254735572981) (INE) predice la población española para los próximos 50 años. 
+
+
+\
+\
+
+# Métodos de previsión
+
+Un método de previsión es un proceso detallado que describe los pasos a seguir desde que se plantea el problema hasta que se obtiene la previsión: recogida de la  información, procesamiento de la información, estimación de la previsión, medida de incertidumbre...
+
+La literatura recoge dos grandes métodos de previsión:
+
+* Métodos subjetivos
+* Métodos objetivos
+
+En este tema hablaremos algo sobre los primeros y en los restantes temas analizaremos en detalle los segundos.
+
+\
+
+## Métodos subjetivos
+
+Realizar predicciones a partir de opiniones y juicios subjetivos es práctica común. En muchas ocasiones las previsiones subjetivas es la única opción, tales como cuando no hay datos históricos, o cuando un nuevo producto se va a sacar al mercado, o cuando entra en el mercado un nuevo competidor, o durante un entorno de mercado único y nuevo. Por ejemplo, predecir el efecto que iba a tener la COVID en el grado de ocupación hotelera de agosto, una situación sin precedentes, requiere necesariamente de juicios subjetivos.
+
+Con los años las predicciones por métodos subjetivos han ido ganando aceptación y reconocimiento como una ciencia. En parte porque la calidad de sus predicciones ha mejorado como resultado directo del uso de metodologías mejor estructuradas y más sistemáticas. 
+
+La predicciones a partir de opiniones y juicios son subjetivas y por tanto sujetas a un montón de sesgos y limitaciones. Por citar algunas:
+
+* Pueden ser perfectamente inconsistentes por muchos motivos: se presta más atención a acontecimientos presentes que a los pasados; podemos directamente pasar por alto información relevante; se pueden confundir algunas relaciones causales.
+* Pueden estar afectadas por la agenda política o personal.
+* Pueden sufrir del _efecto ancla_: las predicciones tienden a agruparse en torno a un valor inicial de referencia familiar.
+* o del _efecto de confirmación_, donde se da mas peso a la información que confirma nuestras hipótesis previas.
+* ... (la lista es larga)
+
+### Principios básico en la implementación {-}
+
+A fin de reducir el efecto adverso de estas limitaciones y sesgos, es fundamental usar una aproximación sistemática y bien estructurada, con independencia de la metodología que finalmente se vaya a seguir. Los principios a seguir son:
+
+* Define la variable a predecir de forma clara y concisa.
+* Implementa un método de previsión sistemático.
+* Documenta todo el proceso con el objetivo de promover la consistencia y la replicabilidad.
+* Justifica las predicciones para reducir los sesgos.
+* Monitoriza las predicciones para adelantarte a irregularidades o desviaciones importantes respecto de los valores reales.
+* Separa los predictores de los usuarios de las predicciones.
+
+### Algunos métodos subjetivos {-}
+
+* _Jurado de opinión_: la predicción la realizan un conjunto de expertos por consenso.
+* _Predicción por analogía_: se realiza la predicción buscando situaciones o entornos análogos donde se conoce la información solicitada.  
+* _Método Delphi_: similar al jurado de opinión, pero se preserva el anonimato de los expertos y el consenso se obtiene a partir de un proceso iterativo en varias rondas:
+
+    1. Se elige un panel de expertos.
+    2. Se solicita a cada uno su opinión respecto a las variables que se desea predecir.
+    3. Los expertos devuelven sus predicciones y la justificación. Estas se resumen de forma anónima.
+    4. Se distribuye a cada experto el resumen de resultados para su análisis y revisión.
+    5. Los expertos revisan sus opiniones personales a partir de la información obtenida.
+    6. Se repiten los pasos 3 a 5 hasta que deje de haber cambios significativos en las opiniones.
+* _Método de escenarios_: se definen una serie de posibles escenarios considerando todos los factores relevantes y se les asigna una probabilidad. Para cada escenario se obtiene, siguiendo un determinado método, la predicción deseada.
+* _Ajustes por juicios subjetivos_: propiamente este no es un método subjetivo. Consiste en realizar una predicción con información histórica disponible usando herramientas estadísticas para después ser ajustada a partir del juicio de expertos.
+
+\
+
+## Métodos objetivos
+
+La predicción se obtiene principalmente a partir de los valores pasados de la propia variable a predecir aunque también se puede utilizar el valor pasado de otras variables
+
+$$\hat y_{t+h} = f(y_t, y_{t-1},\ldots)$$
+donde $\hat y_{t+h}$ es la previsión que hacemos para el periodo $t+h$ con información solo hasta el periodo $t$.
+
+Dentro de los métodos objetivos distinguiremos entre:
+
+* **No paramétricos**, donde no se asume ninguna hipótesis estadística y las predicciones se obtienen a partir de los datos pasados con cálculos _sencillos_ que no comportan estimar ningún parámetro. Por ejemplo $\hat y_{t+1} = y_t$ (método ingenuo I).
+
+  Veremos estas técnicas en los temas 3 a 5: métodos ingenuos, medias móviles y métodos de alisado exponencial.
+
+* **Paramétricos**, se asume una estructura estocástica en la generación de los datos, es necesario que se verifiquen ciertos supuestos estadísticos y hay que estimar parámetros. Por ejemplo $\hat y_{t+1} = \hat \mu + \hat \phi_1 y_t$ (modelo autoregresivo de orden 1).
+
+  Veremos estas técnicas en los temas 6 y 7: modelos ARIMA.
+
+\
+\
+
+# ¿Qué haremos y qué no haremos en este curso?
+
+En este curso nos vamos a centrar en los métodos más fiables para obtener predicciones. Métodos que son replicables, cuyos resultados --las predicciones-- son verificables y que son usados ampliamente por parte de organizaciones y empresas. Métodos objetivos.
+
+No podremos ver todos los métodos existentes, ¡ni aunque hubiera un grado solo para predicciones! Pero los que veremos te darán la base para aprender otros métodos de previsión: alisado exponencial con doble estacionalidad, el vecino más próximo, vectores autoregresivos, redes neuronales; y para aprender otros enfoques a la hora de hacer previsiones: modelos jerárquicos de series, boostrapping, bagging...
+
+No vamos a aprender a predecir cotizaciones de bolsa. La metodología para predecir estas series es completamente diferente y muy poco exitosa. Si fuera fácil, estaríamos todos invirtiendo, no dando clases (yo) o recibiéndolas (vosotros).
+
+# Referencias
+
+* Holton, J, y Keating, B. (1996). *Previsiones en los negocios*. Ed. ERWIN, Madrid
+* Metcalfe, A.W. y Cowpertwait, P.S.P. (2009). *Introductory Time Series with R*. Ed. Springer, New York, NY. doi:10.1007/978-0-387-88698-5
+
+\
+\
+\
+\
+

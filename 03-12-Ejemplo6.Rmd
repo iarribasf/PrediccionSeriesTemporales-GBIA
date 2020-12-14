@@ -1,0 +1,378 @@
+---
+title: "Pernoctaciones en alojamientos turísticos de turistas extranjeros"
+subtitle: "Procesos ARIMA (sin estacionalidad)"
+author: "Iván Arribas (Depto. Análisis Económico. Universitat de València)"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: pygments 
+    fig_caption: false
+    df_print: kable
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    self_contained: true
+    code_download: true
+---
+
+```{r chunk_setup, echo = FALSE}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      comment = "",
+                      fig.align = "center", 
+                      fig.show = "hold",
+                      fig.height = 4,
+                      fig.width = 8,
+                      out.width = "80%") 
+```
+
+```{r options_setup, echo = FALSE}
+#options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r librerias, echo = FALSE}
+library(forecast)
+library(ggplot2); theme_set(theme_bw())
+library(gridExtra)
+library(grid)
+library(aod)
+```
+
+\
+\
+
+# Introducción
+
+Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.
+
+Para su análisis por modelos ARIMA sin estacionalidad vamos a anualizarla (20 años) y a dividirla por un millón para cambiar las unidades.
+
+```{r}
+Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", header = TRUE)
+Pernoctaciones <- ts(Pernoctaciones[,2], start = 2000, frequency = 12)
+Pernoctaciones <- aggregate(Pernoctaciones/10^6, FUN = sum)
+
+autoplot(Pernoctaciones,
+         xlab = "",
+         ylab = "Noches (millones)",
+         main = "Figura 1. Pernoctaciones") +
+  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+```
+
+\
+\
+
+# Transformación de la serie
+
+La figura 2 no deja claro si la serie original es ya estacionaria, pero sí los es su primera diferencia. Por otro lado, la función `ndiffs` (que realiza un contraste formal de estacionariedad), indica que no es necesaria realizar ninguna diferenciación.
+
+Ante esta situación se opta por explorar ambas opciones. Es decir, analizaremos la serie $Pernoctaciones \sim I(0)$ así como la serie $Pernoctaciones \sim I(1)$ y veremos cual de las dos nos ofrece mejores predicciones.
+
+
+```{r, eval = FALSE}
+autoplot(Pernoctaciones, xlab = "Serie original", ylab = "", main = "")
+autoplot(diff(Pernoctaciones), xlab = "Serie diferenciada", ylab = "", main = "")
+ggAcf(Pernoctaciones, xlab = "", ylab = "FAC", main = "")
+ggAcf(diff(Pernoctaciones), xlab = "", ylab = "FAC", main = "")
+```
+
+```{r, echo = FALSE}
+grid.arrange(
+  autoplot(Pernoctaciones, xlab = "Serie original", ylab = "", main = "Figura 2. Pernoctaciones"),
+  autoplot(diff(Pernoctaciones), xlab = "Serie diferenciada", ylab = "", main = ""),
+  ggAcf(Pernoctaciones, xlab = "", ylab = "FAC", main = ""),
+  ggAcf(diff(Pernoctaciones), xlab = "", ylab = "FAC", main = ""),
+  nrow = 2
+)
+```
+
+```{r}
+ndiffs(Pernoctaciones)
+```
+
+\
+\
+
+# Análisis de la serie Pernoctaciones $\sim I(0)$
+
+En este epígrafe asumiremos que la serie Pernoctaciones es estacionaria.
+
+\
+
+## Identificación
+
+Vamos a identificar los valores de $p$ y $q$ a partir de `auto.arima`.
+
+```{r} 
+auto.arima(Pernoctaciones, d = 0)
+```
+
+Se identifica un proceso ARIMA(2, 0, 0) con constante. La estimación de este modelo muestra que los dos coeficientes estimados son aparentemente significativos y el análisis del error revela un valor que supera las 2.5 desviaciones típicas en el año 2009 (figura 3).
+
+```{r}
+arima200 <- Arima(Pernoctaciones, 
+                  order = c(2, 0, 0),
+                  include.mean = TRUE)
+
+error <- residuals(arima200)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "",
+         ylab = "Error",
+         main = "Figura 3. Error + Intervención") +
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  geom_point() +
+  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+```
+
+Creamos una variable ficticia para el año 2009 y la incluimos en el modelo. Ahora ya no se identifican más valores atípicos (figura 4).
+
+```{r}
+d2009 <- 1*(time(Pernoctaciones) == 2009)
+arima200 <- Arima(Pernoctaciones, 
+                  order = c(2, 0, 0),
+                  include.mean = TRUE,
+                  xreg = d2009)
+arima200
+
+error <- residuals(arima200)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "",
+         ylab = "Error",
+         main = "Figura 4. Error + Intervención") +
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  geom_point() +
+  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+```
+
+\
+
+## Validación
+
+### Variables son significativas {-}
+
+Todos dos coeficientes estimados ($\phi_1$, $\phi_2$, $\mu$ y $\gamma_{d2009}$) son significativos.
+
+```{r}
+# H0: phi1 = 0
+wald.test(b = coef(arima200), Sigma = vcov(arima200), Terms = 1)
+# H0: phi2 = 0
+wald.test(b = coef(arima200), Sigma = vcov(arima200), Terms = 2)
+# H0: constante = 0
+wald.test(b = coef(arima200), Sigma = vcov(arima200), Terms = 3)
+# H0: d2009 =  0
+wald.test(b = coef(arima200), Sigma = vcov(arima200), Terms = 4)
+
+```
+
+\
+
+### Medidas de error {-}
+
+El error medio es `r round(accuracy(arima200)[2],0)` defunciones (RMSE) y el error porcentual medio es `r round(accuracy(arima200)[5],2)`% (MAPE).
+
+```{r, eval=FALSE}
+accuracy(arima200)
+```
+
+```{r,echo=FALSE}
+round(accuracy(arima200),2)
+```
+
+### Error de previsión extra-muestral según horizonte temporal {-}
+
+Asumimos que se precisan diez años para hacer una buena estimación, $k=10$, y que el horizonte temporal es tres años vista, $h = 5$. Por simplicidad, no incluiremos la intervención.
+  
+```{r}  
+k <- 10                 #Minimo numero de datos para estimar
+h <- 5                  #Horizonte de las predicicones
+TT <- length(Pernoctaciones)  #Longitud serie
+s <- TT - k - h          #Total de estimaciones
+
+mapeArima200 <- matrix(NA, s + 1, h)
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  train.xreg <- d2009[(i + 1):(i + k)] 
+  test.xreg <- d2009[(i + k + 1):(i + k + h)]
+  
+  fit <- Arima(train.set, order = c(2, 0, 0), include.mean = TRUE, xreg = train.xreg)
+  fcast <- forecast(fit, h = h, xreg = test.xreg)
+  mapeArima200[i + 1, ] <- 100*abs(test.set - fcast$mean)/test.set
+}
+
+mapeArima200 <- colMeans(mapeArima200)
+mapeArima200
+```
+
+Si bien el error de previsión a un periodo vista se mantiene razonablemente bajo, para previsiones a 2 o más años vista el error se incrementa hasta el 12%.
+
+\
+\
+
+# Análisis de la serie Pernoctaciones $\sim I(1)$
+
+En este epígrafe asumiremos que la serie Pernoctaciones no es estacionaria, pero su primera diferencia sí es estacionaria.
+
+\
+
+## Identificación
+
+Identificaremos los valores de $p$ y $q$ a partir de `auto.arima`.
+
+```{r} 
+auto.arima(Pernoctaciones, d = 1)
+```
+
+Se identifica un proceso ARIMA(0, 1, 0) sin deriva, es decir un paseo aleatorio o método Ingenuo I. Tras estimar el modelo, el análisis del error no revela ningún valor atípico (figura 5).
+
+```{r}
+arima010 <- Arima(Pernoctaciones, 
+                  order = c(0, 1, 0),
+                  include.constant = FALSE)
+
+error <- residuals(arima010)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "",
+         ylab = "Error",
+         main = "Figura 5. Error + Intervención") +
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  geom_point() +
+  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+```
+
+\
+
+## Validación
+
+### Medidas de error {-}
+
+El error medio es `r round(accuracy(arima010)[2],1)` defunciones (RMSE) y el error porcentual medio es `r round(accuracy(arima010)[5],2)`% (MAPE).
+
+```{r, eval=FALSE}
+accuracy(arima010)
+```
+
+```{r,echo=FALSE}
+round(accuracy(arima010),2)
+```
+
+### Error de previsión extra-muestral según horizonte temporal {-}
+
+Asumimos que se precisan diez años para hacer una buena estimación, $k=10$, y que el horizonte temporal es tres años vista, $h = 3$.
+  
+```{r}  
+k <- 10                 #Minimo numero de datos para estimar
+h <- 5                  #Horizonte de las predicicones
+TT <- length(Pernoctaciones)  #Longitud serie
+s <- TT - k - h          #Total de estimaciones
+
+mapeArima010 <- matrix(NA, s + 1, h)
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  
+  fit <- Arima(train.set, order = c(0, 1, 0), include.mean = TRUE)
+  fcast <- forecast(fit, h = h)
+  mapeArima010[i + 1, ] <- 100*abs(test.set - fcast$mean)/test.set
+}
+
+mapeArima010 <- colMeans(mapeArima010)
+mapeArima010
+```
+
+El error de previsión a un periodo es muy bueno (por debajo del 3%), pero para previsiones a 2 o más años este error se incrementa notablemente.
+
+\
+\
+
+# Comparativa entre modelos
+
+Si atendemos a los indicadores de calidad de ajuste de ambos modelos, todos apuntan al proceso ARIMA(2, 0, 0) como el que mejor ajusta a los datos. El error medio (RMSE) para AR(2) es casi un millón de pernoctaciones menor que para ARIMA(0, 1, 0) y el error relativo es más de un punto porcentual menor.
+
+```{r, eval = FALSE}
+accuracy(arima200)
+accuracy(arima100)
+```
+
+```{r, echo = FALSE}
+round(accuracy(arima200), 2)
+round(accuracy(arima010), 2)
+```
+
+Si atendemos a los errores de previsión extra-muestrales, el mejor proceso depende del horizonte temporal:
+
+* para previsiones de uno a tres periodos vista el proceso ARIMA(0, 1, 0) es superior al error del proceso AR(2). 
+* para previsiones a 4 y 5 periodos vista el proceso AR(2) es el mejor.
+
+```{r}
+mapeArima200
+mapeArima010
+```
+
+Otro ejemplo más de que mejor ajuste no implica mejor predicción. En este caso el modelo AR(2) sobreajusta (_overfitting_) los datos y genera peores predicciones a corto plazo.
+
+Asumimos que se da más peso a las predicciones a corto plazo y concluimos que el mejor modelo con propósitos predictivos es $Pernoctaciones \sim ARIMA(0, 1, 0)$.
+
+**Nota:** Es la tercera vez que el método Ingenuo I (paseo aleatorio) aparece como el más adecuado para predecir la serie anual de pernoctaciones. Era el mejor de entre los métodos simples. Al elegir dentro de la familia de Alisado Exponencial, también fue el mejor. Ahora, es el proceso ARIMA más adecuado. Para esta serie, que es corta y aparentemente sencilla, ninguna aproximación compleja mejora el método Ingenuo I, más fácil de obtener e interpretar.
+ 
+\
+\
+
+# Interpretación del modelo
+
+El proceso es un paseo aleatorio (ingenuo I) $Pernoctaciones \sim ARIMA(0, 1, 0)$:
+$$(1 - L) Pernoctaciones_t =  \varepsilon_t$$
+o
+$$Pernoctaciones_t = Pernoctaciones_{t-1} + \varepsilon_t.$$
+El modelo estimado queda:
+$$\widehat{Pernoctaciones}_t = Pernoctaciones_{t-1}.$$
+Cada año el número de pernoctaciones previsto es el mismo que el del año previo.
+
+
+
+\
+\
+
+# Predicción
+
+Podemos usar el modelo estimado para predecir los casos pernoctaciones para los próximos 5 años.
+
+```{r}
+parima010 <- forecast(arima010, 
+                      h = 5, 
+                      level = 95)
+parima010
+```
+
+```{r}
+autoplot(parima010, 
+     ylab = "Noches (millones)",
+     main = "Figura 6. Pernoctaciones") +
+  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
+```
+
+\
+\
+\
+\
+
+
+
+
+
+

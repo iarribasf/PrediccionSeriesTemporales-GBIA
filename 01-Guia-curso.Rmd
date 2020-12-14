@@ -1,0 +1,89 @@
+---
+output:
+  html_document:
+    theme: cerulean
+    highlight: monochrome 
+    number_sections: false
+    toc: true
+    toc_float: true
+---
+
+\
+\
+\
+
+-------------------
+
+## Introducción
+  
+La asignatura de **Predicción con Datos Temporales** pertenece al Grado en Inteligencia y Analítica de Negocios y se configura como un módulo impartido en el segundo cuatrimestre con 6 créditos ECTS.
+
+El objetivo general es aprender a manejarse con datos de corte temporal, **Series Temporales**. Es decir, ser capaces de aplicar los métodos para describir, analizar, modelizar y predecir series de datos que evolucionan en el tiempo. Además, hay que saber evaluar la calidad de las predicciones en el contexto de la estadística tradicional y con técnicas de _Machine Learning_.
+
+Para ello, veremos la teoría necesaria y, sobre todo, practicaremos utilizando el programa estadístico **R** y el lenguaje **Markdown** a través de **RStudio**. A estas alturas del grado ya debes estar familiarizado con este programa.  
+
+\
+
+------------------
+
+\
+
+## Contenidos
+
+El programa de la asignatura contiene 7 temas distribuidos entre sesiones teóricas de una hora y prácticas de tres horas:
+
+* Tema 1. Introducción
+* Tema 2. Series temporales. Definición y componentes
+* Tema 3: Métodos ingenuos de predicción. Evaluación de predicciones.
+* Tema 4: Método de medias móviles.
+* Tema 5: Técnicas de alisado exponencial.
+* Tema 6. Modelos ARIMA
+* Tema 7. Modelos ARIMA con estacionalidad
+
+Pasar de un tema al siguiente supone incrementar la complejidad de las técnicas empleadas para el análisis de una serie temporal de forma que podréis valorar con datos reales la relación entre complejidad--tiempo--resultados y optar por la metodología más adecuada.
+
+El desarrollo detallado de cada tema lo podréis encontrar en la sección [Calendario](https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/06-Calendario.html) de la página web. Esta es una sección viva, que se irá ampliado y modificando según avance el curso.
+
+\
+
+------------------
+
+\
+
+## Metodología
+
+Dado el carácter eminentemente práctico del curso, la mayoría de las clases se impartirán haciendo uso constante del ordenador y alternaremos entre teoría y práctica según convenga:
+
+1. _Tiempo de teórica_: durante las clases teóricas, de una hora de duración, veremos conceptos nucleares de cada tema de forma precisa y rigurosa, en lenguaje natural, gráfico y formal. El material teórico lo podéis encontrar en la sección **Diapos**. 
+2. _Tiempo de práctica_: durante las clases prácticas también veremos algo de teoría (material en **Diapos**), pero inmediatamente la practicaremos a partir del código y de los ficheros de datos que podéis encontrar en la sección [**Recursos de R**](https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/04-Recursos-R.html) y aprenderemos el manejo de R para el análisis de series temporales.
+3. _Tiempo de evaluación_: tras cada tema realizaréis una breve prueba tipo test, con tiempo limitado, para valorar si habéis adquirido los conocimientos teóricos y las habilidades practicas básicas.
+4. _Trabajo práctico de evaluación_: en la medida de lo posible, en clase os daré tiempo para realizar parte de los trabajos prácticos que servirán de evaluación continua del curso.
+
+\
+
+**Os recomiendo fuertemente que vengáis a clase con vuestros ordenadores**.
+
+Todo el material necesario para este curso lo tenéis disponible en esta página web así como en [**Aula Virtual**](https://aulavirtual.uv.es). También podéis encontrar los detalles en la sección [Logística](https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/02-Logistica.html) de la web.
+
+\
+
+
+------------------
+
+\
+
+## Evaluación
+
+La **evaluación continua supondrá un 60%** de la nota de la asignatura y se compondrá de dos tipos de actividades:
+
+* Tras la mayoría de los temas se realizará en horario de clase una **breve prueba tipo test**. La prueba contendrá preguntas de respuesta múltiple, numérica, verdadero/falso, etc. Este conjunto de pruebas supondrá un **15%** de la nota de la asignatura. Esta parte de la evaluación continua **no es recuperable**.
+* Además, tras cada unidad temática, se realizará una **práctica de evaluación** que se deberá entregar en el plazo establecido. La valoración de estos trabajos supondrá un **45%** de la nota de la asignatura. Las prácticas de evaluación deben realizarse utilizando el **programa estadístico R** y recomiendo que uséis para la escritura del trabajo el lenguaje **Markdown**. Esta parte de la evaluación continua es **recuperable**.
+
+En la fecha convenida se realizará un **examen que supondrá el restante 40%** de la nota de la asignatura. El examen tendrá tanto apartados de teoría como preguntas prácticas.
+
+\
+\
+\
+\
+
+

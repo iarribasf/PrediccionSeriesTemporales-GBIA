@@ -1,0 +1,196 @@
+---
+title: "Pernoctaciones en alojamientos turísticos de turistas extranjeros"
+subtitle: "Medias móviles"
+author: "Iván Arribas (Depto. Análisis Económico. Universitat de València)"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: pygments 
+    fig_caption: false
+    df_print: kable
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    self_contained: true
+    code_download: true
+---
+
+```{r chunk_setup, echo = FALSE}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      comment = "",
+                      fig.align = "center", 
+                      fig.show = "hold",
+                      fig.height = 4,
+                      fig.width = 8,
+                      out.width = "80%") 
+```
+
+```{r options_setup, echo = FALSE}
+options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r librerias, echo = FALSE}
+library(forecast)
+library(ggplot2); theme_set(theme_bw())
+library(gridExtra)
+library(grid)
+```
+
+\
+\
+
+# Introducción
+
+Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.
+
+La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.
+
+```{r}
+Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", header = TRUE)
+Pernoctaciones <- ts(Pernoctaciones[,2], start = 2000, frequency = 12)
+```
+
+```{r}
+autoplot(Pernoctaciones/1000000,
+         xlab = "",
+         ylab = "Noches (millones)",
+         main = "Figura 1. Pernoctaciones (datos mensuales)") +
+  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+```
+
+\
+\
+
+# Predicción por el método de las medias móviles
+
+Vamos ajustar y predecir la serie de pernoctaciones por el método de las medias móviles. Como este método asume que la serie no tiene estacionalidad, vamos a trabajar con la serie anualizada de pernoctaciones, donde cada dato será el número de pernoctaciones anuales.
+
+```{r}
+Pernoctaciones <- aggregate(Pernoctaciones, FUN = sum)
+```
+
+
+```{r}
+autoplot(Pernoctaciones/1000000,
+         xlab = "",
+         ylab = "Noches (millones)",
+         main = "Figura 2. Pernoctaciones (datos anuales)") +
+  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+```
+
+Dado que la serie tiene tendencia, usaremos las dobles medias móviles para estimar el nivel y la pendiente, y a partir de ellas obtener la serie ajustada y las predicciones.
+
+`R` no nos proporciona una función específica para aplicar el método de las dobles medias móviles, así usaremos nuestra función `dmm`.
+
+```{r}
+dmm <- function(x, r = 3, h = 5) {
+  z <- NULL
+  z$x <- x
+  z$orden = r
+  
+  TT <- length(x)
+  inicio <- start(x)
+  frecuencia <-frequency(x)
+  
+  z$mm1 <- stats::filter(x, rep(1/r, r), side = 1)
+  z$mm2 <- stats::filter(z$mm1, rep(1/r, r), side = 1)
+  
+  z$l <- 2 * z$mm1 - z$mm2
+  z$b <- 2 * (z$mm1 - z$mm2) / (r - 1)
+  
+  z$fitted <- ts(c(NA, z$l[-TT] + z$b[-TT]), start = inicio, freq = frecuencia)
+  z$mean <- ts(z$l[TT] + (1:h) * z$b[TT], start = time(x)[TT] + 1/frecuencia, freq = frecuencia)
+  z$residuals <- x - z$fitted
+  class(z) <- "forecast"
+  z
+}
+```
+
+Veamos primero los resultados asumiendo un orden de la media móvil de 4 años ($r = 4$) y realizando una predicción para los próximos 5 años (`h = 5`). La figura 3 muestra la serie Pernoctaciones, la serie ajustada y la predicción.
+
+```{r}
+PernoctacionesPre <- dmm(Pernoctaciones, r = 4, h = 5)
+autoplot(Pernoctaciones, series = "Pernoctaciones",
+         xlab = "",
+         ylab = "Noches",
+         main = "Figura 3. Pernoctaciones y predicción") +
+  autolayer(PernoctacionesPre$fitted, series = "Pred. intra") + 
+  autolayer(PernoctacionesPre$mean, series = "Pred. extra")
+```
+
+Un desastre. El orden es muy elevado así que perdemos 7 observaciones al inicio, le cuesta capturar el primer cambio de tendencia --en la serie original tiene lugar en 2010 y en la serie estimada en 2013-- y las predicciones no tienen en cuenta el descenso en las pernoctaciones ocurrido en los dos últimos años.
+
+```{r}
+accuracy(PernoctacionesPre)
+```
+
+Así, no sorprenden los valores de los criterios de bondad de ajuste: un error medio muy elevado, indicativo de sesgo en las predicciones; un error porcentual de 7.2%, algo elevado; y un error medio (RMSE) de casi 5.5 millones de pernoctaciones. Estos errores son superiores a los obtenidos con el método Ingenuo I (RMSE = 3.8 millones de pernoctaciones; MAPE = 4.4%).
+
+\
+\
+
+# Selección del orden y predicción usando origen de predicción móvil
+
+Vamos a mejorar nuestra primera aproximación usando el método del origen de predicción móvil para identificar el orden óptimo de la doble media móvil según que la predicción sea de 1 a 5 años. 
+
+Consideraremos órdenes desde 2 hasta 5, y asumiremos que el mínimo número de años para hacer las estimaciones es de 10
+
+```{r}
+k <- 10                   #Minimo numero de datos para estimar
+h <- 5                    #Horizonte de las prediciciones
+TT <- length(Pernoctaciones) #Longitud serie
+s <- TT - k - h           #Total de estimaciones
+
+MAPE <- matrix(NA, nrow = 4, ncol = 5)
+rownames(MAPE) <- 2:5
+colnames(MAPE) <- 1:h
+
+for (r in 2:5) {
+
+  tmpMape <- matrix(NA, s + 1, h)
+  
+  for (i in 0:s) {
+  
+    train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+    test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+    
+    fit <- dmm(train.set, r = r, h = 5)
+    tmpMape[i + 1, ] <- 100*abs(test.set - fit$mean)/test.set
+  }
+  MAPE[r - 1, ] <- colMeans(tmpMape)
+}
+MAPE
+```
+
+En la tabla previa, cada fila hace referencia a un orden de la doble media móvil desde 2 hasta 5; y cada columna hace referencia a un horizonte temporal de predicción. Con independencia del horizonte temporal de predicción considerado, el error se hace mínimo para un orden de las medias móviles de 2. Además, el error para predicciones extra-muestrales es solo aceptable a un año vista.
+
+La figura 4 muestra la serie Pernoctaciones, la previsiones intra-muestrales y las previsiones extra-muestrales para el orden óptimo de 2. Observa como ahora la doble media móvil captura rápidamente los dos cambios de tendencia, aunque sigue yendo con un poco de retraso. Además, las predicciones están en consonancia con la tendencia de las últimas observaciones.
+
+```{r}
+PernoctacionesPre <- dmm(Pernoctaciones, r = 2, h = 5)
+autoplot(Pernoctaciones, series = "Pernoctaciones",
+         xlab = "",
+         ylab = "Noches",
+         main = "Figura 4. Pernoctaciones y predicción") +
+  autolayer(PernoctacionesPre$fitted, series = "Pred. intra") + 
+  autolayer(PernoctacionesPre$mean, series = "Pred. extra")
+```
+
+\
+\
+
+**Comparación con el método Ingenuo para series con estacionalidad**
+
+Podemos ahora comparar la calidad de las previsiones extra-muestrales obtenidas con la doble media móvil de orden 2 y el método Ingenuo I.
+
+A un año vista, el error de previsión con el método Ingenuo I es notablemente inferior al obtenido con la doble media móvil (3% y 4.6%, respectivamente). Sin embargo, para previsiones a dos o más años vista la doble media móvil bate al método Ingenuo I. Por ejemplo, a 5 años vista el primero tiene un error del 9.2%, mientras que el segundo tiene un error del 15%.
+
+Es decir, la elección del _mejor_ método dependerá del horizonte de previsión en el que estemos interesados.
+
+
+\
+\
+\
+\
+

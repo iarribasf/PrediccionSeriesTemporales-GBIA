@@ -1,0 +1,461 @@
+---
+title: "Pernoctaciones en alojamientos turísticos de turistas extranjeros"
+subtitle: "Procesos ARIMA con estacionalidad"
+author: "Iván Arribas (Depto. Análisis Económico. Universitat de València)"
+output: 
+  html_document:
+    theme: cerulean
+    highlight: pygments 
+    fig_caption: false
+    df_print: kable
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    self_contained: true
+    code_download: true
+---
+
+```{r chunk_setup, echo = FALSE}
+knitr::opts_chunk$set(warning = FALSE, 
+                      message = FALSE, 
+                      comment = "",
+                      fig.align = "center", 
+                      fig.show = "hold",
+                      fig.height = 4,
+                      fig.width = 8,
+                      out.width = "80%") 
+```
+
+```{r options_setup, echo = FALSE}
+#options(scipen = 999) #- para quitar la notacion cientifica
+```
+
+```{r librerias, echo = FALSE}
+library(forecast)
+library(ggplot2); theme_set(theme_bw())
+library(gridExtra)
+library(grid)
+library(aod)
+library(seasonal)
+library(timeDate)
+```
+
+\
+\
+
+# Introducción
+
+Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.
+
+La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.
+
+```{r}
+Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", header = TRUE)
+Pernoctaciones <- ts(Pernoctaciones[,2], start = 2000, frequency = 12)
+```
+
+```{r}
+autoplot(Pernoctaciones/1000000,
+         xlab = "",
+         ylab = "Noches (millones)",
+         main = "Figura 1. Pernoctaciones (datos mensuales)") +
+  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+```
+
+\
+\
+
+# Identificación
+
+\
+
+## Diferenciación y logaritmo
+
+El esquema multiplicativo de la serie aconseja el uso de la transformación logarítmica. Además, vamos a ver que para que la serie sea estacionaria, es necesario diferenciarla tanto regular como estacionalmente, así que el uso de logaritmo vuelve a ser aconsejable si queremos ganar en interpretabilidad.
+
+La figura 2 muestra la FAC para la serie Pernoctaciones (log) y algunas de sus transformaciones. En los paneles de la primera fila las autocorrelaciones estacionales decrecen muy lentamente, indicando que la serie analizada no es ergódica (ni estacionaria estacionalmente). El primer panel de la segunda fila muestra que las autocorrelaciones en la parte regular decrecen lentamente, indicando que la serie analizada no es estacionaria. Solo la doble diferenciación regular y estacional de la serie muestra un rápido descenso en los coeficiente de autocorrelación (segundo panel de la segunda fila), indicando que la serie así transformada es estacionaria en media y ergódica.
+
+```{r, eval = FALSE}
+ggAcf(log(Pernoctaciones), lag = 48)
+ggAcf(diff(log(Pernoctaciones)), lag = 48)
+ggAcf(diff(log(Pernoctaciones), lag = 12), lag = 48)
+ggAcf(diff(diff(log(Pernoctaciones), lag=12)), lag = 48)
+```
+
+```{r, echo = FALSE, fig.height= 6}
+grid.arrange(
+  ggAcf(log(Pernoctaciones), lag = 48, main = "", xlab = "", ylab = expression("log("*y[t]*")"), main = "Figura 2. FAC para Pernoctaciones (log)"),
+  ggAcf(diff(log(Pernoctaciones)), lag = 48, main = "", xlab = "", ylab = expression(nabla~"log("*y[t]*")")),
+  ggAcf(diff(log(Pernoctaciones), lag = 12), lag = 48, main = "", xlab = "", ylab = expression(nabla[12]~"log("*y[t]*")")),
+  ggAcf(diff(diff(log(Pernoctaciones)), lag = 12), lag = 48, main = "", xlab = "", ylab = expression(nabla*nabla[12]~"log("*y[t]*")")),
+  nrow = 2
+)
+```
+
+Por otro lado, la identificación automática de la diferenciación solo aconseja diferenciar estacionalmente.
+
+```{r}
+ndiffs(log(Pernoctaciones))
+nsdiffs(log(Pernoctaciones))
+```
+
+Vamos a asumir que el proceso debe ser doblemente diferenciado. Dejaremos para un epígrafe posterior el análisis de procesos alternativos.
+
+\
+
+## Identificación del orden regular y estacional
+
+Vamos a identificar los valores de $p$, $q$, $P$ y $Q$. Para ello solicitaremos con `auto.arima` y `seas` una identificación automática. Con `auto.arima` incluiremos un efecto calendario para los meses de febrero bisiestos y otras variables ficticias para los valores atípicos ya identificados cuando aplicamos Alisado exponencial: agosto de 2001, 2002 y 2017, abril de 2002 y julio de 2014. 
+
+Veamos `auto.arima`
+
+```{r}
+Bisiestos <- 1*(monthdays(Pernoctaciones) == 29)
+
+d0801 <- 1*(cycle(Pernoctaciones) == 8 & trunc(time(Pernoctaciones)) == 2001)
+d0802 <- 1*(cycle(Pernoctaciones) == 8 & trunc(time(Pernoctaciones)) == 2002)
+d0817 <- 1*(cycle(Pernoctaciones) == 8 & trunc(time(Pernoctaciones)) == 2017)
+d0402 <- 1*(cycle(Pernoctaciones) == 4 & trunc(time(Pernoctaciones)) == 2002)
+d0714 <- 1*(cycle(Pernoctaciones) == 7 & trunc(time(Pernoctaciones)) == 2014)
+
+auto.arima(Pernoctaciones, d = 1, D = 1,
+           lambda = 0,
+           xreg = cbind(Bisiestos, d0801, d0802, d0817, d0402, d0714))
+```
+
+La función `auto.arima` identifica un proceso $ARIMA_{12}(0,1,2)(2,1,2)$, donde muchos coeficientes y variables de intervención no parecen ser significativos (los coeficientes no superan los dos errores estándar). La identificación alcanzada por `seas` es un proceso $ARIMA_{12}(1,1,1)(0,1,1)$ de la transformación logarítmica, con una intervención en Semana Santa.
+
+```{r}
+summary(seas(Pernoctaciones))
+```
+
+Vamos a partir de la identificación obtenida por `seas`, que es más parsimoniosa y cercana al clásimo modelo de las aerolíneas, y a generar e incluir un efecto Semana Santa: $log(Pernoctaciones) \sim ARIMA_{12}(1,1,1)(0,1,1) + SS$.
+
+\
+\
+
+# Estimación 
+
+Antes se estimar el modelo identificado, vamos a crear el efecto Semana Santa. Lo que vamos a hacer es crear una variable que permita estimar el efecto del periodo de dos semanas que comprende Semana Santa y Pascua. Es decir, el periodo que va desde el lunes previo a Semana Santa hasta el Viernes posterior a Domingo de Resurrección. Esta nueva variable (_SemanaSanta_) valdrá cero para los meses distintos de marzo y abril; para marzo valdrá la proporción de días vacacionales que recaen en marzo; y para abril el opuesto (la proporción de días vacacionales que no caen el abril). Es decir, se genera un efecto compensación siempre que un periodo vacacional no recae íntegramente en abril y la magnitud de esta compensación es proporcional a la proporción de días vacacionales de Semana Santa fuera de abril.
+
+La librería `timeData` proporciona una serie de funciones que permiten definir un calendario de festividades, identificar los fines de semana, etc. En concreto la función `Easter` permite identificar donde ha caído la Semana Santa.
+
+El proceso seguido es el siguiente:
+
+* Con `Easter` se define la festividad de cada día del periodo considerado. 
+
+  Por claridad, cada festivo se ha definido de forma independiente para después crear una variable con todos los festivos de Semana Santa (_SemanaSanta_).
+
+  El rango para todos los cálculos va desde 2000 hasta 2022 que incluye el rango de la serie Pasajeros más tres años de predicción.
+
+* A continuación, con `timeSequence` se crea una serie diaria desde el 1 de enero de 2000 hasta el 31 de diciembre de 2022.
+
+* Las dos siguientes líneas eliminan de la serie diaria los festivos de Semana Santa, (función `isBizday`), para después dar a esta nueva serie abreviada el formato año-mes eliminando el día. De esta forma, la serie abreviada tendrá el mismo identificador para todos los días del mismo mes.
+
+* Después, se crea una tabla que, por la naturaleza de la serie abreviada, tendrá para cada año-mes el numero de días laborables. 
+
+* Fechamos la tabla, que es nuestra serie de días laborables sin Semana Santa.
+
+  Mostramos los resultados de  este proceso para ayudar a entenderlo. Observa que para todos los meses de año excepto marzo y abril, lo que tenemos es simplemente el número de días del mes. Para marzo y abril tenemos el número de días del mes excepto los festivos de Semana Santa. Por ejemplo, en 2002 la Semana Santa cayó entre marzo y abril, de forma que los días no festivos en marzo fueron 24 y en abril 25.
+
+* Las siguientes líneas calculan que proporción de días de Semana Santa caen en cada mes y generan el efecto compensación: para marzo valdrá la proporción de días vacacionales que recaen en marzo y para abril el opuesto (la proporción de días vacacionales que no caen el abril).
+
+* Las dos últimas líneas de código parten la serie en el periodo muestral y el de predicción.
+
+
+```{r}
+LunSanto <- Easter(2000:2022, shift = -6)
+MarSanto <- Easter(1996:2024, shift = -5)
+MieSanto <- Easter(1996:2024, shift = -4)
+JueSanto <- Easter(1996:2024, shift = -3)
+VieSanto <- Easter(1996:2024, shift = -2)
+SabSanto <- Easter(1996:2024, shift = -1)
+DomSanto <- Easter(1996:2024, shift =  0)
+LunPascu <- Easter(1996:2024, shift =  1)
+MarPascu <- Easter(1996:2024, shift =  2)
+MiePascu <- Easter(1996:2024, shift =  3)
+JuePascu <- Easter(1996:2024, shift =  4)
+ViePascu <- Easter(1996:2024, shift =  5)
+
+
+SemanaSanta <- c(LunSanto, MarSanto, MieSanto, JueSanto, VieSanto,
+                 SabSanto, DomSanto, LunPascu ,MarPascu, MiePascu, 
+                 JuePascu, ViePascu)
+fechaDiaria <- timeSequence(from = "2000-01-01", to = "2022-12-31")
+biz <- fechaDiaria[isBizday(fechaDiaria, holidays = SemanaSanta, wday = 0:6)]
+bizdays <- format(biz, format = "%Y-%m")
+
+SemanaSanta <- table(bizdays)
+SemanaSanta <- ts(SemanaSanta, start = 2000, frequency = 12)
+SemanaSanta
+SemanaSanta <- (monthdays(SemanaSanta) - SemanaSanta)/12 #Nuestra SS tiene 12 dias
+SemanaSanta[cycle(SemanaSanta) == 4] <- -SemanaSanta[cycle(SemanaSanta) == 3]  
+round(SemanaSanta, 2)
+
+pSemanaSanta <- subset(SemanaSanta, start = length(SemanaSanta) - 35)
+SemanaSanta <- subset(SemanaSanta, end = length(SemanaSanta) - 36)
+```
+
+La siguiente salida muestra el modelo estimado y la figura 3 permite analizar la presencia de más valores extremos.
+
+```{r}
+Arima1 <- Arima(Pernoctaciones, 
+                order = c(1, 1, 1),  
+                seasonal = list(order = c(0, 1, 1), period = 12),
+                lambda = 0,
+                xreg = SemanaSanta)
+Arima1
+``` 
+
+
+```{r} 
+error <- residuals(Arima1)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "",
+         ylab = "Error",
+         main = "Figura 3. Error + Intervención") +
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+```
+Se observan dos valores claramente extremos en abril de 2011 y mayo de 2013. Además, hay otro candidato a valor extremo en abril de 2016, que no resulta ser significativo por lo que no se incluirá en el análisis.
+
+```{r}
+d0411 <- 1*(cycle(Pernoctaciones) == 4 & trunc(time(Pernoctaciones)) == 2011)
+d0513 <- 1*(cycle(Pernoctaciones) == 5 & trunc(time(Pernoctaciones)) == 2013)
+
+Arima2 <- Arima(Pernoctaciones, 
+                         order = c(1, 1, 1),  
+                         seasonal = list(order = c(0, 1, 1), period = 12),
+                         lambda = 0,
+                         xreg = cbind(SemanaSanta, d0411, d0513))
+Arima2
+``` 
+
+Aparentemente las variables de intervención incluidas son significativas. 
+
+El análisis gráfico del residuo indica que aún hay candidatos a valores atípicos. Como ninguno alcanza las tres desviaciones típicas, vamos a dar por concluido este proceso.
+
+```{r} 
+error <- residuals(Arima2)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "",
+         ylab = "Error",
+         main = "Figura 4. Error + Intervención") +
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+```
+Por último, veamos si efectivamente todos los coeficientes del modelo son significativos.
+
+```{r}
+ancho <- max(nchar(names(coef(Arima2)))) + 2
+for(i in 1:length(coef(Arima2))) {
+  wt <- wald.test(b = coef(Arima2), 
+                  Sigma = vcov(Arima2), 
+                  Terms = i)
+  cat("\nCoeficiente: ", format(names(coef(Arima2))[i], width = ancho), "valor de p: ",
+      formatC(wt$result$chi2[3], digits = 4, format = "f"))
+}
+```
+
+Para un nivel de significatividad del 5% todos los coeficientes del modelo son significativos. Observa que el coeficidente asociado al AR(1), roza la significatividad. Si lo excluyéramos del proceso, tendríamos el modelo de las aerolíneas.
+
+
+\
+\
+
+# Validación
+
+Analizando los criterios de bondad de ajuste se tiene que: el error medio (ME), igual a `r round(accuracy(Arima2)[1],2)`, es prácticamente cero (en relación a los valores de la serie) por lo que no parece que haya sesgo en las predicciones; en media nos equivocamos en `r round(accuracy(Arima2)[2]/1000,0)` mil pernoctaciones (RMSE); y el error porcentual medio es `r round(accuracy(Arima2)[5],1)`%, muy bajo.
+
+```{r,eval=FALSE}
+accuracy(Arima2)
+```
+
+```{r,echo=FALSE}
+round(accuracy(Arima2),2)
+```
+
+\
+\
+
+# Ecuación del modelo identificado
+
+Ahora que ya hemos dado por válido el modelo, veamos cuál es su ecuación. 
+
+El __modelo teórico__ es
+$$(1 - \phi_1 L)(1-L)(1-L^{12})log(Pernoctaciones_t) =(1+\theta_1 L)(1 + \theta_{12}L^{12})\varepsilon_t +$$
+$$\gamma_1 SemanaSanta + \gamma_2 d0411 + \gamma_3 d0513.$$
+
+Si se desarrolla el modelo y se deja en función de la tasa de variación anual del número de pernoctaciones, queda (la parte de intervención no cambia):
+
+$$TVA_{Pernoctaciones_t} = TVA_{Pernoctaciones_{t-1}} + \phi_1(TVA_{Pernoctaciones_{t-1}} - TVA_{Pernoctaciones_{t-2}}) +$$
+$$\theta_1 \varepsilon_{t-1} + \theta_{12} \varepsilon_{t-12}+ \theta_1 \theta_{12} \varepsilon_{t-13}+\varepsilon_t + AI.$$
+Finalmente, el modelo estimado es:
+$$\widehat{TVA}_{Pernoctaciones_t} = TVA_{Pernoctaciones_{t-1}} + 0.26(TVA_{Pernoctaciones_{t-1}} - TVA_{Pernoctaciones_{t-2}})$$
+$$- 0.65\varepsilon_{t-1} - 0.28 \varepsilon_{t-12} + 0.19 \varepsilon_{t-13} + $$
+$$0.059 \cdot SemanaSanta + 0.113\cdot d0411 + 0.083\cdot d0513.$$
+
+* La tasa de variación anual de las pernoctaciones de un año es la misma que la del año pasado más un 26% de la última diferencia entre las tasas de variación anuales observadas.
+
+* Si en periodos previos se ha producido un shock, hay que tenerlo en cuenta en las predicciones.
+
+* Si la Semana Santa cae íntegramente en marzo, en este mes la tasa variación anual de las pernoctaciones sera 5.9 puntos porcentuales mayor y en abril 5.9 puntos porcentuales menor.
+
+* En abril de 2011 y mayo de 2013 la tasa variación anual de las pernoctaciones fue significativamente mayor de la esperada.
+
+\
+\
+
+# Predicción de las pernoctaciones
+
+Una vez dado por válido el modelo, podemos pasar a realizar predicciones para los próximos años. Para Semana Santa usaremos en las predicciones la variable antes generada y para el resto de la intervención fijaremos sus valores previstos a cero.
+
+```{r}
+pArima2 <- forecast(Arima2, 
+                             h = 36,
+                             xreg = cbind(pSemanaSanta, rep(0, 36), rep(0, 36)), 
+                             level = 95)
+autoplot(pArima2, 
+         xlab = "",
+         ylab = 'Defunciones',
+         main = 'Figura 5. Pernoctaciones (2000-2019) y predicción (2000-2022)') +
+  scale_x_continuous(breaks= seq(2000, 2022, 4)) 
+```
+
+\
+\
+
+# Comparación con otros modelos
+
+## Calidad de ajuste
+
+La serie Pernoctaciones la hemos ajustado por el método ingenuo con estacionalidad, el método de Alisado Exponencial y procesos ARIMA. La siguiente table recoje el error medio (RMSE) y porcentual (MAPE) al usar estas tres aproximación con la serie original y su transformación logarítmica.
+
+```{r echo = FALSE}
+Arima22 <- Arima(Pernoctaciones, 
+                         order = c(1, 1, 1),  
+                         seasonal = list(order = c(0, 1, 1), period = 12),
+                         xreg = cbind(SemanaSanta, d0411, d0513))
+```
+
+
+|Serie                |Método | RMSE | MAPE |
+|:--------------------|:----------|--------:|---------:|
+| Pernoctaciones      | Ingenuo | `r formatC(accuracy(snaive(Pernoctaciones))[2], format = "f", digits = 0)` | `r formatC(accuracy(snaive(Pernoctaciones))[5], format = "f", digits = 2)` |
+| log(Pernoctaciones) | Ingenuo | `r formatC(accuracy(snaive(Pernoctaciones, lambda = 0))[2], format = "f", digits = 0)` | `r formatC(accuracy(snaive(Pernoctaciones, lambda = 0))[5], format = "f", digits = 2)` |
+| Pernoctaciones      | Alisado | `r formatC(accuracy(ets(Pernoctaciones, model = "MAM", damped = TRUE))[2], format = "f", digits = 0)` | `r formatC(accuracy(ets(Pernoctaciones, model = "MAM", damped = TRUE))[5], format = "f", digits = 2)` |
+| log(Pernoctaciones) | Alisado | `r formatC(accuracy(ets(Pernoctaciones, model = "AAA", damped = TRUE, lambda = 0))[2], format = "f", digits = 0)` | `r formatC(accuracy(ets(Pernoctaciones, model = "AAA", damped = TRUE, lambda = 0))[5], format = "f", digits = 2)` |
+| Pernoctaciones      | ARIMA   | `r formatC(accuracy(Arima22)[2], format = "f", digits = 0)` | `r formatC(accuracy(Arima22)[5], format = "f", digits = 2)` |
+| log(Pernoctaciones) | ARIMA   | `r formatC(accuracy(Arima2)[2], format = "f", digits = 0)` | `r formatC(accuracy(Arima2)[5], format = "f", digits = 2)` |
+
+Podemos extraer dos conclusiones: i) la transformación logarítimica mejora el ajuste de los datos; y ii) el proceso ARIMA con transformación logaritmica es la mejor aproximación. (En el método ingenuo, la transformaciñon logarítmica no cambia las predicciones y los criterios de calidad de ajuste coinciden.)
+
+Hay que decir que la ligera mejora en el ajuste de los modelos Arima respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención. 
+
+## Predicciones extra-muestrales
+
+Vamos a determinar si también la aplicación de modelos Arima mejora la calidad de las predicciones extra-muestrales lo suficiente como para justificar su uso --frente a los métodos de alisado, mucho más sencillos. Para ello, aplicaremos la metodología de origen de predicción móvil para estimar la capacidad predictiva del modelo Arima y compararla con el modelo de Alisado y el ingenuo con estacionalidad. 
+
+```{r}  
+k <- 120                   
+h <- 12                    
+T <- length(Pernoctaciones)     
+s <- T - k - h               
+
+mapeIngenuo <- matrix(NA, s + 1, h)
+mapeAlisado <- matrix(NA, s + 1, h)
+mapeAlisadoLog <- matrix(NA, s + 1, h)
+mapeArima <- matrix(NA, s + 1, h)
+mapeArimaLog <- matrix(NA, s + 1, h)
+
+
+X <- cbind(SemanaSanta, d0411, d0513)
+
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h) 
+  
+  X.train <- X[(i + 1):(i + k),]
+  hay <- colSums(X.train)
+  X.train <- X.train[, hay>0]
+  
+  X.test <- X[(i + k + 1):(i + k + h),]
+  X.test <- X.test[, hay>0]
+  
+  #Ingenuo
+  fit <- snaive(train.set, h = h)
+  mapeIngenuo[i + 1,] <- 100*abs(test.set - fit$mean)/test.set
+  
+  #Alisado sin log
+  fit <- ets(train.set, model = "MAM", damped = TRUE)
+  fcast <- forecast(fit, h = h) 
+  mapeAlisado[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  #Alisado con log
+  fit <- ets(train.set, model = "AAA", damped = TRUE, lambda = 0)
+  fcast <- forecast(fit, h = h, biasadj = TRUE) 
+  mapeAlisadoLog[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  #Arima sin log
+  fit <- try(Arima(train.set, 
+                   order = c(1, 1, 1),
+                   seasonal = list(order = c(0, 1, 1), period = 12),
+                   xreg = X.train), silent = TRUE)
+  
+  if (!is.element("try-error", class(fit))) {
+    fcast <- forecast(fit, h = h, xreg = X.test) 
+    mapeArima[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  }
+  
+  #Arima con log
+  fit <- try(Arima(train.set, 
+                   order = c(1, 1, 1),
+                   seasonal = list(order = c(0, 1, 1), period = 12),
+                   lambda = 0,
+                   xreg = X.train), silent = TRUE)
+  
+  if (!is.element("try-error", class(fit))) {
+    fcast <- forecast(fit, h = h, xreg = X.test, biasadj = TRUE) 
+    mapeArimaLog[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  }
+  
+}
+
+mapeIngenuo <- colMeans(mapeIngenuo)
+mapeAlisado <- colMeans(mapeAlisado)
+mapeAlisadoLog <- colMeans(mapeAlisadoLog)
+mapeArima <- colMeans(mapeArima, na.rm = TRUE)
+mapeArimaLog <- colMeans(mapeArimaLog, na.rm = TRUE)
+```
+
+```{r}
+ggplot() +
+  geom_line(aes(x = 1:12, y = mapeIngenuo, colour = "Ingenuo")) +
+  geom_line(aes(x = 1:12, y = mapeAlisado, colour = "Alisado")) + 
+  geom_line(aes(x = 1:12, y = mapeAlisadoLog, colour = "Alisado (log)")) +
+  geom_line(aes(x = 1:12, y = mapeArima, colour = "Arima")) +
+  geom_line(aes(x = 1:12, y = mapeArimaLog, colour = "Arima (log)")) +
+  ggtitle("Figura 6. Errores de previsión extra-muestral. Varios modelos") +
+  xlab("") +
+  ylab("MAPE") +
+  scale_x_continuous(breaks= 1:12) +
+  scale_color_discrete(name = "Modelos")
+```
+
+
+La figura 6 revela que Arima con transformación logarítmica es siempre superior a Alisado en calidad de predicciones. Solo para predicciones a largo plazo las diferencias entre los métodos desaparecen.
+
+También se observa que la transformación logarítmica no afecta significativamente la calidad de las predicciones en los modelos de Alisado, pero es muy determinante en los procesos Arima.
+
+Como ya vimos, sorprendentemente el error con el método ingenuo parece independiente del horizonte temporal. A corto plazo es la peor aproximación, pero a largo plazo es tan bueno como el resto de métodos.
+

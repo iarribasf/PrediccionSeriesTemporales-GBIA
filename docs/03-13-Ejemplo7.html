@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
+
+
+<title>Pernoctaciones en alojamientos turísticos de turistas extranjeros</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="01-Guia-curso.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Guía del curso
+  </a>
+</li>
+<li>
+  <a href="02-Logistica.html">
+    <span class="fa fa-laptop"></span>
+     
+    Logística
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Diapos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Teoría</li>
+    <li>
+      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
+    </li>
+    <li>
+      <a href="03-02-Tema2.html">Tema 2: Definición</a>
+    </li>
+    <li>
+      <a href="03-03-Tema3.html">Tema 3: Métodos sencillos</a>
+    </li>
+    <li>
+      <a href="03-04-Tema4.html">Tema 4: Media móvil</a>
+    </li>
+    <li>
+      <a href="03-05-Tema5.html">Tema 5: Alisado</a>
+    </li>
+    <li>
+      <a href="03-06-Tema6.html">Tema 6: ARIMA</a>
+    </li>
+    <li>
+      <a href="03-07-Tema7.html">Tema 7: SARIMA</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ejemplo de aplicación</li>
+    <li>
+      <a href="03-08-Ejemplo2.html">Ejemplo Tema 2</a>
+    </li>
+    <li>
+      <a href="03-09-Ejemplo3.html">Ejemplo Tema 3</a>
+    </li>
+    <li>
+      <a href="03-10-Ejemplo4.html">Ejemplo Tema 4</a>
+    </li>
+    <li>
+      <a href="03-11-Ejemplo5.html">Ejemplo Tema 5</a>
+    </li>
+    <li>
+      <a href="03-12-Ejemplo6.html">Ejemplo Tema 6</a>
+    </li>
+    <li>
+      <a href="03-13-Ejemplo7.html">Ejemplo Tema 7</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otro ejemplo</li>
+    <li>
+      <a href="03-14-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="04-Recursos-R.html">
+    <span class="fa fa-code"></span>
+     
+    Recursos de R
+  </a>
+</li>
+<li>
+  <a href="05-Practica.html">
+    <span class="fa fa-edit"></span>
+     
+    Practica
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-download"></span>
+     
+    Más
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">R</li>
+    <li>
+      <a href="https://cran.r-project.org">Dónde está R</a>
+    </li>
+    <li>
+      <a href="https://rstudio.com">Donde está RStudio</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Markdown</li>
+    <li>
+      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otros</li>
+    <li>
+      <a href="https://www.r-bloggers.com">Blog sobre R</a>
+    </li>
+    <li>
+      <a href="https://bookdown.org">Libros online que debes conocer</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Pernoctaciones en alojamientos turísticos de turistas extranjeros</h1>
+<h3 class="subtitle">Procesos ARIMA con estacionalidad</h3>
+<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+
+</div>
+
+<div id="TOC">
+<ul>
+<li><a href="#introducción"><span class="toc-section-number">1</span> Introducción</a></li>
+<li><a href="#identificación"><span class="toc-section-number">2</span> Identificación</a><ul>
+<li><a href="#diferenciación-y-logaritmo"><span class="toc-section-number">2.1</span> Diferenciación y logaritmo</a></li>
+<li><a href="#identificación-del-orden-regular-y-estacional"><span class="toc-section-number">2.2</span> Identificación del orden regular y estacional</a></li>
+</ul></li>
+<li><a href="#estimación"><span class="toc-section-number">3</span> Estimación</a></li>
+<li><a href="#validación"><span class="toc-section-number">4</span> Validación</a></li>
+<li><a href="#ecuación-del-modelo-identificado"><span class="toc-section-number">5</span> Ecuación del modelo identificado</a></li>
+<li><a href="#predicción-de-las-pernoctaciones"><span class="toc-section-number">6</span> Predicción de las pernoctaciones</a></li>
+<li><a href="#comparación-con-otros-modelos"><span class="toc-section-number">7</span> Comparación con otros modelos</a><ul>
+<li><a href="#calidad-de-ajuste"><span class="toc-section-number">7.1</span> Calidad de ajuste</a></li>
+<li><a href="#predicciones-extra-muestrales"><span class="toc-section-number">7.2</span> Predicciones extra-muestrales</a></li>
+</ul></li>
+</ul>
+</div>
+
+<p><br />
+<br />
+</p>
+<div id="introducción" class="section level1">
+<h1><span class="header-section-number">1</span> Introducción</h1>
+<p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
+<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">ts</span>(Pernoctaciones[,<span class="dv">2</span>], <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">frequency =</span> <span class="dv">12</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">autoplot</span>(Pernoctaciones<span class="op">/</span><span class="dv">1000000</span>,</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones (datos mensuales)&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>))  </a></code></pre></div>
+<p><img src="03-13-Ejemplo7_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="identificación" class="section level1">
+<h1><span class="header-section-number">2</span> Identificación</h1>
+<p><br />
+</p>
+<div id="diferenciación-y-logaritmo" class="section level2">
+<h2><span class="header-section-number">2.1</span> Diferenciación y logaritmo</h2>
+<p>El esquema multiplicativo de la serie aconseja el uso de la transformación logarítmica. Además, vamos a ver que para que la serie sea estacionaria, es necesario diferenciarla tanto regular como estacionalmente, así que el uso de logaritmo vuelve a ser aconsejable si queremos ganar en interpretabilidad.</p>
+<p>La figura 2 muestra la FAC para la serie Pernoctaciones (log) y algunas de sus transformaciones. En los paneles de la primera fila las autocorrelaciones estacionales decrecen muy lentamente, indicando que la serie analizada no es ergódica (ni estacionaria estacionalmente). El primer panel de la segunda fila muestra que las autocorrelaciones en la parte regular decrecen lentamente, indicando que la serie analizada no es estacionaria. Solo la doble diferenciación regular y estacional de la serie muestra un rápido descenso en los coeficiente de autocorrelación (segundo panel de la segunda fila), indicando que la serie así transformada es estacionaria en media y ergódica.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">ggAcf</span>(<span class="kw">log</span>(Pernoctaciones), <span class="dt">lag =</span> <span class="dv">48</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">ggAcf</span>(<span class="kw">diff</span>(<span class="kw">log</span>(Pernoctaciones)), <span class="dt">lag =</span> <span class="dv">48</span>)</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">ggAcf</span>(<span class="kw">diff</span>(<span class="kw">log</span>(Pernoctaciones), <span class="dt">lag =</span> <span class="dv">12</span>), <span class="dt">lag =</span> <span class="dv">48</span>)</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">ggAcf</span>(<span class="kw">diff</span>(<span class="kw">diff</span>(<span class="kw">log</span>(Pernoctaciones), <span class="dt">lag=</span><span class="dv">12</span>)), <span class="dt">lag =</span> <span class="dv">48</span>)</a></code></pre></div>
+<p><img src="03-13-Ejemplo7_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Por otro lado, la identificación automática de la diferenciación solo aconseja diferenciar estacionalmente.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ndiffs</span>(<span class="kw">log</span>(Pernoctaciones))</a></code></pre></div>
+<pre><code>[1] 0</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">nsdiffs</span>(<span class="kw">log</span>(Pernoctaciones))</a></code></pre></div>
+<pre><code>[1] 1</code></pre>
+<p>Vamos a asumir que el proceso debe ser doblemente diferenciado. Dejaremos para un epígrafe posterior el análisis de procesos alternativos.</p>
+<p><br />
+</p>
+</div>
+<div id="identificación-del-orden-regular-y-estacional" class="section level2">
+<h2><span class="header-section-number">2.2</span> Identificación del orden regular y estacional</h2>
+<p>Vamos a identificar los valores de <span class="math inline">\(p\)</span>, <span class="math inline">\(q\)</span>, <span class="math inline">\(P\)</span> y <span class="math inline">\(Q\)</span>. Para ello solicitaremos con <code>auto.arima</code> y <code>seas</code> una identificación automática. Con <code>auto.arima</code> incluiremos un efecto calendario para los meses de febrero bisiestos y otras variables ficticias para los valores atípicos ya identificados cuando aplicamos Alisado exponencial: agosto de 2001, 2002 y 2017, abril de 2002 y julio de 2014.</p>
+<p>Veamos <code>auto.arima</code></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">Bisiestos &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">monthdays</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">29</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">d0801 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">8</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2001</span>)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">d0802 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">8</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2002</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">d0817 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">8</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2017</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">d0402 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2002</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">d0714 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">7</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2014</span>)</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="kw">auto.arima</span>(Pernoctaciones, <span class="dt">d =</span> <span class="dv">1</span>, <span class="dt">D =</span> <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">           <span class="dt">lambda =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">           <span class="dt">xreg =</span> <span class="kw">cbind</span>(Bisiestos, d0801, d0802, d0817, d0402, d0714))</a></code></pre></div>
+<pre><code>Series: Pernoctaciones 
+Regression with ARIMA(0,1,2)(2,1,2)[12] errors 
+Box Cox transformation: lambda= 0 
+
+Coefficients:
+          ma1      ma2     sar1     sar2    sma1    sma2  Bisiestos    d0801
+      -0.4446  -0.0836  -1.0539  -0.5571  0.6462  0.1515     0.0231  -0.0593
+s.e.   0.0676   0.0627   0.1372   0.1411  0.1730  0.1714     0.0109   0.0302
+       d0802    d0817    d0402    d0714
+      0.0141  -0.0256  -0.0731  -0.0354
+s.e.  0.0291   0.0278   0.0304   0.0266
+
+sigma^2 estimated as 0.001559:  log likelihood=416.3
+AIC=-806.61   AICc=-804.9   BIC=-762.08</code></pre>
+<p>La función <code>auto.arima</code> identifica un proceso <span class="math inline">\(ARIMA_{12}(0,1,2)(2,1,2)\)</span>, donde muchos coeficientes y variables de intervención no parecen ser significativos (los coeficientes no superan los dos errores estándar). La identificación alcanzada por <code>seas</code> es un proceso <span class="math inline">\(ARIMA_{12}(1,1,1)(0,1,1)\)</span> de la transformación logarítmica, con una intervención en Semana Santa.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">summary</span>(<span class="kw">seas</span>(Pernoctaciones))</a></code></pre></div>
+<pre><code>
+Call:
+seas(x = Pernoctaciones)
+
+Coefficients:
+                  Estimate Std. Error z value            Pr(&gt;|z|)    
+Easter[15]        0.058189   0.007312   7.958 0.00000000000000175 ***
+AR-Nonseasonal-01 0.314165   0.121679   2.582             0.00983 ** 
+MA-Nonseasonal-01 0.697317   0.090371   7.716 0.00000000000001199 ***
+MA-Seasonal-12    0.374473   0.060259   6.214 0.00000000051539786 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+SEATS adj.  ARIMA: (1 1 1)(0 1 1)  Obs.: 240  Transform: log
+AICc:  6220, BIC:  6237  QS (no seasonality in final):    0  
+Box-Ljung (no autocorr.): 33.11   Shapiro (normality): 0.9917  </code></pre>
+<p>Vamos a partir de la identificación obtenida por <code>seas</code>, que es más parsimoniosa y cercana al clásimo modelo de las aerolíneas, y a generar e incluir un efecto Semana Santa: <span class="math inline">\(log(Pernoctaciones) \sim ARIMA_{12}(1,1,1)(0,1,1) + SS\)</span>.</p>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+<div id="estimación" class="section level1">
+<h1><span class="header-section-number">3</span> Estimación</h1>
+<p>Antes se estimar el modelo identificado, vamos a crear el efecto Semana Santa. Lo que vamos a hacer es crear una variable que permita estimar el efecto del periodo de dos semanas que comprende Semana Santa y Pascua. Es decir, el periodo que va desde el lunes previo a Semana Santa hasta el Viernes posterior a Domingo de Resurrección. Esta nueva variable (<em>SemanaSanta</em>) valdrá cero para los meses distintos de marzo y abril; para marzo valdrá la proporción de días vacacionales que recaen en marzo; y para abril el opuesto (la proporción de días vacacionales que no caen el abril). Es decir, se genera un efecto compensación siempre que un periodo vacacional no recae íntegramente en abril y la magnitud de esta compensación es proporcional a la proporción de días vacacionales de Semana Santa fuera de abril.</p>
+<p>La librería <code>timeData</code> proporciona una serie de funciones que permiten definir un calendario de festividades, identificar los fines de semana, etc. En concreto la función <code>Easter</code> permite identificar donde ha caído la Semana Santa.</p>
+<p>El proceso seguido es el siguiente:</p>
+<ul>
+<li><p>Con <code>Easter</code> se define la festividad de cada día del periodo considerado.</p>
+<p>Por claridad, cada festivo se ha definido de forma independiente para después crear una variable con todos los festivos de Semana Santa (<em>SemanaSanta</em>).</p>
+<p>El rango para todos los cálculos va desde 2000 hasta 2022 que incluye el rango de la serie Pasajeros más tres años de predicción.</p></li>
+<li><p>A continuación, con <code>timeSequence</code> se crea una serie diaria desde el 1 de enero de 2000 hasta el 31 de diciembre de 2022.</p></li>
+<li><p>Las dos siguientes líneas eliminan de la serie diaria los festivos de Semana Santa, (función <code>isBizday</code>), para después dar a esta nueva serie abreviada el formato año-mes eliminando el día. De esta forma, la serie abreviada tendrá el mismo identificador para todos los días del mismo mes.</p></li>
+<li><p>Después, se crea una tabla que, por la naturaleza de la serie abreviada, tendrá para cada año-mes el numero de días laborables.</p></li>
+<li><p>Fechamos la tabla, que es nuestra serie de días laborables sin Semana Santa.</p>
+<p>Mostramos los resultados de este proceso para ayudar a entenderlo. Observa que para todos los meses de año excepto marzo y abril, lo que tenemos es simplemente el número de días del mes. Para marzo y abril tenemos el número de días del mes excepto los festivos de Semana Santa. Por ejemplo, en 2002 la Semana Santa cayó entre marzo y abril, de forma que los días no festivos en marzo fueron 24 y en abril 25.</p></li>
+<li><p>Las siguientes líneas calculan que proporción de días de Semana Santa caen en cada mes y generan el efecto compensación: para marzo valdrá la proporción de días vacacionales que recaen en marzo y para abril el opuesto (la proporción de días vacacionales que no caen el abril).</p></li>
+<li><p>Las dos últimas líneas de código parten la serie en el periodo muestral y el de predicción.</p></li>
+</ul>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">LunSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">2000</span><span class="op">:</span><span class="dv">2022</span>, <span class="dt">shift =</span> <span class="dv">-6</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">MarSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span> <span class="dv">-5</span>)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">MieSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span> <span class="dv">-4</span>)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">JueSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span> <span class="dv">-3</span>)</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">VieSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span> <span class="dv">-2</span>)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">SabSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span> <span class="dv">-1</span>)</a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">DomSanto &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span>  <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb12-8" data-line-number="8">LunPascu &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span>  <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">MarPascu &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span>  <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">MiePascu &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span>  <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">JuePascu &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span>  <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">ViePascu &lt;-<span class="st"> </span><span class="kw">Easter</span>(<span class="dv">1996</span><span class="op">:</span><span class="dv">2024</span>, <span class="dt">shift =</span>  <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb12-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15">SemanaSanta &lt;-<span class="st"> </span><span class="kw">c</span>(LunSanto, MarSanto, MieSanto, JueSanto, VieSanto,</a>
+<a class="sourceLine" id="cb12-16" data-line-number="16">                 SabSanto, DomSanto, LunPascu ,MarPascu, MiePascu, </a>
+<a class="sourceLine" id="cb12-17" data-line-number="17">                 JuePascu, ViePascu)</a>
+<a class="sourceLine" id="cb12-18" data-line-number="18">fechaDiaria &lt;-<span class="st"> </span><span class="kw">timeSequence</span>(<span class="dt">from =</span> <span class="st">&quot;2000-01-01&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;2022-12-31&quot;</span>)</a>
+<a class="sourceLine" id="cb12-19" data-line-number="19">biz &lt;-<span class="st"> </span>fechaDiaria[<span class="kw">isBizday</span>(fechaDiaria, <span class="dt">holidays =</span> SemanaSanta, <span class="dt">wday =</span> <span class="dv">0</span><span class="op">:</span><span class="dv">6</span>)]</a>
+<a class="sourceLine" id="cb12-20" data-line-number="20">bizdays &lt;-<span class="st"> </span><span class="kw">format</span>(biz, <span class="dt">format =</span> <span class="st">&quot;%Y-%m&quot;</span>)</a>
+<a class="sourceLine" id="cb12-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb12-22" data-line-number="22">SemanaSanta &lt;-<span class="st"> </span><span class="kw">table</span>(bizdays)</a>
+<a class="sourceLine" id="cb12-23" data-line-number="23">SemanaSanta &lt;-<span class="st"> </span><span class="kw">ts</span>(SemanaSanta, <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">frequency =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb12-24" data-line-number="24">SemanaSanta</a></code></pre></div>
+<pre><code>     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+2000  31  29  31  18  31  30  31  31  30  31  30  31
+2001  31  28  31  18  31  30  31  31  30  31  30  31
+2002  31  28  24  25  31  30  31  31  30  31  30  31
+2003  31  28  31  18  31  30  31  31  30  31  30  31
+2004  31  29  31  18  31  30  31  31  30  31  30  31
+2005  31  28  20  29  31  30  31  31  30  31  30  31
+2006  31  28  31  18  31  30  31  31  30  31  30  31
+2007  31  28  31  18  31  30  31  31  30  31  30  31
+2008  31  29  19  30  31  30  31  31  30  31  30  31
+2009  31  28  31  18  31  30  31  31  30  31  30  31
+2010  31  28  28  21  31  30  31  31  30  31  30  31
+2011  31  28  31  18  31  30  31  31  30  31  30  31
+2012  31  29  31  18  31  30  31  31  30  31  30  31
+2013  31  28  24  25  31  30  31  31  30  31  30  31
+2014  31  28  31  18  31  30  31  31  30  31  30  31
+2015  31  28  29  20  31  30  31  31  30  31  30  31
+2016  31  29  20  29  31  30  31  31  30  31  30  31
+2017  31  28  31  18  31  30  31  31  30  31  30  31
+2018  31  28  25  24  31  30  31  31  30  31  30  31
+2019  31  28  31  18  31  30  31  31  30  31  30  31
+2020  31  29  31  18  31  30  31  31  30  31  30  31
+2021  31  28  28  21  31  30  31  31  30  31  30  31
+2022  31  28  31  18  31  30  31  31  30  31  30  31</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">SemanaSanta &lt;-<span class="st"> </span>(<span class="kw">monthdays</span>(SemanaSanta) <span class="op">-</span><span class="st"> </span>SemanaSanta)<span class="op">/</span><span class="dv">12</span> <span class="co">#Nuestra SS tiene 12 dias</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">SemanaSanta[<span class="kw">cycle</span>(SemanaSanta) <span class="op">==</span><span class="st"> </span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="op">-</span>SemanaSanta[<span class="kw">cycle</span>(SemanaSanta) <span class="op">==</span><span class="st"> </span><span class="dv">3</span>]  </a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw">round</span>(SemanaSanta, <span class="dv">2</span>)</a></code></pre></div>
+<pre><code>       Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+2000  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2001  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2002  0.00  0.00  0.58 -0.58  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2003  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2004  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2005  0.00  0.00  0.92 -0.92  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2006  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2007  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2008  0.00  0.00  1.00 -1.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2009  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2010  0.00  0.00  0.25 -0.25  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2011  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2012  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2013  0.00  0.00  0.58 -0.58  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2014  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2015  0.00  0.00  0.17 -0.17  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2016  0.00  0.00  0.92 -0.92  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2017  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2018  0.00  0.00  0.50 -0.50  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2019  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2020  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2021  0.00  0.00  0.25 -0.25  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+2022  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">pSemanaSanta &lt;-<span class="st"> </span><span class="kw">subset</span>(SemanaSanta, <span class="dt">start =</span> <span class="kw">length</span>(SemanaSanta) <span class="op">-</span><span class="st"> </span><span class="dv">35</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">SemanaSanta &lt;-<span class="st"> </span><span class="kw">subset</span>(SemanaSanta, <span class="dt">end =</span> <span class="kw">length</span>(SemanaSanta) <span class="op">-</span><span class="st"> </span><span class="dv">36</span>)</a></code></pre></div>
+<p>La siguiente salida muestra el modelo estimado y la figura 3 permite analizar la presencia de más valores extremos.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">Arima1 &lt;-<span class="st"> </span><span class="kw">Arima</span>(Pernoctaciones, </a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">                <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),  </a>
+<a class="sourceLine" id="cb17-3" data-line-number="3">                <span class="dt">seasonal =</span> <span class="kw">list</span>(<span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">period =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">                <span class="dt">lambda =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">                <span class="dt">xreg =</span> SemanaSanta)</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6">Arima1</a></code></pre></div>
+<pre><code>Series: Pernoctaciones 
+Regression with ARIMA(1,1,1)(0,1,1)[12] errors 
+Box Cox transformation: lambda= 0 
+
+Coefficients:
+         ar1      ma1     sma1    xreg
+      0.2787  -0.6874  -0.3802  0.0629
+s.e.  0.1159   0.0833   0.0606  0.0092
+
+sigma^2 estimated as 0.001501:  log likelihood=417.88
+AIC=-825.76   AICc=-825.49   BIC=-808.64</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">error &lt;-<span class="st"> </span><span class="kw">residuals</span>(Arima1)</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">sderror &lt;-<span class="st"> </span><span class="kw">sd</span>(error)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="kw">autoplot</span>(error, <span class="dt">series=</span><span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">         <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">         <span class="dt">ylab =</span> <span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">         <span class="dt">main =</span> <span class="st">&quot;Figura 3. Error + Intervención&quot;) +</span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="st">  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, </span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="st">             colour = c(&quot;</span>red<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>red<span class="st">&quot;), </span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="st">             lty = 2) + </span></a>
+<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="st">  scale_x_continuous(breaks= seq(2000, 2020, 2)) </span></a></code></pre></div>
+<p><img src="03-13-Ejemplo7_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /> Se observan dos valores claramente extremos en abril de 2011 y mayo de 2013. Además, hay otro candidato a valor extremo en abril de 2016, que no resulta ser significativo por lo que no se incluirá en el análisis.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">d0411 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">4</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2011</span>)</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">d0513 &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">*</span>(<span class="kw">cycle</span>(Pernoctaciones) <span class="op">==</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span><span class="kw">trunc</span>(<span class="kw">time</span>(Pernoctaciones)) <span class="op">==</span><span class="st"> </span><span class="dv">2013</span>)</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">Arima2 &lt;-<span class="st"> </span><span class="kw">Arima</span>(Pernoctaciones, </a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">                         <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),  </a>
+<a class="sourceLine" id="cb20-6" data-line-number="6">                         <span class="dt">seasonal =</span> <span class="kw">list</span>(<span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">period =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">                         <span class="dt">lambda =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">                         <span class="dt">xreg =</span> <span class="kw">cbind</span>(SemanaSanta, d0411, d0513))</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">Arima2</a></code></pre></div>
+<pre><code>Series: Pernoctaciones 
+Regression with ARIMA(1,1,1)(0,1,1)[12] errors 
+Box Cox transformation: lambda= 0 
+
+Coefficients:
+         ar1      ma1     sma1  SemanaSanta   d0411   d0513
+      0.2593  -0.6526  -0.2839       0.0588  0.1128  0.0827
+s.e.  0.1273   0.0957   0.0666       0.0082  0.0249  0.0245
+
+sigma^2 estimated as 0.00134:  log likelihood=432.39
+AIC=-850.79   AICc=-850.27   BIC=-826.81</code></pre>
+<p>Aparentemente las variables de intervención incluidas son significativas.</p>
+<p>El análisis gráfico del residuo indica que aún hay candidatos a valores atípicos. Como ninguno alcanza las tres desviaciones típicas, vamos a dar por concluido este proceso.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">error &lt;-<span class="st"> </span><span class="kw">residuals</span>(Arima2)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2">sderror &lt;-<span class="st"> </span><span class="kw">sd</span>(error)</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="kw">autoplot</span>(error, <span class="dt">series=</span><span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb22-5" data-line-number="5">         <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>,</a>
+<a class="sourceLine" id="cb22-6" data-line-number="6">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb22-7" data-line-number="7">         <span class="dt">ylab =</span> <span class="st">&quot;Error&quot;</span>,</a>
+<a class="sourceLine" id="cb22-8" data-line-number="8">         <span class="dt">main =</span> <span class="st">&quot;Figura 4. Error + Intervención&quot;) +</span></a>
+<a class="sourceLine" id="cb22-9" data-line-number="9"><span class="st">  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, </span></a>
+<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="st">             colour = c(&quot;</span>red<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>red<span class="st">&quot;), </span></a>
+<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="st">             lty = 2) + </span></a>
+<a class="sourceLine" id="cb22-12" data-line-number="12"><span class="st">  scale_x_continuous(breaks= seq(2000, 2020, 2)) </span></a></code></pre></div>
+<p><img src="03-13-Ejemplo7_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /> Por último, veamos si efectivamente todos los coeficientes del modelo son significativos.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">ancho &lt;-<span class="st"> </span><span class="kw">max</span>(<span class="kw">nchar</span>(<span class="kw">names</span>(<span class="kw">coef</span>(Arima2)))) <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(<span class="kw">coef</span>(Arima2))) {</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">  wt &lt;-<span class="st"> </span><span class="kw">wald.test</span>(<span class="dt">b =</span> <span class="kw">coef</span>(Arima2), </a>
+<a class="sourceLine" id="cb23-4" data-line-number="4">                  <span class="dt">Sigma =</span> <span class="kw">vcov</span>(Arima2), </a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">                  <span class="dt">Terms =</span> i)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">  <span class="kw">cat</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">Coeficiente: &quot;</span>, <span class="kw">format</span>(<span class="kw">names</span>(<span class="kw">coef</span>(Arima2))[i], <span class="dt">width =</span> ancho), <span class="st">&quot;valor de p: &quot;</span>,</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">      <span class="kw">formatC</span>(wt<span class="op">$</span>result<span class="op">$</span>chi2[<span class="dv">3</span>], <span class="dt">digits =</span> <span class="dv">4</span>, <span class="dt">format =</span> <span class="st">&quot;f&quot;</span>))</a>
+<a class="sourceLine" id="cb23-8" data-line-number="8">}</a></code></pre></div>
+<pre><code>
+Coeficiente:  ar1           valor de p:  0.0417
+Coeficiente:  ma1           valor de p:  0.0000
+Coeficiente:  sma1          valor de p:  0.0000
+Coeficiente:  SemanaSanta   valor de p:  0.0000
+Coeficiente:  d0411         valor de p:  0.0000
+Coeficiente:  d0513         valor de p:  0.0007</code></pre>
+<p>Para un nivel de significatividad del 5% todos los coeficientes del modelo son significativos. Observa que el coeficidente asociado al AR(1), roza la significatividad. Si lo excluyéramos del proceso, tendríamos el modelo de las aerolíneas.</p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="validación" class="section level1">
+<h1><span class="header-section-number">4</span> Validación</h1>
+<p>Analizando los criterios de bondad de ajuste se tiene que: el error medio (ME), igual a -5796.54, es prácticamente cero (en relación a los valores de la serie) por lo que no parece que haya sesgo en las predicciones; en media nos equivocamos en 228 mil pernoctaciones (RMSE); y el error porcentual medio es 2.8%, muy bajo.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">accuracy</span>(Arima2)</a></code></pre></div>
+<pre><code>                   ME     RMSE      MAE   MPE MAPE MASE ACF1
+Training set -5796.54 228218.9 169645.9 -0.09 2.81 0.55    0</code></pre>
+<p><br />
+<br />
+</p>
+</div>
+<div id="ecuación-del-modelo-identificado" class="section level1">
+<h1><span class="header-section-number">5</span> Ecuación del modelo identificado</h1>
+<p>Ahora que ya hemos dado por válido el modelo, veamos cuál es su ecuación.</p>
+<p>El <strong>modelo teórico</strong> es <span class="math display">\[(1 - \phi_1 L)(1-L)(1-L^{12})log(Pernoctaciones_t) =(1+\theta_1 L)(1 + \theta_{12}L^{12})\varepsilon_t +\]</span> <span class="math display">\[\gamma_1 SemanaSanta + \gamma_2 d0411 + \gamma_3 d0513.\]</span></p>
+<p>Si se desarrolla el modelo y se deja en función de la tasa de variación anual del número de pernoctaciones, queda (la parte de intervención no cambia):</p>
+<p><span class="math display">\[TVA_{Pernoctaciones_t} = TVA_{Pernoctaciones_{t-1}} + \phi_1(TVA_{Pernoctaciones_{t-1}} - TVA_{Pernoctaciones_{t-2}}) +\]</span> <span class="math display">\[\theta_1 \varepsilon_{t-1} + \theta_{12} \varepsilon_{t-12}+ \theta_1 \theta_{12} \varepsilon_{t-13}+\varepsilon_t + AI.\]</span> Finalmente, el modelo estimado es: <span class="math display">\[\widehat{TVA}_{Pernoctaciones_t} = TVA_{Pernoctaciones_{t-1}} + 0.26(TVA_{Pernoctaciones_{t-1}} - TVA_{Pernoctaciones_{t-2}})\]</span> <span class="math display">\[- 0.65\varepsilon_{t-1} - 0.28 \varepsilon_{t-12} + 0.19 \varepsilon_{t-13} + \]</span> <span class="math display">\[0.059 \cdot SemanaSanta + 0.113\cdot d0411 + 0.083\cdot d0513.\]</span></p>
+<ul>
+<li><p>La tasa de variación anual de las pernoctaciones de un año es la misma que la del año pasado más un 26% de la última diferencia entre las tasas de variación anuales observadas.</p></li>
+<li><p>Si en periodos previos se ha producido un shock, hay que tenerlo en cuenta en las predicciones.</p></li>
+<li><p>Si la Semana Santa cae íntegramente en marzo, en este mes la tasa variación anual de las pernoctaciones sera 5.9 puntos porcentuales mayor y en abril 5.9 puntos porcentuales menor.</p></li>
+<li><p>En abril de 2011 y mayo de 2013 la tasa variación anual de las pernoctaciones fue significativamente mayor de la esperada.</p></li>
+</ul>
+<p><br />
+<br />
+</p>
+</div>
+<div id="predicción-de-las-pernoctaciones" class="section level1">
+<h1><span class="header-section-number">6</span> Predicción de las pernoctaciones</h1>
+<p>Una vez dado por válido el modelo, podemos pasar a realizar predicciones para los próximos años. Para Semana Santa usaremos en las predicciones la variable antes generada y para el resto de la intervención fijaremos sus valores previstos a cero.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">pArima2 &lt;-<span class="st"> </span><span class="kw">forecast</span>(Arima2, </a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">                             <span class="dt">h =</span> <span class="dv">36</span>,</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">                             <span class="dt">xreg =</span> <span class="kw">cbind</span>(pSemanaSanta, <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">36</span>), <span class="kw">rep</span>(<span class="dv">0</span>, <span class="dv">36</span>)), </a>
+<a class="sourceLine" id="cb27-4" data-line-number="4">                             <span class="dt">level =</span> <span class="dv">95</span>)</a>
+<a class="sourceLine" id="cb27-5" data-line-number="5"><span class="kw">autoplot</span>(pArima2, </a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb27-7" data-line-number="7">         <span class="dt">ylab =</span> <span class="st">&#39;Defunciones&#39;</span>,</a>
+<a class="sourceLine" id="cb27-8" data-line-number="8">         <span class="dt">main =</span> <span class="st">&#39;Figura 5. Pernoctaciones (2000-2019) y predicción (2000-2022)&#39;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2022</span>, <span class="dv">4</span>)) </a></code></pre></div>
+<p><img src="03-13-Ejemplo7_files/figure-html/unnamed-chunk-16-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="comparación-con-otros-modelos" class="section level1">
+<h1><span class="header-section-number">7</span> Comparación con otros modelos</h1>
+<div id="calidad-de-ajuste" class="section level2">
+<h2><span class="header-section-number">7.1</span> Calidad de ajuste</h2>
+<p>La serie Pernoctaciones la hemos ajustado por el método ingenuo con estacionalidad, el método de Alisado Exponencial y procesos ARIMA. La siguiente table recoje el error medio (RMSE) y porcentual (MAPE) al usar estas tres aproximación con la serie original y su transformación logarítmica.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Serie</th>
+<th align="left">Método</th>
+<th align="right">RMSE</th>
+<th align="right">MAPE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Pernoctaciones</td>
+<td align="left">Ingenuo</td>
+<td align="right">405381</td>
+<td align="right">5.32</td>
+</tr>
+<tr class="even">
+<td align="left">log(Pernoctaciones)</td>
+<td align="left">Ingenuo</td>
+<td align="right">405381</td>
+<td align="right">5.32</td>
+</tr>
+<tr class="odd">
+<td align="left">Pernoctaciones</td>
+<td align="left">Alisado</td>
+<td align="right">252133</td>
+<td align="right">3.21</td>
+</tr>
+<tr class="even">
+<td align="left">log(Pernoctaciones)</td>
+<td align="left">Alisado</td>
+<td align="right">248960</td>
+<td align="right">3.15</td>
+</tr>
+<tr class="odd">
+<td align="left">Pernoctaciones</td>
+<td align="left">ARIMA</td>
+<td align="right">225868</td>
+<td align="right">3.08</td>
+</tr>
+<tr class="even">
+<td align="left">log(Pernoctaciones)</td>
+<td align="left">ARIMA</td>
+<td align="right">228219</td>
+<td align="right">2.81</td>
+</tr>
+</tbody>
+</table>
+<p>Podemos extraer dos conclusiones: i) la transformación logarítimica mejora el ajuste de los datos; y ii) el proceso ARIMA con transformación logaritmica es la mejor aproximación. (En el método ingenuo, la transformaciñon logarítmica no cambia las predicciones y los criterios de calidad de ajuste coinciden.)</p>
+<p>Hay que decir que la ligera mejora en el ajuste de los modelos Arima respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención.</p>
+</div>
+<div id="predicciones-extra-muestrales" class="section level2">
+<h2><span class="header-section-number">7.2</span> Predicciones extra-muestrales</h2>
+<p>Vamos a determinar si también la aplicación de modelos Arima mejora la calidad de las predicciones extra-muestrales lo suficiente como para justificar su uso –frente a los métodos de alisado, mucho más sencillos. Para ello, aplicaremos la metodología de origen de predicción móvil para estimar la capacidad predictiva del modelo Arima y compararla con el modelo de Alisado y el ingenuo con estacionalidad.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">k &lt;-<span class="st"> </span><span class="dv">120</span>                   </a>
+<a class="sourceLine" id="cb28-2" data-line-number="2">h &lt;-<span class="st"> </span><span class="dv">12</span>                    </a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">T &lt;-<span class="st"> </span><span class="kw">length</span>(Pernoctaciones)     </a>
+<a class="sourceLine" id="cb28-4" data-line-number="4">s &lt;-<span class="st"> </span>T <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span>h               </a>
+<a class="sourceLine" id="cb28-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">mapeIngenuo &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb28-7" data-line-number="7">mapeAlisado &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb28-8" data-line-number="8">mapeAlisadoLog &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb28-9" data-line-number="9">mapeArima &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb28-10" data-line-number="10">mapeArimaLog &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb28-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb28-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb28-13" data-line-number="13">X &lt;-<span class="st"> </span><span class="kw">cbind</span>(SemanaSanta, d0411, d0513)</a>
+<a class="sourceLine" id="cb28-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb28-15" data-line-number="15"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span>s) {</a>
+<a class="sourceLine" id="cb28-16" data-line-number="16">  train.set &lt;-<span class="st"> </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k)</a>
+<a class="sourceLine" id="cb28-17" data-line-number="17">  test.set &lt;-<span class="st">  </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h) </a>
+<a class="sourceLine" id="cb28-18" data-line-number="18">  </a>
+<a class="sourceLine" id="cb28-19" data-line-number="19">  X.train &lt;-<span class="st"> </span>X[(i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)<span class="op">:</span>(i <span class="op">+</span><span class="st"> </span>k),]</a>
+<a class="sourceLine" id="cb28-20" data-line-number="20">  hay &lt;-<span class="st"> </span><span class="kw">colSums</span>(X.train)</a>
+<a class="sourceLine" id="cb28-21" data-line-number="21">  X.train &lt;-<span class="st"> </span>X.train[, hay<span class="op">&gt;</span><span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb28-22" data-line-number="22">  </a>
+<a class="sourceLine" id="cb28-23" data-line-number="23">  X.test &lt;-<span class="st"> </span>X[(i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)<span class="op">:</span>(i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h),]</a>
+<a class="sourceLine" id="cb28-24" data-line-number="24">  X.test &lt;-<span class="st"> </span>X.test[, hay<span class="op">&gt;</span><span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb28-25" data-line-number="25">  </a>
+<a class="sourceLine" id="cb28-26" data-line-number="26">  <span class="co">#Ingenuo</span></a>
+<a class="sourceLine" id="cb28-27" data-line-number="27">  fit &lt;-<span class="st"> </span><span class="kw">snaive</span>(train.set, <span class="dt">h =</span> h)</a>
+<a class="sourceLine" id="cb28-28" data-line-number="28">  mapeIngenuo[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fit<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb28-29" data-line-number="29">  </a>
+<a class="sourceLine" id="cb28-30" data-line-number="30">  <span class="co">#Alisado sin log</span></a>
+<a class="sourceLine" id="cb28-31" data-line-number="31">  fit &lt;-<span class="st"> </span><span class="kw">ets</span>(train.set, <span class="dt">model =</span> <span class="st">&quot;MAM&quot;</span>, <span class="dt">damped =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb28-32" data-line-number="32">  fcast &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> h) </a>
+<a class="sourceLine" id="cb28-33" data-line-number="33">  mapeAlisado[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb28-34" data-line-number="34">  </a>
+<a class="sourceLine" id="cb28-35" data-line-number="35">  <span class="co">#Alisado con log</span></a>
+<a class="sourceLine" id="cb28-36" data-line-number="36">  fit &lt;-<span class="st"> </span><span class="kw">ets</span>(train.set, <span class="dt">model =</span> <span class="st">&quot;AAA&quot;</span>, <span class="dt">damped =</span> <span class="ot">TRUE</span>, <span class="dt">lambda =</span> <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb28-37" data-line-number="37">  fcast &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> h, <span class="dt">biasadj =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb28-38" data-line-number="38">  mapeAlisadoLog[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb28-39" data-line-number="39">  </a>
+<a class="sourceLine" id="cb28-40" data-line-number="40">  <span class="co">#Arima sin log</span></a>
+<a class="sourceLine" id="cb28-41" data-line-number="41">  fit &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">Arima</span>(train.set, </a>
+<a class="sourceLine" id="cb28-42" data-line-number="42">                   <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb28-43" data-line-number="43">                   <span class="dt">seasonal =</span> <span class="kw">list</span>(<span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">period =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb28-44" data-line-number="44">                   <span class="dt">xreg =</span> X.train), <span class="dt">silent =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb28-45" data-line-number="45">  </a>
+<a class="sourceLine" id="cb28-46" data-line-number="46">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.element</span>(<span class="st">&quot;try-error&quot;</span>, <span class="kw">class</span>(fit))) {</a>
+<a class="sourceLine" id="cb28-47" data-line-number="47">    fcast &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> h, <span class="dt">xreg =</span> X.test) </a>
+<a class="sourceLine" id="cb28-48" data-line-number="48">    mapeArima[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb28-49" data-line-number="49">  }</a>
+<a class="sourceLine" id="cb28-50" data-line-number="50">  </a>
+<a class="sourceLine" id="cb28-51" data-line-number="51">  <span class="co">#Arima con log</span></a>
+<a class="sourceLine" id="cb28-52" data-line-number="52">  fit &lt;-<span class="st"> </span><span class="kw">try</span>(<span class="kw">Arima</span>(train.set, </a>
+<a class="sourceLine" id="cb28-53" data-line-number="53">                   <span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb28-54" data-line-number="54">                   <span class="dt">seasonal =</span> <span class="kw">list</span>(<span class="dt">order =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="dt">period =</span> <span class="dv">12</span>),</a>
+<a class="sourceLine" id="cb28-55" data-line-number="55">                   <span class="dt">lambda =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb28-56" data-line-number="56">                   <span class="dt">xreg =</span> X.train), <span class="dt">silent =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb28-57" data-line-number="57">  </a>
+<a class="sourceLine" id="cb28-58" data-line-number="58">  <span class="cf">if</span> (<span class="op">!</span><span class="kw">is.element</span>(<span class="st">&quot;try-error&quot;</span>, <span class="kw">class</span>(fit))) {</a>
+<a class="sourceLine" id="cb28-59" data-line-number="59">    fcast &lt;-<span class="st"> </span><span class="kw">forecast</span>(fit, <span class="dt">h =</span> h, <span class="dt">xreg =</span> X.test, <span class="dt">biasadj =</span> <span class="ot">TRUE</span>) </a>
+<a class="sourceLine" id="cb28-60" data-line-number="60">    mapeArimaLog[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb28-61" data-line-number="61">  }</a>
+<a class="sourceLine" id="cb28-62" data-line-number="62">  </a>
+<a class="sourceLine" id="cb28-63" data-line-number="63">}</a>
+<a class="sourceLine" id="cb28-64" data-line-number="64"></a>
+<a class="sourceLine" id="cb28-65" data-line-number="65">mapeIngenuo &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeIngenuo)</a>
+<a class="sourceLine" id="cb28-66" data-line-number="66">mapeAlisado &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeAlisado)</a>
+<a class="sourceLine" id="cb28-67" data-line-number="67">mapeAlisadoLog &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeAlisadoLog)</a>
+<a class="sourceLine" id="cb28-68" data-line-number="68">mapeArima &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeArima, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb28-69" data-line-number="69">mapeArimaLog &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeArimaLog, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> mapeIngenuo, <span class="dt">colour =</span> <span class="st">&quot;Ingenuo&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> mapeAlisado, <span class="dt">colour =</span> <span class="st">&quot;Alisado&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> mapeAlisadoLog, <span class="dt">colour =</span> <span class="st">&quot;Alisado (log)&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> mapeArima, <span class="dt">colour =</span> <span class="st">&quot;Arima&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> mapeArimaLog, <span class="dt">colour =</span> <span class="st">&quot;Arima (log)&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-7" data-line-number="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Figura 6. Errores de previsión extra-muestral. Varios modelos&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-8" data-line-number="8"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-9" data-line-number="9"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;MAPE&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-10" data-line-number="10"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-11" data-line-number="11"><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Modelos&quot;</span>)</a></code></pre></div>
+<p><img src="03-13-Ejemplo7_files/figure-html/unnamed-chunk-19-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>La figura 6 revela que Arima con transformación logarítmica es siempre superior a Alisado en calidad de predicciones. Solo para predicciones a largo plazo las diferencias entre los métodos desaparecen.</p>
+<p>También se observa que la transformación logarítmica no afecta significativamente la calidad de las predicciones en los modelos de Alisado, pero es muy determinante en los procesos Arima.</p>
+<p>Como ya vimos, sorprendentemente el error con el método ingenuo parece independiente del horizonte temporal. A corto plazo es la peor aproximación, pero a largo plazo es tan bueno como el resto de métodos.</p>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIlByb2Nlc29zIEFSSU1BIGNvbiBlc3RhY2lvbmFsaWRhZCIKYXV0aG9yOiAiSXbDoW4gQXJyaWJhcyAoRGVwdG8uIEFuw6FsaXNpcyBFY29uw7NtaWNvLiBVbml2ZXJzaXRhdCBkZSBWYWzDqG5jaWEpIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICB0aGVtZTogY2VydWxlYW4KICAgIGhpZ2hsaWdodDogcHlnbWVudHMgCiAgICBmaWdfY2FwdGlvbjogZmFsc2UKICAgIGRmX3ByaW50OiBrYWJsZQogICAgdG9jOiB0cnVlCiAgICB0b2NfZGVwdGg6IDIKICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQogICAgc2VsZl9jb250YWluZWQ6IHRydWUKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKLS0tCgpgYGB7ciBjaHVua19zZXR1cCwgZWNobyA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIG1lc3NhZ2UgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuYWxpZ24gPSAiY2VudGVyIiwgCiAgICAgICAgICAgICAgICAgICAgICBmaWcuc2hvdyA9ICJob2xkIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5oZWlnaHQgPSA0LAogICAgICAgICAgICAgICAgICAgICAgZmlnLndpZHRoID0gOCwKICAgICAgICAgICAgICAgICAgICAgIG91dC53aWR0aCA9ICI4MCUiKSAKYGBgCgpgYGB7ciBvcHRpb25zX3NldHVwLCBlY2hvID0gRkFMU0V9CiNvcHRpb25zKHNjaXBlbiA9IDk5OSkgIy0gcGFyYSBxdWl0YXIgbGEgbm90YWNpb24gY2llbnRpZmljYQpgYGAKCmBgYHtyIGxpYnJlcmlhcywgZWNobyA9IEZBTFNFfQpsaWJyYXJ5KGZvcmVjYXN0KQpsaWJyYXJ5KGdncGxvdDIpOyB0aGVtZV9zZXQodGhlbWVfYncoKSkKbGlicmFyeShncmlkRXh0cmEpCmxpYnJhcnkoZ3JpZCkKbGlicmFyeShhb2QpCmxpYnJhcnkoc2Vhc29uYWwpCmxpYnJhcnkodGltZURhdGUpCmBgYAoKXApcCgojIEludHJvZHVjY2nDs24KCkNvbnNpZGVyZW1vcyBkZSBudWV2byBsYSBzZXJpZSB0ZW1wb3JhbCBjb3JyZXNwb25kaWVudGUgYWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBxdWUgbG9zIHR1cmlzdGFzIGV4dHJhbmplcm9zIHJlYWxpemFuIGVuIEVzcGHDsWEgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGF1dG9yaXphZG9zIChxdWUgbGxhbWFyZW1vcyBQZXJub2N0YWNpb25lcyBlbiBhZGVsYW50ZSkuIEVzdGEgc2VyaWUgZXN0w6EgZGlzcG9uaWJsZSBlbiBFdXJvc3RhdCBkZXNkZSBlbmVybyBkZSAyMDAwIGhhc3RhIGRpY2llbWJyZSBkZSAyMDE5LCB1biB0b3RhbCBkZSAyMCBhw7FvcyB5IDI0MCBvYnNlcnZhY2lvbmVzLgoKTGEgc2VyaWUgcHJlc2VudGEgdGVuZGVuY2lhIGRlY3JlY2llbnRlIGhhc3RhIGZpbmFsZXMgZGUgbGEgcHJpbWVyYSBkw6ljYWRhIGRlbCBwcmVzZW50ZSBzaWdsbyB5IGx1ZWdvIGNyZWNpZW50ZSBoYXN0YSBsb3MgZG9zIMO6bHRpbW9zIGHDsW9zLiBMYSBlc3RhY2lvbmFsaWRhZCBkZSBvcmRlbiAxMiBlc3RhIGRldGVybWluYWRhIHBvciBsYXMgdmFjYWNpb25lcyBkZSB2ZXJhbm8uIEVsIGVzcXVlbWEgZXMgbXVsdGlwbGljYXRpdm8uCgpgYGB7cn0KUGVybm9jdGFjaW9uZXMgPC0gcmVhZC5jc3YyKCIuL3Nlcmllcy9QZXJub2N0YWNpb25lcy5jc3YiLCBoZWFkZXIgPSBUUlVFKQpQZXJub2N0YWNpb25lcyA8LSB0cyhQZXJub2N0YWNpb25lc1ssMl0sIHN0YXJ0ID0gMjAwMCwgZnJlcXVlbmN5ID0gMTIpCmBgYAoKYGBge3J9CmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDEuIFBlcm5vY3RhY2lvbmVzIChkYXRvcyBtZW5zdWFsZXMpIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgIApgYGAKClwKXAoKIyBJZGVudGlmaWNhY2nDs24KClwKCiMjIERpZmVyZW5jaWFjacOzbiB5IGxvZ2FyaXRtbwoKRWwgZXNxdWVtYSBtdWx0aXBsaWNhdGl2byBkZSBsYSBzZXJpZSBhY29uc2VqYSBlbCB1c28gZGUgbGEgdHJhbnNmb3JtYWNpw7NuIGxvZ2Fyw610bWljYS4gQWRlbcOhcywgdmFtb3MgYSB2ZXIgcXVlIHBhcmEgcXVlIGxhIHNlcmllIHNlYSBlc3RhY2lvbmFyaWEsIGVzIG5lY2VzYXJpbyBkaWZlcmVuY2lhcmxhIHRhbnRvIHJlZ3VsYXIgY29tbyBlc3RhY2lvbmFsbWVudGUsIGFzw60gcXVlIGVsIHVzbyBkZSBsb2dhcml0bW8gdnVlbHZlIGEgc2VyIGFjb25zZWphYmxlIHNpIHF1ZXJlbW9zIGdhbmFyIGVuIGludGVycHJldGFiaWxpZGFkLgoKTGEgZmlndXJhIDIgbXVlc3RyYSBsYSBGQUMgcGFyYSBsYSBzZXJpZSBQZXJub2N0YWNpb25lcyAobG9nKSB5IGFsZ3VuYXMgZGUgc3VzIHRyYW5zZm9ybWFjaW9uZXMuIEVuIGxvcyBwYW5lbGVzIGRlIGxhIHByaW1lcmEgZmlsYSBsYXMgYXV0b2NvcnJlbGFjaW9uZXMgZXN0YWNpb25hbGVzIGRlY3JlY2VuIG11eSBsZW50YW1lbnRlLCBpbmRpY2FuZG8gcXVlIGxhIHNlcmllIGFuYWxpemFkYSBubyBlcyBlcmfDs2RpY2EgKG5pIGVzdGFjaW9uYXJpYSBlc3RhY2lvbmFsbWVudGUpLiBFbCBwcmltZXIgcGFuZWwgZGUgbGEgc2VndW5kYSBmaWxhIG11ZXN0cmEgcXVlIGxhcyBhdXRvY29ycmVsYWNpb25lcyBlbiBsYSBwYXJ0ZSByZWd1bGFyIGRlY3JlY2VuIGxlbnRhbWVudGUsIGluZGljYW5kbyBxdWUgbGEgc2VyaWUgYW5hbGl6YWRhIG5vIGVzIGVzdGFjaW9uYXJpYS4gU29sbyBsYSBkb2JsZSBkaWZlcmVuY2lhY2nDs24gcmVndWxhciB5IGVzdGFjaW9uYWwgZGUgbGEgc2VyaWUgbXVlc3RyYSB1biByw6FwaWRvIGRlc2NlbnNvIGVuIGxvcyBjb2VmaWNpZW50ZSBkZSBhdXRvY29ycmVsYWNpw7NuIChzZWd1bmRvIHBhbmVsIGRlIGxhIHNlZ3VuZGEgZmlsYSksIGluZGljYW5kbyBxdWUgbGEgc2VyaWUgYXPDrSB0cmFuc2Zvcm1hZGEgZXMgZXN0YWNpb25hcmlhIGVuIG1lZGlhIHkgZXJnw7NkaWNhLgoKYGBge3IsIGV2YWwgPSBGQUxTRX0KZ2dBY2YobG9nKFBlcm5vY3RhY2lvbmVzKSwgbGFnID0gNDgpCmdnQWNmKGRpZmYobG9nKFBlcm5vY3RhY2lvbmVzKSksIGxhZyA9IDQ4KQpnZ0FjZihkaWZmKGxvZyhQZXJub2N0YWNpb25lcyksIGxhZyA9IDEyKSwgbGFnID0gNDgpCmdnQWNmKGRpZmYoZGlmZihsb2coUGVybm9jdGFjaW9uZXMpLCBsYWc9MTIpKSwgbGFnID0gNDgpCmBgYAoKYGBge3IsIGVjaG8gPSBGQUxTRSwgZmlnLmhlaWdodD0gNn0KZ3JpZC5hcnJhbmdlKAogIGdnQWNmKGxvZyhQZXJub2N0YWNpb25lcyksIGxhZyA9IDQ4LCBtYWluID0gIiIsIHhsYWIgPSAiIiwgeWxhYiA9IGV4cHJlc3Npb24oImxvZygiKnlbdF0qIikiKSwgbWFpbiA9ICJGaWd1cmEgMi4gRkFDIHBhcmEgUGVybm9jdGFjaW9uZXMgKGxvZykiKSwKICBnZ0FjZihkaWZmKGxvZyhQZXJub2N0YWNpb25lcykpLCBsYWcgPSA0OCwgbWFpbiA9ICIiLCB4bGFiID0gIiIsIHlsYWIgPSBleHByZXNzaW9uKG5hYmxhfiJsb2coIip5W3RdKiIpIikpLAogIGdnQWNmKGRpZmYobG9nKFBlcm5vY3RhY2lvbmVzKSwgbGFnID0gMTIpLCBsYWcgPSA0OCwgbWFpbiA9ICIiLCB4bGFiID0gIiIsIHlsYWIgPSBleHByZXNzaW9uKG5hYmxhWzEyXX4ibG9nKCIqeVt0XSoiKSIpKSwKICBnZ0FjZihkaWZmKGRpZmYobG9nKFBlcm5vY3RhY2lvbmVzKSksIGxhZyA9IDEyKSwgbGFnID0gNDgsIG1haW4gPSAiIiwgeGxhYiA9ICIiLCB5bGFiID0gZXhwcmVzc2lvbihuYWJsYSpuYWJsYVsxMl1+ImxvZygiKnlbdF0qIikiKSksCiAgbnJvdyA9IDIKKQpgYGAKClBvciBvdHJvIGxhZG8sIGxhIGlkZW50aWZpY2FjacOzbiBhdXRvbcOhdGljYSBkZSBsYSBkaWZlcmVuY2lhY2nDs24gc29sbyBhY29uc2VqYSBkaWZlcmVuY2lhciBlc3RhY2lvbmFsbWVudGUuCgpgYGB7cn0KbmRpZmZzKGxvZyhQZXJub2N0YWNpb25lcykpCm5zZGlmZnMobG9nKFBlcm5vY3RhY2lvbmVzKSkKYGBgCgpWYW1vcyBhIGFzdW1pciBxdWUgZWwgcHJvY2VzbyBkZWJlIHNlciBkb2JsZW1lbnRlIGRpZmVyZW5jaWFkby4gRGVqYXJlbW9zIHBhcmEgdW4gZXDDrWdyYWZlIHBvc3RlcmlvciBlbCBhbsOhbGlzaXMgZGUgcHJvY2Vzb3MgYWx0ZXJuYXRpdm9zLgoKXAoKIyMgSWRlbnRpZmljYWNpw7NuIGRlbCBvcmRlbiByZWd1bGFyIHkgZXN0YWNpb25hbAoKVmFtb3MgYSBpZGVudGlmaWNhciBsb3MgdmFsb3JlcyBkZSAkcCQsICRxJCwgJFAkIHkgJFEkLiBQYXJhIGVsbG8gc29saWNpdGFyZW1vcyBjb24gYGF1dG8uYXJpbWFgIHkgYHNlYXNgIHVuYSBpZGVudGlmaWNhY2nDs24gYXV0b23DoXRpY2EuIENvbiBgYXV0by5hcmltYWAgaW5jbHVpcmVtb3MgdW4gZWZlY3RvIGNhbGVuZGFyaW8gcGFyYSBsb3MgbWVzZXMgZGUgZmVicmVybyBiaXNpZXN0b3MgeSBvdHJhcyB2YXJpYWJsZXMgZmljdGljaWFzIHBhcmEgbG9zIHZhbG9yZXMgYXTDrXBpY29zIHlhIGlkZW50aWZpY2Fkb3MgY3VhbmRvIGFwbGljYW1vcyBBbGlzYWRvIGV4cG9uZW5jaWFsOiBhZ29zdG8gZGUgMjAwMSwgMjAwMiB5IDIwMTcsIGFicmlsIGRlIDIwMDIgeSBqdWxpbyBkZSAyMDE0LiAKClZlYW1vcyBgYXV0by5hcmltYWAKCmBgYHtyfQpCaXNpZXN0b3MgPC0gMSoobW9udGhkYXlzKFBlcm5vY3RhY2lvbmVzKSA9PSAyOSkKCmQwODAxIDwtIDEqKGN5Y2xlKFBlcm5vY3RhY2lvbmVzKSA9PSA4ICYgdHJ1bmModGltZShQZXJub2N0YWNpb25lcykpID09IDIwMDEpCmQwODAyIDwtIDEqKGN5Y2xlKFBlcm5vY3RhY2lvbmVzKSA9PSA4ICYgdHJ1bmModGltZShQZXJub2N0YWNpb25lcykpID09IDIwMDIpCmQwODE3IDwtIDEqKGN5Y2xlKFBlcm5vY3RhY2lvbmVzKSA9PSA4ICYgdHJ1bmModGltZShQZXJub2N0YWNpb25lcykpID09IDIwMTcpCmQwNDAyIDwtIDEqKGN5Y2xlKFBlcm5vY3RhY2lvbmVzKSA9PSA0ICYgdHJ1bmModGltZShQZXJub2N0YWNpb25lcykpID09IDIwMDIpCmQwNzE0IDwtIDEqKGN5Y2xlKFBlcm5vY3RhY2lvbmVzKSA9PSA3ICYgdHJ1bmModGltZShQZXJub2N0YWNpb25lcykpID09IDIwMTQpCgphdXRvLmFyaW1hKFBlcm5vY3RhY2lvbmVzLCBkID0gMSwgRCA9IDEsCiAgICAgICAgICAgbGFtYmRhID0gMCwKICAgICAgICAgICB4cmVnID0gY2JpbmQoQmlzaWVzdG9zLCBkMDgwMSwgZDA4MDIsIGQwODE3LCBkMDQwMiwgZDA3MTQpKQpgYGAKCkxhIGZ1bmNpw7NuIGBhdXRvLmFyaW1hYCBpZGVudGlmaWNhIHVuIHByb2Nlc28gJEFSSU1BX3sxMn0oMCwxLDIpKDIsMSwyKSQsIGRvbmRlIG11Y2hvcyBjb2VmaWNpZW50ZXMgeSB2YXJpYWJsZXMgZGUgaW50ZXJ2ZW5jacOzbiBubyBwYXJlY2VuIHNlciBzaWduaWZpY2F0aXZvcyAobG9zIGNvZWZpY2llbnRlcyBubyBzdXBlcmFuIGxvcyBkb3MgZXJyb3JlcyBlc3TDoW5kYXIpLiBMYSBpZGVudGlmaWNhY2nDs24gYWxjYW56YWRhIHBvciBgc2Vhc2AgZXMgdW4gcHJvY2VzbyAkQVJJTUFfezEyfSgxLDEsMSkoMCwxLDEpJCBkZSBsYSB0cmFuc2Zvcm1hY2nDs24gbG9nYXLDrXRtaWNhLCBjb24gdW5hIGludGVydmVuY2nDs24gZW4gU2VtYW5hIFNhbnRhLgoKYGBge3J9CnN1bW1hcnkoc2VhcyhQZXJub2N0YWNpb25lcykpCmBgYAoKVmFtb3MgYSBwYXJ0aXIgZGUgbGEgaWRlbnRpZmljYWNpw7NuIG9idGVuaWRhIHBvciBgc2Vhc2AsIHF1ZSBlcyBtw6FzIHBhcnNpbW9uaW9zYSB5IGNlcmNhbmEgYWwgY2zDoXNpbW8gbW9kZWxvIGRlIGxhcyBhZXJvbMOtbmVhcywgeSBhIGdlbmVyYXIgZSBpbmNsdWlyIHVuIGVmZWN0byBTZW1hbmEgU2FudGE6ICRsb2coUGVybm9jdGFjaW9uZXMpIFxzaW0gQVJJTUFfezEyfSgxLDEsMSkoMCwxLDEpICsgU1MkLgoKXApcCgojIEVzdGltYWNpw7NuIAoKQW50ZXMgc2UgZXN0aW1hciBlbCBtb2RlbG8gaWRlbnRpZmljYWRvLCB2YW1vcyBhIGNyZWFyIGVsIGVmZWN0byBTZW1hbmEgU2FudGEuIExvIHF1ZSB2YW1vcyBhIGhhY2VyIGVzIGNyZWFyIHVuYSB2YXJpYWJsZSBxdWUgcGVybWl0YSBlc3RpbWFyIGVsIGVmZWN0byBkZWwgcGVyaW9kbyBkZSBkb3Mgc2VtYW5hcyBxdWUgY29tcHJlbmRlIFNlbWFuYSBTYW50YSB5IFBhc2N1YS4gRXMgZGVjaXIsIGVsIHBlcmlvZG8gcXVlIHZhIGRlc2RlIGVsIGx1bmVzIHByZXZpbyBhIFNlbWFuYSBTYW50YSBoYXN0YSBlbCBWaWVybmVzIHBvc3RlcmlvciBhIERvbWluZ28gZGUgUmVzdXJyZWNjacOzbi4gRXN0YSBudWV2YSB2YXJpYWJsZSAoX1NlbWFuYVNhbnRhXykgdmFsZHLDoSBjZXJvIHBhcmEgbG9zIG1lc2VzIGRpc3RpbnRvcyBkZSBtYXJ6byB5IGFicmlsOyBwYXJhIG1hcnpvIHZhbGRyw6EgbGEgcHJvcG9yY2nDs24gZGUgZMOtYXMgdmFjYWNpb25hbGVzIHF1ZSByZWNhZW4gZW4gbWFyem87IHkgcGFyYSBhYnJpbCBlbCBvcHVlc3RvIChsYSBwcm9wb3JjacOzbiBkZSBkw61hcyB2YWNhY2lvbmFsZXMgcXVlIG5vIGNhZW4gZWwgYWJyaWwpLiBFcyBkZWNpciwgc2UgZ2VuZXJhIHVuIGVmZWN0byBjb21wZW5zYWNpw7NuIHNpZW1wcmUgcXVlIHVuIHBlcmlvZG8gdmFjYWNpb25hbCBubyByZWNhZSDDrW50ZWdyYW1lbnRlIGVuIGFicmlsIHkgbGEgbWFnbml0dWQgZGUgZXN0YSBjb21wZW5zYWNpw7NuIGVzIHByb3BvcmNpb25hbCBhIGxhIHByb3BvcmNpw7NuIGRlIGTDrWFzIHZhY2FjaW9uYWxlcyBkZSBTZW1hbmEgU2FudGEgZnVlcmEgZGUgYWJyaWwuCgpMYSBsaWJyZXLDrWEgYHRpbWVEYXRhYCBwcm9wb3JjaW9uYSB1bmEgc2VyaWUgZGUgZnVuY2lvbmVzIHF1ZSBwZXJtaXRlbiBkZWZpbmlyIHVuIGNhbGVuZGFyaW8gZGUgZmVzdGl2aWRhZGVzLCBpZGVudGlmaWNhciBsb3MgZmluZXMgZGUgc2VtYW5hLCBldGMuIEVuIGNvbmNyZXRvIGxhIGZ1bmNpw7NuIGBFYXN0ZXJgIHBlcm1pdGUgaWRlbnRpZmljYXIgZG9uZGUgaGEgY2HDrWRvIGxhIFNlbWFuYSBTYW50YS4KCkVsIHByb2Nlc28gc2VndWlkbyBlcyBlbCBzaWd1aWVudGU6CgoqIENvbiBgRWFzdGVyYCBzZSBkZWZpbmUgbGEgZmVzdGl2aWRhZCBkZSBjYWRhIGTDrWEgZGVsIHBlcmlvZG8gY29uc2lkZXJhZG8uIAoKICBQb3IgY2xhcmlkYWQsIGNhZGEgZmVzdGl2byBzZSBoYSBkZWZpbmlkbyBkZSBmb3JtYSBpbmRlcGVuZGllbnRlIHBhcmEgZGVzcHXDqXMgY3JlYXIgdW5hIHZhcmlhYmxlIGNvbiB0b2RvcyBsb3MgZmVzdGl2b3MgZGUgU2VtYW5hIFNhbnRhIChfU2VtYW5hU2FudGFfKS4KCiAgRWwgcmFuZ28gcGFyYSB0b2RvcyBsb3MgY8OhbGN1bG9zIHZhIGRlc2RlIDIwMDAgaGFzdGEgMjAyMiBxdWUgaW5jbHV5ZSBlbCByYW5nbyBkZSBsYSBzZXJpZSBQYXNhamVyb3MgbcOhcyB0cmVzIGHDsW9zIGRlIHByZWRpY2Npw7NuLgoKKiBBIGNvbnRpbnVhY2nDs24sIGNvbiBgdGltZVNlcXVlbmNlYCBzZSBjcmVhIHVuYSBzZXJpZSBkaWFyaWEgZGVzZGUgZWwgMSBkZSBlbmVybyBkZSAyMDAwIGhhc3RhIGVsIDMxIGRlIGRpY2llbWJyZSBkZSAyMDIyLgoKKiBMYXMgZG9zIHNpZ3VpZW50ZXMgbMOtbmVhcyBlbGltaW5hbiBkZSBsYSBzZXJpZSBkaWFyaWEgbG9zIGZlc3Rpdm9zIGRlIFNlbWFuYSBTYW50YSwgKGZ1bmNpw7NuIGBpc0JpemRheWApLCBwYXJhIGRlc3B1w6lzIGRhciBhIGVzdGEgbnVldmEgc2VyaWUgYWJyZXZpYWRhIGVsIGZvcm1hdG8gYcOxby1tZXMgZWxpbWluYW5kbyBlbCBkw61hLiBEZSBlc3RhIGZvcm1hLCBsYSBzZXJpZSBhYnJldmlhZGEgdGVuZHLDoSBlbCBtaXNtbyBpZGVudGlmaWNhZG9yIHBhcmEgdG9kb3MgbG9zIGTDrWFzIGRlbCBtaXNtbyBtZXMuCgoqIERlc3B1w6lzLCBzZSBjcmVhIHVuYSB0YWJsYSBxdWUsIHBvciBsYSBuYXR1cmFsZXphIGRlIGxhIHNlcmllIGFicmV2aWFkYSwgdGVuZHLDoSBwYXJhIGNhZGEgYcOxby1tZXMgZWwgbnVtZXJvIGRlIGTDrWFzIGxhYm9yYWJsZXMuIAoKKiBGZWNoYW1vcyBsYSB0YWJsYSwgcXVlIGVzIG51ZXN0cmEgc2VyaWUgZGUgZMOtYXMgbGFib3JhYmxlcyBzaW4gU2VtYW5hIFNhbnRhLgoKICBNb3N0cmFtb3MgbG9zIHJlc3VsdGFkb3MgZGUgIGVzdGUgcHJvY2VzbyBwYXJhIGF5dWRhciBhIGVudGVuZGVybG8uIE9ic2VydmEgcXVlIHBhcmEgdG9kb3MgbG9zIG1lc2VzIGRlIGHDsW8gZXhjZXB0byBtYXJ6byB5IGFicmlsLCBsbyBxdWUgdGVuZW1vcyBlcyBzaW1wbGVtZW50ZSBlbCBuw7ptZXJvIGRlIGTDrWFzIGRlbCBtZXMuIFBhcmEgbWFyem8geSBhYnJpbCB0ZW5lbW9zIGVsIG7Dum1lcm8gZGUgZMOtYXMgZGVsIG1lcyBleGNlcHRvIGxvcyBmZXN0aXZvcyBkZSBTZW1hbmEgU2FudGEuIFBvciBlamVtcGxvLCBlbiAyMDAyIGxhIFNlbWFuYSBTYW50YSBjYXnDsyBlbnRyZSBtYXJ6byB5IGFicmlsLCBkZSBmb3JtYSBxdWUgbG9zIGTDrWFzIG5vIGZlc3Rpdm9zIGVuIG1hcnpvIGZ1ZXJvbiAyNCB5IGVuIGFicmlsIDI1LgoKKiBMYXMgc2lndWllbnRlcyBsw61uZWFzIGNhbGN1bGFuIHF1ZSBwcm9wb3JjacOzbiBkZSBkw61hcyBkZSBTZW1hbmEgU2FudGEgY2FlbiBlbiBjYWRhIG1lcyB5IGdlbmVyYW4gZWwgZWZlY3RvIGNvbXBlbnNhY2nDs246IHBhcmEgbWFyem8gdmFsZHLDoSBsYSBwcm9wb3JjacOzbiBkZSBkw61hcyB2YWNhY2lvbmFsZXMgcXVlIHJlY2FlbiBlbiBtYXJ6byB5IHBhcmEgYWJyaWwgZWwgb3B1ZXN0byAobGEgcHJvcG9yY2nDs24gZGUgZMOtYXMgdmFjYWNpb25hbGVzIHF1ZSBubyBjYWVuIGVsIGFicmlsKS4KCiogTGFzIGRvcyDDumx0aW1hcyBsw61uZWFzIGRlIGPDs2RpZ28gcGFydGVuIGxhIHNlcmllIGVuIGVsIHBlcmlvZG8gbXVlc3RyYWwgeSBlbCBkZSBwcmVkaWNjacOzbi4KCgpgYGB7cn0KTHVuU2FudG8gPC0gRWFzdGVyKDIwMDA6MjAyMiwgc2hpZnQgPSAtNikKTWFyU2FudG8gPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAtNSkKTWllU2FudG8gPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAtNCkKSnVlU2FudG8gPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAtMykKVmllU2FudG8gPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAtMikKU2FiU2FudG8gPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAtMSkKRG9tU2FudG8gPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAgMCkKTHVuUGFzY3UgPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAgMSkKTWFyUGFzY3UgPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAgMikKTWllUGFzY3UgPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAgMykKSnVlUGFzY3UgPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAgNCkKVmllUGFzY3UgPC0gRWFzdGVyKDE5OTY6MjAyNCwgc2hpZnQgPSAgNSkKCgpTZW1hbmFTYW50YSA8LSBjKEx1blNhbnRvLCBNYXJTYW50bywgTWllU2FudG8sIEp1ZVNhbnRvLCBWaWVTYW50bywKICAgICAgICAgICAgICAgICBTYWJTYW50bywgRG9tU2FudG8sIEx1blBhc2N1ICxNYXJQYXNjdSwgTWllUGFzY3UsIAogICAgICAgICAgICAgICAgIEp1ZVBhc2N1LCBWaWVQYXNjdSkKZmVjaGFEaWFyaWEgPC0gdGltZVNlcXVlbmNlKGZyb20gPSAiMjAwMC0wMS0wMSIsIHRvID0gIjIwMjItMTItMzEiKQpiaXogPC0gZmVjaGFEaWFyaWFbaXNCaXpkYXkoZmVjaGFEaWFyaWEsIGhvbGlkYXlzID0gU2VtYW5hU2FudGEsIHdkYXkgPSAwOjYpXQpiaXpkYXlzIDwtIGZvcm1hdChiaXosIGZvcm1hdCA9ICIlWS0lbSIpCgpTZW1hbmFTYW50YSA8LSB0YWJsZShiaXpkYXlzKQpTZW1hbmFTYW50YSA8LSB0cyhTZW1hbmFTYW50YSwgc3RhcnQgPSAyMDAwLCBmcmVxdWVuY3kgPSAxMikKU2VtYW5hU2FudGEKU2VtYW5hU2FudGEgPC0gKG1vbnRoZGF5cyhTZW1hbmFTYW50YSkgLSBTZW1hbmFTYW50YSkvMTIgI051ZXN0cmEgU1MgdGllbmUgMTIgZGlhcwpTZW1hbmFTYW50YVtjeWNsZShTZW1hbmFTYW50YSkgPT0gNF0gPC0gLVNlbWFuYVNhbnRhW2N5Y2xlKFNlbWFuYVNhbnRhKSA9PSAzXSAgCnJvdW5kKFNlbWFuYVNhbnRhLCAyKQoKcFNlbWFuYVNhbnRhIDwtIHN1YnNldChTZW1hbmFTYW50YSwgc3RhcnQgPSBsZW5ndGgoU2VtYW5hU2FudGEpIC0gMzUpClNlbWFuYVNhbnRhIDwtIHN1YnNldChTZW1hbmFTYW50YSwgZW5kID0gbGVuZ3RoKFNlbWFuYVNhbnRhKSAtIDM2KQpgYGAKCkxhIHNpZ3VpZW50ZSBzYWxpZGEgbXVlc3RyYSBlbCBtb2RlbG8gZXN0aW1hZG8geSBsYSBmaWd1cmEgMyBwZXJtaXRlIGFuYWxpemFyIGxhIHByZXNlbmNpYSBkZSBtw6FzIHZhbG9yZXMgZXh0cmVtb3MuCgpgYGB7cn0KQXJpbWExIDwtIEFyaW1hKFBlcm5vY3RhY2lvbmVzLCAKICAgICAgICAgICAgICAgIG9yZGVyID0gYygxLCAxLCAxKSwgIAogICAgICAgICAgICAgICAgc2Vhc29uYWwgPSBsaXN0KG9yZGVyID0gYygwLCAxLCAxKSwgcGVyaW9kID0gMTIpLAogICAgICAgICAgICAgICAgbGFtYmRhID0gMCwKICAgICAgICAgICAgICAgIHhyZWcgPSBTZW1hbmFTYW50YSkKQXJpbWExCmBgYCAKCgpgYGB7cn0gCmVycm9yIDwtIHJlc2lkdWFscyhBcmltYTEpCnNkZXJyb3IgPC0gc2QoZXJyb3IpCgphdXRvcGxvdChlcnJvciwgc2VyaWVzPSJFcnJvciIsCiAgICAgICAgIGNvbG91ciA9ICJibGFjayIsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJFcnJvciIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDMuIEVycm9yICsgSW50ZXJ2ZW5jacOzbiIpICsKICBnZW9tX2hsaW5lKHlpbnRlcmNlcHQgPSBjKC0zLCAtMiwgMiwgMykqc2RlcnJvciwgCiAgICAgICAgICAgICBjb2xvdXIgPSBjKCJyZWQiLCAiZ3JlZW4iLCAiZ3JlZW4iLCAicmVkIiksIAogICAgICAgICAgICAgbHR5ID0gMikgKyAKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSBzZXEoMjAwMCwgMjAyMCwgMikpIApgYGAKU2Ugb2JzZXJ2YW4gZG9zIHZhbG9yZXMgY2xhcmFtZW50ZSBleHRyZW1vcyBlbiBhYnJpbCBkZSAyMDExIHkgbWF5byBkZSAyMDEzLiBBZGVtw6FzLCBoYXkgb3RybyBjYW5kaWRhdG8gYSB2YWxvciBleHRyZW1vIGVuIGFicmlsIGRlIDIwMTYsIHF1ZSBubyByZXN1bHRhIHNlciBzaWduaWZpY2F0aXZvIHBvciBsbyBxdWUgbm8gc2UgaW5jbHVpcsOhIGVuIGVsIGFuw6FsaXNpcy4KCmBgYHtyfQpkMDQxMSA8LSAxKihjeWNsZShQZXJub2N0YWNpb25lcykgPT0gNCAmIHRydW5jKHRpbWUoUGVybm9jdGFjaW9uZXMpKSA9PSAyMDExKQpkMDUxMyA8LSAxKihjeWNsZShQZXJub2N0YWNpb25lcykgPT0gNSAmIHRydW5jKHRpbWUoUGVybm9jdGFjaW9uZXMpKSA9PSAyMDEzKQoKQXJpbWEyIDwtIEFyaW1hKFBlcm5vY3RhY2lvbmVzLCAKICAgICAgICAgICAgICAgICAgICAgICAgIG9yZGVyID0gYygxLCAxLCAxKSwgIAogICAgICAgICAgICAgICAgICAgICAgICAgc2Vhc29uYWwgPSBsaXN0KG9yZGVyID0gYygwLCAxLCAxKSwgcGVyaW9kID0gMTIpLAogICAgICAgICAgICAgICAgICAgICAgICAgbGFtYmRhID0gMCwKICAgICAgICAgICAgICAgICAgICAgICAgIHhyZWcgPSBjYmluZChTZW1hbmFTYW50YSwgZDA0MTEsIGQwNTEzKSkKQXJpbWEyCmBgYCAKCkFwYXJlbnRlbWVudGUgbGFzIHZhcmlhYmxlcyBkZSBpbnRlcnZlbmNpw7NuIGluY2x1aWRhcyBzb24gc2lnbmlmaWNhdGl2YXMuIAoKRWwgYW7DoWxpc2lzIGdyw6FmaWNvIGRlbCByZXNpZHVvIGluZGljYSBxdWUgYcO6biBoYXkgY2FuZGlkYXRvcyBhIHZhbG9yZXMgYXTDrXBpY29zLiBDb21vIG5pbmd1bm8gYWxjYW56YSBsYXMgdHJlcyBkZXN2aWFjaW9uZXMgdMOtcGljYXMsIHZhbW9zIGEgZGFyIHBvciBjb25jbHVpZG8gZXN0ZSBwcm9jZXNvLgoKYGBge3J9IAplcnJvciA8LSByZXNpZHVhbHMoQXJpbWEyKQpzZGVycm9yIDwtIHNkKGVycm9yKQoKYXV0b3Bsb3QoZXJyb3IsIHNlcmllcz0iRXJyb3IiLAogICAgICAgICBjb2xvdXIgPSAiYmxhY2siLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiRXJyb3IiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSA0LiBFcnJvciArIEludGVydmVuY2nDs24iKSArCiAgZ2VvbV9obGluZSh5aW50ZXJjZXB0ID0gYygtMywgLTIsIDIsIDMpKnNkZXJyb3IsIAogICAgICAgICAgICAgY29sb3VyID0gYygicmVkIiwgImdyZWVuIiwgImdyZWVuIiwgInJlZCIpLCAKICAgICAgICAgICAgIGx0eSA9IDIpICsgCiAgc2NhbGVfeF9jb250aW51b3VzKGJyZWFrcz0gc2VxKDIwMDAsIDIwMjAsIDIpKSAKYGBgClBvciDDumx0aW1vLCB2ZWFtb3Mgc2kgZWZlY3RpdmFtZW50ZSB0b2RvcyBsb3MgY29lZmljaWVudGVzIGRlbCBtb2RlbG8gc29uIHNpZ25pZmljYXRpdm9zLgoKYGBge3J9CmFuY2hvIDwtIG1heChuY2hhcihuYW1lcyhjb2VmKEFyaW1hMikpKSkgKyAyCmZvcihpIGluIDE6bGVuZ3RoKGNvZWYoQXJpbWEyKSkpIHsKICB3dCA8LSB3YWxkLnRlc3QoYiA9IGNvZWYoQXJpbWEyKSwgCiAgICAgICAgICAgICAgICAgIFNpZ21hID0gdmNvdihBcmltYTIpLCAKICAgICAgICAgICAgICAgICAgVGVybXMgPSBpKQogIGNhdCgiXG5Db2VmaWNpZW50ZTogIiwgZm9ybWF0KG5hbWVzKGNvZWYoQXJpbWEyKSlbaV0sIHdpZHRoID0gYW5jaG8pLCAidmFsb3IgZGUgcDogIiwKICAgICAgZm9ybWF0Qyh3dCRyZXN1bHQkY2hpMlszXSwgZGlnaXRzID0gNCwgZm9ybWF0ID0gImYiKSkKfQpgYGAKClBhcmEgdW4gbml2ZWwgZGUgc2lnbmlmaWNhdGl2aWRhZCBkZWwgNSUgdG9kb3MgbG9zIGNvZWZpY2llbnRlcyBkZWwgbW9kZWxvIHNvbiBzaWduaWZpY2F0aXZvcy4gT2JzZXJ2YSBxdWUgZWwgY29lZmljaWRlbnRlIGFzb2NpYWRvIGFsIEFSKDEpLCByb3phIGxhIHNpZ25pZmljYXRpdmlkYWQuIFNpIGxvIGV4Y2x1ecOpcmFtb3MgZGVsIHByb2Nlc28sIHRlbmRyw61hbW9zIGVsIG1vZGVsbyBkZSBsYXMgYWVyb2zDrW5lYXMuCgoKXApcCgojIFZhbGlkYWNpw7NuCgpBbmFsaXphbmRvIGxvcyBjcml0ZXJpb3MgZGUgYm9uZGFkIGRlIGFqdXN0ZSBzZSB0aWVuZSBxdWU6IGVsIGVycm9yIG1lZGlvIChNRSksIGlndWFsIGEgYHIgcm91bmQoYWNjdXJhY3koQXJpbWEyKVsxXSwyKWAsIGVzIHByw6FjdGljYW1lbnRlIGNlcm8gKGVuIHJlbGFjacOzbiBhIGxvcyB2YWxvcmVzIGRlIGxhIHNlcmllKSBwb3IgbG8gcXVlIG5vIHBhcmVjZSBxdWUgaGF5YSBzZXNnbyBlbiBsYXMgcHJlZGljY2lvbmVzOyBlbiBtZWRpYSBub3MgZXF1aXZvY2Ftb3MgZW4gYHIgcm91bmQoYWNjdXJhY3koQXJpbWEyKVsyXS8xMDAwLDApYCBtaWwgcGVybm9jdGFjaW9uZXMgKFJNU0UpOyB5IGVsIGVycm9yIHBvcmNlbnR1YWwgbWVkaW8gZXMgYHIgcm91bmQoYWNjdXJhY3koQXJpbWEyKVs1XSwxKWAlLCBtdXkgYmFqby4KCmBgYHtyLGV2YWw9RkFMU0V9CmFjY3VyYWN5KEFyaW1hMikKYGBgCgpgYGB7cixlY2hvPUZBTFNFfQpyb3VuZChhY2N1cmFjeShBcmltYTIpLDIpCmBgYAoKXApcCgojIEVjdWFjacOzbiBkZWwgbW9kZWxvIGlkZW50aWZpY2FkbwoKQWhvcmEgcXVlIHlhIGhlbW9zIGRhZG8gcG9yIHbDoWxpZG8gZWwgbW9kZWxvLCB2ZWFtb3MgY3XDoWwgZXMgc3UgZWN1YWNpw7NuLiAKCkVsIF9fbW9kZWxvIHRlw7NyaWNvX18gZXMKJCQoMSAtIFxwaGlfMSBMKSgxLUwpKDEtTF57MTJ9KWxvZyhQZXJub2N0YWNpb25lc190KSA9KDErXHRoZXRhXzEgTCkoMSArIFx0aGV0YV97MTJ9TF57MTJ9KVx2YXJlcHNpbG9uX3QgKyQkCiQkXGdhbW1hXzEgU2VtYW5hU2FudGEgKyBcZ2FtbWFfMiBkMDQxMSArIFxnYW1tYV8zIGQwNTEzLiQkCgpTaSBzZSBkZXNhcnJvbGxhIGVsIG1vZGVsbyB5IHNlIGRlamEgZW4gZnVuY2nDs24gZGUgbGEgdGFzYSBkZSB2YXJpYWNpw7NuIGFudWFsIGRlbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzLCBxdWVkYSAobGEgcGFydGUgZGUgaW50ZXJ2ZW5jacOzbiBubyBjYW1iaWEpOgoKJCRUVkFfe1Blcm5vY3RhY2lvbmVzX3R9ID0gVFZBX3tQZXJub2N0YWNpb25lc197dC0xfX0gKyBccGhpXzEoVFZBX3tQZXJub2N0YWNpb25lc197dC0xfX0gLSBUVkFfe1Blcm5vY3RhY2lvbmVzX3t0LTJ9fSkgKyQkCiQkXHRoZXRhXzEgXHZhcmVwc2lsb25fe3QtMX0gKyBcdGhldGFfezEyfSBcdmFyZXBzaWxvbl97dC0xMn0rIFx0aGV0YV8xIFx0aGV0YV97MTJ9IFx2YXJlcHNpbG9uX3t0LTEzfStcdmFyZXBzaWxvbl90ICsgQUkuJCQKRmluYWxtZW50ZSwgZWwgbW9kZWxvIGVzdGltYWRvIGVzOgokJFx3aWRlaGF0e1RWQX1fe1Blcm5vY3RhY2lvbmVzX3R9ID0gVFZBX3tQZXJub2N0YWNpb25lc197dC0xfX0gKyAwLjI2KFRWQV97UGVybm9jdGFjaW9uZXNfe3QtMX19IC0gVFZBX3tQZXJub2N0YWNpb25lc197dC0yfX0pJCQKJCQtIDAuNjVcdmFyZXBzaWxvbl97dC0xfSAtIDAuMjggXHZhcmVwc2lsb25fe3QtMTJ9ICsgMC4xOSBcdmFyZXBzaWxvbl97dC0xM30gKyAkJAokJDAuMDU5IFxjZG90IFNlbWFuYVNhbnRhICsgMC4xMTNcY2RvdCBkMDQxMSArIDAuMDgzXGNkb3QgZDA1MTMuJCQKCiogTGEgdGFzYSBkZSB2YXJpYWNpw7NuIGFudWFsIGRlIGxhcyBwZXJub2N0YWNpb25lcyBkZSB1biBhw7FvIGVzIGxhIG1pc21hIHF1ZSBsYSBkZWwgYcOxbyBwYXNhZG8gbcOhcyB1biAyNiUgZGUgbGEgw7psdGltYSBkaWZlcmVuY2lhIGVudHJlIGxhcyB0YXNhcyBkZSB2YXJpYWNpw7NuIGFudWFsZXMgb2JzZXJ2YWRhcy4KCiogU2kgZW4gcGVyaW9kb3MgcHJldmlvcyBzZSBoYSBwcm9kdWNpZG8gdW4gc2hvY2ssIGhheSBxdWUgdGVuZXJsbyBlbiBjdWVudGEgZW4gbGFzIHByZWRpY2Npb25lcy4KCiogU2kgbGEgU2VtYW5hIFNhbnRhIGNhZSDDrW50ZWdyYW1lbnRlIGVuIG1hcnpvLCBlbiBlc3RlIG1lcyBsYSB0YXNhIHZhcmlhY2nDs24gYW51YWwgZGUgbGFzIHBlcm5vY3RhY2lvbmVzIHNlcmEgNS45IHB1bnRvcyBwb3JjZW50dWFsZXMgbWF5b3IgeSBlbiBhYnJpbCA1LjkgcHVudG9zIHBvcmNlbnR1YWxlcyBtZW5vci4KCiogRW4gYWJyaWwgZGUgMjAxMSB5IG1heW8gZGUgMjAxMyBsYSB0YXNhIHZhcmlhY2nDs24gYW51YWwgZGUgbGFzIHBlcm5vY3RhY2lvbmVzIGZ1ZSBzaWduaWZpY2F0aXZhbWVudGUgbWF5b3IgZGUgbGEgZXNwZXJhZGEuCgpcClwKCiMgUHJlZGljY2nDs24gZGUgbGFzIHBlcm5vY3RhY2lvbmVzCgpVbmEgdmV6IGRhZG8gcG9yIHbDoWxpZG8gZWwgbW9kZWxvLCBwb2RlbW9zIHBhc2FyIGEgcmVhbGl6YXIgcHJlZGljY2lvbmVzIHBhcmEgbG9zIHByw7N4aW1vcyBhw7Fvcy4gUGFyYSBTZW1hbmEgU2FudGEgdXNhcmVtb3MgZW4gbGFzIHByZWRpY2Npb25lcyBsYSB2YXJpYWJsZSBhbnRlcyBnZW5lcmFkYSB5IHBhcmEgZWwgcmVzdG8gZGUgbGEgaW50ZXJ2ZW5jacOzbiBmaWphcmVtb3Mgc3VzIHZhbG9yZXMgcHJldmlzdG9zIGEgY2Vyby4KCmBgYHtyfQpwQXJpbWEyIDwtIGZvcmVjYXN0KEFyaW1hMiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgaCA9IDM2LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIHhyZWcgPSBjYmluZChwU2VtYW5hU2FudGEsIHJlcCgwLCAzNiksIHJlcCgwLCAzNikpLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBsZXZlbCA9IDk1KQphdXRvcGxvdChwQXJpbWEyLCAKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gJ0RlZnVuY2lvbmVzJywKICAgICAgICAgbWFpbiA9ICdGaWd1cmEgNS4gUGVybm9jdGFjaW9uZXMgKDIwMDAtMjAxOSkgeSBwcmVkaWNjacOzbiAoMjAwMC0yMDIyKScpICsKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSBzZXEoMjAwMCwgMjAyMiwgNCkpIApgYGAKClwKXAoKIyBDb21wYXJhY2nDs24gY29uIG90cm9zIG1vZGVsb3MKCiMjIENhbGlkYWQgZGUgYWp1c3RlCgpMYSBzZXJpZSBQZXJub2N0YWNpb25lcyBsYSBoZW1vcyBhanVzdGFkbyBwb3IgZWwgbcOpdG9kbyBpbmdlbnVvIGNvbiBlc3RhY2lvbmFsaWRhZCwgZWwgbcOpdG9kbyBkZSBBbGlzYWRvIEV4cG9uZW5jaWFsIHkgcHJvY2Vzb3MgQVJJTUEuIExhIHNpZ3VpZW50ZSB0YWJsZSByZWNvamUgZWwgZXJyb3IgbWVkaW8gKFJNU0UpIHkgcG9yY2VudHVhbCAoTUFQRSkgYWwgdXNhciBlc3RhcyB0cmVzIGFwcm94aW1hY2nDs24gY29uIGxhIHNlcmllIG9yaWdpbmFsIHkgc3UgdHJhbnNmb3JtYWNpw7NuIGxvZ2Fyw610bWljYS4KCmBgYHtyIGVjaG8gPSBGQUxTRX0KQXJpbWEyMiA8LSBBcmltYShQZXJub2N0YWNpb25lcywgCiAgICAgICAgICAgICAgICAgICAgICAgICBvcmRlciA9IGMoMSwgMSwgMSksICAKICAgICAgICAgICAgICAgICAgICAgICAgIHNlYXNvbmFsID0gbGlzdChvcmRlciA9IGMoMCwgMSwgMSksIHBlcmlvZCA9IDEyKSwKICAgICAgICAgICAgICAgICAgICAgICAgIHhyZWcgPSBjYmluZChTZW1hbmFTYW50YSwgZDA0MTEsIGQwNTEzKSkKYGBgCgoKfFNlcmllICAgICAgICAgICAgICAgIHxNw6l0b2RvIHwgUk1TRSB8IE1BUEUgfAp8Oi0tLS0tLS0tLS0tLS0tLS0tLS0tfDotLS0tLS0tLS0tfC0tLS0tLS0tOnwtLS0tLS0tLS06fAp8IFBlcm5vY3RhY2lvbmVzICAgICAgfCBJbmdlbnVvIHwgYHIgZm9ybWF0QyhhY2N1cmFjeShzbmFpdmUoUGVybm9jdGFjaW9uZXMpKVsyXSwgZm9ybWF0ID0gImYiLCBkaWdpdHMgPSAwKWAgfCBgciBmb3JtYXRDKGFjY3VyYWN5KHNuYWl2ZShQZXJub2N0YWNpb25lcykpWzVdLCBmb3JtYXQgPSAiZiIsIGRpZ2l0cyA9IDIpYCB8CnwgbG9nKFBlcm5vY3RhY2lvbmVzKSB8IEluZ2VudW8gfCBgciBmb3JtYXRDKGFjY3VyYWN5KHNuYWl2ZShQZXJub2N0YWNpb25lcywgbGFtYmRhID0gMCkpWzJdLCBmb3JtYXQgPSAiZiIsIGRpZ2l0cyA9IDApYCB8IGByIGZvcm1hdEMoYWNjdXJhY3koc25haXZlKFBlcm5vY3RhY2lvbmVzLCBsYW1iZGEgPSAwKSlbNV0sIGZvcm1hdCA9ICJmIiwgZGlnaXRzID0gMilgIHwKfCBQZXJub2N0YWNpb25lcyAgICAgIHwgQWxpc2FkbyB8IGByIGZvcm1hdEMoYWNjdXJhY3koZXRzKFBlcm5vY3RhY2lvbmVzLCBtb2RlbCA9ICJNQU0iLCBkYW1wZWQgPSBUUlVFKSlbMl0sIGZvcm1hdCA9ICJmIiwgZGlnaXRzID0gMClgIHwgYHIgZm9ybWF0QyhhY2N1cmFjeShldHMoUGVybm9jdGFjaW9uZXMsIG1vZGVsID0gIk1BTSIsIGRhbXBlZCA9IFRSVUUpKVs1XSwgZm9ybWF0ID0gImYiLCBkaWdpdHMgPSAyKWAgfAp8IGxvZyhQZXJub2N0YWNpb25lcykgfCBBbGlzYWRvIHwgYHIgZm9ybWF0QyhhY2N1cmFjeShldHMoUGVybm9jdGFjaW9uZXMsIG1vZGVsID0gIkFBQSIsIGRhbXBlZCA9IFRSVUUsIGxhbWJkYSA9IDApKVsyXSwgZm9ybWF0ID0gImYiLCBkaWdpdHMgPSAwKWAgfCBgciBmb3JtYXRDKGFjY3VyYWN5KGV0cyhQZXJub2N0YWNpb25lcywgbW9kZWwgPSAiQUFBIiwgZGFtcGVkID0gVFJVRSwgbGFtYmRhID0gMCkpWzVdLCBmb3JtYXQgPSAiZiIsIGRpZ2l0cyA9IDIpYCB8CnwgUGVybm9jdGFjaW9uZXMgICAgICB8IEFSSU1BICAgfCBgciBmb3JtYXRDKGFjY3VyYWN5KEFyaW1hMjIpWzJdLCBmb3JtYXQgPSAiZiIsIGRpZ2l0cyA9IDApYCB8IGByIGZvcm1hdEMoYWNjdXJhY3koQXJpbWEyMilbNV0sIGZvcm1hdCA9ICJmIiwgZGlnaXRzID0gMilgIHwKfCBsb2coUGVybm9jdGFjaW9uZXMpIHwgQVJJTUEgICB8IGByIGZvcm1hdEMoYWNjdXJhY3koQXJpbWEyKVsyXSwgZm9ybWF0ID0gImYiLCBkaWdpdHMgPSAwKWAgfCBgciBmb3JtYXRDKGFjY3VyYWN5KEFyaW1hMilbNV0sIGZvcm1hdCA9ICJmIiwgZGlnaXRzID0gMilgIHwKClBvZGVtb3MgZXh0cmFlciBkb3MgY29uY2x1c2lvbmVzOiBpKSBsYSB0cmFuc2Zvcm1hY2nDs24gbG9nYXLDrXRpbWljYSBtZWpvcmEgZWwgYWp1c3RlIGRlIGxvcyBkYXRvczsgeSBpaSkgZWwgcHJvY2VzbyBBUklNQSBjb24gdHJhbnNmb3JtYWNpw7NuIGxvZ2FyaXRtaWNhIGVzIGxhIG1lam9yIGFwcm94aW1hY2nDs24uIChFbiBlbCBtw6l0b2RvIGluZ2VudW8sIGxhIHRyYW5zZm9ybWFjacOxb24gbG9nYXLDrXRtaWNhIG5vIGNhbWJpYSBsYXMgcHJlZGljY2lvbmVzIHkgbG9zIGNyaXRlcmlvcyBkZSBjYWxpZGFkIGRlIGFqdXN0ZSBjb2luY2lkZW4uKQoKSGF5IHF1ZSBkZWNpciBxdWUgbGEgbGlnZXJhIG1lam9yYSBlbiBlbCBhanVzdGUgZGUgbG9zIG1vZGVsb3MgQXJpbWEgcmVzcGVjdG8gZGVsIG3DqXRvZG8gZGUgQWxpc2FkbyBzZSBkZWJlIGEgbGEgaW5jb3Jwb3JhY2nDs24gZGUgdmFyaWFibGVzIGZpY3RpY2lhcyBwYXJhIHJlY29nZXIgbGEgaW50ZXJ2ZW5jacOzbi4gCgojIyBQcmVkaWNjaW9uZXMgZXh0cmEtbXVlc3RyYWxlcwoKVmFtb3MgYSBkZXRlcm1pbmFyIHNpIHRhbWJpw6luIGxhIGFwbGljYWNpw7NuIGRlIG1vZGVsb3MgQXJpbWEgbWVqb3JhIGxhIGNhbGlkYWQgZGUgbGFzIHByZWRpY2Npb25lcyBleHRyYS1tdWVzdHJhbGVzIGxvIHN1ZmljaWVudGUgY29tbyBwYXJhIGp1c3RpZmljYXIgc3UgdXNvIC0tZnJlbnRlIGEgbG9zIG3DqXRvZG9zIGRlIGFsaXNhZG8sIG11Y2hvIG3DoXMgc2VuY2lsbG9zLiBQYXJhIGVsbG8sIGFwbGljYXJlbW9zIGxhIG1ldG9kb2xvZ8OtYSBkZSBvcmlnZW4gZGUgcHJlZGljY2nDs24gbcOzdmlsIHBhcmEgZXN0aW1hciBsYSBjYXBhY2lkYWQgcHJlZGljdGl2YSBkZWwgbW9kZWxvIEFyaW1hIHkgY29tcGFyYXJsYSBjb24gZWwgbW9kZWxvIGRlIEFsaXNhZG8geSBlbCBpbmdlbnVvIGNvbiBlc3RhY2lvbmFsaWRhZC4gCgpgYGB7cn0gIAprIDwtIDEyMCAgICAgICAgICAgICAgICAgICAKaCA8LSAxMiAgICAgICAgICAgICAgICAgICAgClQgPC0gbGVuZ3RoKFBlcm5vY3RhY2lvbmVzKSAgICAgCnMgPC0gVCAtIGsgLSBoICAgICAgICAgICAgICAgCgptYXBlSW5nZW51byA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQptYXBlQWxpc2FkbyA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQptYXBlQWxpc2Fkb0xvZyA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQptYXBlQXJpbWEgPC0gbWF0cml4KE5BLCBzICsgMSwgaCkKbWFwZUFyaW1hTG9nIDwtIG1hdHJpeChOQSwgcyArIDEsIGgpCgoKWCA8LSBjYmluZChTZW1hbmFTYW50YSwgZDA0MTEsIGQwNTEzKQoKZm9yIChpIGluIDA6cykgewogIHRyYWluLnNldCA8LSBzdWJzZXQoUGVybm9jdGFjaW9uZXMsIHN0YXJ0ID0gaSArIDEsIGVuZCA9IGkgKyBrKQogIHRlc3Quc2V0IDwtICBzdWJzZXQoUGVybm9jdGFjaW9uZXMsIHN0YXJ0ID0gaSArIGsgKyAxLCBlbmQgPSBpICsgayArIGgpIAogIAogIFgudHJhaW4gPC0gWFsoaSArIDEpOihpICsgayksXQogIGhheSA8LSBjb2xTdW1zKFgudHJhaW4pCiAgWC50cmFpbiA8LSBYLnRyYWluWywgaGF5PjBdCiAgCiAgWC50ZXN0IDwtIFhbKGkgKyBrICsgMSk6KGkgKyBrICsgaCksXQogIFgudGVzdCA8LSBYLnRlc3RbLCBoYXk+MF0KICAKICAjSW5nZW51bwogIGZpdCA8LSBzbmFpdmUodHJhaW4uc2V0LCBoID0gaCkKICBtYXBlSW5nZW51b1tpICsgMSxdIDwtIDEwMCphYnModGVzdC5zZXQgLSBmaXQkbWVhbikvdGVzdC5zZXQKICAKICAjQWxpc2FkbyBzaW4gbG9nCiAgZml0IDwtIGV0cyh0cmFpbi5zZXQsIG1vZGVsID0gIk1BTSIsIGRhbXBlZCA9IFRSVUUpCiAgZmNhc3QgPC0gZm9yZWNhc3QoZml0LCBoID0gaCkgCiAgbWFwZUFsaXNhZG9baSArIDEsXSA8LSAxMDAqYWJzKHRlc3Quc2V0IC0gZmNhc3QkbWVhbikvdGVzdC5zZXQKICAKICAjQWxpc2FkbyBjb24gbG9nCiAgZml0IDwtIGV0cyh0cmFpbi5zZXQsIG1vZGVsID0gIkFBQSIsIGRhbXBlZCA9IFRSVUUsIGxhbWJkYSA9IDApCiAgZmNhc3QgPC0gZm9yZWNhc3QoZml0LCBoID0gaCwgYmlhc2FkaiA9IFRSVUUpIAogIG1hcGVBbGlzYWRvTG9nW2kgKyAxLF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGZjYXN0JG1lYW4pL3Rlc3Quc2V0CiAgCiAgI0FyaW1hIHNpbiBsb2cKICBmaXQgPC0gdHJ5KEFyaW1hKHRyYWluLnNldCwgCiAgICAgICAgICAgICAgICAgICBvcmRlciA9IGMoMSwgMSwgMSksCiAgICAgICAgICAgICAgICAgICBzZWFzb25hbCA9IGxpc3Qob3JkZXIgPSBjKDAsIDEsIDEpLCBwZXJpb2QgPSAxMiksCiAgICAgICAgICAgICAgICAgICB4cmVnID0gWC50cmFpbiksIHNpbGVudCA9IFRSVUUpCiAgCiAgaWYgKCFpcy5lbGVtZW50KCJ0cnktZXJyb3IiLCBjbGFzcyhmaXQpKSkgewogICAgZmNhc3QgPC0gZm9yZWNhc3QoZml0LCBoID0gaCwgeHJlZyA9IFgudGVzdCkgCiAgICBtYXBlQXJpbWFbaSArIDEsXSA8LSAxMDAqYWJzKHRlc3Quc2V0IC0gZmNhc3QkbWVhbikvdGVzdC5zZXQKICB9CiAgCiAgI0FyaW1hIGNvbiBsb2cKICBmaXQgPC0gdHJ5KEFyaW1hKHRyYWluLnNldCwgCiAgICAgICAgICAgICAgICAgICBvcmRlciA9IGMoMSwgMSwgMSksCiAgICAgICAgICAgICAgICAgICBzZWFzb25hbCA9IGxpc3Qob3JkZXIgPSBjKDAsIDEsIDEpLCBwZXJpb2QgPSAxMiksCiAgICAgICAgICAgICAgICAgICBsYW1iZGEgPSAwLAogICAgICAgICAgICAgICAgICAgeHJlZyA9IFgudHJhaW4pLCBzaWxlbnQgPSBUUlVFKQogIAogIGlmICghaXMuZWxlbWVudCgidHJ5LWVycm9yIiwgY2xhc3MoZml0KSkpIHsKICAgIGZjYXN0IDwtIGZvcmVjYXN0KGZpdCwgaCA9IGgsIHhyZWcgPSBYLnRlc3QsIGJpYXNhZGogPSBUUlVFKSAKICAgIG1hcGVBcmltYUxvZ1tpICsgMSxdIDwtIDEwMCphYnModGVzdC5zZXQgLSBmY2FzdCRtZWFuKS90ZXN0LnNldAogIH0KICAKfQoKbWFwZUluZ2VudW8gPC0gY29sTWVhbnMobWFwZUluZ2VudW8pCm1hcGVBbGlzYWRvIDwtIGNvbE1lYW5zKG1hcGVBbGlzYWRvKQptYXBlQWxpc2Fkb0xvZyA8LSBjb2xNZWFucyhtYXBlQWxpc2Fkb0xvZykKbWFwZUFyaW1hIDwtIGNvbE1lYW5zKG1hcGVBcmltYSwgbmEucm0gPSBUUlVFKQptYXBlQXJpbWFMb2cgPC0gY29sTWVhbnMobWFwZUFyaW1hTG9nLCBuYS5ybSA9IFRSVUUpCmBgYAoKYGBge3J9CmdncGxvdCgpICsKICBnZW9tX2xpbmUoYWVzKHggPSAxOjEyLCB5ID0gbWFwZUluZ2VudW8sIGNvbG91ciA9ICJJbmdlbnVvIikpICsKICBnZW9tX2xpbmUoYWVzKHggPSAxOjEyLCB5ID0gbWFwZUFsaXNhZG8sIGNvbG91ciA9ICJBbGlzYWRvIikpICsgCiAgZ2VvbV9saW5lKGFlcyh4ID0gMToxMiwgeSA9IG1hcGVBbGlzYWRvTG9nLCBjb2xvdXIgPSAiQWxpc2FkbyAobG9nKSIpKSArCiAgZ2VvbV9saW5lKGFlcyh4ID0gMToxMiwgeSA9IG1hcGVBcmltYSwgY29sb3VyID0gIkFyaW1hIikpICsKICBnZW9tX2xpbmUoYWVzKHggPSAxOjEyLCB5ID0gbWFwZUFyaW1hTG9nLCBjb2xvdXIgPSAiQXJpbWEgKGxvZykiKSkgKwogIGdndGl0bGUoIkZpZ3VyYSA2LiBFcnJvcmVzIGRlIHByZXZpc2nDs24gZXh0cmEtbXVlc3RyYWwuIFZhcmlvcyBtb2RlbG9zIikgKwogIHhsYWIoIiIpICsKICB5bGFiKCJNQVBFIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IDE6MTIpICsKICBzY2FsZV9jb2xvcl9kaXNjcmV0ZShuYW1lID0gIk1vZGVsb3MiKQpgYGAKCgpMYSBmaWd1cmEgNiByZXZlbGEgcXVlIEFyaW1hIGNvbiB0cmFuc2Zvcm1hY2nDs24gbG9nYXLDrXRtaWNhIGVzIHNpZW1wcmUgc3VwZXJpb3IgYSBBbGlzYWRvIGVuIGNhbGlkYWQgZGUgcHJlZGljY2lvbmVzLiBTb2xvIHBhcmEgcHJlZGljY2lvbmVzIGEgbGFyZ28gcGxhem8gbGFzIGRpZmVyZW5jaWFzIGVudHJlIGxvcyBtw6l0b2RvcyBkZXNhcGFyZWNlbi4KClRhbWJpw6luIHNlIG9ic2VydmEgcXVlIGxhIHRyYW5zZm9ybWFjacOzbiBsb2dhcsOtdG1pY2Egbm8gYWZlY3RhIHNpZ25pZmljYXRpdmFtZW50ZSBsYSBjYWxpZGFkIGRlIGxhcyBwcmVkaWNjaW9uZXMgZW4gbG9zIG1vZGVsb3MgZGUgQWxpc2FkbywgcGVybyBlcyBtdXkgZGV0ZXJtaW5hbnRlIGVuIGxvcyBwcm9jZXNvcyBBcmltYS4KCkNvbW8geWEgdmltb3MsIHNvcnByZW5kZW50ZW1lbnRlIGVsIGVycm9yIGNvbiBlbCBtw6l0b2RvIGluZ2VudW8gcGFyZWNlIGluZGVwZW5kaWVudGUgZGVsIGhvcml6b250ZSB0ZW1wb3JhbC4gQSBjb3J0byBwbGF6byBlcyBsYSBwZW9yIGFwcm94aW1hY2nDs24sIHBlcm8gYSBsYXJnbyBwbGF6byBlcyB0YW4gYnVlbm8gY29tbyBlbCByZXN0byBkZSBtw6l0b2Rvcy4KCg==</div>
+<footer class="footer">
+  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+<br>
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
+  
+</footer>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("03-13-Ejemplo7.Rmd");
+});
+</script>
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
