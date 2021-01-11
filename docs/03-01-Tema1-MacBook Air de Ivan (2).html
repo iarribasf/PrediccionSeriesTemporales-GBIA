@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
+
+
+<title>Introducción</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="01-Guia-curso.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Guía del curso
+  </a>
+</li>
+<li>
+  <a href="02-Logistica.html">
+    <span class="fa fa-laptop"></span>
+     
+    Logística
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Diapos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Teoría</li>
+    <li>
+      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
+    </li>
+    <li>
+      <a href="03-02-Tema2.html">Tema 2: Alisado</a>
+    </li>
+    <li>
+      <a href="03-03-Tema3.html">Tema 3: Procesos estocásticos</a>
+    </li>
+    <li>
+      <a href="03-04-Tema4.html">Tema 4: ARIMA</a>
+    </li>
+    <li>
+      <a href="03-05-Tema5.html">Tema 5: SARIMA</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ejemplo de aplicación</li>
+    <li>
+      <a href="03-06-Ejemplo1.html">Ejemplo Tema 1</a>
+    </li>
+    <li>
+      <a href="03-07-Ejemplo2.html">Ejemplo Tema 2</a>
+    </li>
+    <li>
+      <a href="03-08-Ejemplo3.html">Ejemplo Tema 3</a>
+    </li>
+    <li>
+      <a href="03-09-Ejemplo4.html">Ejemplo Tema 4</a>
+    </li>
+    <li>
+      <a href="03-10-Ejemplo5.html">Ejemplo Tema 5</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otro ejemplo</li>
+    <li>
+      <a href="03-11-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="04-Recursos-R.html">
+    <span class="fa fa-code"></span>
+     
+    Recursos de R
+  </a>
+</li>
+<li>
+  <a href="05-Practica.html">
+    <span class="fa fa-edit"></span>
+     
+    Practica
+  </a>
+</li>
+<li>
+  <a href="06-Calendario.html">
+    <span class="fa fa-calendar-alt"></span>
+     
+    Calendario
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-download"></span>
+     
+    Más
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">R</li>
+    <li>
+      <a href="https://cran.r-project.org">Dónde está R</a>
+    </li>
+    <li>
+      <a href="https://rstudio.com">Donde está RStudio</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Markdown</li>
+    <li>
+      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otros</li>
+    <li>
+      <a href="https://www.r-bloggers.com">Blog sobre R</a>
+    </li>
+    <li>
+      <a href="https://bookdown.org">Libros online que debes conocer</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Introducción</h1>
+<h3 class="subtitle">Previsión con Datos Temporales (GBIA)</h3>
+<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+<h4 class="date">Curso 2020-21</h4>
+
+</div>
+
+
+<div id="introducción" class="section level1">
+<h1><span class="header-section-number">1</span> Introducción</h1>
+<blockquote>
+<p>“Hacer previsiones supone realizar la mejor apreciación posible de algún suceso futuro” Holton y Keating (1996).</p>
+</blockquote>
+<blockquote>
+<p>“Time series are analysed to understand the past and to predict the future.” Cowpertwait y Metcalfe (2009)</p>
+</blockquote>
+<p>Los datos temporales, <strong>series temporales</strong>, se analizan para entender el pasado y predecir el futuro posibilitando a los agentes tomar decisiones adecuadamente informados.</p>
+<p><br />
+</p>
+<div id="la-previsión-en-el-ámbito-de-los-negocios" class="section level2">
+<h2><span class="header-section-number">1.1</span> La previsión en el ámbito de los negocios</h2>
+<p>En prácticamente todas las áreas funcionales de una empresa o negocio se realiza algún tipo de previsión.</p>
+<ul>
+<li><p>Las cabeceras de prensa determinan el número de ejemplares a imprimir cada día analizando la demanda pasada de su diario.</p></li>
+<li><p>Los supermercados predicen la demanda de sus principales referencias (productos) a fin de ajustar su flujo logístico y evitar que se agoten en el lineal o que caduquen.</p></li>
+<li><p>Los directores de producción han de basarse en predicciones para ajustar las necesidades de materias primas y el nivel de existencias de los productos elaborados.</p></li>
+<li><p>Los directores financieros hacen previsiones de los flujos de caja para evitar tensiones en la tesorería.</p></li>
+</ul>
+<p><br />
+</p>
+</div>
+<div id="la-previsión-en-el-sector-público" class="section level2">
+<h2><span class="header-section-number">1.2</span> La previsión en el sector público</h2>
+<p>Los presupuestos generales del estado se establecen en base a un amplio conjunto de previsiones (ingresos, consumo, tipos de interés…) En general, todos los organismos y empresas públicas precisan de las predicciones en su gestión diaria.</p>
+<ul>
+<li><p><a href="https://demanda.ree.es/demanda.html">Red Eléctrica Española</a> predice el consumo eléctrico hora a hora para ajustar la oferta a la demanda.</p></li>
+<li><p>El <a href="http://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&amp;cid=1254736176953&amp;menu=ultiDatos&amp;idp=1254735572981">Instituto Nacional de Estadística</a> (INE) predice la población española para los próximos 50 años.</p></li>
+</ul>
+<p><br />
+<br />
+</p>
+<p>Predecir es fácil y cuando se acierta puede parecer cosa de suerte o una gran intuición. Cuando se fracasa, puede ser un desastre.</p>
+<ul>
+<li><em>Creo que hay mercado mundial para tal vez cinco ordenadores.</em> (Presidente de IBM, 1943)</li>
+<li><em>Los ordenadores en el futuro no pesarán más de 1.5 toneladas.</em> (Popular Mechanics, 1949)</li>
+<li><em>No hay razón para que cada uno quiera un ordenador en su casa</em>. (Presidente de DEC, 1977; tres años después IBM lanzaba al mercado el primer PC)</li>
+</ul>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+<div id="métodos-de-previsión" class="section level1">
+<h1><span class="header-section-number">2</span> Métodos de previsión</h1>
+<p>Un método de previsión es un proceso detallado que describe los pasos a seguir desde que se plantea el problema hasta que se obtiene la previsión: recogida de la información, procesamiento de la información, estimación de la previsión, medida de incertidumbre…</p>
+<p>La literatura recoge dos grandes métodos de previsión:</p>
+<ul>
+<li>Métodos subjetivos</li>
+<li>Métodos objetivos</li>
+</ul>
+<p>En este tema hablaremos algo sobre los primeros y en los restantes temas analizaremos en detalle los segundos.</p>
+<p><br />
+</p>
+<div id="métodos-subjetivos" class="section level2">
+<h2><span class="header-section-number">2.1</span> Métodos subjetivos</h2>
+<p>Realizar predicciones a partir de opiniones y juicios subjetivos es práctica común. En muchas ocasiones las previsiones subjetivas es la única opción, tales como cuando no hay datos históricos, o cuando un nuevo producto se va a sacar al mercado, o cuando entra en el mercado un nuevo competidor, o durante un entorno de mercado único y nuevo. Por ejemplo, predecir el efecto que iba a tener la COVID en el grado de ocupación hotelera de agosto, una situación sin precedentes, requiere necesariamente de juicios subjetivos.</p>
+<p>Con los años las predicciones por métodos subjetivos han ido ganando aceptación y reconocimiento como una ciencia. En parte porque la calidad de sus predicciones ha mejorado como resultado directo del uso de metodologías mejor estructuradas y más sistemáticas.</p>
+<p>La predicciones a partir de opiniones y juicios son subjetivas y por tanto sujetas a un montón de sesgos y limitaciones. Por citar algunas:</p>
+<ul>
+<li>Pueden ser perfectamente inconsistentes por muchos motivos: se presta más atención a acontecimientos presentes que a los pasados; podemos directamente pasar por alto información relevante; se pueden confundir algunas relaciones causales.</li>
+<li>Pueden estar afectadas por la agenda política o personal.</li>
+<li>Pueden sufrir del <em>efecto ancla</em>: las predicciones tienden a agruparse en torno a un valor inicial de referencia familiar.</li>
+<li>o del <em>efecto de confirmación</em>, donde se da mas peso a la información que confirma nuestras hipótesis previas.</li>
+<li>… (la lista es larga)</li>
+</ul>
+<div id="principios-básico-en-la-implementación" class="section level3 unnumbered">
+<h3>Principios básico en la implementación</h3>
+<p>A fin de reducir el efecto adverso de estas limitaciones y sesgos, es fundamental usar una aproximación sistemática y bien estructurada, con independencia de la metodología que finalmente se vaya a seguir. Los principios a seguir son:</p>
+<ul>
+<li>Define la variable a predecir de forma clara y concisa.</li>
+<li>Implementa un método de previsión sistemático.</li>
+<li>Documenta todo el proceso con el objetivo de promover la consistencia y la replicabilidad.</li>
+<li>Justifica las predicciones para reducir los sesgos.</li>
+<li>Monitoriza las predicciones para adelantarte a irregularidades o desviaciones importantes respecto de los valores reales.</li>
+<li>Separa los predictores de los usuarios de las predicciones.</li>
+</ul>
+</div>
+<div id="algunos-métodos-subjetivos" class="section level3 unnumbered">
+<h3>Algunos métodos subjetivos</h3>
+<ul>
+<li><em>Jurado de opinión</em>: la predicción la realizan un conjunto de expertos por consenso.</li>
+<li><em>Predicción por analogía</em>: se realiza la predicción buscando situaciones o entornos análogos donde se conoce la información solicitada.<br />
+</li>
+<li><em>Método Delphi</em>: similar al jurado de opinión, pero se preserva el anonimato de los expertos y el consenso se obtiene a partir de un proceso iterativo en varias rondas:
+<ol style="list-style-type: decimal">
+<li>Se elige un panel de expertos.</li>
+<li>Se solicita a cada uno su opinión respecto a las variables que se desea predecir.</li>
+<li>Los expertos devuelven sus predicciones y la justificación. Estas se resumen de forma anónima.</li>
+<li>Se distribuye a cada experto el resumen de resultados para su análisis y revisión.</li>
+<li>Los expertos revisan sus opiniones personales a partir de la información obtenida.</li>
+<li>Se repiten los pasos 3 a 5 hasta que deje de haber cambios significativos en las opiniones.</li>
+</ol></li>
+<li><em>Método de escenarios</em>: se definen una serie de posibles escenarios considerando todos los factores relevantes y se les asigna una probabilidad. Para cada escenario se obtiene, siguiendo un determinado método, la predicción deseada.</li>
+<li><em>Ajustes por juicios subjetivos</em>: propiamente este no es un método subjetivo. Consiste en realizar una predicción con información histórica disponible usando herramientas estadísticas para después ser ajustada a partir del juicio de expertos.</li>
+</ul>
+<p><br />
+</p>
+</div>
+</div>
+<div id="métodos-objetivos" class="section level2">
+<h2><span class="header-section-number">2.2</span> Métodos objetivos</h2>
+<p>La predicción se obtiene principalmente a partir de los valores pasados de la propia variable a predecir aunque también se puede utilizar el valor pasado de otras variables</p>
+<p><span class="math display">\[\hat y_{t+h} = f(y_t, y_{t-1},\ldots)\]</span> donde <span class="math inline">\(\hat y_{t+h}\)</span> es la previsión que hacemos para el periodo <span class="math inline">\(t+h\)</span> con información solo hasta el periodo <span class="math inline">\(t\)</span>.</p>
+<p>Dentro de los métodos objetivos distinguiremos entre:</p>
+<ul>
+<li><p><strong>No paramétricos</strong>, donde no se asume ninguna hipótesis estadística y las predicciones se obtienen a partir de los datos pasados con cálculos <em>sencillos</em> que no comportan estimar ningún parámetro. Por ejemplo <span class="math inline">\(\hat y_{t+1} = y_t\)</span> (método ingenuo I).</p>
+<p>Veremos estas técnicas en los temas 3 a 5: métodos ingenuos, medias móviles y métodos de alisado exponencial.</p></li>
+<li><p><strong>Paramétricos</strong>, se asume una estructura estocástica en la generación de los datos, es necesario que se verifiquen ciertos supuestos estadísticos y hay que estimar parámetros. Por ejemplo <span class="math inline">\(\hat y_{t+1} = \hat \mu + \hat \phi_1 y_t\)</span> (modelo autoregresivo de orden 1).</p>
+<p>Veremos estas técnicas en los temas 6 y 7: modelos ARIMA.</p></li>
+</ul>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+<div id="qué-haremos-y-qué-no-haremos-en-este-curso" class="section level1">
+<h1><span class="header-section-number">3</span> ¿Qué haremos y qué no haremos en este curso?</h1>
+<p>En este curso nos vamos a centrar en los métodos más fiables para obtener predicciones. Métodos que son replicables, cuyos resultados –las predicciones– son verificables y que son usados ampliamente por parte de organizaciones y empresas. Métodos objetivos.</p>
+<p>No podremos ver todos los métodos existentes, ¡ni aunque hubiera un grado solo para predicciones! Pero los que veremos te darán la base para aprender otros métodos de previsión: alisado exponencial con doble estacionalidad, el vecino más próximo, vectores autoregresivos, redes neuronales; y para aprender otros enfoques a la hora de hacer previsiones: modelos jerárquicos de series, boostrapping, bagging…</p>
+<p>No vamos a aprender a predecir cotizaciones de bolsa. La metodología para predecir estas series es completamente diferente y muy poco exitosa. Si fuera fácil, estaríamos todos invirtiendo, no dando clases (yo) o recibiéndolas (vosotros).</p>
+<p><br />
+<br />
+<br />
+<br />
+</p>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWNjacOzbiIKYXV0aG9yOiAiSXbDoW4gQXJyaWJhcyAoRGVwdG8uIEFuw6FsaXNpcyBFY29uw7NtaWNvLiBVbml2ZXJzaXRhdCBkZSBWYWzDqG5jaWEpIgpzdWJ0aXRsZTogIlByZXZpc2nDs24gY29uIERhdG9zIFRlbXBvcmFsZXMgKEdCSUEpIgpkYXRlOiAiQ3Vyc28gMjAyMC0yMSIKb3V0cHV0OgogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB5ZXMKICAgIGRmX3ByaW50OiBrYWJsZQogICAgZmlnX2NhcHRpb246IG5vCiAgICBoaWdobGlnaHQ6IHB5Z21lbnRzCiAgICBudW1iZXJfc2VjdGlvbnM6IHllcwogICAgc2VsZl9jb250YWluZWQ6IHllcwogICAgdGhlbWU6IGNlcnVsZWFuCiAgICB0b2M6IHllcwogICAgdG9jX2RlcHRoOiAyCiAgICB0b2NfZmxvYXQ6CiAgICAgIGNvbGxhcHNlZDogeWVzCgotLS0KCmBgYHtyIGNodW5rX3NldHVwLCBlY2hvID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCh3YXJuaW5nID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgbWVzc2FnZSA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5hbGlnbiA9ICJjZW50ZXIiLCAKICAgICAgICAgICAgICAgICAgICAgIGZpZy5zaG93ID0gImhvbGQiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmhlaWdodCA9IDQsCiAgICAgICAgICAgICAgICAgICAgICBmaWcud2lkdGggPSA4LAogICAgICAgICAgICAgICAgICAgICAgb3V0LndpZHRoID0gIjgwJSIpIApgYGAKCgojIEludHJvZHVjY2nDs24KCj4iSGFjZXIgcHJldmlzaW9uZXMgc3Vwb25lIHJlYWxpemFyIGxhIG1lam9yIGFwcmVjaWFjacOzbiBwb3NpYmxlIGRlIGFsZ8O6biBzdWNlc28gZnV0dXJvIiBIb2x0b24geSBLZWF0aW5nICgxOTk2KS4KCj4iVGltZSBzZXJpZXMgYXJlIGFuYWx5c2VkIHRvIHVuZGVyc3RhbmQgdGhlIHBhc3QgYW5kIHRvIHByZWRpY3QgdGhlIGZ1dHVyZS4iIENvd3BlcnR3YWl0IHkgTWV0Y2FsZmUgKDIwMDkpCgpMb3MgZGF0b3MgdGVtcG9yYWxlcywgX19zZXJpZXMgdGVtcG9yYWxlc19fLCBzZSBhbmFsaXphbiBwYXJhIGVudGVuZGVyIGVsIHBhc2FkbyB5IHByZWRlY2lyIGVsIGZ1dHVybyBwb3NpYmlsaXRhbmRvIGEgbG9zIGFnZW50ZXMgdG9tYXIgZGVjaXNpb25lcyBhZGVjdWFkYW1lbnRlIGluZm9ybWFkb3MuCgpcCgojIyBMYSBwcmV2aXNpw7NuIGVuIGVsIMOhbWJpdG8gZGUgbG9zIG5lZ29jaW9zCgpFbiBwcsOhY3RpY2FtZW50ZSB0b2RhcyBsYXMgw6FyZWFzIGZ1bmNpb25hbGVzIGRlIHVuYSBlbXByZXNhIG8gbmVnb2NpbyBzZSByZWFsaXphIGFsZ8O6biB0aXBvIGRlIHByZXZpc2nDs24uCgoqIExhcyBjYWJlY2VyYXMgZGUgcHJlbnNhIGRldGVybWluYW4gZWwgbsO6bWVybyBkZSBlamVtcGxhcmVzIGEgaW1wcmltaXIgY2FkYSBkw61hIGFuYWxpemFuZG8gbGEgZGVtYW5kYSBwYXNhZGEgZGUgc3UgZGlhcmlvLgoKKiBMb3Mgc3VwZXJtZXJjYWRvcyBwcmVkaWNlbiBsYSBkZW1hbmRhIGRlIHN1cyBwcmluY2lwYWxlcyByZWZlcmVuY2lhcyAocHJvZHVjdG9zKSBhIGZpbiBkZSBhanVzdGFyIHN1IGZsdWpvIGxvZ8Otc3RpY28geSBldml0YXIgcXVlIHNlIGFnb3RlbiBlbiBlbCBsaW5lYWwgbyBxdWUgY2FkdXF1ZW4uIAoKKiBMb3MgZGlyZWN0b3JlcyBkZSBwcm9kdWNjacOzbiBoYW4gZGUgYmFzYXJzZSBlbiBwcmVkaWNjaW9uZXMgcGFyYSBhanVzdGFyIGxhcyBuZWNlc2lkYWRlcyBkZSBtYXRlcmlhcyBwcmltYXMgeSBlbCBuaXZlbCBkZSBleGlzdGVuY2lhcyBkZSBsb3MgcHJvZHVjdG9zIGVsYWJvcmFkb3MuCgoqIExvcyBkaXJlY3RvcmVzIGZpbmFuY2llcm9zIGhhY2VuIHByZXZpc2lvbmVzIGRlIGxvcyBmbHVqb3MgZGUgY2FqYSBwYXJhIGV2aXRhciB0ZW5zaW9uZXMgZW4gbGEgdGVzb3JlcsOtYS4KClwKCiMjIExhIHByZXZpc2nDs24gZW4gZWwgc2VjdG9yIHDDumJsaWNvCgpMb3MgcHJlc3VwdWVzdG9zIGdlbmVyYWxlcyBkZWwgZXN0YWRvIHNlIGVzdGFibGVjZW4gZW4gYmFzZSBhIHVuIGFtcGxpbyBjb25qdW50byBkZSBwcmV2aXNpb25lcyAoaW5ncmVzb3MsIGNvbnN1bW8sIHRpcG9zIGRlIGludGVyw6lzLi4uKSBFbiBnZW5lcmFsLCB0b2RvcyBsb3Mgb3JnYW5pc21vcyB5IGVtcHJlc2FzIHDDumJsaWNhcyBwcmVjaXNhbiBkZSBsYXMgcHJlZGljY2lvbmVzIGVuIHN1IGdlc3Rpw7NuIGRpYXJpYS4KCiogW1JlZCBFbMOpY3RyaWNhIEVzcGHDsW9sYV0oaHR0cHM6Ly9kZW1hbmRhLnJlZS5lcy9kZW1hbmRhLmh0bWwpIHByZWRpY2UgZWwgY29uc3VtbyBlbMOpY3RyaWNvIGhvcmEgYSBob3JhIHBhcmEgYWp1c3RhciBsYSBvZmVydGEgYSBsYSBkZW1hbmRhLgoKKiBFbCBbSW5zdGl0dXRvIE5hY2lvbmFsIGRlIEVzdGFkw61zdGljYV0oaHR0cDovL3d3dy5pbmUuZXMvZHluZ3MvSU5FYmFzZS9lcy9vcGVyYWNpb24uaHRtP2M9RXN0YWRpc3RpY2FfQyZjaWQ9MTI1NDczNjE3Njk1MyZtZW51PXVsdGlEYXRvcyZpZHA9MTI1NDczNTU3Mjk4MSkgKElORSkgcHJlZGljZSBsYSBwb2JsYWNpw7NuIGVzcGHDsW9sYSBwYXJhIGxvcyBwcsOzeGltb3MgNTAgYcOxb3MuIAoKXApcCgpQcmVkZWNpciBlcyBmw6FjaWwgeSBjdWFuZG8gc2UgYWNpZXJ0YSBwdWVkZSBwYXJlY2VyIGNvc2EgZGUgc3VlcnRlIG8gdW5hIGdyYW4gaW50dWljacOzbi4gQ3VhbmRvIHNlIGZyYWNhc2EsIHB1ZWRlIHNlciB1biBkZXNhc3RyZS4KCiogX0NyZW8gcXVlIGhheSBtZXJjYWRvIG11bmRpYWwgcGFyYSB0YWwgdmV6IGNpbmNvIG9yZGVuYWRvcmVzLl8gKFByZXNpZGVudGUgZGUgSUJNLCAxOTQzKQoqIF9Mb3Mgb3JkZW5hZG9yZXMgZW4gZWwgZnV0dXJvIG5vIHBlc2Fyw6FuIG3DoXMgZGUgMS41IHRvbmVsYWRhcy5fIChQb3B1bGFyIE1lY2hhbmljcywgMTk0OSkKKiBfTm8gaGF5IHJhesOzbiBwYXJhIHF1ZSBjYWRhIHVubyBxdWllcmEgdW4gb3JkZW5hZG9yIGVuIHN1IGNhc2FfLiAoUHJlc2lkZW50ZSBkZSBERUMsIDE5Nzc7IHRyZXMgYcOxb3MgZGVzcHXDqXMgSUJNIGxhbnphYmEgYWwgbWVyY2FkbyBlbCBwcmltZXIgUEMpCgpcClwKCiMgTcOpdG9kb3MgZGUgcHJldmlzacOzbgoKVW4gbcOpdG9kbyBkZSBwcmV2aXNpw7NuIGVzIHVuIHByb2Nlc28gZGV0YWxsYWRvIHF1ZSBkZXNjcmliZSBsb3MgcGFzb3MgYSBzZWd1aXIgZGVzZGUgcXVlIHNlIHBsYW50ZWEgZWwgcHJvYmxlbWEgaGFzdGEgcXVlIHNlIG9idGllbmUgbGEgcHJldmlzacOzbjogcmVjb2dpZGEgZGUgbGEgIGluZm9ybWFjacOzbiwgcHJvY2VzYW1pZW50byBkZSBsYSBpbmZvcm1hY2nDs24sIGVzdGltYWNpw7NuIGRlIGxhIHByZXZpc2nDs24sIG1lZGlkYSBkZSBpbmNlcnRpZHVtYnJlLi4uCgpMYSBsaXRlcmF0dXJhIHJlY29nZSBkb3MgZ3JhbmRlcyBtw6l0b2RvcyBkZSBwcmV2aXNpw7NuOgoKKiBNw6l0b2RvcyBzdWJqZXRpdm9zCiogTcOpdG9kb3Mgb2JqZXRpdm9zCgpFbiBlc3RlIHRlbWEgaGFibGFyZW1vcyBhbGdvIHNvYnJlIGxvcyBwcmltZXJvcyB5IGVuIGxvcyByZXN0YW50ZXMgdGVtYXMgYW5hbGl6YXJlbW9zIGVuIGRldGFsbGUgbG9zIHNlZ3VuZG9zLgoKXAoKIyMgTcOpdG9kb3Mgc3ViamV0aXZvcwoKUmVhbGl6YXIgcHJlZGljY2lvbmVzIGEgcGFydGlyIGRlIG9waW5pb25lcyB5IGp1aWNpb3Mgc3ViamV0aXZvcyBlcyBwcsOhY3RpY2EgY29tw7puLiBFbiBtdWNoYXMgb2Nhc2lvbmVzIGxhcyBwcmV2aXNpb25lcyBzdWJqZXRpdmFzIGVzIGxhIMO6bmljYSBvcGNpw7NuLCB0YWxlcyBjb21vIGN1YW5kbyBubyBoYXkgZGF0b3MgaGlzdMOzcmljb3MsIG8gY3VhbmRvIHVuIG51ZXZvIHByb2R1Y3RvIHNlIHZhIGEgc2FjYXIgYWwgbWVyY2FkbywgbyBjdWFuZG8gZW50cmEgZW4gZWwgbWVyY2FkbyB1biBudWV2byBjb21wZXRpZG9yLCBvIGR1cmFudGUgdW4gZW50b3JubyBkZSBtZXJjYWRvIMO6bmljbyB5IG51ZXZvLiBQb3IgZWplbXBsbywgcHJlZGVjaXIgZWwgZWZlY3RvIHF1ZSBpYmEgYSB0ZW5lciBsYSBDT1ZJRCBlbiBlbCBncmFkbyBkZSBvY3VwYWNpw7NuIGhvdGVsZXJhIGRlIGFnb3N0bywgdW5hIHNpdHVhY2nDs24gc2luIHByZWNlZGVudGVzLCByZXF1aWVyZSBuZWNlc2FyaWFtZW50ZSBkZSBqdWljaW9zIHN1YmpldGl2b3MuCgpDb24gbG9zIGHDsW9zIGxhcyBwcmVkaWNjaW9uZXMgcG9yIG3DqXRvZG9zIHN1YmpldGl2b3MgaGFuIGlkbyBnYW5hbmRvIGFjZXB0YWNpw7NuIHkgcmVjb25vY2ltaWVudG8gY29tbyB1bmEgY2llbmNpYS4gRW4gcGFydGUgcG9ycXVlIGxhIGNhbGlkYWQgZGUgc3VzIHByZWRpY2Npb25lcyBoYSBtZWpvcmFkbyBjb21vIHJlc3VsdGFkbyBkaXJlY3RvIGRlbCB1c28gZGUgbWV0b2RvbG9nw61hcyBtZWpvciBlc3RydWN0dXJhZGFzIHkgbcOhcyBzaXN0ZW3DoXRpY2FzLiAKCkxhIHByZWRpY2Npb25lcyBhIHBhcnRpciBkZSBvcGluaW9uZXMgeSBqdWljaW9zIHNvbiBzdWJqZXRpdmFzIHkgcG9yIHRhbnRvIHN1amV0YXMgYSB1biBtb250w7NuIGRlIHNlc2dvcyB5IGxpbWl0YWNpb25lcy4gUG9yIGNpdGFyIGFsZ3VuYXM6CgoqIFB1ZWRlbiBzZXIgcGVyZmVjdGFtZW50ZSBpbmNvbnNpc3RlbnRlcyBwb3IgbXVjaG9zIG1vdGl2b3M6IHNlIHByZXN0YSBtw6FzIGF0ZW5jacOzbiBhIGFjb250ZWNpbWllbnRvcyBwcmVzZW50ZXMgcXVlIGEgbG9zIHBhc2Fkb3M7IHBvZGVtb3MgZGlyZWN0YW1lbnRlIHBhc2FyIHBvciBhbHRvIGluZm9ybWFjacOzbiByZWxldmFudGU7IHNlIHB1ZWRlbiBjb25mdW5kaXIgYWxndW5hcyByZWxhY2lvbmVzIGNhdXNhbGVzLgoqIFB1ZWRlbiBlc3RhciBhZmVjdGFkYXMgcG9yIGxhIGFnZW5kYSBwb2zDrXRpY2EgbyBwZXJzb25hbC4KKiBQdWVkZW4gc3VmcmlyIGRlbCBfZWZlY3RvIGFuY2xhXzogbGFzIHByZWRpY2Npb25lcyB0aWVuZGVuIGEgYWdydXBhcnNlIGVuIHRvcm5vIGEgdW4gdmFsb3IgaW5pY2lhbCBkZSByZWZlcmVuY2lhIGZhbWlsaWFyLgoqIG8gZGVsIF9lZmVjdG8gZGUgY29uZmlybWFjacOzbl8sIGRvbmRlIHNlIGRhIG1hcyBwZXNvIGEgbGEgaW5mb3JtYWNpw7NuIHF1ZSBjb25maXJtYSBudWVzdHJhcyBoaXDDs3Rlc2lzIHByZXZpYXMuCiogLi4uIChsYSBsaXN0YSBlcyBsYXJnYSkKCiMjIyBQcmluY2lwaW9zIGLDoXNpY28gZW4gbGEgaW1wbGVtZW50YWNpw7NuIHstfQoKQSBmaW4gZGUgcmVkdWNpciBlbCBlZmVjdG8gYWR2ZXJzbyBkZSBlc3RhcyBsaW1pdGFjaW9uZXMgeSBzZXNnb3MsIGVzIGZ1bmRhbWVudGFsIHVzYXIgdW5hIGFwcm94aW1hY2nDs24gc2lzdGVtw6F0aWNhIHkgYmllbiBlc3RydWN0dXJhZGEsIGNvbiBpbmRlcGVuZGVuY2lhIGRlIGxhIG1ldG9kb2xvZ8OtYSBxdWUgZmluYWxtZW50ZSBzZSB2YXlhIGEgc2VndWlyLiBMb3MgcHJpbmNpcGlvcyBhIHNlZ3VpciBzb246CgoqIERlZmluZSBsYSB2YXJpYWJsZSBhIHByZWRlY2lyIGRlIGZvcm1hIGNsYXJhIHkgY29uY2lzYS4KKiBJbXBsZW1lbnRhIHVuIG3DqXRvZG8gZGUgcHJldmlzacOzbiBzaXN0ZW3DoXRpY28uCiogRG9jdW1lbnRhIHRvZG8gZWwgcHJvY2VzbyBjb24gZWwgb2JqZXRpdm8gZGUgcHJvbW92ZXIgbGEgY29uc2lzdGVuY2lhIHkgbGEgcmVwbGljYWJpbGlkYWQuCiogSnVzdGlmaWNhIGxhcyBwcmVkaWNjaW9uZXMgcGFyYSByZWR1Y2lyIGxvcyBzZXNnb3MuCiogTW9uaXRvcml6YSBsYXMgcHJlZGljY2lvbmVzIHBhcmEgYWRlbGFudGFydGUgYSBpcnJlZ3VsYXJpZGFkZXMgbyBkZXN2aWFjaW9uZXMgaW1wb3J0YW50ZXMgcmVzcGVjdG8gZGUgbG9zIHZhbG9yZXMgcmVhbGVzLgoqIFNlcGFyYSBsb3MgcHJlZGljdG9yZXMgZGUgbG9zIHVzdWFyaW9zIGRlIGxhcyBwcmVkaWNjaW9uZXMuCgojIyMgQWxndW5vcyBtw6l0b2RvcyBzdWJqZXRpdm9zIHstfQoKKiBfSnVyYWRvIGRlIG9waW5pw7NuXzogbGEgcHJlZGljY2nDs24gbGEgcmVhbGl6YW4gdW4gY29uanVudG8gZGUgZXhwZXJ0b3MgcG9yIGNvbnNlbnNvLgoqIF9QcmVkaWNjacOzbiBwb3IgYW5hbG9nw61hXzogc2UgcmVhbGl6YSBsYSBwcmVkaWNjacOzbiBidXNjYW5kbyBzaXR1YWNpb25lcyBvIGVudG9ybm9zIGFuw6Fsb2dvcyBkb25kZSBzZSBjb25vY2UgbGEgaW5mb3JtYWNpw7NuIHNvbGljaXRhZGEuICAKKiBfTcOpdG9kbyBEZWxwaGlfOiBzaW1pbGFyIGFsIGp1cmFkbyBkZSBvcGluacOzbiwgcGVybyBzZSBwcmVzZXJ2YSBlbCBhbm9uaW1hdG8gZGUgbG9zIGV4cGVydG9zIHkgZWwgY29uc2Vuc28gc2Ugb2J0aWVuZSBhIHBhcnRpciBkZSB1biBwcm9jZXNvIGl0ZXJhdGl2byBlbiB2YXJpYXMgcm9uZGFzOgogICAgMS4gU2UgZWxpZ2UgdW4gcGFuZWwgZGUgZXhwZXJ0b3MuCiAgICAyLiBTZSBzb2xpY2l0YSBhIGNhZGEgdW5vIHN1IG9waW5pw7NuIHJlc3BlY3RvIGEgbGFzIHZhcmlhYmxlcyBxdWUgc2UgZGVzZWEgcHJlZGVjaXIuCiAgICAzLiBMb3MgZXhwZXJ0b3MgZGV2dWVsdmVuIHN1cyBwcmVkaWNjaW9uZXMgeSBsYSBqdXN0aWZpY2FjacOzbi4gRXN0YXMgc2UgcmVzdW1lbiBkZSBmb3JtYSBhbsOzbmltYS4KICAgIDQuIFNlIGRpc3RyaWJ1eWUgYSBjYWRhIGV4cGVydG8gZWwgcmVzdW1lbiBkZSByZXN1bHRhZG9zIHBhcmEgc3UgYW7DoWxpc2lzIHkgcmV2aXNpw7NuLgogICAgNS4gTG9zIGV4cGVydG9zIHJldmlzYW4gc3VzIG9waW5pb25lcyBwZXJzb25hbGVzIGEgcGFydGlyIGRlIGxhIGluZm9ybWFjacOzbiBvYnRlbmlkYS4KICAgIDYuIFNlIHJlcGl0ZW4gbG9zIHBhc29zIDMgYSA1IGhhc3RhIHF1ZSBkZWplIGRlIGhhYmVyIGNhbWJpb3Mgc2lnbmlmaWNhdGl2b3MgZW4gbGFzIG9waW5pb25lcy4KKiBfTcOpdG9kbyBkZSBlc2NlbmFyaW9zXzogc2UgZGVmaW5lbiB1bmEgc2VyaWUgZGUgcG9zaWJsZXMgZXNjZW5hcmlvcyBjb25zaWRlcmFuZG8gdG9kb3MgbG9zIGZhY3RvcmVzIHJlbGV2YW50ZXMgeSBzZSBsZXMgYXNpZ25hIHVuYSBwcm9iYWJpbGlkYWQuIFBhcmEgY2FkYSBlc2NlbmFyaW8gc2Ugb2J0aWVuZSwgc2lndWllbmRvIHVuIGRldGVybWluYWRvIG3DqXRvZG8sIGxhIHByZWRpY2Npw7NuIGRlc2VhZGEuCiogX0FqdXN0ZXMgcG9yIGp1aWNpb3Mgc3ViamV0aXZvc186IHByb3BpYW1lbnRlIGVzdGUgbm8gZXMgdW4gbcOpdG9kbyBzdWJqZXRpdm8uIENvbnNpc3RlIGVuIHJlYWxpemFyIHVuYSBwcmVkaWNjacOzbiBjb24gaW5mb3JtYWNpw7NuIGhpc3TDs3JpY2EgZGlzcG9uaWJsZSB1c2FuZG8gaGVycmFtaWVudGFzIGVzdGFkw61zdGljYXMgcGFyYSBkZXNwdcOpcyBzZXIgYWp1c3RhZGEgYSBwYXJ0aXIgZGVsIGp1aWNpbyBkZSBleHBlcnRvcy4KClwKCiMjIE3DqXRvZG9zIG9iamV0aXZvcwoKTGEgcHJlZGljY2nDs24gc2Ugb2J0aWVuZSBwcmluY2lwYWxtZW50ZSBhIHBhcnRpciBkZSBsb3MgdmFsb3JlcyBwYXNhZG9zIGRlIGxhIHByb3BpYSB2YXJpYWJsZSBhIHByZWRlY2lyIGF1bnF1ZSB0YW1iacOpbiBzZSBwdWVkZSB1dGlsaXphciBlbCB2YWxvciBwYXNhZG8gZGUgb3RyYXMgdmFyaWFibGVzCgokJFxoYXQgeV97dCtofSA9IGYoeV90LCB5X3t0LTF9LFxsZG90cykkJApkb25kZSAkXGhhdCB5X3t0K2h9JCBlcyBsYSBwcmV2aXNpw7NuIHF1ZSBoYWNlbW9zIHBhcmEgZWwgcGVyaW9kbyAkdCtoJCBjb24gaW5mb3JtYWNpw7NuIHNvbG8gaGFzdGEgZWwgcGVyaW9kbyAkdCQuCgpEZW50cm8gZGUgbG9zIG3DqXRvZG9zIG9iamV0aXZvcyBkaXN0aW5ndWlyZW1vcyBlbnRyZToKCiogKipObyBwYXJhbcOpdHJpY29zKiosIGRvbmRlIG5vIHNlIGFzdW1lIG5pbmd1bmEgaGlww7N0ZXNpcyBlc3RhZMOtc3RpY2EgeSBsYXMgcHJlZGljY2lvbmVzIHNlIG9idGllbmVuIGEgcGFydGlyIGRlIGxvcyBkYXRvcyBwYXNhZG9zIGNvbiBjw6FsY3Vsb3MgX3NlbmNpbGxvc18gcXVlIG5vIGNvbXBvcnRhbiBlc3RpbWFyIG5pbmfDum4gcGFyw6FtZXRyby4gUG9yIGVqZW1wbG8gJFxoYXQgeV97dCsxfSA9IHlfdCQgKG3DqXRvZG8gaW5nZW51byBJKS4KCiAgVmVyZW1vcyBlc3RhcyB0w6ljbmljYXMgZW4gbG9zIHRlbWFzIDMgYSA1OiBtw6l0b2RvcyBpbmdlbnVvcywgbWVkaWFzIG3Ds3ZpbGVzIHkgbcOpdG9kb3MgZGUgYWxpc2FkbyBleHBvbmVuY2lhbC4KCiogKipQYXJhbcOpdHJpY29zKiosIHNlIGFzdW1lIHVuYSBlc3RydWN0dXJhIGVzdG9jw6FzdGljYSBlbiBsYSBnZW5lcmFjacOzbiBkZSBsb3MgZGF0b3MsIGVzIG5lY2VzYXJpbyBxdWUgc2UgdmVyaWZpcXVlbiBjaWVydG9zIHN1cHVlc3RvcyBlc3RhZMOtc3RpY29zIHkgaGF5IHF1ZSBlc3RpbWFyIHBhcsOhbWV0cm9zLiBQb3IgZWplbXBsbyAkXGhhdCB5X3t0KzF9ID0gXGhhdCBcbXUgKyBcaGF0IFxwaGlfMSB5X3QkIChtb2RlbG8gYXV0b3JlZ3Jlc2l2byBkZSBvcmRlbiAxKS4KCiAgVmVyZW1vcyBlc3RhcyB0w6ljbmljYXMgZW4gbG9zIHRlbWFzIDYgeSA3OiBtb2RlbG9zIEFSSU1BLgoKXApcCgojIMK/UXXDqSBoYXJlbW9zIHkgcXXDqSBubyBoYXJlbW9zIGVuIGVzdGUgY3Vyc28/CgpFbiBlc3RlIGN1cnNvIG5vcyB2YW1vcyBhIGNlbnRyYXIgZW4gbG9zIG3DqXRvZG9zIG3DoXMgZmlhYmxlcyBwYXJhIG9idGVuZXIgcHJlZGljY2lvbmVzLiBNw6l0b2RvcyBxdWUgc29uIHJlcGxpY2FibGVzLCBjdXlvcyByZXN1bHRhZG9zIC0tbGFzIHByZWRpY2Npb25lcy0tIHNvbiB2ZXJpZmljYWJsZXMgeSBxdWUgc29uIHVzYWRvcyBhbXBsaWFtZW50ZSBwb3IgcGFydGUgZGUgb3JnYW5pemFjaW9uZXMgeSBlbXByZXNhcy4gTcOpdG9kb3Mgb2JqZXRpdm9zLgoKTm8gcG9kcmVtb3MgdmVyIHRvZG9zIGxvcyBtw6l0b2RvcyBleGlzdGVudGVzLCDCoW5pIGF1bnF1ZSBodWJpZXJhIHVuIGdyYWRvIHNvbG8gcGFyYSBwcmVkaWNjaW9uZXMhIFBlcm8gbG9zIHF1ZSB2ZXJlbW9zIHRlIGRhcsOhbiBsYSBiYXNlIHBhcmEgYXByZW5kZXIgb3Ryb3MgbcOpdG9kb3MgZGUgcHJldmlzacOzbjogYWxpc2FkbyBleHBvbmVuY2lhbCBjb24gZG9ibGUgZXN0YWNpb25hbGlkYWQsIGVsIHZlY2lubyBtw6FzIHByw7N4aW1vLCB2ZWN0b3JlcyBhdXRvcmVncmVzaXZvcywgcmVkZXMgbmV1cm9uYWxlczsgeSBwYXJhIGFwcmVuZGVyIG90cm9zIGVuZm9xdWVzIGEgbGEgaG9yYSBkZSBoYWNlciBwcmV2aXNpb25lczogbW9kZWxvcyBqZXLDoXJxdWljb3MgZGUgc2VyaWVzLCBib29zdHJhcHBpbmcsIGJhZ2dpbmcuLi4KCk5vIHZhbW9zIGEgYXByZW5kZXIgYSBwcmVkZWNpciBjb3RpemFjaW9uZXMgZGUgYm9sc2EuIExhIG1ldG9kb2xvZ8OtYSBwYXJhIHByZWRlY2lyIGVzdGFzIHNlcmllcyBlcyBjb21wbGV0YW1lbnRlIGRpZmVyZW50ZSB5IG11eSBwb2NvIGV4aXRvc2EuIFNpIGZ1ZXJhIGbDoWNpbCwgZXN0YXLDrWFtb3MgdG9kb3MgaW52aXJ0aWVuZG8sIG5vIGRhbmRvIGNsYXNlcyAoeW8pIG8gcmVjaWJpw6luZG9sYXMgKHZvc290cm9zKS4KCgpcClwKXApcCgo=</div>
+<footer class="footer">
+  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+<br>
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
+  
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("03-01-Tema1.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

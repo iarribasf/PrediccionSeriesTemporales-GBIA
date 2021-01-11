@@ -23,8 +23,19 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
@@ -421,10 +432,10 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="05-Practica.html">
+  <a href="05-Evaluacion_Continua.html">
     <span class="fa fa-edit"></span>
      
-    Practica
+    Evaluacion Continua
   </a>
 </li>
 <li class="dropdown">
@@ -503,7 +514,6 @@ div.tocify {
 <li>Tema 7. Modelos ARIMA con estacionalidad</li>
 </ul>
 <p>Pasar de un tema al siguiente supone incrementar la complejidad de las técnicas empleadas para el análisis de una serie temporal de forma que podréis valorar con datos reales la relación entre complejidad–tiempo–resultados y optar por la metodología más adecuada.</p>
-<p>El desarrollo detallado de cada tema lo podréis encontrar en la sección <a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/06-Calendario.html">Calendario</a> de la página web. Esta es una sección viva, que se irá ampliado y modificando según avance el curso.</p>
 <p><br />
 </p>
 <hr />
@@ -516,8 +526,7 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li><em>Tiempo de teórica</em>: durante las clases teóricas, de una hora de duración, veremos conceptos nucleares de cada tema de forma precisa y rigurosa, en lenguaje natural, gráfico y formal. El material teórico lo podéis encontrar en la sección <strong>Diapos</strong>.</li>
 <li><em>Tiempo de práctica</em>: durante las clases prácticas también veremos algo de teoría (material en <strong>Diapos</strong>), pero inmediatamente la practicaremos a partir del código y de los ficheros de datos que podéis encontrar en la sección <a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/04-Recursos-R.html"><strong>Recursos de R</strong></a> y aprenderemos el manejo de R para el análisis de series temporales.</li>
-<li><em>Tiempo de evaluación</em>: tras cada tema realizaréis una breve prueba tipo test, con tiempo limitado, para valorar si habéis adquirido los conocimientos teóricos y las habilidades practicas básicas.</li>
-<li><em>Trabajo práctico de evaluación</em>: en la medida de lo posible, en clase os daré tiempo para realizar parte de los trabajos prácticos que servirán de evaluación continua del curso.</li>
+<li><em>Tiempo de evaluación</em>: tras cada tema realizaréis una prueba tipo test para valorar si habéis adquirido los conocimientos teóricos y las habilidades practicas básicas. Estas pruebas serán de evaluación continua del curso.</li>
 </ol>
 <p><br />
 </p>
@@ -531,12 +540,17 @@ div.tocify {
 </div>
 <div id="evaluación" class="section level2">
 <h2>Evaluación</h2>
-<p>La <strong>evaluación continua supondrá un 60%</strong> de la nota de la asignatura y se compondrá de dos tipos de actividades:</p>
+<p>La <strong>evaluación continua supondrá un 60%</strong> de la nota de la asignatura.</p>
 <ul>
-<li>Tras la mayoría de los temas se realizará en horario de clase una <strong>breve prueba tipo test</strong>. La prueba contendrá preguntas de respuesta múltiple, numérica, verdadero/falso, etc. Este conjunto de pruebas supondrá un <strong>15%</strong> de la nota de la asignatura. Esta parte de la evaluación continua <strong>no es recuperable</strong>.</li>
-<li>Además, tras cada unidad temática, se realizará una <strong>práctica de evaluación</strong> que se deberá entregar en el plazo establecido. La valoración de estos trabajos supondrá un <strong>45%</strong> de la nota de la asignatura. Las prácticas de evaluación deben realizarse utilizando el <strong>programa estadístico R</strong> y recomiendo que uséis para la escritura del trabajo el lenguaje <strong>Markdown</strong>. Esta parte de la evaluación continua es <strong>recuperable</strong>.</li>
+<li>Tras la mayoría de los temas se realizará una <strong>prueba tipo test</strong>. La prueba contendrá preguntas de respuesta múltiple, numérica, verdadero/falso, etc.</li>
+<li>La prueba se enviará a través de vuestro correo de la universidad y se indicará el plazo para realizarla y subir la plantilla de respuestas como una <em>Tarea de Aulavirtual</em>.</li>
+<li>La evaluación continua <strong>es recuperable de cara a la segunda convocatoria</strong>.</li>
 </ul>
-<p>En la fecha convenida se realizará un <strong>examen que supondrá el restante 40%</strong> de la nota de la asignatura. El examen tendrá tanto apartados de teoría como preguntas prácticas.</p>
+<p>En la fecha convenida se realizará un <strong>examen que supondrá el restante 40%</strong> de la nota de la asignatura.</p>
+<ul>
+<li>El examen tendrá tanto apartados de teoría como preguntas prácticas.</li>
+<li>Será condición imprescindible para la superación de la asignatura aprobar el examen escrito.</li>
+</ul>
 <p><br />
 <br />
 <br />
@@ -562,7 +576,7 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -601,7 +615,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

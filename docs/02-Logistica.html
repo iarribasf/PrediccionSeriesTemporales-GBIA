@@ -23,8 +23,19 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
@@ -421,10 +432,10 @@ div.tocify {
   </a>
 </li>
 <li>
-  <a href="05-Practica.html">
+  <a href="05-Evaluacion_Continua.html">
     <span class="fa fa-edit"></span>
      
-    Practica
+    Evaluacion Continua
   </a>
 </li>
 <li class="dropdown">
@@ -487,7 +498,7 @@ div.tocify {
 <h3>Contenidos del curso</h3>
 <ul>
 <li><p><a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/index.html"><strong>“Página en Github con el curso”</strong></a> dónde encontrarás todo el material teórico y práctico necesario para seguir el curso y realizar las prácticas de evaluación.</p></li>
-<li><p><a href="https://aulavirtual.uv.es"><strong>Aula Virtual</strong></a> donde encontrarás una copia de todo el material del curso en un único fichero comprimido. Además, Aulavirtual será el medio de comunicación <em>oficial</em> entre nosotros, será dónde subiréis las prácticas de evaluación como tareas y dónde realizaréis las pruebas tipo test.</p></li>
+<li><p><a href="https://aulavirtual.uv.es"><strong>Aula Virtual</strong></a> donde encontrarás una copia de todo el material del curso en un único fichero comprimido. Además, Aulavirtual será el medio de comunicación <em>oficial</em> entre nosotros, será dónde subiréis las respuestas a las pruebas tipo test.</p></li>
 </ul>
 <p><br />
 </p>
@@ -498,9 +509,8 @@ div.tocify {
 <div id="materiales" class="section level3">
 <h3>Materiales</h3>
 <ul>
-<li><p><strong>Contenidos teóricos</strong>: los encontrarás en la sección <strong>Diapos</strong>. Las primeras entradas corresponden a los contenidos teóricos del curso y las restantes a un ejemplo práctico de aplicación para cada tema. Este ejemplo no necesariamente lo veremos durante el curso, pero puede serte de ayuda para terminar de comprender los conceptos teóricos visto y su aplicación práctica con <code>R</code>.</p></li>
+<li><p><strong>Contenidos teóricos</strong>: los encontrarás en la sección <strong>Diapos</strong>. Las primeras entradas corresponden a los contenidos teóricos del curso y las restantes a un ejemplo práctico de aplicación para cada tema. Este ejemplo no necesariamente lo veremos durante el curso, pero puede serte de ayuda para terminar de comprender los conceptos teóricos vistos y su aplicación práctica con <code>R</code>.</p></li>
 <li><p><a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/04-Recursos-R.html"><strong>Recursos de R</strong></a>: contiene los ficheros de datos de los ejemplos utilizados durante el curso (ficheros .csv) así como el código de R que usaremos en las clases (ficheros .R).</p></li>
-<li><p><a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/05-Practica.html"><strong>Práctica</strong></a>: contiene la descripción de las prácticas de evaluación y el fichero de datos que cada uno de vosotros debéis usar para realizarlas.</p></li>
 </ul>
 <p><br />
 </p>
@@ -599,7 +609,7 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
@@ -638,7 +648,7 @@ $(document).ready(function ()  {
       theme: "bootstrap3",
       context: '.toc-content',
       hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
       },
       ignoreSelector: ".toc-ignore",
       scrollTo: 0

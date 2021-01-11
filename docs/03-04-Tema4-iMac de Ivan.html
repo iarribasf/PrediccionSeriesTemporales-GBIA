@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
+
+
+<title>Métodos de medias móviles</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">
+    <span class="fa fa-home"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="01-Guia-curso.html">
+    <span class="fa fa-graduation-cap"></span>
+     
+    Guía del curso
+  </a>
+</li>
+<li>
+  <a href="02-Logistica.html">
+    <span class="fa fa-laptop"></span>
+     
+    Logística
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-book"></span>
+     
+    Diapos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Teoría</li>
+    <li>
+      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
+    </li>
+    <li>
+      <a href="03-02-Tema2.html">Tema 2: Definición</a>
+    </li>
+    <li>
+      <a href="03-03-Tema3.html">Tema 3: Métodos sencillos</a>
+    </li>
+    <li>
+      <a href="03-04-Tema4.html">Tema 4: Media móvil</a>
+    </li>
+    <li>
+      <a href="03-05-Tema5.html">Tema 5: Alisado</a>
+    </li>
+    <li>
+      <a href="03-06-Tema6.html">Tema 6: ARIMA</a>
+    </li>
+    <li>
+      <a href="03-07-Tema7.html">Tema 7: SARIMA</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Ejemplo de aplicación</li>
+    <li>
+      <a href="03-08-Ejemplo2.html">Ejemplo Tema 2</a>
+    </li>
+    <li>
+      <a href="03-09-Ejemplo3.html">Ejemplo Tema 3</a>
+    </li>
+    <li>
+      <a href="03-10-Ejemplo4.html">Ejemplo Tema 4</a>
+    </li>
+    <li>
+      <a href="03-11-Ejemplo5.html">Ejemplo Tema 5</a>
+    </li>
+    <li>
+      <a href="03-12-Ejemplo6.html">Ejemplo Tema 6</a>
+    </li>
+    <li>
+      <a href="03-13-Ejemplo7.html">Ejemplo Tema 7</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otro ejemplo</li>
+    <li>
+      <a href="03-14-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="04-Recursos-R.html">
+    <span class="fa fa-code"></span>
+     
+    Recursos de R
+  </a>
+</li>
+<li>
+  <a href="05-Practica.html">
+    <span class="fa fa-edit"></span>
+     
+    Practica
+  </a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-download"></span>
+     
+    Más
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">R</li>
+    <li>
+      <a href="https://cran.r-project.org">Dónde está R</a>
+    </li>
+    <li>
+      <a href="https://rstudio.com">Donde está RStudio</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Markdown</li>
+    <li>
+      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
+    </li>
+    <li>
+      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
+    </li>
+    <li class="divider"></li>
+    <li class="dropdown-header">Otros</li>
+    <li>
+      <a href="https://www.r-bloggers.com">Blog sobre R</a>
+    </li>
+    <li>
+      <a href="https://bookdown.org">Libros online que debes conocer</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Métodos de medias móviles</h1>
+<h3 class="subtitle">Previsión con Datos Temporales (GBIA)</h3>
+<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+
+</div>
+
+
+<div id="introducción" class="section level1">
+<h1><span class="header-section-number">1</span> Introducción</h1>
+<p>Recuerda que ya utilizamos la media móvil en el contexto de la descomposición. Se trataba de una media móvil centrada y se utilizaba para estimar la tendencia de una serie. Vamos ahora a ver con algo más de detalle el concepto de media móvil y como se puede usar para obtener predicciones.</p>
+<p>El método de las medias móviles con fines predictivos aparece en los años 20, su uso se generalizó en los años 50 y sigue siendo un método utilizado en determinados campos, donde el fin último es capturar la tendencia a largo plazo de una serie.</p>
+<p>Por ejemplo, si pinchas <a href="https://momo.isciii.es/public/momo/dashboard/momo_dashboard.html#nacional">aqui</a> puedes ver el registro del número de muertes diarias (MoMo) que mantiene el <em>Ministerio de Ciencia e Innovación</em>. La línea negra es el número real de muertes y la línea azul es (más o menos) la media móvil de orden 365. La media móvil captura la tendencia en el número de muertes a largo plazo, es decir, cabe esperar que ambas lineas aparezcan siempre cercanas. Si se observa que ambas líneas se separan, debemos pensar que un causa no identificada está produciendo un exceso (o defecto) de muertes sobre su valor esperado.</p>
+<p>En bolsa es muy habitual ver gráficos donde junto a la evolución del índice bursátil se muestra una media móvil de orden alto y otra de orden bajo. Cuando ambas líneas se cruzan, los analistas consideran que es buen momento para comprar (la media móvil de corto plazo pasa encima de la de largo plazo) o vender (la media móvil de corto plazo pasa por debajo de la de largo plazo).</p>
+<p><img src="imagenes/bolsa_medias_moviles.png" /></p>
+<p><br />
+</p>
+<p>Si te das cuenta, en ambos ejemplos <strong>la media móvil se ha utilizado como señal de alarma</strong> –en el primer caso de que algo está generando más o menos muertes de las esperadas y en el segundo caso de que es buen momento para comprar o vender–, pero no para realizar predicciones. En la actualidad, <strong>es poco frecuente el uso de la media móvil con fines exclusivamente predictivos</strong>.</p>
+<p>Sin embargo, por su sencillez de cálculo y su utilidad para identificar que el entorno de predicción está cambiando, vamos a dedicarles algo de tiempo a las medias móviles.</p>
+<p>Antes de empezar, un par de aspectos adicionales a tener en cuenta. Desde un punto de vista teórico, <strong>las medias móviles no pueden capturar la estacionalidad</strong> de una serie así que solo se aplican a series que por su naturaleza no tengan esta componente; desde un punto de vista práctico, <code>R</code> no dispone de una función que permita de forma cómoda obtener una media móvil, las predicciones intra-muestrales, las extra muestrales y el error. Algo como hemos visto en temas previos y veremos en los posteriores. Solventaremos este aspectos creando nuestra propia función.</p>
+<p><br />
+<br />
+</p>
+</div>
+<div id="media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" class="section level1">
+<h1><span class="header-section-number">2</span> Media móvil simple para series sin tendencia (ni estacionalidad)</h1>
+<p><br />
+</p>
+<div id="definición" class="section level2">
+<h2><span class="header-section-number">2.1</span> Definición</h2>
+<p>El método de la media móvil simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante. En este caso, <strong>la predicción para un periodo es la media de las <span class="math inline">\(r\)</span> observaciones previas</strong>. El valor <span class="math inline">\(r\)</span>, denominado orden de la media móvil, es un parámetro que debe ser fijado por el investigador.</p>
+<p>Definimos primero la media móvil <em>hacia atrás</em> (<em>backward</em>) de orden <span class="math inline">\(r\)</span> para el periodo <span class="math inline">\(t\)</span> como <span class="math display">\[mm_t = \frac{1}{r}\sum_{i=0}^{r-1} y_{t-i} = \frac{y_t + y_{t-1} + \ldots + y_{t-r+1}}{r}\]</span> Observa que la media móvil hacia atrás se define de forma diferente a la media móvil <em>centrada</em> que vimos en la descomposición por medias móviles.</p>
+<p>A partir de <span class="math inline">\(mm_t\)</span> se define la ecuación de la <strong>predicción intra-muestral</strong> como <span class="math display">\[\widehat{y}_{t+1} = mm_t.\]</span> Podemos entender que <span class="math inline">\(mm_t\)</span> es una estimación del nivel de la serie en el periodo <span class="math inline">\(t\)</span> y como la serie es estacionaria (no cambia de nivel), este valor se usa como predicción para el periodo siguiente.</p>
+<p>Es decir, la media móvil simple de orden <span class="math inline">\(r\)</span> usa para predecir el promedio los últimos <span class="math inline">\(r\)</span> datos. Es un punto medio entre el método ingenuo I, que para predecir usaba solo el ultimo dato, y la media simple, que promediaba todos los datos.</p>
+<p>La primera <strong>predicción extra-muestral</strong> es <span class="math inline">\(\widehat{y}_{T+1} = mm_T\)</span> y las restantes <span class="math inline">\(\widehat{y}_{T+h} = \widehat{y}_{T+1}.\)</span></p>
+<p>Observa que:</p>
+<ul>
+<li>Para poder aplicar la media móvil de orden <span class="math inline">\(r\)</span> se necesitan al menos <span class="math inline">\(r\)</span> datos.</li>
+<li>Para los <span class="math inline">\(r-1\)</span> periodos iniciales no es posible calcular la media móvil y, por tanto, para los <span class="math inline">\(r\)</span> periodos iniciales no es posible obtener una predicción intra-muestral.</li>
+<li>El valor de <span class="math inline">\(r\)</span> debe fijarlo el investigador. Cuanto mayor es su valor, más <em>suave</em> es la linea de predicciones obtenida y menos efecto tiene el valor de una observación individual sobre la predicción (véase la gráfica previa del Ibex35). En el caso límite <span class="math inline">\(r=1\)</span> se tiene el <em>método ingenuo</em> y para <span class="math inline">\(r=T\)</span> el <em>método de la media</em>.</li>
+</ul>
+<p>Veamos un sencillo ejemplo numérico.</p>
+<p>La siguiente tabla muestra la aplicación del método de las medias móviles para los 10 últimos datos de la serie Libros. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la media móvil de orden 5 y la siguiente columna, <em>Yhat</em>, la predicción de Libros, es decir la columna <em>mm</em> retrasada un periodo. La columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intra-muestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie.</p>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">Fecha</th>
+<th align="right">Libros</th>
+<th align="right">mm</th>
+<th align="right">Yhat</th>
+<th align="right">Res</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2009</td>
+<td align="right">74521</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2010</td>
+<td align="right">76206</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">2011</td>
+<td align="right">74244</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2012</td>
+<td align="right">69668</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">2013</td>
+<td align="right">56435</td>
+<td align="right">70214.8</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2014</td>
+<td align="right">56030</td>
+<td align="right">66516.6</td>
+<td align="right">70214.8</td>
+<td align="right">-14184.8</td>
+</tr>
+<tr class="odd">
+<td align="right">2015</td>
+<td align="right">61008</td>
+<td align="right">63477.0</td>
+<td align="right">66516.6</td>
+<td align="right">-5508.6</td>
+</tr>
+<tr class="even">
+<td align="right">2016</td>
+<td align="right">59567</td>
+<td align="right">60541.6</td>
+<td align="right">63477.0</td>
+<td align="right">-3910.0</td>
+</tr>
+<tr class="odd">
+<td align="right">2017</td>
+<td align="right">60185</td>
+<td align="right">58645.0</td>
+<td align="right">60541.6</td>
+<td align="right">-356.6</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">62180</td>
+<td align="right">59794.0</td>
+<td align="right">58645.0</td>
+<td align="right">3535.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tu mismo puedes comprobar que <span class="math display">\[mm_{2013} = \frac{74521 + 76206 + 74244 + 69668 + 56435}{5} = 70214.8\]</span> y la primera predicción extra-muestral seria la media de las 5 últimas observaciones <span class="math inline">\(\widehat{Libros}_{2019} = mm_{2018} = 59794\)</span></p>
+<p><br />
+</p>
+</div>
+<div id="ejemplo-de-aplicación-con-libros" class="section level2">
+<h2><span class="header-section-number">2.2</span> Ejemplo de aplicación con Libros</h2>
+<p>Vamos a usar el método de medias móviles para predecir la serie Libros. <code>R</code> proporciona varias funciones que permiten calcular la media móvil simple: <code>filter</code> del paquete <code>stats</code>, <code>ts_ma</code> de <code>TSstudio</code>, <code>sma</code> de <code>smooth</code>, <code>ma</code> de <code>forecast</code> o <code>movavg</code> de <code>pracma</code>. Sin embargo, ninguna de estas funciones es tan completa como las vistas en el tema previo y permiten obtener la media móvil, la estimación, la predicción y el error con una sola función.</p>
+<p>Para resolver este inconveniente vamos a programar nuestra propia función <code>mm</code></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">mm &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">r =</span> <span class="dv">3</span>, <span class="dt">h =</span> <span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">  z &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">  z<span class="op">$</span>x &lt;-<span class="st"> </span>x</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  z<span class="op">$</span>orden =<span class="st"> </span>r</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">  TT &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">  inicio &lt;-<span class="st"> </span><span class="kw">start</span>(x)</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">  frecuencia &lt;-<span class="kw">frequency</span>(x)</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">  z<span class="op">$</span>mm &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">filter</span>(x, <span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span>r, r), <span class="dt">side =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  z<span class="op">$</span>fitted &lt;-<span class="st"> </span><span class="kw">ts</span>(<span class="kw">c</span>(<span class="ot">NA</span>, z<span class="op">$</span>mm[<span class="op">-</span>TT]), <span class="dt">start =</span> inicio, <span class="dt">freq =</span> frecuencia)</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">  z<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">ts</span>(<span class="kw">rep</span>(z<span class="op">$</span>mm[TT], h), <span class="dt">start =</span> <span class="kw">time</span>(x)[TT] <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>frecuencia, <span class="dt">freq =</span> frecuencia)</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">  z<span class="op">$</span>residuals &lt;-<span class="st"> </span>x <span class="op">-</span><span class="st"> </span>z<span class="op">$</span>fitted</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">  </a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">  <span class="kw">class</span>(z) &lt;-<span class="st"> &quot;forecast&quot;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">  z</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">}</a></code></pre></div>
+<p>La función <code>mm</code> precisa de tres argumentos, una serie temporal, el orden de la media móvil <span class="math inline">\(r\)</span> y el horizonte de previsión <span class="math inline">\(h\)</span>. Los dos últimos argumentos están fijados a 3 y 5 como opciones por defecto. El núcleo de la función es <code>filter</code>, que calcula la media móvil simple –realmente la función calcula una media ponderada hacia atrás (argumento <code>side = 1</code>).</p>
+<p>La función <code>mm</code> devuelve un objeto que contiene la serie original (<code>x</code>), el orden de la media móvil (<code>orden</code>), la media móvil (<code>mm</code>), la serie ajustada o predicción intra-muestral a un periodo vista (<code>fitted</code>), la predicción (<code>forecast</code>) y el error de estimación (<code>error</code>).</p>
+<p><strong>Nota:</strong> la función <code>filter</code> (librería <code>stats</code>), tiene como primer argumento la serie y el segundo argumento, <code>rep(1/r, r)</code>, son los pesos de la media móvil <span class="math inline">\(1/r\)</span> repetidos <span class="math inline">\(r\)</span>. El tercer argumento indica si la media es centrada <code>side = 2</code> (como la usada en el método de descomposición visto en el tema 2) o hacia atrás <code>side = 1</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">mmLibros &lt;-<span class="st"> </span><span class="kw">mm</span>(libros, <span class="dt">r =</span> <span class="dv">5</span>, <span class="dt">h =</span> <span class="dv">5</span>)</a></code></pre></div>
+<p>La figura 1 muestra la serie Libros, las previsiones intra-muestrales y las previsiones extra-muestrales, que son constantes.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">autoplot</span>(libros, <span class="dt">series =</span> <span class="st">&quot;Libros&quot;</span>,</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">         <span class="dt">ylab =</span> <span class="st">&quot;Títulos&quot;</span>,</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 1. Libros y predicción con media móvil de orden 5&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw">autolayer</span>(mmLibros<span class="op">$</span>fitted, <span class="dt">series =</span> <span class="st">&quot;Pred. intra&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw">autolayer</span>(mmLibros<span class="op">$</span>mean, <span class="dt">series =</span> <span class="st">&quot;Pred. extra&quot;</span>)</a></code></pre></div>
+<p><img src="03-04-Tema4_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>Podemos ahora obtener los diferentes indicadores de bondad de ajuste del modelo (error de predicción intra-muestral) con la función <code>accuracy</code>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">accuracy</span>(mmLibros)</a></code></pre></div>
+<pre><code>                   ME     RMSE     MAE      MPE     MAPE     MASE      ACF1
+Training set 1950.676 9154.809 7391.99 2.267172 11.47894 1.597785 0.6836209</code></pre>
+<p>El MAPE de 11.5% evidencia que las predicciones no son muy adecuadas, resultado lógico si tenemos en cuenta que estamos aplicando a una serie con tendencia un método de ajuste y predicción para series sin tendencia.</p>
+<p>Podríamos probar con otros valores para el orden de la media móvil e identificar el que genera el menor error extra-muestral para el horizonte de previsión deseado.</p>
+<p><br />
+<br />
+</p>
+</div>
+</div>
+<div id="dobles-medias-móviles-para-series-con-tendencia-pero-sin-estacionalidad" class="section level1">
+<h1><span class="header-section-number">3</span> Dobles medias móviles para series con tendencia (pero sin estacionalidad)</h1>
+<p><br />
+</p>
+<div id="definición-1" class="section level2">
+<h2><span class="header-section-number">3.1</span> Definición</h2>
+<p>El método de dobles medias móviles es adecuado para una serie no estacionaria y sin estacionalidad y supone que la tendencia es localmente lineal. En este caso, para obtener una predicción en el periodo <span class="math inline">\(t+1\)</span> con datos hasta el periodo <span class="math inline">\(t\)</span> necesitamos dos componentes:</p>
+<ul>
+<li>La estimación del nivel de la serie en el periodo <span class="math inline">\(t\)</span>, que denominaremos <span class="math inline">\(l_t\)</span></li>
+<li>La estimación de la pendiente de la serie en el periodo <span class="math inline">\(t\)</span>, que denominaremos <span class="math inline">\(b_t\)</span></li>
+</ul>
+<p>A partir de estas componentes, obtenidas en el periodo <span class="math inline">\(t\)</span> se tendría que la predicción en el periodo <span class="math inline">\(t+1\)</span> es: <span class="math display">\[\widehat{y}_{t+1} = l_t+b_t.\]</span></p>
+<p>Veamos como podemos obtener el nivel <span class="math inline">\(l_t\)</span> y la pendiente <span class="math inline">\(b_t\)</span> usando una doble media móvil.</p>
+<ul>
+<li>El primer paso es obtener la media móvil simple de orden <span class="math inline">\(r\)</span> tal y como vimos en el epígrafe previo</li>
+</ul>
+<p><span class="math display">\[mm_t =  \frac{y_t + y_{t-1} + \ldots + y_{t-r+1}}{r}.\]</span></p>
+<ul>
+<li>El segundo paso consiste en calcular un media móvil simple de la media móvil obtenida en el paso 1, es decir, una doble media móvil, también de orden <span class="math inline">\(r\)</span>, y que denominaremos <span class="math inline">\(dmm_t\)</span></li>
+</ul>
+<p><span class="math display">\[dmm_t  = \frac{mm_t + mm_{t-1} + \ldots + mm_{t-r+1}}{r}.\]</span></p>
+<p>Se puede demostrar que <span class="math inline">\(mm_t\)</span> es una estimación del nivel de la serie en el periodo <span class="math inline">\(t - \frac{r-1}{2}\)</span> y que <span class="math inline">\(dmm_t\)</span> es una estimación del nivel en el periodo <span class="math inline">\(t - (r - 1)\)</span>. Teniendo en cuenta estos resultados, podemos estimar el valor del nivel de la serie en el periodo <span class="math inline">\(t\)</span> como <span class="math display">\[l_t = 2mm_t - dmm_t.\]</span></p>
+<p>Por otra parte, la pendiente en el periodo <span class="math inline">\(t\)</span> se puede obtener como <span class="math display">\[b_t = \frac{2}{r-1}(mm_t - dmm_t).\]</span></p>
+<p>A partir estas dos componentes, la ecuación de la <strong>predicción intra-muestral</strong> es <span class="math display">\[\widehat{y}_{t+1} = l_t + b_t\]</span> y la ecuación de <strong>predicción extra-muestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T.\]</span></p>
+<p>Veamos otro sencillo ejemplo numérico construido a partir del método de las dobles medias móviles para los 10 últimos datos de la serie Libros y con un orden <span class="math inline">\(r=3\)</span>. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la primera media móvil de orden 3 y la siguiente columna, <em>dmm</em>, la segunda media móvil. A partir de ellas se calculan las dos siguientes columnas <em>l</em> y <em>b</em>, el nivel y la pendiente respectivamente. La columna <em>Yhat</em> es la predicción de Libros y la columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intra-muestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie. En general, en una doble media móvil de orden <span class="math inline">\(r\)</span> se pierden <span class="math inline">\(2r - 1\)</span> datos al inicio de la serie.</p>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">Fecha</th>
+<th align="right">Libros</th>
+<th align="right">mm</th>
+<th align="right">dmm</th>
+<th align="right">l</th>
+<th align="right">b</th>
+<th align="right">Yhat</th>
+<th align="right">Res</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">2009</td>
+<td align="right">74521</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2010</td>
+<td align="right">76206</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">2011</td>
+<td align="right">74244</td>
+<td align="right">74990.33</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2012</td>
+<td align="right">69668</td>
+<td align="right">73372.67</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="odd">
+<td align="right">2013</td>
+<td align="right">56435</td>
+<td align="right">66782.33</td>
+<td align="right">71715.11</td>
+<td align="right">61849.56</td>
+<td align="right">-4932.78</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+<tr class="even">
+<td align="right">2014</td>
+<td align="right">56030</td>
+<td align="right">60711.00</td>
+<td align="right">66955.33</td>
+<td align="right">54466.67</td>
+<td align="right">-6244.33</td>
+<td align="right">56916.78</td>
+<td align="right">-886.78</td>
+</tr>
+<tr class="odd">
+<td align="right">2015</td>
+<td align="right">61008</td>
+<td align="right">57824.33</td>
+<td align="right">61772.56</td>
+<td align="right">53876.11</td>
+<td align="right">-3948.22</td>
+<td align="right">48222.33</td>
+<td align="right">12785.67</td>
+</tr>
+<tr class="even">
+<td align="right">2016</td>
+<td align="right">59567</td>
+<td align="right">58868.33</td>
+<td align="right">59134.56</td>
+<td align="right">58602.11</td>
+<td align="right">-266.22</td>
+<td align="right">49927.89</td>
+<td align="right">9639.11</td>
+</tr>
+<tr class="odd">
+<td align="right">2017</td>
+<td align="right">60185</td>
+<td align="right">60253.33</td>
+<td align="right">58982.00</td>
+<td align="right">61524.67</td>
+<td align="right">1271.33</td>
+<td align="right">58335.89</td>
+<td align="right">1849.11</td>
+</tr>
+<tr class="even">
+<td align="right">2018</td>
+<td align="right">62180</td>
+<td align="right">60644.00</td>
+<td align="right">59921.89</td>
+<td align="right">61366.11</td>
+<td align="right">722.11</td>
+<td align="right">62796.00</td>
+<td align="right">-616.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tu mismo puedes comprobar que <span class="math display">\[
+\begin{aligned}
+   mm_{2011} &amp; = \frac{74521 + 76206 + 74244}{3} = 74990.33 \\
+   dmm_{2013} &amp; = \frac{74990.33 + 73372.67 + 66782.33}{3} = 71715.11\\
+   l_{2013} &amp; = 2\cdot mm_{2013} - dmm_{2013} =  2 \cdot 66782.33 - 71715.11 = 61849.56 \\
+   b_{2013} &amp; = \frac{2}{3-1}(mm_{2013} - dmm_{2013}) =  66782.33 - 71715.11 = -4932.78 \\
+   \hat y_{2014} &amp; = l_{2013} + b_{2013} = 61849.56  -4932.78 = 56916.78
+\end{aligned}
+\]</span></p>
+<p>La primera predicción extra-muestral seria la suma del nivel y la pendiente de la última observación</p>
+<p><span class="math display">\[\widehat{Libros}_{2019} = l_{2018} + b_{2018} = 62088.22\]</span></p>
+<p>y la segunda predicción extra-muestral seria el nivel más dos veces la pendiente de la última observación:</p>
+<p><span class="math display">\[\widehat{Libros}_{2020} = l_{2018} + 2\cdot b_{2018} = 62810.33.\]</span></p>
+<p><br />
+</p>
+</div>
+<div id="ejemplo-de-aplicación-con-nacimientos" class="section level2">
+<h2><span class="header-section-number">3.2</span> Ejemplo de aplicación con Nacimientos</h2>
+<p>Veamos un ejemplo de aplicación de las dobles medias móviles con la serie Nacimientos anualizada.</p>
+<p>El método de las dobles medias móviles no está implementado en <code>R</code>, al menos hasta donde llega mi conocimiento. Para resolver este inconveniente vamos a programar nuestra propia función <code>dmm</code>. No tendrás ninguna dificultad en ver como funciona la función y como va creando cada uno de los elementos necesarios –primera y segunda media móvil, nivel y pendiente– para obtener finalmente la serie ajustada, las predicciones y el error.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">dmm &lt;-<span class="st"> </span><span class="cf">function</span>(x, <span class="dt">r =</span> <span class="dv">3</span>, <span class="dt">h =</span> <span class="dv">5</span>) {</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  z &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  z<span class="op">$</span>x &lt;-<span class="st"> </span>x</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  z<span class="op">$</span>orden =<span class="st"> </span>r</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  </a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  TT &lt;-<span class="st"> </span><span class="kw">length</span>(x)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">  inicio &lt;-<span class="st"> </span><span class="kw">start</span>(x)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">  frecuencia &lt;-<span class="kw">frequency</span>(x)</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">  </a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">  z<span class="op">$</span>mm1 &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">filter</span>(x, <span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span>r, r), <span class="dt">side =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">  z<span class="op">$</span>mm2 &lt;-<span class="st"> </span>stats<span class="op">::</span><span class="kw">filter</span>(z<span class="op">$</span>mm1, <span class="kw">rep</span>(<span class="dv">1</span><span class="op">/</span>r, r), <span class="dt">side =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb6-13" data-line-number="13">  z<span class="op">$</span>l &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>z<span class="op">$</span>mm1 <span class="op">-</span><span class="st"> </span>z<span class="op">$</span>mm2</a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">  z<span class="op">$</span>b &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>(z<span class="op">$</span>mm1 <span class="op">-</span><span class="st"> </span>z<span class="op">$</span>mm2) <span class="op">/</span><span class="st"> </span>(r <span class="op">-</span><span class="st"> </span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">  z<span class="op">$</span>fitted &lt;-<span class="st"> </span><span class="kw">ts</span>(<span class="kw">c</span>(<span class="ot">NA</span>, z<span class="op">$</span>l[<span class="op">-</span>TT] <span class="op">+</span><span class="st"> </span>z<span class="op">$</span>b[<span class="op">-</span>TT]), <span class="dt">start =</span> inicio, <span class="dt">freq =</span> frecuencia)</a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">  z<span class="op">$</span>mean &lt;-<span class="st"> </span><span class="kw">ts</span>(z<span class="op">$</span>l[TT] <span class="op">+</span><span class="st"> </span>(<span class="dv">1</span><span class="op">:</span>h) <span class="op">*</span><span class="st"> </span>z<span class="op">$</span>b[TT], <span class="dt">start =</span> <span class="kw">time</span>(x)[TT] <span class="op">+</span><span class="st"> </span><span class="dv">1</span><span class="op">/</span>frecuencia, <span class="dt">freq =</span> frecuencia)</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">  z<span class="op">$</span>residuals &lt;-<span class="st"> </span>x <span class="op">-</span><span class="st"> </span>z<span class="op">$</span>fitted</a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">  <span class="kw">class</span>(z) &lt;-<span class="st"> &quot;forecast&quot;</span></a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">  z</a>
+<a class="sourceLine" id="cb6-21" data-line-number="21">}</a></code></pre></div>
+<div id="identificación-del-mejor-modelo" class="section level3 unnumbered">
+<h3>Identificación del mejor modelo</h3>
+<p>Podemos aplicar el método de la doble media móvil para diferentes órdenes <span class="math inline">\(r\)</span> y comprobar para cual de ellos se obtiene el menor valor del criterio de bondad de ajuste deseado. Realizaremos este ejercicio considerando como indicador de bondad de ajuste el MAPE pero en dos escenarios: previsiones intra-muestrales a un periodo vista y origen de predicción móvil.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">nacimientos &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;./series/nacimientos.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">nacimientos &lt;-<span class="st"> </span><span class="kw">ts</span>(nacimientos[, <span class="dv">2</span>],</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">                  <span class="dt">start =</span> <span class="kw">c</span>(<span class="dv">1975</span>, <span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                  <span class="dt">frequency =</span> <span class="dv">12</span>)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">nacimientos &lt;-<span class="st"> </span><span class="kw">aggregate</span>(nacimientos, <span class="dt">FUN =</span> sum)</a></code></pre></div>
+<p><strong>Selección usando previsiones intra-muestrales a un periodo vista</strong></p>
+<p>La siguiente rutina calcula el MAPE para el método de la doble media móvil con órdenes desde 2 hasta 10. (¿Ves por qué en una doble media móvil el orden debe ser de 2 o superior?)</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">MAPE &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="ot">NA</span>, <span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">names</span>(MAPE) &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">  dmmNacimientos &lt;-<span class="st"> </span><span class="kw">dmm</span>(nacimientos, <span class="dt">r =</span> r)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">  MAPE[r <span class="op">-</span><span class="st"> </span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">accuracy</span>(dmmNacimientos)[<span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">MAPE</a></code></pre></div>
+<pre><code>        2         3         4         5         6         7         8         9 
+ 2.202026  2.690053  3.314361  4.331183  5.442385  7.165894  9.050259 10.954865 
+       10 
+12.701585 </code></pre>
+<p>Podemos concluir que el orden óptimo es 2, donde se alcanza el menor MAPE.</p>
+<p><strong>Selección usando origen de predicción móvil</strong></p>
+<p>Dado que nuestro interés está en la calidad de las previsiones, vamos a obtener el MAPE para el método de la doble media móvil usando origen de predicción móvil con horizontes temporales de 1 a 5 años. Consideraremos órdenes desde 2 hasta 10. A fin de capturar la tendencia decreciente de los últimos años, consideraremos 30 como el mínimo número de datos para hacer las estimaciones</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">k &lt;-<span class="st"> </span><span class="dv">30</span>                   <span class="co">#Minimo numero de datos para estimar</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">h &lt;-<span class="st"> </span><span class="dv">5</span>                    <span class="co">#Horizonte de las prediciciones</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">TT &lt;-<span class="st"> </span><span class="kw">length</span>(nacimientos) <span class="co">#Longitud serie</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">s &lt;-<span class="st"> </span>TT <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span>h           <span class="co">#Total de estimaciones</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">MAPE &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, <span class="dt">nrow =</span> <span class="dv">9</span>, <span class="dt">ncol =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw">rownames</span>(MAPE) &lt;-<span class="st"> </span><span class="dv">2</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="kw">colnames</span>(MAPE) &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span>h</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="cf">for</span> (r <span class="cf">in</span> <span class="dv">2</span><span class="op">:</span><span class="dv">10</span>) {</a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12">  tmpMape &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb10-14" data-line-number="14">  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span>s) {</a>
+<a class="sourceLine" id="cb10-15" data-line-number="15">  </a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">    train.set &lt;-<span class="st"> </span><span class="kw">subset</span>(nacimientos, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k)</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">    test.set &lt;-<span class="st">  </span><span class="kw">subset</span>(nacimientos, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h)</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18">    </a>
+<a class="sourceLine" id="cb10-19" data-line-number="19">    dmmNacimientos &lt;-<span class="st"> </span><span class="kw">dmm</span>(train.set, <span class="dt">r =</span> r, <span class="dt">h =</span> h)</a>
+<a class="sourceLine" id="cb10-20" data-line-number="20">    tmpMape[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, ] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>dmmNacimientos<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
+<a class="sourceLine" id="cb10-21" data-line-number="21">  }</a>
+<a class="sourceLine" id="cb10-22" data-line-number="22">  MAPE[r <span class="op">-</span><span class="st"> </span><span class="dv">1</span>, ] &lt;-<span class="st"> </span><span class="kw">colMeans</span>(tmpMape)</a>
+<a class="sourceLine" id="cb10-23" data-line-number="23">}</a>
+<a class="sourceLine" id="cb10-24" data-line-number="24">MAPE</a></code></pre></div>
+<pre><code>           1         2         3        4        5
+2   2.958914  4.800780  7.576362 10.59846 14.88468
+3   3.334705  5.501458  8.460553 12.03112 16.08163
+4   4.233137  6.886985 10.329308 14.16597 18.59347
+5   5.511392  8.457949 12.106864 16.58065 21.65478
+6   7.119569 10.548174 14.510435 19.19483 24.12903
+7   8.634000 12.271319 16.290182 20.68924 25.64427
+8  10.034600 13.670609 17.361862 21.73089 26.13362
+9  11.196446 14.522505 18.133706 21.99300 26.42560
+10 11.966653 15.222716 18.376814 22.10407 25.89743</code></pre>
+<p>En la tabla previa, cada fila hace referencia a un orden de la doble media móvil desde 2 hasta 10; y cada columna hace referencia a un horizonte temporal de predicción. Por ejemplo, usando un orden igual a 4 y para un horizonte de predicción de 2 periodos, el error medio de predicción extra-muestral es de 6.89%. Observa que con independencia del horizonte temporal de predicción considerado, el error se hace mínimo para un orden de las medias móviles de 2.</p>
+<p>Podemos concluir que, dado que nuestro interés es minimizar el error de las predicciones extra-muestrales, el valor óptimo del orden de la doble media móvil es 2. La figura 2 muestra la serie Nacimientos, la previsiones intra-muestrales y las previsiones extra-muestrales para dicho orden. Observa como en los dos cambios de tendencia, la serie ajustada (línea azul) va con un poco de retraso. A la doble media móvil le cuesta identificar e incorporar los cambios de tendencia.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">dmmNacimiemtos &lt;-<span class="st"> </span><span class="kw">dmm</span>(nacimientos, <span class="dt">r =</span> <span class="dv">2</span>, <span class="dt">h =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">autoplot</span>(nacimientos, <span class="dt">series =</span> <span class="st">&quot;Nacimientos&quot;</span>,</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4">         <span class="dt">ylab =</span> <span class="st">&quot;Bebés&quot;</span>,</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">         <span class="dt">main =</span> <span class="st">&quot;Figura 2. Nacimientos y predicción con doble media móvil de orden 2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">autolayer</span>(dmmNacimiemtos<span class="op">$</span>fitted, <span class="dt">series =</span> <span class="st">&quot;Pred. intra&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw">autolayer</span>(dmmNacimiemtos<span class="op">$</span>mean, <span class="dt">series =</span> <span class="st">&quot;Pred. extra&quot;</span>)</a></code></pre></div>
+<p><img src="03-04-Tema4_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+<br />
+<br />
+<br />
+</p>
+</div>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTcOpdG9kb3MgZGUgbWVkaWFzIG3Ds3ZpbGVzIgpzdWJ0aXRsZTogIlByZXZpc2nDs24gY29uIERhdG9zIFRlbXBvcmFsZXMgKEdCSUEpIgphdXRob3I6ICJJdsOhbiBBcnJpYmFzIChEZXB0by4gQW7DoWxpc2lzIEVjb27Ds21pY28uIFVuaXZlcnNpdGF0IGRlIFZhbMOobmNpYSkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHllcwogICAgZGZfcHJpbnQ6IGthYmxlCiAgICBmaWdfY2FwdGlvbjogbm8KICAgIGhpZ2hsaWdodDogcHlnbWVudHMKICAgIG51bWJlcl9zZWN0aW9uczogeWVzCiAgICBzZWxmX2NvbnRhaW5lZDogeWVzCiAgICB0aGVtZTogY2VydWxlYW4KICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6IDIKICAgIHRvY19mbG9hdDoKICAgICAgY29sbGFwc2VkOiB5ZXMKLS0tCgpgYGB7ciBjaHVua19zZXR1cCwgZWNobyA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIG1lc3NhZ2UgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuYWxpZ24gPSAiY2VudGVyIiwgCiAgICAgICAgICAgICAgICAgICAgICBmaWcuc2hvdyA9ICJob2xkIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5oZWlnaHQgPSA0LAogICAgICAgICAgICAgICAgICAgICAgZmlnLndpZHRoID0gOCwKICAgICAgICAgICAgICAgICAgICAgIG91dC53aWR0aCA9ICI4MCUiKSAKYGBgCgpgYGB7ciBvcHRpb25zX3NldHVwLCBlY2hvID0gRkFMU0V9Cm9wdGlvbnMoc2NpcGVuID0gOTk5KSAjLSBwYXJhIHF1aXRhciBsYSBub3RhY2lvbiBjaWVudGlmaWNhCmBgYAoKYGBge3IgbGlicmVyaWFzLCBlY2hvID0gRkFMU0V9CmxpYnJhcnkoZm9yZWNhc3QpCmxpYnJhcnkoZ2dwbG90Mik7IHRoZW1lX3NldCh0aGVtZV9idygpKQpsaWJyYXJ5KGdyaWRFeHRyYSkKbGlicmFyeShncmlkKQpgYGAKCiMgSW50cm9kdWNjacOzbgoKUmVjdWVyZGEgcXVlIHlhIHV0aWxpemFtb3MgbGEgbWVkaWEgbcOzdmlsIGVuIGVsIGNvbnRleHRvIGRlIGxhIGRlc2NvbXBvc2ljacOzbi4gU2UgdHJhdGFiYSBkZSB1bmEgbWVkaWEgbcOzdmlsIGNlbnRyYWRhIHkgc2UgdXRpbGl6YWJhIHBhcmEgZXN0aW1hciBsYSB0ZW5kZW5jaWEgZGUgdW5hIHNlcmllLiBWYW1vcyBhaG9yYSBhIHZlciBjb24gYWxnbyBtw6FzIGRlIGRldGFsbGUgZWwgY29uY2VwdG8gZGUgbWVkaWEgbcOzdmlsIHkgY29tbyBzZSBwdWVkZSB1c2FyIHBhcmEgb2J0ZW5lciBwcmVkaWNjaW9uZXMuCgpFbCBtw6l0b2RvIGRlIGxhcyBtZWRpYXMgbcOzdmlsZXMgY29uIGZpbmVzIHByZWRpY3Rpdm9zIGFwYXJlY2UgZW4gbG9zIGHDsW9zIDIwLCBzdSB1c28gc2UgZ2VuZXJhbGl6w7MgZW4gbG9zIGHDsW9zIDUwIHkgc2lndWUgc2llbmRvIHVuIG3DqXRvZG8gdXRpbGl6YWRvIGVuIGRldGVybWluYWRvcyBjYW1wb3MsIGRvbmRlIGVsIGZpbiDDumx0aW1vIGVzIGNhcHR1cmFyIGxhIHRlbmRlbmNpYSBhIGxhcmdvIHBsYXpvIGRlIHVuYSBzZXJpZS4KClBvciBlamVtcGxvLCBzaSBwaW5jaGFzIFthcXVpXShodHRwczovL21vbW8uaXNjaWlpLmVzL3B1YmxpYy9tb21vL2Rhc2hib2FyZC9tb21vX2Rhc2hib2FyZC5odG1sI25hY2lvbmFsKSBwdWVkZXMgdmVyIGVsIHJlZ2lzdHJvIGRlbCBuw7ptZXJvIGRlIG11ZXJ0ZXMgZGlhcmlhcyAoTW9NbykgcXVlIG1hbnRpZW5lIGVsIF9NaW5pc3RlcmlvIGRlIENpZW5jaWEgZSBJbm5vdmFjacOzbl8uIExhIGzDrW5lYSBuZWdyYSBlcyBlbCBuw7ptZXJvIHJlYWwgZGUgbXVlcnRlcyB5IGxhIGzDrW5lYSBhenVsIGVzIChtw6FzIG8gbWVub3MpIGxhIG1lZGlhIG3Ds3ZpbCBkZSBvcmRlbiAzNjUuIExhIG1lZGlhIG3Ds3ZpbCBjYXB0dXJhIGxhIHRlbmRlbmNpYSBlbiBlbCBuw7ptZXJvIGRlIG11ZXJ0ZXMgYSBsYXJnbyBwbGF6bywgZXMgZGVjaXIsIGNhYmUgZXNwZXJhciBxdWUgYW1iYXMgbGluZWFzIGFwYXJlemNhbiBzaWVtcHJlIGNlcmNhbmFzLiBTaSBzZSBvYnNlcnZhIHF1ZSBhbWJhcyBsw61uZWFzIHNlIHNlcGFyYW4sIGRlYmVtb3MgcGVuc2FyIHF1ZSB1biBjYXVzYSBubyBpZGVudGlmaWNhZGEgZXN0w6EgcHJvZHVjaWVuZG8gdW4gZXhjZXNvIChvIGRlZmVjdG8pIGRlIG11ZXJ0ZXMgc29icmUgc3UgdmFsb3IgZXNwZXJhZG8uCgpFbiBib2xzYSBlcyBtdXkgaGFiaXR1YWwgdmVyIGdyw6FmaWNvcyBkb25kZSBqdW50byBhIGxhIGV2b2x1Y2nDs24gZGVsIMOtbmRpY2UgYnVyc8OhdGlsIHNlIG11ZXN0cmEgdW5hIG1lZGlhIG3Ds3ZpbCBkZSBvcmRlbiBhbHRvIHkgb3RyYSBkZSBvcmRlbiBiYWpvLiBDdWFuZG8gYW1iYXMgbMOtbmVhcyBzZSBjcnV6YW4sIGxvcyBhbmFsaXN0YXMgY29uc2lkZXJhbiBxdWUgZXMgYnVlbiBtb21lbnRvIHBhcmEgY29tcHJhciAobGEgbWVkaWEgbcOzdmlsIGRlIGNvcnRvIHBsYXpvIHBhc2EgZW5jaW1hIGRlIGxhIGRlIGxhcmdvIHBsYXpvKSBvIHZlbmRlciAobGEgbWVkaWEgbcOzdmlsIGRlIGNvcnRvIHBsYXpvIHBhc2EgcG9yIGRlYmFqbyBkZSBsYSBkZSBsYXJnbyBwbGF6bykuCgohW10oLi9pbWFnZW5lcy9ib2xzYV9tZWRpYXNfbW92aWxlcy5wbmcpCgpcCgpTaSB0ZSBkYXMgY3VlbnRhLCBlbiBhbWJvcyBlamVtcGxvcyAqKmxhIG1lZGlhIG3Ds3ZpbCBzZSBoYSB1dGlsaXphZG8gY29tbyBzZcOxYWwgZGUgYWxhcm1hKiogLS1lbiBlbCBwcmltZXIgY2FzbyBkZSBxdWUgYWxnbyBlc3TDoSBnZW5lcmFuZG8gbcOhcyBvIG1lbm9zIG11ZXJ0ZXMgZGUgbGFzIGVzcGVyYWRhcyB5IGVuIGVsIHNlZ3VuZG8gY2FzbyBkZSBxdWUgZXMgYnVlbiBtb21lbnRvIHBhcmEgY29tcHJhciBvIHZlbmRlci0tLCBwZXJvIG5vIHBhcmEgcmVhbGl6YXIgcHJlZGljY2lvbmVzLiBFbiBsYSBhY3R1YWxpZGFkLCAqKmVzIHBvY28gZnJlY3VlbnRlIGVsIHVzbyBkZSBsYSBtZWRpYSBtw7N2aWwgY29uIGZpbmVzIGV4Y2x1c2l2YW1lbnRlIHByZWRpY3Rpdm9zKiouIAoKU2luIGVtYmFyZ28sIHBvciBzdSBzZW5jaWxsZXogZGUgY8OhbGN1bG8geSBzdSB1dGlsaWRhZCBwYXJhIGlkZW50aWZpY2FyIHF1ZSBlbCBlbnRvcm5vIGRlIHByZWRpY2Npw7NuIGVzdMOhIGNhbWJpYW5kbywgdmFtb3MgYSBkZWRpY2FybGVzIGFsZ28gZGUgdGllbXBvIGEgbGFzIG1lZGlhcyBtw7N2aWxlcy4KCkFudGVzIGRlIGVtcGV6YXIsIHVuIHBhciBkZSBhc3BlY3RvcyBhZGljaW9uYWxlcyBhIHRlbmVyIGVuIGN1ZW50YS4gRGVzZGUgdW4gcHVudG8gZGUgdmlzdGEgdGXDs3JpY28sICoqbGFzIG1lZGlhcyBtw7N2aWxlcyBubyBwdWVkZW4gY2FwdHVyYXIgbGEgZXN0YWNpb25hbGlkYWQqKiBkZSB1bmEgc2VyaWUgYXPDrSBxdWUgc29sbyBzZSBhcGxpY2FuIGEgc2VyaWVzIHF1ZSBwb3Igc3UgbmF0dXJhbGV6YSBubyB0ZW5nYW4gZXN0YSBjb21wb25lbnRlOyBkZXNkZSB1biBwdW50byBkZSB2aXN0YSBwcsOhY3RpY28sIGBSYCBubyBkaXNwb25lIGRlIHVuYSBmdW5jacOzbiBxdWUgcGVybWl0YSBkZSBmb3JtYSBjw7Ntb2RhIG9idGVuZXIgdW5hIG1lZGlhIG3Ds3ZpbCwgbGFzIHByZWRpY2Npb25lcyBpbnRyYS1tdWVzdHJhbGVzLCBsYXMgZXh0cmEgbXVlc3RyYWxlcyB5IGVsIGVycm9yLiBBbGdvIGNvbW8gaGVtb3MgdmlzdG8gZW4gdGVtYXMgcHJldmlvcyB5IHZlcmVtb3MgZW4gbG9zIHBvc3RlcmlvcmVzLiBTb2x2ZW50YXJlbW9zIGVzdGUgYXNwZWN0b3MgY3JlYW5kbyBudWVzdHJhIHByb3BpYSBmdW5jacOzbi4gCgpcClwKCiMgTWVkaWEgbcOzdmlsIHNpbXBsZSBwYXJhIHNlcmllcyBzaW4gdGVuZGVuY2lhIChuaSBlc3RhY2lvbmFsaWRhZCkKClwKCiMjIERlZmluaWNpw7NuCgpFbCBtw6l0b2RvIGRlIGxhIG1lZGlhIG3Ds3ZpbCBzaW1wbGUgZXMgYWRlY3VhZG8gcGFyYSB1bmEgc2VyaWUgZXN0YWNpb25hcmlhIHkgc2luIGVzdGFjaW9uYWxpZGFkLiBFcyBkZWNpciwgdW5hIHNlcmllIHF1ZSBzZSBtdWV2ZSBhbHJlZGVkb3IgZGUgdW4gbml2ZWwgY29uc3RhbnRlLiBFbiBlc3RlIGNhc28sICoqbGEgcHJlZGljY2nDs24gcGFyYSB1biBwZXJpb2RvIGVzIGxhIG1lZGlhIGRlIGxhcyAkciQgb2JzZXJ2YWNpb25lcyBwcmV2aWFzKiouIEVsIHZhbG9yICRyJCwgZGVub21pbmFkbyBvcmRlbiBkZSBsYSBtZWRpYSBtw7N2aWwsIGVzIHVuIHBhcsOhbWV0cm8gcXVlIGRlYmUgc2VyIGZpamFkbyBwb3IgZWwgaW52ZXN0aWdhZG9yLgoKRGVmaW5pbW9zIHByaW1lcm8gbGEgbWVkaWEgbcOzdmlsIF9oYWNpYSBhdHLDoXNfIChfYmFja3dhcmRfKSBkZSBvcmRlbiAkciQgcGFyYSBlbCBwZXJpb2RvICR0JCBjb21vCiQkbW1fdCA9IFxmcmFjezF9e3J9XHN1bV97aT0wfV57ci0xfSB5X3t0LWl9ID0gXGZyYWN7eV90ICsgeV97dC0xfSArIFxsZG90cyArIHlfe3QtcisxfX17cn0kJApPYnNlcnZhIHF1ZSBsYSBtZWRpYSBtw7N2aWwgaGFjaWEgYXRyw6FzIHNlIGRlZmluZSBkZSBmb3JtYSBkaWZlcmVudGUgYSBsYSBtZWRpYSBtw7N2aWwgX2NlbnRyYWRhXyBxdWUgdmltb3MgZW4gbGEgZGVzY29tcG9zaWNpw7NuIHBvciBtZWRpYXMgbcOzdmlsZXMuCgpBIHBhcnRpciBkZSAkbW1fdCQgc2UgZGVmaW5lIGxhIGVjdWFjacOzbiBkZSBsYSBfX3ByZWRpY2Npw7NuIGludHJhLW11ZXN0cmFsX18gY29tbyAKJCRcd2lkZWhhdHt5fV97dCsxfSA9IG1tX3QuJCQKUG9kZW1vcyBlbnRlbmRlciBxdWUgJG1tX3QkIGVzIHVuYSBlc3RpbWFjacOzbiBkZWwgbml2ZWwgZGUgbGEgc2VyaWUgZW4gZWwgcGVyaW9kbyAkdCQgeSBjb21vIGxhIHNlcmllIGVzIGVzdGFjaW9uYXJpYSAobm8gY2FtYmlhIGRlIG5pdmVsKSwgZXN0ZSB2YWxvciBzZSB1c2EgY29tbyBwcmVkaWNjacOzbiBwYXJhIGVsIHBlcmlvZG8gc2lndWllbnRlLgoKRXMgZGVjaXIsIGxhIG1lZGlhIG3Ds3ZpbCBzaW1wbGUgZGUgb3JkZW4gJHIkIHVzYSBwYXJhIHByZWRlY2lyIGVsIHByb21lZGlvIGxvcyDDumx0aW1vcyAkciQgZGF0b3MuIEVzIHVuIHB1bnRvIG1lZGlvIGVudHJlIGVsIG3DqXRvZG8gaW5nZW51byBJLCBxdWUgcGFyYSBwcmVkZWNpciB1c2FiYSBzb2xvIGVsIHVsdGltbyBkYXRvLCB5IGxhIG1lZGlhIHNpbXBsZSwgcXVlIHByb21lZGlhYmEgdG9kb3MgbG9zIGRhdG9zLgoKTGEgcHJpbWVyYSBfX3ByZWRpY2Npw7NuIGV4dHJhLW11ZXN0cmFsX18gZXMgJFx3aWRlaGF0e3l9X3tUKzF9ID0gbW1fVCQgeSBsYXMgcmVzdGFudGVzICRcd2lkZWhhdHt5fV97VCtofSA9IFx3aWRlaGF0e3l9X3tUKzF9LiQKCk9ic2VydmEgcXVlOgoKKiBQYXJhIHBvZGVyIGFwbGljYXIgbGEgbWVkaWEgbcOzdmlsIGRlIG9yZGVuICRyJCBzZSBuZWNlc2l0YW4gYWwgbWVub3MgJHIkIGRhdG9zLgoqIFBhcmEgbG9zICRyLTEkIHBlcmlvZG9zIGluaWNpYWxlcyBubyBlcyBwb3NpYmxlIGNhbGN1bGFyIGxhIG1lZGlhIG3Ds3ZpbCB5LCBwb3IgdGFudG8sIHBhcmEgbG9zICRyJCBwZXJpb2RvcyBpbmljaWFsZXMgbm8gZXMgcG9zaWJsZSBvYnRlbmVyIHVuYSBwcmVkaWNjacOzbiBpbnRyYS1tdWVzdHJhbC4KKiBFbCB2YWxvciBkZSAkciQgZGViZSBmaWphcmxvIGVsIGludmVzdGlnYWRvci4gQ3VhbnRvIG1heW9yIGVzIHN1IHZhbG9yLCBtw6FzIF9zdWF2ZV8gZXMgbGEgbGluZWEgZGUgcHJlZGljY2lvbmVzIG9idGVuaWRhIHkgbWVub3MgZWZlY3RvIHRpZW5lIGVsIHZhbG9yIGRlIHVuYSBvYnNlcnZhY2nDs24gaW5kaXZpZHVhbCBzb2JyZSBsYSBwcmVkaWNjacOzbiAodsOpYXNlIGxhIGdyw6FmaWNhIHByZXZpYSBkZWwgSWJleDM1KS4gRW4gZWwgY2FzbyBsw61taXRlICRyPTEkIHNlIHRpZW5lIGVsIF9tw6l0b2RvIGluZ2VudW9fIHkgcGFyYSAkcj1UJCBlbCBfbcOpdG9kbyBkZSBsYSBtZWRpYV8uCgpWZWFtb3MgdW4gc2VuY2lsbG8gZWplbXBsbyBudW3DqXJpY28uIAoKTGEgc2lndWllbnRlIHRhYmxhIG11ZXN0cmEgbGEgYXBsaWNhY2nDs24gZGVsIG3DqXRvZG8gZGUgbGFzIG1lZGlhcyBtw7N2aWxlcyBwYXJhIGxvcyAxMCDDumx0aW1vcyBkYXRvcyBkZSBsYSBzZXJpZSBMaWJyb3MuIExhIHByaW1lcmEgY29sdW1uYSBpbmRpY2EgZWwgYcOxbyB5IGxhIHNlZ3VuZGEgZWwgdmFsb3IgZGUgbGEgc2VyaWUgX0xpYnJvc18uIExhIHRlcmNlcmEgY29sdW1uYSwgX21tXywgZXMgbGEgbWVkaWEgbcOzdmlsIGRlIG9yZGVuIDUgeSBsYSBzaWd1aWVudGUgY29sdW1uYSwgX1loYXRfLCBsYSBwcmVkaWNjacOzbiBkZSBMaWJyb3MsIGVzIGRlY2lyIGxhIGNvbHVtbmEgX21tXyByZXRyYXNhZGEgdW4gcGVyaW9kby4gTGEgY29sdW1uYSBfUmVzXyAoZXJyb3IgZGUgcHJlZGljY2nDs24pIHNlIGNhbGN1bGEgcmVzdGFuZG8gYSBsYSBzZXJpZSBvcmlnaW5hbCAoY29sdW1uYSBfTGlicm9zXykgbGEgcHJlZGljY2nDs24gaW50cmEtbXVlc3RyYWwgKGNvbHVtbmEgX1loYXRfKS4gT2JzZXJ2YSBxdWUgZW4gZWwgcHJvY2VzbyBzZSBoYW4gcGVyZGlkbyA1IGRhdG9zIHBhcmEgbGEgcHJlZGljY2nDs24geSBlbCByZXNpZHVvIGFsIGluaWNpbyBkZSBsYSBzZXJpZS4KCmBgYHtyLCBlY2hvID0gRkFMU0V9Cm1tIDwtIGZ1bmN0aW9uKHgsIHIgPSAzLCBoID0gNSkgewogIHogPC0gTlVMTAogIHokeCA8LSB4CiAgeiRvcmRlbiA9IHIKICAKICBUVCA8LSBsZW5ndGgoeCkKICBpbmljaW8gPC0gc3RhcnQoeCkKICBmcmVjdWVuY2lhIDwtZnJlcXVlbmN5KHgpCiAgCiAgeiRtbSA8LSBzdGF0czo6ZmlsdGVyKHgsIHJlcCgxL3IsIHIpLCBzaWRlID0gMSkKICB6JGZpdHRlZCA8LSB0cyhjKE5BLCB6JG1tWy1UVF0pLCBzdGFydCA9IGluaWNpbywgZnJlcSA9IGZyZWN1ZW5jaWEpCiAgeiRtZWFuIDwtIHRzKHJlcCh6JG1tW1RUXSwgaCksIHN0YXJ0ID0gdGltZSh4KVtUVF0gKyAxL2ZyZWN1ZW5jaWEsIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokcmVzaWR1YWxzIDwtIHggLSB6JGZpdHRlZAogIAogIGNsYXNzKHopIDwtICJmb3JlY2FzdCIKICB6Cn0KCmxpYnJvcyA8LSByZWFkLmNzdjIoIi4vc2VyaWVzL2xpYnJvcy5jc3YiLCBoZWFkZXIgPSBUUlVFKQpsaWJyb3MgPC0gdHMobGlicm9zWywgMl0sIHN0YXJ0ID0gMTk5MywgZnJlcXVlbmN5ICA9IDEpCmxpYnJvc2IgPC0gc3Vic2V0KGxpYnJvcywgc3RhcnQgPSBsZW5ndGgobGlicm9zKSAtIDksIGVuZCA9IGxlbmd0aChsaWJyb3MpKQoKbW1MaWJyb3MgPC0gbW0obGlicm9zYiwgciA9IDUpCgpkYXRvcyA8LSBkYXRhLmZyYW1lKAogIEZlY2hhID0gdGltZShsaWJyb3NiKSwKICBMaWJyb3MgPSBhcy5udW1lcmljKGxpYnJvc2IpLAogIG1tID0gcm91bmQoYXMubnVtZXJpYyhtbUxpYnJvcyRtbSksIDIpLAogIFloYXQgPSByb3VuZChhcy5udW1lcmljKG1tTGlicm9zJGZpdHRlZCksIDIpLAogIFJlcyA9IHJvdW5kKGFzLm51bWVyaWMobW1MaWJyb3MkcmVzaWR1YWxzKSwgMikKKQoKZGF0b3MKYGBgCgpUdSBtaXNtbyBwdWVkZXMgY29tcHJvYmFyIHF1ZSAKJCRtbV97MjAxM30gPSBcZnJhY3tgciBwYXN0ZShsaWJyb3NiWzE6NV0sIGNvbGxhcHNlID0gIiArICIpYH17NX0gPSBgciBkYXRvcyRtbVs1XWAkJAp5IGxhIHByaW1lcmEgcHJlZGljY2nDs24gZXh0cmEtbXVlc3RyYWwgc2VyaWEgbGEgbWVkaWEgZGUgbGFzIDUgw7psdGltYXMgb2JzZXJ2YWNpb25lcyAkXHdpZGVoYXR7TGlicm9zfV97MjAxOX0gPSBtbV97MjAxOH0gPSBgciB0YWlsKG1tTGlicm9zJG1lYW4sIDEpYCQKClwKCgojIyBFamVtcGxvIGRlIGFwbGljYWNpw7NuIGNvbiBMaWJyb3MgCgpWYW1vcyBhIHVzYXIgZWwgbcOpdG9kbyBkZSBtZWRpYXMgbcOzdmlsZXMgcGFyYSBwcmVkZWNpciBsYSBzZXJpZSBMaWJyb3MuIGBSYCBwcm9wb3JjaW9uYSB2YXJpYXMgZnVuY2lvbmVzIHF1ZSBwZXJtaXRlbiBjYWxjdWxhciBsYSBtZWRpYSBtw7N2aWwgc2ltcGxlOiBgZmlsdGVyYCBkZWwgcGFxdWV0ZSBgc3RhdHNgLCAgYHRzX21hYCBkZSBgVFNzdHVkaW9gLCBgc21hYCBkZSBgc21vb3RoYCwgYG1hYCBkZSBgZm9yZWNhc3RgIG8gYG1vdmF2Z2AgZGUgYHByYWNtYWAuIFNpbiBlbWJhcmdvLCBuaW5ndW5hIGRlIGVzdGFzIGZ1bmNpb25lcyBlcyB0YW4gY29tcGxldGEgY29tbyBsYXMgdmlzdGFzIGVuIGVsIHRlbWEgcHJldmlvIHkgcGVybWl0ZW4gb2J0ZW5lciBsYSBtZWRpYSBtw7N2aWwsIGxhIGVzdGltYWNpw7NuLCBsYSBwcmVkaWNjacOzbiB5IGVsIGVycm9yIGNvbiB1bmEgc29sYSBmdW5jacOzbi4KClBhcmEgcmVzb2x2ZXIgZXN0ZSBpbmNvbnZlbmllbnRlIHZhbW9zIGEgcHJvZ3JhbWFyIG51ZXN0cmEgcHJvcGlhIGZ1bmNpw7NuIGBtbWAgCgpgYGB7ciwgZXZhbCA9IEZBTFNFfQptbSA8LSBmdW5jdGlvbih4LCByID0gMywgaCA9IDUpIHsKICB6IDwtIE5VTEwKICB6JHggPC0geAogIHokb3JkZW4gPSByCiAgCiAgVFQgPC0gbGVuZ3RoKHgpCiAgaW5pY2lvIDwtIHN0YXJ0KHgpCiAgZnJlY3VlbmNpYSA8LWZyZXF1ZW5jeSh4KQogIAogIHokbW0gPC0gc3RhdHM6OmZpbHRlcih4LCByZXAoMS9yLCByKSwgc2lkZSA9IDEpCiAgeiRmaXR0ZWQgPC0gdHMoYyhOQSwgeiRtbVstVFRdKSwgc3RhcnQgPSBpbmljaW8sIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokbWVhbiA8LSB0cyhyZXAoeiRtbVtUVF0sIGgpLCBzdGFydCA9IHRpbWUoeClbVFRdICsgMS9mcmVjdWVuY2lhLCBmcmVxID0gZnJlY3VlbmNpYSkKICB6JHJlc2lkdWFscyA8LSB4IC0geiRmaXR0ZWQKICAKICBjbGFzcyh6KSA8LSAiZm9yZWNhc3QiCiAgegp9CmBgYAoKTGEgZnVuY2nDs24gYG1tYCBwcmVjaXNhIGRlIHRyZXMgYXJndW1lbnRvcywgdW5hIHNlcmllIHRlbXBvcmFsLCBlbCBvcmRlbiBkZSBsYSBtZWRpYSBtw7N2aWwgJHIkIHkgZWwgaG9yaXpvbnRlIGRlIHByZXZpc2nDs24gJGgkLiBMb3MgZG9zIMO6bHRpbW9zIGFyZ3VtZW50b3MgZXN0w6FuIGZpamFkb3MgYSAzIHkgNSBjb21vIG9wY2lvbmVzIHBvciBkZWZlY3RvLiBFbCBuw7pjbGVvIGRlIGxhIGZ1bmNpw7NuIGVzIGBmaWx0ZXJgLCBxdWUgY2FsY3VsYSBsYSBtZWRpYSBtw7N2aWwgc2ltcGxlIC0tcmVhbG1lbnRlIGxhIGZ1bmNpw7NuIGNhbGN1bGEgdW5hIG1lZGlhIHBvbmRlcmFkYSBoYWNpYSBhdHLDoXMgKGFyZ3VtZW50byBgc2lkZSA9IDFgKS4gCgpMYSBmdW5jacOzbiBgbW1gIGRldnVlbHZlIHVuIG9iamV0byBxdWUgY29udGllbmUgbGEgc2VyaWUgb3JpZ2luYWwgKGB4YCksIGVsIG9yZGVuIGRlIGxhIG1lZGlhIG3Ds3ZpbCAoYG9yZGVuYCksIGxhIG1lZGlhIG3Ds3ZpbCAoYG1tYCksIGxhIHNlcmllIGFqdXN0YWRhIG8gcHJlZGljY2nDs24gaW50cmEtbXVlc3RyYWwgYSB1biBwZXJpb2RvIHZpc3RhIChgZml0dGVkYCksIGxhIHByZWRpY2Npw7NuIChgZm9yZWNhc3RgKSB5IGVsIGVycm9yIGRlIGVzdGltYWNpw7NuIChgZXJyb3JgKS4KCioqTm90YToqKiBsYSBmdW5jacOzbiBgZmlsdGVyYCAobGlicmVyw61hIGBzdGF0c2ApLCB0aWVuZSBjb21vIHByaW1lciBhcmd1bWVudG8gbGEgc2VyaWUgeSBlbCBzZWd1bmRvIGFyZ3VtZW50bywgYHJlcCgxL3IsIHIpYCwgc29uIGxvcyBwZXNvcyBkZSBsYSBtZWRpYSBtw7N2aWwgJDEvciQgcmVwZXRpZG9zICRyJC4gRWwgdGVyY2VyIGFyZ3VtZW50byBpbmRpY2Egc2kgbGEgbWVkaWEgZXMgY2VudHJhZGEgYHNpZGUgPSAyYCAoY29tbyBsYSB1c2FkYSBlbiBlbCBtw6l0b2RvIGRlIGRlc2NvbXBvc2ljacOzbiB2aXN0byBlbiBlbCB0ZW1hIDIpIG8gaGFjaWEgYXRyw6FzIGBzaWRlID0gMWAuIAoKYGBge3J9Cm1tTGlicm9zIDwtIG1tKGxpYnJvcywgciA9IDUsIGggPSA1KQpgYGAKCkxhIGZpZ3VyYSAxIG11ZXN0cmEgbGEgc2VyaWUgTGlicm9zLCBsYXMgcHJldmlzaW9uZXMgaW50cmEtbXVlc3RyYWxlcyB5IGxhcyBwcmV2aXNpb25lcyBleHRyYS1tdWVzdHJhbGVzLCBxdWUgc29uIGNvbnN0YW50ZXMuIAogCmBgYHtyfQphdXRvcGxvdChsaWJyb3MsIHNlcmllcyA9ICJMaWJyb3MiLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiVMOtdHVsb3MiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSAxLiBMaWJyb3MgeSBwcmVkaWNjacOzbiBjb24gbWVkaWEgbcOzdmlsIGRlIG9yZGVuIDUiKSArCiAgYXV0b2xheWVyKG1tTGlicm9zJGZpdHRlZCwgc2VyaWVzID0gIlByZWQuIGludHJhIikgKyAKICBhdXRvbGF5ZXIobW1MaWJyb3MkbWVhbiwgc2VyaWVzID0gIlByZWQuIGV4dHJhIikKYGBgCgpQb2RlbW9zIGFob3JhIG9idGVuZXIgbG9zIGRpZmVyZW50ZXMgaW5kaWNhZG9yZXMgZGUgYm9uZGFkIGRlIGFqdXN0ZSBkZWwgbW9kZWxvIChlcnJvciBkZSBwcmVkaWNjacOzbiBpbnRyYS1tdWVzdHJhbCkgY29uIGxhIGZ1bmNpw7NuIGBhY2N1cmFjeWAuCgpgYGB7cn0KYWNjdXJhY3kobW1MaWJyb3MpCmBgYAoKRWwgTUFQRSBkZSAxMS41JSBldmlkZW5jaWEgcXVlIGxhcyBwcmVkaWNjaW9uZXMgbm8gc29uIG11eSBhZGVjdWFkYXMsIHJlc3VsdGFkbyBsw7NnaWNvIHNpIHRlbmVtb3MgZW4gY3VlbnRhIHF1ZSBlc3RhbW9zIGFwbGljYW5kbyBhIHVuYSBzZXJpZSBjb24gdGVuZGVuY2lhIHVuIG3DqXRvZG8gZGUgYWp1c3RlIHkgcHJlZGljY2nDs24gcGFyYSBzZXJpZXMgc2luIHRlbmRlbmNpYS4KClBvZHLDrWFtb3MgcHJvYmFyIGNvbiBvdHJvcyB2YWxvcmVzIHBhcmEgZWwgb3JkZW4gZGUgbGEgbWVkaWEgbcOzdmlsIGUgaWRlbnRpZmljYXIgZWwgcXVlIGdlbmVyYSBlbCBtZW5vciBlcnJvciBleHRyYS1tdWVzdHJhbCBwYXJhIGVsIGhvcml6b250ZSBkZSBwcmV2aXNpw7NuIGRlc2VhZG8uCgpcClwKCiMgRG9ibGVzIG1lZGlhcyBtw7N2aWxlcyBwYXJhIHNlcmllcyBjb24gdGVuZGVuY2lhIChwZXJvIHNpbiBlc3RhY2lvbmFsaWRhZCkKClwKCiMjIERlZmluaWNpw7NuCgpFbCBtw6l0b2RvIGRlIGRvYmxlcyBtZWRpYXMgbcOzdmlsZXMgZXMgYWRlY3VhZG8gcGFyYSB1bmEgc2VyaWUgbm8gZXN0YWNpb25hcmlhIHkgc2luIGVzdGFjaW9uYWxpZGFkIHkgc3Vwb25lIHF1ZSBsYSB0ZW5kZW5jaWEgZXMgbG9jYWxtZW50ZSBsaW5lYWwuIEVuIGVzdGUgY2FzbywgcGFyYSBvYnRlbmVyIHVuYSBwcmVkaWNjacOzbiBlbiBlbCBwZXJpb2RvICR0KzEkIGNvbiBkYXRvcyBoYXN0YSBlbCBwZXJpb2RvICR0JCBuZWNlc2l0YW1vcyBkb3MgY29tcG9uZW50ZXM6CgoqIExhIGVzdGltYWNpw7NuIGRlbCBuaXZlbCBkZSBsYSBzZXJpZSBlbiBlbCBwZXJpb2RvICR0JCwgcXVlIGRlbm9taW5hcmVtb3MgJGxfdCQKKiBMYSBlc3RpbWFjacOzbiBkZSBsYSBwZW5kaWVudGUgZGUgbGEgc2VyaWUgZW4gZWwgcGVyaW9kbyAkdCQsIHF1ZSBkZW5vbWluYXJlbW9zICRiX3QkCgpBIHBhcnRpciBkZSBlc3RhcyBjb21wb25lbnRlcywgb2J0ZW5pZGFzIGVuIGVsIHBlcmlvZG8gJHQkIHNlIHRlbmRyw61hIHF1ZSBsYSBwcmVkaWNjacOzbiBlbiBlbCBwZXJpb2RvICR0KzEkIGVzOgokJFx3aWRlaGF0e3l9X3t0KzF9ID0gbF90K2JfdC4kJAoKVmVhbW9zIGNvbW8gcG9kZW1vcyBvYnRlbmVyIGVsIG5pdmVsICRsX3QkIHkgbGEgcGVuZGllbnRlICRiX3QkIHVzYW5kbyB1bmEgZG9ibGUgbWVkaWEgbcOzdmlsLgoKKiBFbCBwcmltZXIgcGFzbyBlcyBvYnRlbmVyIGxhIG1lZGlhIG3Ds3ZpbCBzaW1wbGUgZGUgb3JkZW4gJHIkIHRhbCB5IGNvbW8gdmltb3MgZW4gZWwgZXDDrWdyYWZlIHByZXZpbwoKJCRtbV90ID0gIFxmcmFje3lfdCArIHlfe3QtMX0gKyBcbGRvdHMgKyB5X3t0LXIrMX19e3J9LiQkCgoqIEVsIHNlZ3VuZG8gcGFzbyBjb25zaXN0ZSBlbiBjYWxjdWxhciB1biBtZWRpYSBtw7N2aWwgc2ltcGxlIGRlIGxhIG1lZGlhIG3Ds3ZpbCBvYnRlbmlkYSBlbiBlbCBwYXNvIDEsIGVzIGRlY2lyLCB1bmEgZG9ibGUgbWVkaWEgbcOzdmlsLCB0YW1iacOpbiBkZSBvcmRlbiAkciQsIHkgcXVlIGRlbm9taW5hcmVtb3MgJGRtbV90JAoKJCRkbW1fdCAgPSBcZnJhY3ttbV90ICsgbW1fe3QtMX0gKyBcbGRvdHMgKyBtbV97dC1yKzF9fXtyfS4kJAoKU2UgcHVlZGUgZGVtb3N0cmFyIHF1ZSAkbW1fdCQgZXMgdW5hIGVzdGltYWNpw7NuIGRlbCBuaXZlbCBkZSBsYSBzZXJpZSBlbiBlbCBwZXJpb2RvICR0IC0gXGZyYWN7ci0xfXsyfSQgeSBxdWUgJGRtbV90JCBlcyB1bmEgZXN0aW1hY2nDs24gZGVsIG5pdmVsIGVuIGVsIHBlcmlvZG8gJHQgLSAociAtIDEpJC4gVGVuaWVuZG8gZW4gY3VlbnRhIGVzdG9zIHJlc3VsdGFkb3MsIHBvZGVtb3MgZXN0aW1hciBlbCB2YWxvciBkZWwgbml2ZWwgZGUgbGEgc2VyaWUgZW4gZWwgcGVyaW9kbyAkdCQgY29tbwokJGxfdCA9IDJtbV90IC0gZG1tX3QuJCQKClBvciBvdHJhIHBhcnRlLCBsYSBwZW5kaWVudGUgZW4gZWwgcGVyaW9kbyAkdCQgc2UgcHVlZGUgb2J0ZW5lciBjb21vCiQkYl90ID0gXGZyYWN7Mn17ci0xfShtbV90IC0gZG1tX3QpLiQkCgpBIHBhcnRpciBlc3RhcyBkb3MgY29tcG9uZW50ZXMsIGxhIGVjdWFjacOzbiBkZSBsYSBfX3ByZWRpY2Npw7NuIGludHJhLW11ZXN0cmFsX18gZXMgCiQkXHdpZGVoYXR7eX1fe3QrMX0gPSBsX3QgKyBiX3QkJAp5IGxhIGVjdWFjacOzbiBkZSBfX3ByZWRpY2Npw7NuIGV4dHJhLW11ZXN0cmFsX18gZXMgCiQkXHdpZGVoYXR7eX1fe1QraH09bF9UICsgaCBiX1QuJCQgCgpWZWFtb3Mgb3RybyBzZW5jaWxsbyBlamVtcGxvIG51bcOpcmljbyBjb25zdHJ1aWRvIGEgcGFydGlyIGRlbCBtw6l0b2RvIGRlIGxhcyBkb2JsZXMgbWVkaWFzIG3Ds3ZpbGVzIHBhcmEgbG9zIDEwIMO6bHRpbW9zIGRhdG9zIGRlIGxhIHNlcmllIExpYnJvcyB5IGNvbiB1biBvcmRlbiAkcj0zJC4gTGEgcHJpbWVyYSBjb2x1bW5hIGluZGljYSBlbCBhw7FvIHkgbGEgc2VndW5kYSBlbCB2YWxvciBkZSBsYSBzZXJpZSBfTGlicm9zXy4gTGEgdGVyY2VyYSBjb2x1bW5hLCBfbW1fLCBlcyBsYSBwcmltZXJhIG1lZGlhIG3Ds3ZpbCBkZSBvcmRlbiAzIHkgbGEgc2lndWllbnRlIGNvbHVtbmEsIF9kbW1fLCBsYSBzZWd1bmRhIG1lZGlhIG3Ds3ZpbC4gQSBwYXJ0aXIgZGUgZWxsYXMgc2UgY2FsY3VsYW4gbGFzIGRvcyBzaWd1aWVudGVzIGNvbHVtbmFzIF9sXyB5IF9iXywgZWwgbml2ZWwgeSBsYSBwZW5kaWVudGUgcmVzcGVjdGl2YW1lbnRlLiBMYSBjb2x1bW5hIF9ZaGF0XyBlcyBsYSBwcmVkaWNjacOzbiBkZSBMaWJyb3MgeSBsYSBjb2x1bW5hIF9SZXNfIChlcnJvciBkZSBwcmVkaWNjacOzbikgc2UgY2FsY3VsYSByZXN0YW5kbyBhIGxhIHNlcmllIG9yaWdpbmFsIChjb2x1bW5hIF9MaWJyb3NfKSBsYSBwcmVkaWNjacOzbiBpbnRyYS1tdWVzdHJhbCAoY29sdW1uYSBfWWhhdF8pLiBPYnNlcnZhIHF1ZSBlbiBlbCBwcm9jZXNvIHNlIGhhbiBwZXJkaWRvIDUgZGF0b3MgcGFyYSBsYSBwcmVkaWNjacOzbiB5IGVsIHJlc2lkdW8gYWwgaW5pY2lvIGRlIGxhIHNlcmllLiBFbiBnZW5lcmFsLCBlbiB1bmEgZG9ibGUgbWVkaWEgbcOzdmlsIGRlIG9yZGVuICRyJCBzZSBwaWVyZGVuICQyciAtIDEkIGRhdG9zIGFsIGluaWNpbyBkZSBsYSBzZXJpZS4KCmBgYHtyLCBlY2hvID0gRkFMU0V9CmRtbSA8LSBmdW5jdGlvbih4LCByID0gMywgaCA9IDUpIHsKICB6IDwtIE5VTEwKICB6JHggPC0geAogIHokb3JkZW4gPSByCiAgCiAgVFQgPC0gbGVuZ3RoKHgpCiAgaW5pY2lvIDwtIHN0YXJ0KHgpCiAgZnJlY3VlbmNpYSA8LWZyZXF1ZW5jeSh4KQogIAogIHokbW0xIDwtIHN0YXRzOjpmaWx0ZXIoeCwgcmVwKDEvciwgciksIHNpZGUgPSAxKQogIHokbW0yIDwtIHN0YXRzOjpmaWx0ZXIoeiRtbTEsIHJlcCgxL3IsIHIpLCBzaWRlID0gMSkKICAKICB6JGwgPC0gMiAqIHokbW0xIC0geiRtbTIKICB6JGIgPC0gMiAqICh6JG1tMSAtIHokbW0yKSAvIChyIC0gMSkKICAKICB6JGZpdHRlZCA8LSB0cyhjKE5BLCB6JGxbLVRUXSArIHokYlstVFRdKSwgc3RhcnQgPSBpbmljaW8sIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokbWVhbiA8LSB0cyh6JGxbVFRdICsgKDE6aCkgKiB6JGJbVFRdLCBzdGFydCA9IHRpbWUoeClbVFRdICsgMS9mcmVjdWVuY2lhLCBmcmVxID0gZnJlY3VlbmNpYSkKICB6JHJlc2lkdWFscyA8LSB4IC0geiRmaXR0ZWQKICBjbGFzcyh6KSA8LSAiZm9yZWNhc3QiCiAgegp9CgpkbW1MaWJyb3MgPC0gZG1tKGxpYnJvc2IpCgpkYXRvcyA8LSBkYXRhLmZyYW1lKAogIEZlY2hhID0gdGltZShsaWJyb3NiKSwKICBMaWJyb3MgPSBhcy5udW1lcmljKGxpYnJvc2IpLAogIG1tID0gcm91bmQoYXMubnVtZXJpYyhkbW1MaWJyb3MkbW0xKSwgMiksCiAgZG1tID0gcm91bmQoYXMubnVtZXJpYyhkbW1MaWJyb3MkbW0yKSwgMiksCiAgbCA9IHJvdW5kKGFzLm51bWVyaWMoZG1tTGlicm9zJGwpLCAyKSwKICBiID0gcm91bmQoYXMubnVtZXJpYyhkbW1MaWJyb3MkYiksIDIpLAogIFloYXQgPSByb3VuZChyb3VuZChhcy5udW1lcmljKGRtbUxpYnJvcyRmaXR0ZWQpLCAyKSwgMiksCiAgUmVzID0gcm91bmQocm91bmQoYXMubnVtZXJpYyhkbW1MaWJyb3MkcmVzaWR1YWxzKSwgMiksIDIpCikKCgpkYXRvcwpgYGAKClR1IG1pc21vIHB1ZWRlcyBjb21wcm9iYXIgcXVlIAokJApcYmVnaW57YWxpZ25lZH0KICAgbW1fezIwMTF9ICYgPSBcZnJhY3tgciBwYXN0ZShsaWJyb3NiWzE6M10sIGNvbGxhcHNlID0gIiArICIpYH17M30gPSBgciBkYXRvcyRtbVszXWAgXFwKICAgZG1tX3syMDEzfSAmID0gXGZyYWN7YHIgcGFzdGUoZGF0b3MkbW1bMzo1XSwgY29sbGFwc2UgPSAiICsgIilgfXszfSA9IGByIGRhdG9zJGRtbVs1XWBcXAogICBsX3syMDEzfSAmID0gMlxjZG90IG1tX3syMDEzfSAtIGRtbV97MjAxM30gPSAgMiBcY2RvdCBgciBkYXRvcyRtbVs1XWAgLSBgciBkYXRvcyRkbW1bNV1gID0gYHIgZGF0b3MkbFs1XWAgXFwKICAgYl97MjAxM30gJiA9IFxmcmFjezJ9ezMtMX0obW1fezIwMTN9IC0gZG1tX3syMDEzfSkgPSAgYHIgZGF0b3MkbW1bNV1gIC0gYHIgZGF0b3MkZG1tWzVdYCA9IGByIGRhdG9zJGJbNV1gIFxcCiAgIFxoYXQgeV97MjAxNH0gJiA9IGxfezIwMTN9ICsgYl97MjAxM30gPSBgciBkYXRvcyRsWzVdYCAgYHIgZGF0b3MkYls1XWAgPSBgciBkYXRvcyRZaGF0WzZdYApcZW5ke2FsaWduZWR9CiQkCgpMYSBwcmltZXJhIHByZWRpY2Npw7NuIGV4dHJhLW11ZXN0cmFsIHNlcmlhIGxhIHN1bWEgZGVsIG5pdmVsIHkgbGEgcGVuZGllbnRlIGRlIGxhIMO6bHRpbWEgb2JzZXJ2YWNpw7NuCgokJFx3aWRlaGF0e0xpYnJvc31fezIwMTl9ID0gbF97MjAxOH0gKyBiX3syMDE4fSA9IGByIGRhdG9zJGxbMTBdICsgZGF0b3MkYlsxMF1gJCQKCnkgbGEgc2VndW5kYSBwcmVkaWNjacOzbiBleHRyYS1tdWVzdHJhbCBzZXJpYSBlbCBuaXZlbCBtw6FzIGRvcyB2ZWNlcyBsYSBwZW5kaWVudGUgZGUgbGEgw7psdGltYSBvYnNlcnZhY2nDs246CgokJFx3aWRlaGF0e0xpYnJvc31fezIwMjB9ID0gbF97MjAxOH0gKyAyXGNkb3QgYl97MjAxOH0gPSBgciBkYXRvcyRsWzEwXSArIDIqZGF0b3MkYlsxMF1gLiQkCgpcCgojIyBFamVtcGxvIGRlIGFwbGljYWNpw7NuIGNvbiBOYWNpbWllbnRvcwoKVmVhbW9zIHVuIGVqZW1wbG8gZGUgYXBsaWNhY2nDs24gZGUgbGFzIGRvYmxlcyBtZWRpYXMgbcOzdmlsZXMgY29uIGxhIHNlcmllIE5hY2ltaWVudG9zIGFudWFsaXphZGEuCgpFbCBtw6l0b2RvIGRlIGxhcyBkb2JsZXMgbWVkaWFzIG3Ds3ZpbGVzIG5vIGVzdMOhIGltcGxlbWVudGFkbyBlbiBgUmAsIGFsIG1lbm9zIGhhc3RhIGRvbmRlIGxsZWdhIG1pIGNvbm9jaW1pZW50by4gUGFyYSByZXNvbHZlciBlc3RlIGluY29udmVuaWVudGUgdmFtb3MgYSBwcm9ncmFtYXIgbnVlc3RyYSBwcm9waWEgZnVuY2nDs24gYGRtbWAuIE5vIHRlbmRyw6FzIG5pbmd1bmEgZGlmaWN1bHRhZCBlbiB2ZXIgY29tbyBmdW5jaW9uYSBsYSBmdW5jacOzbiB5IGNvbW8gdmEgY3JlYW5kbyBjYWRhIHVubyBkZSBsb3MgZWxlbWVudG9zIG5lY2VzYXJpb3MgLS1wcmltZXJhIHkgc2VndW5kYSBtZWRpYSBtw7N2aWwsIG5pdmVsIHkgcGVuZGllbnRlLS0gcGFyYSBvYnRlbmVyIGZpbmFsbWVudGUgbGEgc2VyaWUgYWp1c3RhZGEsIGxhcyBwcmVkaWNjaW9uZXMgeSBlbCBlcnJvci4KCmBgYHtyLCBldmFsID0gRkFMU0V9CmRtbSA8LSBmdW5jdGlvbih4LCByID0gMywgaCA9IDUpIHsKICB6IDwtIE5VTEwKICB6JHggPC0geAogIHokb3JkZW4gPSByCiAgCiAgVFQgPC0gbGVuZ3RoKHgpCiAgaW5pY2lvIDwtIHN0YXJ0KHgpCiAgZnJlY3VlbmNpYSA8LWZyZXF1ZW5jeSh4KQogIAogIHokbW0xIDwtIHN0YXRzOjpmaWx0ZXIoeCwgcmVwKDEvciwgciksIHNpZGUgPSAxKQogIHokbW0yIDwtIHN0YXRzOjpmaWx0ZXIoeiRtbTEsIHJlcCgxL3IsIHIpLCBzaWRlID0gMSkKICAKICB6JGwgPC0gMiAqIHokbW0xIC0geiRtbTIKICB6JGIgPC0gMiAqICh6JG1tMSAtIHokbW0yKSAvIChyIC0gMSkKICAKICB6JGZpdHRlZCA8LSB0cyhjKE5BLCB6JGxbLVRUXSArIHokYlstVFRdKSwgc3RhcnQgPSBpbmljaW8sIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokbWVhbiA8LSB0cyh6JGxbVFRdICsgKDE6aCkgKiB6JGJbVFRdLCBzdGFydCA9IHRpbWUoeClbVFRdICsgMS9mcmVjdWVuY2lhLCBmcmVxID0gZnJlY3VlbmNpYSkKICB6JHJlc2lkdWFscyA8LSB4IC0geiRmaXR0ZWQKICBjbGFzcyh6KSA8LSAiZm9yZWNhc3QiCiAgegp9CmBgYAoKIyMjIElkZW50aWZpY2FjacOzbiBkZWwgbWVqb3IgbW9kZWxvIHstfQoKUG9kZW1vcyBhcGxpY2FyIGVsIG3DqXRvZG8gZGUgbGEgZG9ibGUgbWVkaWEgbcOzdmlsIHBhcmEgZGlmZXJlbnRlcyDDs3JkZW5lcyAkciQgeSBjb21wcm9iYXIgcGFyYSBjdWFsIGRlIGVsbG9zIHNlIG9idGllbmUgZWwgbWVub3IgdmFsb3IgZGVsIGNyaXRlcmlvIGRlIGJvbmRhZCBkZSBhanVzdGUgZGVzZWFkby4gUmVhbGl6YXJlbW9zIGVzdGUgZWplcmNpY2lvIGNvbnNpZGVyYW5kbyBjb21vIGluZGljYWRvciBkZSBib25kYWQgZGUgYWp1c3RlIGVsIE1BUEUgcGVybyBlbiBkb3MgZXNjZW5hcmlvczogcHJldmlzaW9uZXMgaW50cmEtbXVlc3RyYWxlcyBhIHVuIHBlcmlvZG8gdmlzdGEgeSBvcmlnZW4gZGUgcHJlZGljY2nDs24gbcOzdmlsLgoKYGBge3J9Cm5hY2ltaWVudG9zIDwtIHJlYWQuY3N2MigiLi9zZXJpZXMvbmFjaW1pZW50b3MuY3N2IiwgaGVhZGVyID0gVFJVRSkKbmFjaW1pZW50b3MgPC0gdHMobmFjaW1pZW50b3NbLCAyXSwKICAgICAgICAgICAgICAgICAgc3RhcnQgPSBjKDE5NzUsIDEpLAogICAgICAgICAgICAgICAgICBmcmVxdWVuY3kgPSAxMikKbmFjaW1pZW50b3MgPC0gYWdncmVnYXRlKG5hY2ltaWVudG9zLCBGVU4gPSBzdW0pCmBgYAoKX19TZWxlY2Npw7NuIHVzYW5kbyBwcmV2aXNpb25lcyBpbnRyYS1tdWVzdHJhbGVzIGEgdW4gcGVyaW9kbyB2aXN0YV9fCgpMYSBzaWd1aWVudGUgcnV0aW5hIGNhbGN1bGEgZWwgTUFQRSBwYXJhIGVsIG3DqXRvZG8gZGUgbGEgZG9ibGUgbWVkaWEgbcOzdmlsIGNvbiDDs3JkZW5lcyBkZXNkZSAyIGhhc3RhIDEwLiAowr9WZXMgcG9yIHF1w6kgZW4gdW5hIGRvYmxlIG1lZGlhIG3Ds3ZpbCBlbCBvcmRlbiBkZWJlIHNlciBkZSAyICBvIHN1cGVyaW9yPykKCmBgYHtyfQpNQVBFIDwtIHJlcChOQSwgOSkKbmFtZXMoTUFQRSkgPC0gMjoxMApmb3IgKHIgaW4gMjoxMCkgewogIGRtbU5hY2ltaWVudG9zIDwtIGRtbShuYWNpbWllbnRvcywgciA9IHIpCiAgTUFQRVtyIC0gMV0gPC0gYWNjdXJhY3koZG1tTmFjaW1pZW50b3MpWzVdCn0KTUFQRQpgYGAKClBvZGVtb3MgY29uY2x1aXIgcXVlIGVsIG9yZGVuIMOzcHRpbW8gZXMgMiwgZG9uZGUgc2UgYWxjYW56YSBlbCBtZW5vciBNQVBFLgoKX19TZWxlY2Npw7NuIHVzYW5kbyBvcmlnZW4gZGUgcHJlZGljY2nDs24gbcOzdmlsX18KCkRhZG8gcXVlIG51ZXN0cm8gaW50ZXLDqXMgZXN0w6EgZW4gbGEgY2FsaWRhZCBkZSBsYXMgcHJldmlzaW9uZXMsIHZhbW9zIGEgb2J0ZW5lciBlbCBNQVBFIHBhcmEgZWwgbcOpdG9kbyBkZSBsYSBkb2JsZSBtZWRpYSBtw7N2aWwgdXNhbmRvIG9yaWdlbiBkZSBwcmVkaWNjacOzbiBtw7N2aWwgY29uIGhvcml6b250ZXMgdGVtcG9yYWxlcyBkZSAxIGEgNSBhw7Fvcy4gQ29uc2lkZXJhcmVtb3Mgw7NyZGVuZXMgZGVzZGUgMiBoYXN0YSAxMC4gQSBmaW4gZGUgY2FwdHVyYXIgbGEgdGVuZGVuY2lhIGRlY3JlY2llbnRlIGRlIGxvcyDDumx0aW1vcyBhw7FvcywgY29uc2lkZXJhcmVtb3MgMzAgY29tbyBlbCBtw61uaW1vIG7Dum1lcm8gZGUgZGF0b3MgcGFyYSBoYWNlciBsYXMgZXN0aW1hY2lvbmVzCgpgYGB7cn0KayA8LSAzMCAgICAgICAgICAgICAgICAgICAjTWluaW1vIG51bWVybyBkZSBkYXRvcyBwYXJhIGVzdGltYXIKaCA8LSA1ICAgICAgICAgICAgICAgICAgICAjSG9yaXpvbnRlIGRlIGxhcyBwcmVkaWNpY2lvbmVzClRUIDwtIGxlbmd0aChuYWNpbWllbnRvcykgI0xvbmdpdHVkIHNlcmllCnMgPC0gVFQgLSBrIC0gaCAgICAgICAgICAgI1RvdGFsIGRlIGVzdGltYWNpb25lcwoKTUFQRSA8LSBtYXRyaXgoTkEsIG5yb3cgPSA5LCBuY29sID0gNSkKcm93bmFtZXMoTUFQRSkgPC0gMjoxMApjb2xuYW1lcyhNQVBFKSA8LSAxOmgKCmZvciAociBpbiAyOjEwKSB7CgogIHRtcE1hcGUgPC0gbWF0cml4KE5BLCBzICsgMSwgaCkKICAKICBmb3IgKGkgaW4gMDpzKSB7CiAgCiAgICB0cmFpbi5zZXQgPC0gc3Vic2V0KG5hY2ltaWVudG9zLCBzdGFydCA9IGkgKyAxLCBlbmQgPSBpICsgaykKICAgIHRlc3Quc2V0IDwtICBzdWJzZXQobmFjaW1pZW50b3MsIHN0YXJ0ID0gaSArIGsgKyAxLCBlbmQgPSBpICsgayArIGgpCiAgICAKICAgIGRtbU5hY2ltaWVudG9zIDwtIGRtbSh0cmFpbi5zZXQsIHIgPSByLCBoID0gaCkKICAgIHRtcE1hcGVbaSArIDEsIF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGRtbU5hY2ltaWVudG9zJG1lYW4pL3Rlc3Quc2V0CiAgfQogIE1BUEVbciAtIDEsIF0gPC0gY29sTWVhbnModG1wTWFwZSkKfQpNQVBFCmBgYAoKRW4gbGEgdGFibGEgcHJldmlhLCBjYWRhIGZpbGEgaGFjZSByZWZlcmVuY2lhIGEgdW4gb3JkZW4gZGUgbGEgZG9ibGUgbWVkaWEgbcOzdmlsIGRlc2RlIDIgaGFzdGEgMTA7IHkgY2FkYSBjb2x1bW5hIGhhY2UgcmVmZXJlbmNpYSBhIHVuIGhvcml6b250ZSB0ZW1wb3JhbCBkZSBwcmVkaWNjacOzbi4gUG9yIGVqZW1wbG8sIHVzYW5kbyB1biBvcmRlbiBpZ3VhbCBhIDQgeSBwYXJhIHVuIGhvcml6b250ZSBkZSBwcmVkaWNjacOzbiBkZSAyIHBlcmlvZG9zLCBlbCBlcnJvciBtZWRpbyBkZSBwcmVkaWNjacOzbiBleHRyYS1tdWVzdHJhbCBlcyBkZSA2Ljg5JS4gT2JzZXJ2YSBxdWUgY29uIGluZGVwZW5kZW5jaWEgZGVsIGhvcml6b250ZSB0ZW1wb3JhbCBkZSBwcmVkaWNjacOzbiBjb25zaWRlcmFkbywgZWwgZXJyb3Igc2UgaGFjZSBtw61uaW1vIHBhcmEgdW4gb3JkZW4gZGUgbGFzIG1lZGlhcyBtw7N2aWxlcyBkZSAyLgoKUG9kZW1vcyBjb25jbHVpciBxdWUsIGRhZG8gcXVlIG51ZXN0cm8gaW50ZXLDqXMgZXMgbWluaW1pemFyIGVsIGVycm9yIGRlIGxhcyBwcmVkaWNjaW9uZXMgZXh0cmEtbXVlc3RyYWxlcywgZWwgdmFsb3Igw7NwdGltbyBkZWwgb3JkZW4gZGUgbGEgZG9ibGUgbWVkaWEgbcOzdmlsIGVzIDIuIExhIGZpZ3VyYSAyIG11ZXN0cmEgbGEgc2VyaWUgTmFjaW1pZW50b3MsIGxhIHByZXZpc2lvbmVzIGludHJhLW11ZXN0cmFsZXMgeSBsYXMgcHJldmlzaW9uZXMgZXh0cmEtbXVlc3RyYWxlcyBwYXJhIGRpY2hvIG9yZGVuLiBPYnNlcnZhIGNvbW8gZW4gbG9zIGRvcyBjYW1iaW9zIGRlIHRlbmRlbmNpYSwgbGEgc2VyaWUgYWp1c3RhZGEgKGzDrW5lYSBhenVsKSB2YSBjb24gdW4gcG9jbyBkZSByZXRyYXNvLiBBIGxhIGRvYmxlIG1lZGlhIG3Ds3ZpbCBsZSBjdWVzdGEgaWRlbnRpZmljYXIgZSBpbmNvcnBvcmFyIGxvcyBjYW1iaW9zIGRlIHRlbmRlbmNpYS4KCmBgYHtyfQpkbW1OYWNpbWllbXRvcyA8LSBkbW0obmFjaW1pZW50b3MsIHIgPSAyLCBoID0gNSkKYXV0b3Bsb3QobmFjaW1pZW50b3MsIHNlcmllcyA9ICJOYWNpbWllbnRvcyIsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJCZWLDqXMiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSAyLiBOYWNpbWllbnRvcyB5IHByZWRpY2Npw7NuIGNvbiBkb2JsZSBtZWRpYSBtw7N2aWwgZGUgb3JkZW4gMiIpICsKICBhdXRvbGF5ZXIoZG1tTmFjaW1pZW10b3MkZml0dGVkLCBzZXJpZXMgPSAiUHJlZC4gaW50cmEiKSArIAogIGF1dG9sYXllcihkbW1OYWNpbWllbXRvcyRtZWFuLCBzZXJpZXMgPSAiUHJlZC4gZXh0cmEiKQpgYGAKClwKXApcClw=</div>
+<footer class="footer">
+  
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+<br>
+This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
+  
+</footer>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("03-04-Tema4.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

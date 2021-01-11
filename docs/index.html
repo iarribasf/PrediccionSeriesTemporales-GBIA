@@ -20,8 +20,19 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
+<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
@@ -345,10 +356,10 @@ $(document).ready(function () {
   </a>
 </li>
 <li>
-  <a href="05-Practica.html">
+  <a href="05-Evaluacion_Continua.html">
     <span class="fa fa-edit"></span>
      
-    Practica
+    Evaluacion Continua
   </a>
 </li>
 <li class="dropdown">
@@ -410,8 +421,8 @@ $(document).ready(function () {
 <p>Hola a tod@s y bienvenid@s a la página web del curso.</p>
 <p><br />
 </p>
-<p>Esta es la página web de la edición 2020-21 del curso de Predicción con Datos Temporales (GBIA) de la Universitat de València. El repositorio para crear esta web lo tenéis <a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/" target="_blank">aquí</a> en Github.</p>
-<p><strong>Resumen del curso:</strong> la idea principal es aprender a manejarse con datos con estructura temporal (en contraposición a datos de corte transversal (que has visto en el primer semestre con Paco Goerlich) o espacial. Veremos cómo describir una serie temporal, como ajustarla a un modelo, cómo hacer predicciones y, lo que es más importante, a valorar la calidad de las predicciones desde un enfoque de <em>Machine Learning</em>.</p>
+<p>Esta es la página web de la edición 2020-21 del curso de Predicción con Datos Temporales (GBIA) de la Universitat de València. El repositorio para crear esta web lo tenéis <a href="https://github.com/iarribasf/PrediccionSeriesTemporales-GBIA" target="_blank">aquí</a> en Github.</p>
+<p><strong>Resumen del curso:</strong> la idea principal es aprender a manejarse con datos con estructura temporal (en contraposición a datos de corte transversal (que has visto en el primer semestre con Paco Goerlich) o espacial. Veremos como describir una serie temporal, como ajustarla a un modelo, como hacer predicciones y, lo que es más importante, a valorar la calidad de las predicciones desde un enfoque de <em>Machine Learning</em>.</p>
 <p>Para más información de este módulo, por favor visita la sección <a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/01-Guia-curso.html">Guía del curso</a> de esta página web o descárgate la <strong>Guía Docente</strong> desde la web de la Universitat de València.</p>
 <p><br />
 </p>
@@ -439,7 +450,7 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();
