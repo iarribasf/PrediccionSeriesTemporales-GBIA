@@ -56,6 +56,8 @@ librosf <- ses(libros,
 
 summary(librosf)
 
+librosf$model$states
+
 autoplot(librosf,
          xlab = "",
          ylab = "Títulos",
@@ -68,7 +70,7 @@ librosf <- holt(libros,
 
 summary(librosf)
 
-tail(librosf$model$states, n = 1)
+librosf$model$states
 
 autoplot(librosf,
          xlab = "",
@@ -140,6 +142,7 @@ summary(librosEts)
 librosEtsPre <- forecast(librosEts, 
                          h = 5)
 librosEtsPre
+
 autoplot(librosEtsPre,
          xlab = "",
          ylab = "Títulos",
@@ -191,6 +194,7 @@ autoplot(libros, series = "Libros",
 #----------------------------------------------------------
 # Ajuste
 nacimientosEts <- ets(nacimientosb, damped = FALSE)
+
 summary(nacimientosEts) 
 
 autoplot(nacimientosEts,
@@ -256,40 +260,37 @@ ggplot() +
 #----------------------------------------------------------
 # Otras alternativas para predecir Nacimientos
 #----------------------------------------------------------
-# Nacimientos
-accuracy(ets(nacimientos, 
-             damped = TRUE))[5]
-accuracy(ets(nacimientos, 
-             damped = TRUE, 
-             opt.crit = "mse"))[5]
-accuracy(ets(nacimientos, 
-             damped = TRUE, 
-             allow.multiplicative.trend = TRUE))[5]
-accuracy(ets(nacimientos, 
-             damped = TRUE, 
-             allow.multiplicative.trend = TRUE, 
+# Serie Nacimientos
+accuracy(ets(nacimientosb, 
+             damped = FALSE))[5]
+accuracy(ets(nacimientosb, 
+             damped = FALSE, 
              opt.crit = "mse"))[5]
 
-# log Nacimientos
-accuracy(ets(nacimientos, 
+# Transformación logarítmica
+accuracy(ets(nacimientosb, 
              lambda = 0, 
-             damped = TRUE))[5]
-accuracy(ets(nacimientos, 
+             damped = FALSE))[5]
+accuracy(ets(nacimientosb, 
              lambda = 0, 
-             damped = TRUE, 
+             damped = FALSE, 
+             opt.crit = "mse"))[5]
+
+# Transformación logarítmica insesgada
+accuracy(ets(nacimientosb, 
+             lambda = 0, 
+             biasadj = TRUE,
+             damped = FALSE))[5]
+accuracy(ets(nacimientosb, 
+             lambda = 0, 
+             biasadj = TRUE,
+             damped = FALSE, 
              opt.crit = "mse"))[5]
 
 # Nacimientos por dia
-accuracy(ets(nacimientos/monthdays(nacimientos), 
-             damped = TRUE))[5]
-accuracy(ets(nacimientos/monthdays(nacimientos), 
-             damped = TRUE, 
-             opt.crit = "mse"))[5]
-accuracy(ets(nacimientos/monthdays(nacimientos), 
-             damped = TRUE, 
-             allow.multiplicative.trend = TRUE))[5]
-accuracy(ets(nacimientos/monthdays(nacimientos), 
-             damped = TRUE, 
-             allow.multiplicative.trend = TRUE, 
+accuracy(ets(nacimientosb/monthdays(nacimientosb), 
+             damped = FALSE))[5]
+accuracy(ets(nacimientosb/monthdays(nacimientosb), 
+             damped = FALSE, 
              opt.crit = "mse"))[5]
 

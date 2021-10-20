@@ -14,20 +14,25 @@
 
 <title>Pernoctaciones en alojamientos turísticos de turistas extranjeros</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -41,28 +46,37 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -71,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -127,42 +141,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
 #rmd-source-code {
   display: none;
 }
 </style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -173,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -193,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -254,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -266,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -277,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -292,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -348,69 +315,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -418,16 +322,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -562,6 +456,9 @@ div.tocify {
     <li>
       <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
     </li>
+    <li>
+      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Otros</li>
     <li>
@@ -577,11 +474,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
@@ -594,70 +491,83 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#introducción"><span class="toc-section-number">1</span> Introducción</a></li>
+<li><a href="#análisis-preliminar-gráfico"><span class="toc-section-number">2</span> Análisis preliminar gráfico</a></li>
+<li><a href="#análisis-de-las-componentes"><span class="toc-section-number">3</span> Análisis de las componentes</a>
+<ul>
+<li><a href="#tendencia"><span class="toc-section-number">3.1</span> Tendencia</a></li>
+<li><a href="#estacionalidad"><span class="toc-section-number">3.2</span> Estacionalidad</a></li>
+</ul></li>
+<li><a href="#descomposición"><span class="toc-section-number">4</span> Descomposición</a></li>
+<li><a href="#identificación-de-meses-atípicos"><span class="toc-section-number">5</span> Identificación de meses atípicos</a></li>
+</ul>
+</div>
 
 <p><br />
 <br />
 </p>
-<div id="introducción" class="section level1">
-<h1><span class="header-section-number">1</span> Introducción</h1>
+<div id="introducción" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Vamos a considerar la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
 <p>La serie y su fechado están en el fichero “Pernoctaciones.csv”.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">ts</span>(Pernoctaciones[,<span class="dv">2</span>], <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">freq =</span> <span class="dv">12</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">ts</span>(Pernoctaciones[,<span class="dv">2</span>], <span class="at">start =</span> <span class="dv">2000</span>, <span class="at">freq =</span> <span class="dv">12</span>)</span></code></pre></div>
 <p><br />
 <br />
 </p>
 </div>
-<div id="análisis-preliminar-gráfico" class="section level1">
-<h1><span class="header-section-number">2</span> Análisis preliminar gráfico</h1>
-<p>La gráfica de la serie temporal (figura 1) muestra una <strong>tendencia</strong> decreciente en el número de pernoctaciones en la primera década del presente siglo, más marcada al inicio de la pasada crisis económica. Con el cambio de década se produce un cambio en la tendencia, aunque en los dos últimos años se ha producido una caída en el número de pernoctaciones.</p>
-<p>Las líneas verticales de la figura 1 marcan los meses de enero de cada año y permiten identificar mejor la posible <strong>componente estacional</strong>. Las pernoctaciones aumentan drásticamente en verano, especialmente en Julio y Agosto, asociadas a las vacaciones estivales. En menor medida se observa el efecto de la Semana Santa. Más adelante haremos un análisis detallado de la estacionalidad.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">autoplot</span>(Pernoctaciones<span class="op">/</span><span class="dv">1000000</span>,</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </a></code></pre></div>
+<div id="análisis-preliminar-gráfico" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Análisis preliminar gráfico</h1>
+<p>La gráfica de la serie temporal (figura 1) muestra una <strong>tendencia</strong> decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, aunque en los dos últimos años se ha producido una caída en el número de pernoctaciones.</p>
+<p>Las líneas verticales de la figura 1 marcan los meses de enero de cada año y permiten identificar mejor la posible <strong>componente estacional</strong>. Las pernoctaciones aumentan notablemente en verano, especialmente en Julio y Agosto, asociadas a las vacaciones estivales. En menor medida se observa el efecto de la Semana Santa. Más adelante haremos un análisis detallado de la estacionalidad.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Parece que conforme disminuye el número pernoctaciones, también disminuye la amplitud estacional. Al inicio del siglo la diferencia entre los meses con más y con menos pernoctaciones superaba los 8 millones de pernoctaciones, mientras que a finales de la primera década esta diferencia no llegaba a los 7 millones de pernoctaciones. Parece, por tanto, que estamos ante un <strong>esquema multiplicativo</strong>. Para confirmar este aspecto, se ha realizado un gráfico de puntos entre el numero anual de pernoctaciones y la desviación típica intra-anual (figura 2).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">CasosAnual =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">aggregate</span>(Pernoctaciones, <span class="dt">FUN =</span> sum))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">DesviacionAnual =<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">aggregate</span>(Pernoctaciones, <span class="dt">FUN =</span> sd))</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> CasosAnual, <span class="dt">y =</span> DesviacionAnual), <span class="dt">size =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Pernoctaciones anuales&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Desviación típica intra-anual&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Figura 2: Análisis del tipo de esquema&quot;</span>) </a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>CasosAnual <span class="ot">=</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sum)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>DesviacionAnual <span class="ot">=</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sd)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> CasosAnual, <span class="at">y =</span> DesviacionAnual), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Pernoctaciones anuales&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Desviación típica intra-anual&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Figura 2: Análisis del tipo de esquema&quot;</span>) </span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Efectivamente, los años con mayor número de pernoctaciones se corresponden con una mayor variabilidad intra-anual, por lo que confirmamos el esquema multiplicativo de la serie.</p>
 <p><br />
 <br />
 </p>
 </div>
-<div id="análisis-de-las-componentes" class="section level1">
-<h1><span class="header-section-number">3</span> Análisis de las componentes</h1>
+<div id="análisis-de-las-componentes" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Análisis de las componentes</h1>
 <p><br />
 </p>
-<div id="tendencia" class="section level2">
-<h2><span class="header-section-number">3.1</span> Tendencia</h2>
+<div id="tendencia" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Tendencia</h2>
 <p>Hemos obtenido la serie anual pernoctaciones, que presentamos en la figura 3. Se confirma la tendencia decreciente de la primera década. En el año 2000 el número de pernoctaciones alcanzaba las 90 millones al año, mientras que en 2009 toco fondo con menos de 60 millones. En los años siguientes se produce una recuperación de las pernoctaciones (a pesar de la crisis económica), sin llegarse a recuperar los niveles de principios de siglo. En los dos últimos años disponibles las pernoctaciones han vuelto a caer.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">autoplot</span>(<span class="kw">aggregate</span>(Pernoctaciones<span class="op">/</span><span class="dv">1000000</span>, <span class="dt">FUN =</span> sum),</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">         <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 3. Pernoctaciones&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">FUN =</span> sum),</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 3. Pernoctaciones&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p><br />
 </p>
 </div>
-<div id="estacionalidad" class="section level2">
-<h2><span class="header-section-number">3.2</span> Estacionalidad</h2>
+<div id="estacionalidad" class="section level2" number="3.2">
+<h2 number="3.2"><span class="header-section-number">3.2</span> Estacionalidad</h2>
 <p>Veamos ahora como varían las pernoctaciones de los turistas extranjeros en España según el mes del año.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">ggmonthplot</span>(Pernoctaciones, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">             <span class="dt">polar=</span><span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">             <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">             <span class="dt">ylab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">             <span class="dt">main =</span> <span class="st">&quot;Figura 4. Gráfico estacional: pernoctaciones&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggmonthplot</span>(Pernoctaciones, </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">polar=</span><span class="cn">TRUE</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">&quot;Figura 4. Gráfico estacional: pernoctaciones&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Cada subserie en la figura 4 vuelve a mostrar la evolución de la tendencia durante el periodo de análisis. Respecto de la estacionalidad, se aprecia que el principal determinante son las vacaciones estivales puesto que el número de pernoctaciones aumenta progresivamente desde mayo a agosto para luego caer bruscamente en septiembre. También cabría esperar un efecto <em>días del mes</em> y observar más pernoctaciones en los meses de 31 días que en los de 30, pero el efecto de la vacaciones estivales es tan dominante que anula cualquier otro efecto.</p>
 <p>La mayor irregularidad observada en abril puede deberse a si la Semana Santa ha caído en abril o en marzo.</p>
@@ -666,63 +576,68 @@ div.tocify {
 </p>
 </div>
 </div>
-<div id="descomposición" class="section level1">
-<h1><span class="header-section-number">4</span> Descomposición</h1>
-<p>Vamos a obtener cada una de las componentes de la serie usando el método de medias móviles <code>decompose</code>. Se ha optado por este método dado que la serie muestra un esquema multiplicativo. Otra opción hubiera sido usar el método de regresiones locales ponderadas trabajando con el logaritmo de la serie, pero entonces hubiéramos perdiendo interpretabilidad.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">PernoctacionesDesMul &lt;-<span class="st"> </span><span class="kw">decompose</span>(Pernoctaciones, <span class="dt">type =</span> <span class="st">&quot;mult&quot;</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw">autoplot</span>(PernoctacionesDesMul,</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 5. Descomposición multiplicativa por medias móviles&quot;)</span></a></code></pre></div>
+<div id="descomposición" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Descomposición</h1>
+<p>Vamos a obtener cada una de las componentes de la serie usando el método de medias móviles <code>decompose</code>. Se ha optado por este método dado que la serie muestra un esquema multiplicativo.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones, <span class="at">type =</span> <span class="st">&quot;mult&quot;</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesDesMul,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 5. Descomposición multiplicativa por medias móviles&quot;</span>)</span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>La <strong>tendencia</strong> obtenida tras la descomposición no hace sino confirmar lo ya observado, una tendencia decreciente en la primera década, y creciente desde entonces hasta los dos últimos años.</p>
 <p>También se aprecian muy claramente varios valores atípicos en el <strong>residuo</strong> destacando uno en 2005 y varios en los últimos años.</p>
-<p>Respecto de la <strong>componente estacional</strong>, se confirma el análisis preliminar: mayor número de pernoctaciones a finales de primavera y verano, especialmente en agosto, y un menor número en invierno, especialmente en diciembre –un mes en que la gente no realiza tantos viales al extranjero. En concreto, en agosto se detecta un 91% más de pernoctaciones respecto de la media anual y en julio un 77% más. Por contra, en diciembre se observa un descenso del 33%, similar al de noviembre. Cabría preguntarse las causas del repunte en marzo, aunque puede deberse a ser un mes de 31 días, comparado con febrero, en el que ocasionalmente cae la Semana Santa.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">round</span>(PernoctacionesDesMul<span class="op">$</span>figure, <span class="dv">2</span>)</a></code></pre></div>
+<p>Respecto de la <strong>componente estacional</strong>, se confirma el análisis preliminar: mayor número de pernoctaciones a finales de primavera y verano, especialmente en agosto, y un menor número en invierno, especialmente en diciembre –un mes en que la gente no realiza tantos viajes al extranjero. En concreto, en agosto se detecta un 91% más de pernoctaciones respecto de la media anual y en julio un 77% más. Por contra, en noviembre y diciembre se observa un descenso del 33%. Cabría preguntarse las causas del repunte en marzo, aunque puede deberse a ser un mes de 31 días, comparado con febrero, en el que ocasionalmente cae la Semana Santa.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(PernoctacionesDesMul<span class="sc">$</span>figure, <span class="dv">2</span>)</span></code></pre></div>
 <pre><code> [1] 0.73 0.72 0.79 0.73 0.86 1.08 1.77 1.91 1.15 0.92 0.68 0.67</code></pre>
 <p>A fin de aislar de la componente estacional el efecto <em>días del mes</em> del efecto de las vacaciones estivales, se ha aplicado la descomposición a la serie <em>pernoctaciones por día</em> resultante de dividir la serie original por el número de días del mes (que obtenemos con la función <code>monthdays</code>). En esta nueva serie todo el efecto estacional se deberá a las vacaciones de verano.</p>
-<p>La figura 6 muestra que la componente estacional estimada para las pernoctaciones por día es solo algo más suave que la componente obtenida a partir la serie original. También se aprecia que el efecto del tamaño del mes es muy acusado en febrero. Para este mes el efecto estacional es el resultado de dos fuerzas, no ser un periodo vacacional y el tamaño del mes (28 días), en la misma dirección que decrementan la componente estacional. Sobre la serie original ambas fuerzas tienen lugar y el resultado es una componente estacional para febrero menor que la de marzo. En la serie de pernoctaciones por día el efecto número de días del mes ha sido eliminado, solo queda el efecto <em>vacacional</em> que es similar para febrero y marzo y por eso la componente de febrero es similar a la de marzo.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">PernoctacionesDiaDesMul &lt;-<span class="st"> </span><span class="kw">decompose</span>(Pernoctaciones<span class="op">/</span><span class="kw">monthdays</span>(Pernoctaciones), <span class="dt">type =</span> <span class="st">&quot;mult&quot;</span>)</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> PernoctacionesDesMul<span class="op">$</span>figure, <span class="dt">colour =</span> <span class="st">&quot;black&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> PernoctacionesDiaDesMul<span class="op">$</span>figure, <span class="dt">colour =</span> <span class="st">&quot;red&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_hline</span>(<span class="dt">yintercept =</span> <span class="dv">1</span>, <span class="dt">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="dt">lty =</span> <span class="dv">2</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Figura 6. Componente estacional de pernoctaciones&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st">  </span><span class="kw">ylab</span>(<span class="st">&quot;Efecto estacional&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, </a>
-<a class="sourceLine" id="cb9-11" data-line-number="11">                     <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Ene&quot;</span>, <span class="st">&quot;Feb&quot;</span>, <span class="st">&quot;Mar&quot;</span>, <span class="st">&quot;Abr&quot;</span>, <span class="st">&quot;May&quot;</span>, <span class="st">&quot;Jun&quot;</span>, </a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">                                <span class="st">&quot;Jul&quot;</span>, <span class="st">&quot;Ago&quot;</span>, <span class="st">&quot;Sep&quot;</span>, <span class="st">&quot;Oct&quot;</span>, <span class="st">&quot;Nov&quot;</span>, <span class="st">&quot;Dic&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-13" data-line-number="13"><span class="st">  </span><span class="kw">scale_color_discrete</span>(<span class="dt">name =</span> <span class="st">&quot;Componente estacional&quot;</span>, </a>
-<a class="sourceLine" id="cb9-14" data-line-number="14">                       <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Pernoctaciones&quot;</span>, <span class="st">&quot;Pernoctaciones por día&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-15" data-line-number="15"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</a></code></pre></div>
+<p>La figura 6 muestra que la componente estacional estimada para las pernoctaciones por día es solo algo más suave que la componente obtenida a partir la serie original. También se aprecia que el efecto del tamaño del mes es muy acusado en febrero. Para este mes el efecto estacional es el resultado de dos fuerzas en la misma dirección, no ser un periodo vacacional y el tamaño del mes (28 días), que decrementan la componente estacional. Sobre la serie original ambas fuerzas tienen lugar y el resultado es una componente estacional para febrero menor que la de marzo. En la serie de pernoctaciones por día el efecto número de días del mes ha sido eliminado, solo queda el efecto <em>vacacional</em> que es similar para febrero y marzo y por eso la componente de febrero es similar a la de marzo.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDiaDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones<span class="sc">/</span><span class="fu">monthdays</span>(Pernoctaciones), <span class="at">type =</span> <span class="st">&quot;mult&quot;</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> PernoctacionesDesMul<span class="sc">$</span>figure, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> PernoctacionesDiaDesMul<span class="sc">$</span>figure, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Figura 6. Componente estacional de pernoctaciones&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Efecto estacional&quot;</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Ene&quot;</span>, <span class="st">&quot;Feb&quot;</span>, <span class="st">&quot;Mar&quot;</span>, <span class="st">&quot;Abr&quot;</span>, <span class="st">&quot;May&quot;</span>, <span class="st">&quot;Jun&quot;</span>, </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;Jul&quot;</span>, <span class="st">&quot;Ago&quot;</span>, <span class="st">&quot;Sep&quot;</span>, <span class="st">&quot;Oct&quot;</span>, <span class="st">&quot;Nov&quot;</span>, <span class="st">&quot;Dic&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Componente estacional&quot;</span>, </span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Pernoctaciones&quot;</span>, <span class="st">&quot;Pernoctaciones por día&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p><br />
 <br />
 </p>
 </div>
-<div id="identificación-de-meses-atípicos" class="section level1">
-<h1><span class="header-section-number">5</span> Identificación de meses atípicos</h1>
+<div id="identificación-de-meses-atípicos" class="section level1" number="5">
+<h1 number="5"><span class="header-section-number">5</span> Identificación de meses atípicos</h1>
 <p>En la descomposición, el vector de residuos contiene las componentes del error y la intervención. Vamos a realizar un análisis gráfico informal del residuo que nos permite ir identificando posibles intervenciones.</p>
 <p>Como la descomposición es multiplicativa, el error es en tanto por uno y tiene media 1. Para analizar las propiedades del residuo, vamos a calcularlo como error aditivo. Para ello vamos a restar a la serie original la serie estimada, obtenida como el producto de la tendencia por la estacionalidad, es decir, <span class="math inline">\(R_t = y_t - (T_t * S_t)\)</span>.</p>
-<p>La figura 7 muestra el error y los intervalos de confianza (IC) al 95% (líneas en verde) y al 99.7% (líneas en rojo). Se observa un valor claramente extremo que cruza el IC(99.7%) por la parte inferior de la gráfica. Es agosto de 2001, mes en el que las pernoctaciones fueron muy inferiores a lo esperado. También se observan otros valores atípicos, en los que el error supera las 2.5 desviaciones típicas: agosto y octubre de 2000 y mayo de 2018.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">error &lt;-<span class="st"> </span>Pernoctaciones <span class="op">-</span><span class="st"> </span><span class="kw">trendcycle</span>(PernoctacionesDesMul) <span class="op">*</span><span class="st"> </span><span class="kw">seasonal</span>(PernoctacionesDesMul)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">sderror &lt;-<span class="st"> </span><span class="kw">sd</span>(error, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw">autoplot</span>(error,</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb10-7" data-line-number="7">         <span class="dt">ylab =</span> <span class="st">&quot;Error&quot;</span>,</a>
-<a class="sourceLine" id="cb10-8" data-line-number="8">         <span class="dt">main =</span> <span class="st">&quot;Figura 7. Error + Intervención&quot;,</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">         colour = &quot;</span>black<span class="st">&quot;) +</span></a>
-<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="st">  geom_hline(yintercept = c(3, 2, -2, -3)*sderror, </span></a>
-<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">             colour = c(&quot;</span>red<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>green<span class="st">&quot;, &quot;</span>red<span class="st">&quot;),</span></a>
-<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">             lty = 2) + </span></a>
-<a class="sourceLine" id="cb10-13" data-line-number="13"><span class="st">  scale_x_continuous(breaks= seq(1980, 2018, 4)) </span></a></code></pre></div>
+<p>La figura 7 muestra el error y los intervalos de confianza (IC) al 95% (líneas en verde) y al 99.7% (líneas en rojo). Se observa un valor claramente extremo que cruza el IC(99.7%) por la parte inferior de la gráfica. Es agosto de 2001, mes en el que las pernoctaciones fueron muy inferiores a lo esperado. También se observan otros valores atípicos en los que el error supera las 2.5 desviaciones típicas: agosto y octubre de 2000 y mayo de 2018.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> Pernoctaciones <span class="sc">-</span> <span class="fu">trendcycle</span>(PernoctacionesDesMul) <span class="sc">*</span> <span class="fu">seasonal</span>(PernoctacionesDesMul)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sderror <span class="ot">&lt;-</span> <span class="fu">sd</span>(error, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(error,</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Error&quot;</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 7. Error + Intervención&quot;</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>)<span class="sc">*</span>sderror, </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">1980</span>, <span class="dv">2018</span>, <span class="dv">4</span>)) </span></code></pre></div>
 <p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p><br />
+<br />
+<br />
+<br />
+</p>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIkRlc2NyaXB0aXZhIgphdXRob3I6ICJJdsOhbiBBcnJpYmFzIChEZXB0by4gQW7DoWxpc2lzIEVjb27Ds21pY28uIFVuaXZlcnNpdGF0IGRlIFZhbMOobmNpYSkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIHRoZW1lOiBjZXJ1bGVhbgogICAgaGlnaGxpZ2h0OiBweWdtZW50cyAKICAgIGZpZ19jYXB0aW9uOiBmYWxzZQogICAgZGZfcHJpbnQ6IGthYmxlCiAgICB0b2M6IHRydWUKICAgIHRvY19kZXB0aDogMgogICAgdG9jX2Zsb2F0OiAKICAgICAgY29sbGFwc2VkOiB0cnVlCiAgICBudW1iZXJfc2VjdGlvbnM6IHRydWUKICAgIHNlbGZfY29udGFpbmVkOiB0cnVlCiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCi0tLQoKYGBge3IgY2h1bmtfc2V0dXAsIGVjaG8gPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KHdhcm5pbmcgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBtZXNzYWdlID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmFsaWduID0gImNlbnRlciIsIAogICAgICAgICAgICAgICAgICAgICAgZmlnLnNob3cgPSAiaG9sZCIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuaGVpZ2h0ID0gNCwKICAgICAgICAgICAgICAgICAgICAgIGZpZy53aWR0aCA9IDgsCiAgICAgICAgICAgICAgICAgICAgICBvdXQud2lkdGggPSAiODAlIikgCmBgYAoKYGBge3Igb3B0aW9uc19zZXR1cCwgZWNobyA9IEZBTFNFfQpvcHRpb25zKHNjaXBlbiA9IDk5OSkgIy0gcGFyYSBxdWl0YXIgbGEgbm90YWNpb24gY2llbnRpZmljYQpgYGAKCmBgYHtyIGxpYnJlcmlhcywgZWNobyA9IEZBTFNFfQpsaWJyYXJ5KGZvcmVjYXN0KQpsaWJyYXJ5KGdncGxvdDIpOyB0aGVtZV9zZXQodGhlbWVfYncoKSkKbGlicmFyeShncmlkRXh0cmEpCmxpYnJhcnkoZ3JpZCkKYGBgCgpcClwKCiMgSW50cm9kdWNjacOzbgoKVmFtb3MgYSBjb25zaWRlcmFyIGxhIHNlcmllIHRlbXBvcmFsIGNvcnJlc3BvbmRpZW50ZSBhbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzIHF1ZSBsb3MgdHVyaXN0YXMgZXh0cmFuamVyb3MgcmVhbGl6YW4gZW4gRXNwYcOxYSBlbiBhbG9qYW1pZW50b3MgdHVyw61zdGljb3MgYXV0b3JpemFkb3MgKHF1ZSBsbGFtYXJlbW9zIFBlcm5vY3RhY2lvbmVzIGVuIGFkZWxhbnRlKS4gRXN0YSBzZXJpZSBlc3TDoSBkaXNwb25pYmxlIGVuIEV1cm9zdGF0IGRlc2RlIGVuZXJvIGRlIDIwMDAgaGFzdGEgZGljaWVtYnJlIGRlIDIwMTksIHVuIHRvdGFsIGRlIDIwIGHDsW9zIHkgMjQwIG9ic2VydmFjaW9uZXMuCgpMYSBzZXJpZSB5IHN1IGZlY2hhZG8gZXN0w6FuIGVuIGVsIGZpY2hlcm8gIlBlcm5vY3RhY2lvbmVzLmNzdiIuCgoKYGBge3J9ClBlcm5vY3RhY2lvbmVzIDwtIHJlYWQuY3N2MigiLi9zZXJpZXMvUGVybm9jdGFjaW9uZXMuY3N2IiwgaGVhZGVyID0gVFJVRSkKUGVybm9jdGFjaW9uZXMgPC0gdHMoUGVybm9jdGFjaW9uZXNbLDJdLCBzdGFydCA9IDIwMDAsIGZyZXEgPSAxMikKYGBgCgpcClwKCiMgQW7DoWxpc2lzIHByZWxpbWluYXIgZ3LDoWZpY28KCkxhIGdyw6FmaWNhIGRlIGxhIHNlcmllIHRlbXBvcmFsIChmaWd1cmEgMSkgbXVlc3RyYSB1bmEgX190ZW5kZW5jaWFfXyBkZWNyZWNpZW50ZSBlbiBlbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzIGVuIGxhIHByaW1lcmEgZMOpY2FkYSBkZWwgcHJlc2VudGUgc2lnbG8sIG3DoXMgbWFyY2FkYSBhbCBpbmljaW8gZGUgbGEgcGFzYWRhIGNyaXNpcyBlY29uw7NtaWNhLiBDb24gZWwgY2FtYmlvIGRlIGTDqWNhZGEgc2UgcHJvZHVjZSB1biBjYW1iaW8gZW4gbGEgdGVuZGVuY2lhLCBhdW5xdWUgZW4gbG9zIGRvcyDDumx0aW1vcyBhw7FvcyBzZSBoYSBwcm9kdWNpZG8gdW5hIGNhw61kYSBlbiBlbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzLiAKCkxhcyBsw61uZWFzIHZlcnRpY2FsZXMgZGUgbGEgZmlndXJhIDEgbWFyY2FuIGxvcyBtZXNlcyBkZSBlbmVybyBkZSBjYWRhIGHDsW8geSBwZXJtaXRlbiBpZGVudGlmaWNhciBtZWpvciBsYSBwb3NpYmxlIF9fY29tcG9uZW50ZSBlc3RhY2lvbmFsX18uIExhcyBwZXJub2N0YWNpb25lcyBhdW1lbnRhbiBkcsOhc3RpY2FtZW50ZSBlbiB2ZXJhbm8sIGVzcGVjaWFsbWVudGUgZW4gSnVsaW8geSBBZ29zdG8sIGFzb2NpYWRhcyBhIGxhcyB2YWNhY2lvbmVzIGVzdGl2YWxlcy4gRW4gbWVub3IgbWVkaWRhIHNlIG9ic2VydmEgZWwgZWZlY3RvIGRlIGxhIFNlbWFuYSBTYW50YS4gTcOhcyBhZGVsYW50ZSBoYXJlbW9zIHVuIGFuw6FsaXNpcyBkZXRhbGxhZG8gZGUgbGEgZXN0YWNpb25hbGlkYWQuCgpgYGB7cn0KYXV0b3Bsb3QoUGVybm9jdGFjaW9uZXMvMTAwMDAwMCwKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIk5vY2hlcyAobWlsbG9uZXMpIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgMS4gUGVybm9jdGFjaW9uZXMiKSArCiAgc2NhbGVfeF9jb250aW51b3VzKGJyZWFrcz0gc2VxKDIwMDAsIDIwMjAsIDIpKSAKYGBgCgpQYXJlY2UgcXVlIGNvbmZvcm1lIGRpc21pbnV5ZSBlbCBuw7ptZXJvIHBlcm5vY3RhY2lvbmVzLCB0YW1iacOpbiBkaXNtaW51eWUgbGEgYW1wbGl0dWQgZXN0YWNpb25hbC4gQWwgaW5pY2lvIGRlbCBzaWdsbyBsYSBkaWZlcmVuY2lhIGVudHJlIGxvcyBtZXNlcyBjb24gbcOhcyB5IGNvbiBtZW5vcyBwZXJub2N0YWNpb25lcyBzdXBlcmFiYSBsb3MgOCBtaWxsb25lcyBkZSBwZXJub2N0YWNpb25lcywgbWllbnRyYXMgcXVlIGEgZmluYWxlcyBkZSBsYSBwcmltZXJhIGTDqWNhZGEgZXN0YSBkaWZlcmVuY2lhIG5vIGxsZWdhYmEgYSBsb3MgNyBtaWxsb25lcyBkZSBwZXJub2N0YWNpb25lcy4gUGFyZWNlLCBwb3IgdGFudG8sIHF1ZSBlc3RhbW9zIGFudGUgdW4gX19lc3F1ZW1hIG11bHRpcGxpY2F0aXZvX18uIFBhcmEgY29uZmlybWFyIGVzdGUgYXNwZWN0bywgc2UgaGEgcmVhbGl6YWRvIHVuIGdyw6FmaWNvIGRlIHB1bnRvcyBlbnRyZSBlbCBudW1lcm8gYW51YWwgZGUgcGVybm9jdGFjaW9uZXMgeSBsYSBkZXN2aWFjacOzbiB0w61waWNhIGludHJhLWFudWFsIChmaWd1cmEgMikuCgpgYGB7cn0KQ2Fzb3NBbnVhbCA9IGFzLm51bWVyaWMoYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLCBGVU4gPSBzdW0pKQpEZXN2aWFjaW9uQW51YWwgPSBhcy5udW1lcmljKGFnZ3JlZ2F0ZShQZXJub2N0YWNpb25lcywgRlVOID0gc2QpKQoKZ2dwbG90KCkgKwogIGdlb21fcG9pbnQoYWVzKHggPSBDYXNvc0FudWFsLCB5ID0gRGVzdmlhY2lvbkFudWFsKSwgc2l6ZSA9IDIpICsKICB4bGFiKCJQZXJub2N0YWNpb25lcyBhbnVhbGVzIikgKyAKICB5bGFiKCJEZXN2aWFjacOzbiB0w61waWNhIGludHJhLWFudWFsIikgKyAKICBnZ3RpdGxlKCJGaWd1cmEgMjogQW7DoWxpc2lzIGRlbCB0aXBvIGRlIGVzcXVlbWEiKSAKYGBgCgpFZmVjdGl2YW1lbnRlLCBsb3MgYcOxb3MgY29uIG1heW9yIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgc2UgY29ycmVzcG9uZGVuIGNvbiB1bmEgbWF5b3IgdmFyaWFiaWxpZGFkIGludHJhLWFudWFsLCBwb3IgbG8gcXVlIGNvbmZpcm1hbW9zIGVsIGVzcXVlbWEgbXVsdGlwbGljYXRpdm8gZGUgbGEgc2VyaWUuCgpcClwKCiMgQW7DoWxpc2lzIGRlIGxhcyBjb21wb25lbnRlcwoKXAoKIyMgVGVuZGVuY2lhCgpIZW1vcyBvYnRlbmlkbyBsYSBzZXJpZSBhbnVhbCBwZXJub2N0YWNpb25lcywgcXVlIHByZXNlbnRhbW9zIGVuIGxhIGZpZ3VyYSAzLiBTZSBjb25maXJtYSBsYSB0ZW5kZW5jaWEgZGVjcmVjaWVudGUgZGUgbGEgcHJpbWVyYSBkw6ljYWRhLiBFbiBlbCBhw7FvIDIwMDAgZWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBhbGNhbnphYmEgbGFzIDkwIG1pbGxvbmVzIGFsIGHDsW8sIG1pZW50cmFzIHF1ZSBlbiAyMDA5IHRvY28gZm9uZG8gY29uIG1lbm9zIGRlIDYwIG1pbGxvbmVzLiBFbiBsb3MgYcOxb3Mgc2lndWllbnRlcyBzZSBwcm9kdWNlIHVuYSByZWN1cGVyYWNpw7NuIGRlIGxhcyBwZXJub2N0YWNpb25lcyAoYSBwZXNhciBkZSBsYSBjcmlzaXMgZWNvbsOzbWljYSksIHNpbiBsbGVnYXJzZSBhIHJlY3VwZXJhciBsb3Mgbml2ZWxlcyBkZSBwcmluY2lwaW9zIGRlIHNpZ2xvLiBFbiBsb3MgZG9zIMO6bHRpbW9zIGHDsW9zIGRpc3BvbmlibGVzIGxhcyBwZXJub2N0YWNpb25lcyBoYW4gdnVlbHRvIGEgY2Flci4KCmBgYHtyfQphdXRvcGxvdChhZ2dyZWdhdGUoUGVybm9jdGFjaW9uZXMvMTAwMDAwMCwgRlVOID0gc3VtKSwKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIk5vY2hlcyAobWlsbG9uZXMpIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgMy4gUGVybm9jdGFjaW9uZXMiKSArCiAgc2NhbGVfeF9jb250aW51b3VzKGJyZWFrcz0gc2VxKDIwMDAsIDIwMjAsIDIpKSAKYGBgCgpcCgojIyBFc3RhY2lvbmFsaWRhZAoKVmVhbW9zIGFob3JhIGNvbW8gdmFyw61hbiBsYXMgcGVybm9jdGFjaW9uZXMgZGUgbG9zIHR1cmlzdGFzIGV4dHJhbmplcm9zIGVuIEVzcGHDsWEgc2Vnw7puIGVsIG1lcyBkZWwgYcOxby4gCgpgYGB7cn0KZ2dtb250aHBsb3QoUGVybm9jdGFjaW9uZXMsIAogICAgICAgICAgICAgcG9sYXI9VFJVRSwKICAgICAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgICAgIHlsYWIgPSAiIiwKICAgICAgICAgICAgIG1haW4gPSAiRmlndXJhIDQuIEdyw6FmaWNvIGVzdGFjaW9uYWw6IHBlcm5vY3RhY2lvbmVzIikgKwogIGd1aWRlcyhjb2xvdXI9RkFMU0UpCmBgYAoKQ2FkYSBzdWJzZXJpZSBlbiBsYSBmaWd1cmEgNCB2dWVsdmUgYSBtb3N0cmFyIGxhIGV2b2x1Y2nDs24gZGUgbGEgdGVuZGVuY2lhIGR1cmFudGUgZWwgcGVyaW9kbyBkZSBhbsOhbGlzaXMuIFJlc3BlY3RvIGRlIGxhIGVzdGFjaW9uYWxpZGFkLCBzZSBhcHJlY2lhIHF1ZSBlbCBwcmluY2lwYWwgZGV0ZXJtaW5hbnRlIHNvbiBsYXMgdmFjYWNpb25lcyBlc3RpdmFsZXMgcHVlc3RvIHF1ZSBlbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzIGF1bWVudGEgcHJvZ3Jlc2l2YW1lbnRlIGRlc2RlIG1heW8gYSBhZ29zdG8gcGFyYSBsdWVnbyBjYWVyIGJydXNjYW1lbnRlIGVuIHNlcHRpZW1icmUuIFRhbWJpw6luIGNhYnLDrWEgZXNwZXJhciB1biBlZmVjdG8gX2TDrWFzIGRlbCBtZXNfIHkgb2JzZXJ2YXIgbcOhcyBwZXJub2N0YWNpb25lcyBlbiBsb3MgbWVzZXMgZGUgMzEgZMOtYXMgcXVlIGVuIGxvcyBkZSAzMCwgcGVybyBlbCBlZmVjdG8gZGUgbGEgdmFjYWNpb25lcyBlc3RpdmFsZXMgZXMgdGFuIGRvbWluYW50ZSBxdWUgYW51bGEgY3VhbHF1aWVyIG90cm8gZWZlY3RvLgoKTGEgbWF5b3IgaXJyZWd1bGFyaWRhZCBvYnNlcnZhZGEgZW4gYWJyaWwgcHVlZGUgZGViZXJzZSBhIHNpIGxhIFNlbWFuYSBTYW50YSBoYSBjYcOtZG8gZW4gYWJyaWwgbyBlbiBtYXJ6by4gCgpcClwKCiMgRGVzY29tcG9zaWNpw7NuCgpWYW1vcyBhIG9idGVuZXIgY2FkYSB1bmEgZGUgbGFzIGNvbXBvbmVudGVzIGRlIGxhIHNlcmllIHVzYW5kbyBlbCBtw6l0b2RvIGRlIG1lZGlhcyBtw7N2aWxlcyBgZGVjb21wb3NlYC4gU2UgaGEgb3B0YWRvIHBvciBlc3RlIG3DqXRvZG8gZGFkbyBxdWUgbGEgc2VyaWUgbXVlc3RyYSB1biBlc3F1ZW1hIG11bHRpcGxpY2F0aXZvLiBPdHJhIG9wY2nDs24gaHViaWVyYSBzaWRvIHVzYXIgZWwgbcOpdG9kbyBkZSByZWdyZXNpb25lcyBsb2NhbGVzIHBvbmRlcmFkYXMgdHJhYmFqYW5kbyBjb24gZWwgbG9nYXJpdG1vIGRlIGxhIHNlcmllLCBwZXJvIGVudG9uY2VzIGh1YmnDqXJhbW9zIHBlcmRpZW5kbyBpbnRlcnByZXRhYmlsaWRhZC4KCmBgYHtyLCBmaWcuaGVpZ2h0PTd9ClBlcm5vY3RhY2lvbmVzRGVzTXVsIDwtIGRlY29tcG9zZShQZXJub2N0YWNpb25lcywgdHlwZSA9ICJtdWx0IikKYXV0b3Bsb3QoUGVybm9jdGFjaW9uZXNEZXNNdWwsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgNS4gRGVzY29tcG9zaWNpw7NuIG11bHRpcGxpY2F0aXZhIHBvciBtZWRpYXMgbcOzdmlsZXMiKQpgYGAKCkxhIF9fdGVuZGVuY2lhX18gb2J0ZW5pZGEgdHJhcyBsYSBkZXNjb21wb3NpY2nDs24gbm8gaGFjZSBzaW5vIGNvbmZpcm1hciBsbyB5YSBvYnNlcnZhZG8sIHVuYSB0ZW5kZW5jaWEgZGVjcmVjaWVudGUgZW4gbGEgcHJpbWVyYSBkw6ljYWRhLCB5IGNyZWNpZW50ZSBkZXNkZSBlbnRvbmNlcyBoYXN0YSBsb3MgZG9zIMO6bHRpbW9zIGHDsW9zLgoKVGFtYmnDqW4gc2UgYXByZWNpYW4gbXV5IGNsYXJhbWVudGUgdmFyaW9zIHZhbG9yZXMgYXTDrXBpY29zIGVuIGVsIF9fcmVzaWR1b19fIGRlc3RhY2FuZG8gdW5vIGVuIDIwMDUgeSB2YXJpb3MgZW4gbG9zIMO6bHRpbW9zIGHDsW9zLgoKUmVzcGVjdG8gZGUgbGEgX19jb21wb25lbnRlIGVzdGFjaW9uYWxfXywgc2UgY29uZmlybWEgZWwgYW7DoWxpc2lzIHByZWxpbWluYXI6IG1heW9yIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgYSBmaW5hbGVzIGRlIHByaW1hdmVyYSB5IHZlcmFubywgZXNwZWNpYWxtZW50ZSBlbiBhZ29zdG8sIHkgdW4gbWVub3IgbsO6bWVybyBlbiBpbnZpZXJubywgZXNwZWNpYWxtZW50ZSBlbiBkaWNpZW1icmUgLS11biBtZXMgZW4gcXVlIGxhIGdlbnRlIG5vIHJlYWxpemEgdGFudG9zIHZpYWxlcyBhbCBleHRyYW5qZXJvLiBFbiBjb25jcmV0bywgZW4gYWdvc3RvIHNlIGRldGVjdGEgdW4gOTElIG3DoXMgZGUgcGVybm9jdGFjaW9uZXMgcmVzcGVjdG8gZGUgbGEgbWVkaWEgYW51YWwgeSBlbiBqdWxpbyB1biA3NyUgbcOhcy4gUG9yIGNvbnRyYSwgZW4gZGljaWVtYnJlIHNlIG9ic2VydmEgdW4gZGVzY2Vuc28gZGVsIDMzJSwgc2ltaWxhciBhbCBkZSBub3ZpZW1icmUuIENhYnLDrWEgcHJlZ3VudGFyc2UgbGFzIGNhdXNhcyBkZWwgcmVwdW50ZSBlbiBtYXJ6bywgYXVucXVlIHB1ZWRlIGRlYmVyc2UgYSBzZXIgdW4gbWVzIGRlIDMxIGTDrWFzLCBjb21wYXJhZG8gY29uIGZlYnJlcm8sIGVuIGVsIHF1ZSBvY2FzaW9uYWxtZW50ZSBjYWUgbGEgU2VtYW5hIFNhbnRhLgoKYGBge3J9CnJvdW5kKFBlcm5vY3RhY2lvbmVzRGVzTXVsJGZpZ3VyZSwgMikKYGBgCgpBIGZpbiBkZSBhaXNsYXIgZGUgbGEgY29tcG9uZW50ZSBlc3RhY2lvbmFsIGVsIGVmZWN0byBfZMOtYXMgZGVsIG1lc18gZGVsIGVmZWN0byBkZSBsYXMgdmFjYWNpb25lcyBlc3RpdmFsZXMsIHNlIGhhIGFwbGljYWRvIGxhIGRlc2NvbXBvc2ljacOzbiBhIGxhIHNlcmllIF9wZXJub2N0YWNpb25lcyBwb3IgZMOtYV8gcmVzdWx0YW50ZSBkZSBkaXZpZGlyIGxhIHNlcmllIG9yaWdpbmFsIHBvciBlbCBuw7ptZXJvIGRlIGTDrWFzIGRlbCBtZXMgKHF1ZSBvYnRlbmVtb3MgY29uIGxhIGZ1bmNpw7NuIGBtb250aGRheXNgKS4gRW4gZXN0YSBudWV2YSBzZXJpZSB0b2RvIGVsIGVmZWN0byBlc3RhY2lvbmFsIHNlIGRlYmVyw6EgYSBsYXMgdmFjYWNpb25lcyBkZSB2ZXJhbm8uCgpMYSBmaWd1cmEgNiBtdWVzdHJhIHF1ZSBsYSBjb21wb25lbnRlIGVzdGFjaW9uYWwgZXN0aW1hZGEgcGFyYSBsYXMgcGVybm9jdGFjaW9uZXMgcG9yIGTDrWEgZXMgc29sbyBhbGdvIG3DoXMgc3VhdmUgcXVlIGxhIGNvbXBvbmVudGUgb2J0ZW5pZGEgYSBwYXJ0aXIgbGEgc2VyaWUgb3JpZ2luYWwuIFRhbWJpw6luIHNlIGFwcmVjaWEgcXVlIGVsIGVmZWN0byBkZWwgdGFtYcOxbyBkZWwgbWVzIGVzIG11eSBhY3VzYWRvIGVuIGZlYnJlcm8uIFBhcmEgZXN0ZSBtZXMgZWwgZWZlY3RvIGVzdGFjaW9uYWwgZXMgZWwgcmVzdWx0YWRvIGRlIGRvcyBmdWVyemFzLCBubyBzZXIgdW4gcGVyaW9kbyB2YWNhY2lvbmFsIHkgZWwgdGFtYcOxbyBkZWwgbWVzICgyOCBkw61hcyksIGVuIGxhIG1pc21hIGRpcmVjY2nDs24gcXVlIGRlY3JlbWVudGFuIGxhIGNvbXBvbmVudGUgZXN0YWNpb25hbC4gU29icmUgbGEgc2VyaWUgb3JpZ2luYWwgYW1iYXMgZnVlcnphcyB0aWVuZW4gbHVnYXIgeSBlbCByZXN1bHRhZG8gZXMgdW5hIGNvbXBvbmVudGUgZXN0YWNpb25hbCBwYXJhIGZlYnJlcm8gbWVub3IgcXVlIGxhIGRlIG1hcnpvLiBFbiBsYSBzZXJpZSBkZSBwZXJub2N0YWNpb25lcyBwb3IgZMOtYSBlbCBlZmVjdG8gbsO6bWVybyBkZSBkw61hcyBkZWwgbWVzIGhhIHNpZG8gZWxpbWluYWRvLCBzb2xvIHF1ZWRhIGVsIGVmZWN0byBfdmFjYWNpb25hbF8gcXVlIGVzIHNpbWlsYXIgcGFyYSBmZWJyZXJvIHkgbWFyem8geSBwb3IgZXNvIGxhIGNvbXBvbmVudGUgZGUgZmVicmVybyBlcyBzaW1pbGFyIGEgbGEgZGUgbWFyem8uCgoKYGBge3J9ClBlcm5vY3RhY2lvbmVzRGlhRGVzTXVsIDwtIGRlY29tcG9zZShQZXJub2N0YWNpb25lcy9tb250aGRheXMoUGVybm9jdGFjaW9uZXMpLCB0eXBlID0gIm11bHQiKQoKZ2dwbG90KCkgKwogIGdlb21fbGluZShhZXMoeCA9IDE6MTIsIHkgPSBQZXJub2N0YWNpb25lc0Rlc011bCRmaWd1cmUsIGNvbG91ciA9ICJibGFjayIpKSArIAogIGdlb21fbGluZShhZXMoeCA9IDE6MTIsIHkgPSBQZXJub2N0YWNpb25lc0RpYURlc011bCRmaWd1cmUsIGNvbG91ciA9ICJyZWQiKSkgKyAKICBnZW9tX2hsaW5lKHlpbnRlcmNlcHQgPSAxLCBjb2xvdXIgPSAiYmx1ZSIsIGx0eSA9IDIpICsKICBnZ3RpdGxlKCJGaWd1cmEgNi4gQ29tcG9uZW50ZSBlc3RhY2lvbmFsIGRlIHBlcm5vY3RhY2lvbmVzIikgKwogIHhsYWIoIiIpICsKICB5bGFiKCJFZmVjdG8gZXN0YWNpb25hbCIpICsKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSAxOjEyLCAKICAgICAgICAgICAgICAgICAgICAgbGFiZWxzID0gYygiRW5lIiwgIkZlYiIsICJNYXIiLCAiQWJyIiwgIk1heSIsICJKdW4iLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiSnVsIiwgIkFnbyIsICJTZXAiLCAiT2N0IiwgIk5vdiIsICJEaWMiKSkgKwogIHNjYWxlX2NvbG9yX2Rpc2NyZXRlKG5hbWUgPSAiQ29tcG9uZW50ZSBlc3RhY2lvbmFsIiwgCiAgICAgICAgICAgICAgICAgICAgICAgbGFiZWxzID0gYygiUGVybm9jdGFjaW9uZXMiLCAiUGVybm9jdGFjaW9uZXMgcG9yIGTDrWEiKSkgKwogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbj1jKDAuMDIsMC45OCksIGxlZ2VuZC5qdXN0aWZpY2F0aW9uPWMoMCwxKSkKYGBgCgpcClwKCiMgSWRlbnRpZmljYWNpw7NuIGRlIG1lc2VzIGF0w61waWNvcwoKRW4gbGEgZGVzY29tcG9zaWNpw7NuLCBlbCB2ZWN0b3IgZGUgcmVzaWR1b3MgY29udGllbmUgbGFzIGNvbXBvbmVudGVzIGRlbCBlcnJvciB5IGxhIGludGVydmVuY2nDs24uIFZhbW9zIGEgcmVhbGl6YXIgdW4gYW7DoWxpc2lzIGdyw6FmaWNvIGluZm9ybWFsIGRlbCByZXNpZHVvIHF1ZSBub3MgcGVybWl0ZSBpciBpZGVudGlmaWNhbmRvIHBvc2libGVzIGludGVydmVuY2lvbmVzLgoKQ29tbyBsYSBkZXNjb21wb3NpY2nDs24gZXMgbXVsdGlwbGljYXRpdmEsIGVsIGVycm9yIGVzIGVuIHRhbnRvIHBvciB1bm8geSB0aWVuZSBtZWRpYSAxLiBQYXJhIGFuYWxpemFyIGxhcyBwcm9waWVkYWRlcyBkZWwgcmVzaWR1bywgdmFtb3MgYSBjYWxjdWxhcmxvIGNvbW8gZXJyb3IgYWRpdGl2by4gUGFyYSBlbGxvIHZhbW9zIGEgcmVzdGFyIGEgbGEgc2VyaWUgb3JpZ2luYWwgbGEgc2VyaWUgZXN0aW1hZGEsIG9idGVuaWRhIGNvbW8gZWwgcHJvZHVjdG8gZGUgbGEgdGVuZGVuY2lhIHBvciBsYSBlc3RhY2lvbmFsaWRhZCwgZXMgZGVjaXIsICRSX3QgPSB5X3QgLSAoVF90ICogU190KSQuCgpMYSBmaWd1cmEgNyBtdWVzdHJhIGVsIGVycm9yIHkgbG9zIGludGVydmFsb3MgZGUgY29uZmlhbnphIChJQykgYWwgOTUlIChsw61uZWFzIGVuIHZlcmRlKSB5IGFsIDk5LjclIChsw61uZWFzIGVuIHJvam8pLiBTZSBvYnNlcnZhIHVuIHZhbG9yIGNsYXJhbWVudGUgZXh0cmVtbyBxdWUgY3J1emEgZWwgSUMoOTkuNyUpIHBvciBsYSBwYXJ0ZSBpbmZlcmlvciBkZSBsYSBncsOhZmljYS4gRXMgYWdvc3RvIGRlIDIwMDEsIG1lcyBlbiBlbCBxdWUgbGFzIHBlcm5vY3RhY2lvbmVzIGZ1ZXJvbiBtdXkgaW5mZXJpb3JlcyBhIGxvIGVzcGVyYWRvLiBUYW1iacOpbiBzZSBvYnNlcnZhbiBvdHJvcyB2YWxvcmVzIGF0w61waWNvcywgZW4gbG9zIHF1ZSBlbCBlcnJvciBzdXBlcmEgbGFzIDIuNSBkZXN2aWFjaW9uZXMgdMOtcGljYXM6IGFnb3N0byB5IG9jdHVicmUgZGUgMjAwMCB5IG1heW8gZGUgMjAxOC4gCgpgYGB7cn0KZXJyb3IgPC0gUGVybm9jdGFjaW9uZXMgLSB0cmVuZGN5Y2xlKFBlcm5vY3RhY2lvbmVzRGVzTXVsKSAqIHNlYXNvbmFsKFBlcm5vY3RhY2lvbmVzRGVzTXVsKQoKc2RlcnJvciA8LSBzZChlcnJvciwgbmEucm0gPSBUUlVFKQoKYXV0b3Bsb3QoZXJyb3IsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJFcnJvciIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDcuIEVycm9yICsgSW50ZXJ2ZW5jacOzbiIsCiAgICAgICAgIGNvbG91ciA9ICJibGFjayIpICsKICBnZW9tX2hsaW5lKHlpbnRlcmNlcHQgPSBjKDMsIDIsIC0yLCAtMykqc2RlcnJvciwgCiAgICAgICAgICAgICBjb2xvdXIgPSBjKCJyZWQiLCAiZ3JlZW4iLCAiZ3JlZW4iLCAicmVkIiksCiAgICAgICAgICAgICBsdHkgPSAyKSArIAogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgxOTgwLCAyMDE4LCA0KSkgCmBgYAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIkRlc2NyaXB0aXZhIgphdXRob3I6ICJJdsOhbiBBcnJpYmFzIChEZXB0by4gQW7DoWxpc2lzIEVjb27Ds21pY28uIFVuaXZlcnNpdGF0IGRlIFZhbMOobmNpYSkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIHRoZW1lOiBjZXJ1bGVhbgogICAgaGlnaGxpZ2h0OiBweWdtZW50cyAKICAgIGZpZ19jYXB0aW9uOiBmYWxzZQogICAgZGZfcHJpbnQ6IGthYmxlCiAgICB0b2M6IHRydWUKICAgIHRvY19kZXB0aDogMgogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlCiAgICBzZWxmX2NvbnRhaW5lZDogdHJ1ZQogICAgY29kZV9kb3dubG9hZDogdHJ1ZQotLS0KCmBgYHtyIGNodW5rX3NldHVwLCBlY2hvID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCh3YXJuaW5nID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgbWVzc2FnZSA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5hbGlnbiA9ICJjZW50ZXIiLCAKICAgICAgICAgICAgICAgICAgICAgIGZpZy5zaG93ID0gImhvbGQiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmhlaWdodCA9IDQsCiAgICAgICAgICAgICAgICAgICAgICBmaWcud2lkdGggPSA4LAogICAgICAgICAgICAgICAgICAgICAgb3V0LndpZHRoID0gIjgwJSIpIApgYGAKCmBgYHtyIG9wdGlvbnNfc2V0dXAsIGVjaG8gPSBGQUxTRX0Kb3B0aW9ucyhzY2lwZW4gPSA5OTkpICMtIHBhcmEgcXVpdGFyIGxhIG5vdGFjaW9uIGNpZW50aWZpY2EKYGBgCgpgYGB7ciBsaWJyZXJpYXMsIGVjaG8gPSBGQUxTRX0KbGlicmFyeShmb3JlY2FzdCkKbGlicmFyeShnZ3Bsb3QyKTsgdGhlbWVfc2V0KHRoZW1lX2J3KCkpCmxpYnJhcnkoZ3JpZEV4dHJhKQpsaWJyYXJ5KGdyaWQpCmBgYAoKXApcCgojIEludHJvZHVjY2nDs24KClZhbW9zIGEgY29uc2lkZXJhciBsYSBzZXJpZSB0ZW1wb3JhbCBjb3JyZXNwb25kaWVudGUgYWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBxdWUgbG9zIHR1cmlzdGFzIGV4dHJhbmplcm9zIHJlYWxpemFuIGVuIEVzcGHDsWEgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGF1dG9yaXphZG9zIChxdWUgbGxhbWFyZW1vcyBQZXJub2N0YWNpb25lcyBlbiBhZGVsYW50ZSkuIEVzdGEgc2VyaWUgZXN0w6EgZGlzcG9uaWJsZSBlbiBFdXJvc3RhdCBkZXNkZSBlbmVybyBkZSAyMDAwIGhhc3RhIGRpY2llbWJyZSBkZSAyMDE5LCB1biB0b3RhbCBkZSAyMCBhw7FvcyB5IDI0MCBvYnNlcnZhY2lvbmVzLgoKTGEgc2VyaWUgeSBzdSBmZWNoYWRvIGVzdMOhbiBlbiBlbCBmaWNoZXJvICJQZXJub2N0YWNpb25lcy5jc3YiLgoKCmBgYHtyfQpQZXJub2N0YWNpb25lcyA8LSByZWFkLmNzdjIoIi4vc2VyaWVzL1Blcm5vY3RhY2lvbmVzLmNzdiIsIGhlYWRlciA9IFRSVUUpClBlcm5vY3RhY2lvbmVzIDwtIHRzKFBlcm5vY3RhY2lvbmVzWywyXSwgc3RhcnQgPSAyMDAwLCBmcmVxID0gMTIpCmBgYAoKXApcCgojIEFuw6FsaXNpcyBwcmVsaW1pbmFyIGdyw6FmaWNvCgpMYSBncsOhZmljYSBkZSBsYSBzZXJpZSB0ZW1wb3JhbCAoZmlndXJhIDEpIG11ZXN0cmEgdW5hIF9fdGVuZGVuY2lhX18gZGVjcmVjaWVudGUgZW4gZWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBlbiBsYSBwcmltZXJhIGTDqWNhZGEgZGVsIHByZXNlbnRlIHNpZ2xvLiBDb24gZWwgY2FtYmlvIGRlIGTDqWNhZGEgc2UgcHJvZHVjZSB1biBjYW1iaW8gZW4gbGEgdGVuZGVuY2lhLCBhdW5xdWUgZW4gbG9zIGRvcyDDumx0aW1vcyBhw7FvcyBzZSBoYSBwcm9kdWNpZG8gdW5hIGNhw61kYSBlbiBlbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzLiAKCkxhcyBsw61uZWFzIHZlcnRpY2FsZXMgZGUgbGEgZmlndXJhIDEgbWFyY2FuIGxvcyBtZXNlcyBkZSBlbmVybyBkZSBjYWRhIGHDsW8geSBwZXJtaXRlbiBpZGVudGlmaWNhciBtZWpvciBsYSBwb3NpYmxlIF9fY29tcG9uZW50ZSBlc3RhY2lvbmFsX18uIExhcyBwZXJub2N0YWNpb25lcyBhdW1lbnRhbiBub3RhYmxlbWVudGUgZW4gdmVyYW5vLCBlc3BlY2lhbG1lbnRlIGVuIEp1bGlvIHkgQWdvc3RvLCBhc29jaWFkYXMgYSBsYXMgdmFjYWNpb25lcyBlc3RpdmFsZXMuIEVuIG1lbm9yIG1lZGlkYSBzZSBvYnNlcnZhIGVsIGVmZWN0byBkZSBsYSBTZW1hbmEgU2FudGEuIE3DoXMgYWRlbGFudGUgaGFyZW1vcyB1biBhbsOhbGlzaXMgZGV0YWxsYWRvIGRlIGxhIGVzdGFjaW9uYWxpZGFkLgoKYGBge3J9CmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDEuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgCmBgYAoKUGFyZWNlIHF1ZSBjb25mb3JtZSBkaXNtaW51eWUgZWwgbsO6bWVybyBwZXJub2N0YWNpb25lcywgdGFtYmnDqW4gZGlzbWludXllIGxhIGFtcGxpdHVkIGVzdGFjaW9uYWwuIEFsIGluaWNpbyBkZWwgc2lnbG8gbGEgZGlmZXJlbmNpYSBlbnRyZSBsb3MgbWVzZXMgY29uIG3DoXMgeSBjb24gbWVub3MgcGVybm9jdGFjaW9uZXMgc3VwZXJhYmEgbG9zIDggbWlsbG9uZXMgZGUgcGVybm9jdGFjaW9uZXMsIG1pZW50cmFzIHF1ZSBhIGZpbmFsZXMgZGUgbGEgcHJpbWVyYSBkw6ljYWRhIGVzdGEgZGlmZXJlbmNpYSBubyBsbGVnYWJhIGEgbG9zIDcgbWlsbG9uZXMgZGUgcGVybm9jdGFjaW9uZXMuIFBhcmVjZSwgcG9yIHRhbnRvLCBxdWUgZXN0YW1vcyBhbnRlIHVuIF9fZXNxdWVtYSBtdWx0aXBsaWNhdGl2b19fLiBQYXJhIGNvbmZpcm1hciBlc3RlIGFzcGVjdG8sIHNlIGhhIHJlYWxpemFkbyB1biBncsOhZmljbyBkZSBwdW50b3MgZW50cmUgZWwgbnVtZXJvIGFudWFsIGRlIHBlcm5vY3RhY2lvbmVzIHkgbGEgZGVzdmlhY2nDs24gdMOtcGljYSBpbnRyYS1hbnVhbCAoZmlndXJhIDIpLgoKYGBge3J9CkNhc29zQW51YWwgPSBhZ2dyZWdhdGUoUGVybm9jdGFjaW9uZXMsIEZVTiA9IHN1bSkKRGVzdmlhY2lvbkFudWFsID0gYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLCBGVU4gPSBzZCkKCmdncGxvdCgpICsKICBnZW9tX3BvaW50KGFlcyh4ID0gQ2Fzb3NBbnVhbCwgeSA9IERlc3ZpYWNpb25BbnVhbCksIHNpemUgPSAyKSArCiAgeGxhYigiUGVybm9jdGFjaW9uZXMgYW51YWxlcyIpICsgCiAgeWxhYigiRGVzdmlhY2nDs24gdMOtcGljYSBpbnRyYS1hbnVhbCIpICsgCiAgZ2d0aXRsZSgiRmlndXJhIDI6IEFuw6FsaXNpcyBkZWwgdGlwbyBkZSBlc3F1ZW1hIikgCmBgYAoKRWZlY3RpdmFtZW50ZSwgbG9zIGHDsW9zIGNvbiBtYXlvciBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzIHNlIGNvcnJlc3BvbmRlbiBjb24gdW5hIG1heW9yIHZhcmlhYmlsaWRhZCBpbnRyYS1hbnVhbCwgcG9yIGxvIHF1ZSBjb25maXJtYW1vcyBlbCBlc3F1ZW1hIG11bHRpcGxpY2F0aXZvIGRlIGxhIHNlcmllLgoKXApcCgojIEFuw6FsaXNpcyBkZSBsYXMgY29tcG9uZW50ZXMKClwKCiMjIFRlbmRlbmNpYQoKSGVtb3Mgb2J0ZW5pZG8gbGEgc2VyaWUgYW51YWwgcGVybm9jdGFjaW9uZXMsIHF1ZSBwcmVzZW50YW1vcyBlbiBsYSBmaWd1cmEgMy4gU2UgY29uZmlybWEgbGEgdGVuZGVuY2lhIGRlY3JlY2llbnRlIGRlIGxhIHByaW1lcmEgZMOpY2FkYS4gRW4gZWwgYcOxbyAyMDAwIGVsIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgYWxjYW56YWJhIGxhcyA5MCBtaWxsb25lcyBhbCBhw7FvLCBtaWVudHJhcyBxdWUgZW4gMjAwOSB0b2NvIGZvbmRvIGNvbiBtZW5vcyBkZSA2MCBtaWxsb25lcy4gRW4gbG9zIGHDsW9zIHNpZ3VpZW50ZXMgc2UgcHJvZHVjZSB1bmEgcmVjdXBlcmFjacOzbiBkZSBsYXMgcGVybm9jdGFjaW9uZXMgKGEgcGVzYXIgZGUgbGEgY3Jpc2lzIGVjb27Ds21pY2EpLCBzaW4gbGxlZ2Fyc2UgYSByZWN1cGVyYXIgbG9zIG5pdmVsZXMgZGUgcHJpbmNpcGlvcyBkZSBzaWdsby4gRW4gbG9zIGRvcyDDumx0aW1vcyBhw7FvcyBkaXNwb25pYmxlcyBsYXMgcGVybm9jdGFjaW9uZXMgaGFuIHZ1ZWx0byBhIGNhZXIuCgpgYGB7cn0KYXV0b3Bsb3QoYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsIEZVTiA9IHN1bSksCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDMuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgCmBgYAoKXAoKIyMgRXN0YWNpb25hbGlkYWQKClZlYW1vcyBhaG9yYSBjb21vIHZhcsOtYW4gbGFzIHBlcm5vY3RhY2lvbmVzIGRlIGxvcyB0dXJpc3RhcyBleHRyYW5qZXJvcyBlbiBFc3Bhw7FhIHNlZ8O6biBlbCBtZXMgZGVsIGHDsW8uIAoKYGBge3J9CmdnbW9udGhwbG90KFBlcm5vY3RhY2lvbmVzLCAKICAgICAgICAgICAgIHBvbGFyPVRSVUUsCiAgICAgICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgICAgICB5bGFiID0gIiIsCiAgICAgICAgICAgICBtYWluID0gIkZpZ3VyYSA0LiBHcsOhZmljbyBlc3RhY2lvbmFsOiBwZXJub2N0YWNpb25lcyIpICsKICBndWlkZXMoY29sb3VyPUZBTFNFKQpgYGAKCkNhZGEgc3Vic2VyaWUgZW4gbGEgZmlndXJhIDQgdnVlbHZlIGEgbW9zdHJhciBsYSBldm9sdWNpw7NuIGRlIGxhIHRlbmRlbmNpYSBkdXJhbnRlIGVsIHBlcmlvZG8gZGUgYW7DoWxpc2lzLiBSZXNwZWN0byBkZSBsYSBlc3RhY2lvbmFsaWRhZCwgc2UgYXByZWNpYSBxdWUgZWwgcHJpbmNpcGFsIGRldGVybWluYW50ZSBzb24gbGFzIHZhY2FjaW9uZXMgZXN0aXZhbGVzIHB1ZXN0byBxdWUgZWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBhdW1lbnRhIHByb2dyZXNpdmFtZW50ZSBkZXNkZSBtYXlvIGEgYWdvc3RvIHBhcmEgbHVlZ28gY2FlciBicnVzY2FtZW50ZSBlbiBzZXB0aWVtYnJlLiBUYW1iacOpbiBjYWJyw61hIGVzcGVyYXIgdW4gZWZlY3RvIF9kw61hcyBkZWwgbWVzXyB5IG9ic2VydmFyIG3DoXMgcGVybm9jdGFjaW9uZXMgZW4gbG9zIG1lc2VzIGRlIDMxIGTDrWFzIHF1ZSBlbiBsb3MgZGUgMzAsIHBlcm8gZWwgZWZlY3RvIGRlIGxhIHZhY2FjaW9uZXMgZXN0aXZhbGVzIGVzIHRhbiBkb21pbmFudGUgcXVlIGFudWxhIGN1YWxxdWllciBvdHJvIGVmZWN0by4KCkxhIG1heW9yIGlycmVndWxhcmlkYWQgb2JzZXJ2YWRhIGVuIGFicmlsIHB1ZWRlIGRlYmVyc2UgYSBzaSBsYSBTZW1hbmEgU2FudGEgaGEgY2HDrWRvIGVuIGFicmlsIG8gZW4gbWFyem8uIAoKXApcCgojIERlc2NvbXBvc2ljacOzbgoKVmFtb3MgYSBvYnRlbmVyIGNhZGEgdW5hIGRlIGxhcyBjb21wb25lbnRlcyBkZSBsYSBzZXJpZSB1c2FuZG8gZWwgbcOpdG9kbyBkZSBtZWRpYXMgbcOzdmlsZXMgYGRlY29tcG9zZWAuIFNlIGhhIG9wdGFkbyBwb3IgZXN0ZSBtw6l0b2RvIGRhZG8gcXVlIGxhIHNlcmllIG11ZXN0cmEgdW4gZXNxdWVtYSBtdWx0aXBsaWNhdGl2by4KCmBgYHtyLCBmaWcuaGVpZ2h0PTd9ClBlcm5vY3RhY2lvbmVzRGVzTXVsIDwtIGRlY29tcG9zZShQZXJub2N0YWNpb25lcywgdHlwZSA9ICJtdWx0IikKYXV0b3Bsb3QoUGVybm9jdGFjaW9uZXNEZXNNdWwsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgNS4gRGVzY29tcG9zaWNpw7NuIG11bHRpcGxpY2F0aXZhIHBvciBtZWRpYXMgbcOzdmlsZXMiKQpgYGAKCkxhIF9fdGVuZGVuY2lhX18gb2J0ZW5pZGEgdHJhcyBsYSBkZXNjb21wb3NpY2nDs24gbm8gaGFjZSBzaW5vIGNvbmZpcm1hciBsbyB5YSBvYnNlcnZhZG8sIHVuYSB0ZW5kZW5jaWEgZGVjcmVjaWVudGUgZW4gbGEgcHJpbWVyYSBkw6ljYWRhLCB5IGNyZWNpZW50ZSBkZXNkZSBlbnRvbmNlcyBoYXN0YSBsb3MgZG9zIMO6bHRpbW9zIGHDsW9zLgoKVGFtYmnDqW4gc2UgYXByZWNpYW4gbXV5IGNsYXJhbWVudGUgdmFyaW9zIHZhbG9yZXMgYXTDrXBpY29zIGVuIGVsIF9fcmVzaWR1b19fIGRlc3RhY2FuZG8gdW5vIGVuIDIwMDUgeSB2YXJpb3MgZW4gbG9zIMO6bHRpbW9zIGHDsW9zLgoKUmVzcGVjdG8gZGUgbGEgX19jb21wb25lbnRlIGVzdGFjaW9uYWxfXywgc2UgY29uZmlybWEgZWwgYW7DoWxpc2lzIHByZWxpbWluYXI6IG1heW9yIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgYSBmaW5hbGVzIGRlIHByaW1hdmVyYSB5IHZlcmFubywgZXNwZWNpYWxtZW50ZSBlbiBhZ29zdG8sIHkgdW4gbWVub3IgbsO6bWVybyBlbiBpbnZpZXJubywgZXNwZWNpYWxtZW50ZSBlbiBkaWNpZW1icmUgLS11biBtZXMgZW4gcXVlIGxhIGdlbnRlIG5vIHJlYWxpemEgdGFudG9zIHZpYWplcyBhbCBleHRyYW5qZXJvLiBFbiBjb25jcmV0bywgZW4gYWdvc3RvIHNlIGRldGVjdGEgdW4gOTElIG3DoXMgZGUgcGVybm9jdGFjaW9uZXMgcmVzcGVjdG8gZGUgbGEgbWVkaWEgYW51YWwgeSBlbiBqdWxpbyB1biA3NyUgbcOhcy4gUG9yIGNvbnRyYSwgZW4gbm92aWVtYnJlIHkgZGljaWVtYnJlIHNlIG9ic2VydmEgdW4gZGVzY2Vuc28gZGVsIDMzJS4gQ2FicsOtYSBwcmVndW50YXJzZSBsYXMgY2F1c2FzIGRlbCByZXB1bnRlIGVuIG1hcnpvLCBhdW5xdWUgcHVlZGUgZGViZXJzZSBhIHNlciB1biBtZXMgZGUgMzEgZMOtYXMsIGNvbXBhcmFkbyBjb24gZmVicmVybywgZW4gZWwgcXVlIG9jYXNpb25hbG1lbnRlIGNhZSBsYSBTZW1hbmEgU2FudGEuCgpgYGB7cn0Kcm91bmQoUGVybm9jdGFjaW9uZXNEZXNNdWwkZmlndXJlLCAyKQpgYGAKCkEgZmluIGRlIGFpc2xhciBkZSBsYSBjb21wb25lbnRlIGVzdGFjaW9uYWwgZWwgZWZlY3RvIF9kw61hcyBkZWwgbWVzXyBkZWwgZWZlY3RvIGRlIGxhcyB2YWNhY2lvbmVzIGVzdGl2YWxlcywgc2UgaGEgYXBsaWNhZG8gbGEgZGVzY29tcG9zaWNpw7NuIGEgbGEgc2VyaWUgX3Blcm5vY3RhY2lvbmVzIHBvciBkw61hXyByZXN1bHRhbnRlIGRlIGRpdmlkaXIgbGEgc2VyaWUgb3JpZ2luYWwgcG9yIGVsIG7Dum1lcm8gZGUgZMOtYXMgZGVsIG1lcyAocXVlIG9idGVuZW1vcyBjb24gbGEgZnVuY2nDs24gYG1vbnRoZGF5c2ApLiBFbiBlc3RhIG51ZXZhIHNlcmllIHRvZG8gZWwgZWZlY3RvIGVzdGFjaW9uYWwgc2UgZGViZXLDoSBhIGxhcyB2YWNhY2lvbmVzIGRlIHZlcmFuby4KCkxhIGZpZ3VyYSA2IG11ZXN0cmEgcXVlIGxhIGNvbXBvbmVudGUgZXN0YWNpb25hbCBlc3RpbWFkYSBwYXJhIGxhcyBwZXJub2N0YWNpb25lcyBwb3IgZMOtYSBlcyBzb2xvIGFsZ28gbcOhcyBzdWF2ZSBxdWUgbGEgY29tcG9uZW50ZSBvYnRlbmlkYSBhIHBhcnRpciBsYSBzZXJpZSBvcmlnaW5hbC4gVGFtYmnDqW4gc2UgYXByZWNpYSBxdWUgZWwgZWZlY3RvIGRlbCB0YW1hw7FvIGRlbCBtZXMgZXMgbXV5IGFjdXNhZG8gZW4gZmVicmVyby4gUGFyYSBlc3RlIG1lcyBlbCBlZmVjdG8gZXN0YWNpb25hbCBlcyBlbCByZXN1bHRhZG8gZGUgZG9zIGZ1ZXJ6YXMgZW4gbGEgbWlzbWEgZGlyZWNjacOzbiwgbm8gc2VyIHVuIHBlcmlvZG8gdmFjYWNpb25hbCB5IGVsIHRhbWHDsW8gZGVsIG1lcyAoMjggZMOtYXMpLCBxdWUgZGVjcmVtZW50YW4gbGEgY29tcG9uZW50ZSBlc3RhY2lvbmFsLiBTb2JyZSBsYSBzZXJpZSBvcmlnaW5hbCBhbWJhcyBmdWVyemFzIHRpZW5lbiBsdWdhciB5IGVsIHJlc3VsdGFkbyBlcyB1bmEgY29tcG9uZW50ZSBlc3RhY2lvbmFsIHBhcmEgZmVicmVybyBtZW5vciBxdWUgbGEgZGUgbWFyem8uIEVuIGxhIHNlcmllIGRlIHBlcm5vY3RhY2lvbmVzIHBvciBkw61hIGVsIGVmZWN0byBuw7ptZXJvIGRlIGTDrWFzIGRlbCBtZXMgaGEgc2lkbyBlbGltaW5hZG8sIHNvbG8gcXVlZGEgZWwgZWZlY3RvIF92YWNhY2lvbmFsXyBxdWUgZXMgc2ltaWxhciBwYXJhIGZlYnJlcm8geSBtYXJ6byB5IHBvciBlc28gbGEgY29tcG9uZW50ZSBkZSBmZWJyZXJvIGVzIHNpbWlsYXIgYSBsYSBkZSBtYXJ6by4KCgpgYGB7cn0KUGVybm9jdGFjaW9uZXNEaWFEZXNNdWwgPC0gZGVjb21wb3NlKFBlcm5vY3RhY2lvbmVzL21vbnRoZGF5cyhQZXJub2N0YWNpb25lcyksIHR5cGUgPSAibXVsdCIpCgpnZ3Bsb3QoKSArCiAgZ2VvbV9saW5lKGFlcyh4ID0gMToxMiwgeSA9IFBlcm5vY3RhY2lvbmVzRGVzTXVsJGZpZ3VyZSwgY29sb3VyID0gImJsYWNrIikpICsgCiAgZ2VvbV9saW5lKGFlcyh4ID0gMToxMiwgeSA9IFBlcm5vY3RhY2lvbmVzRGlhRGVzTXVsJGZpZ3VyZSwgY29sb3VyID0gInJlZCIpKSArIAogIGdlb21faGxpbmUoeWludGVyY2VwdCA9IDEsIGNvbG91ciA9ICJibHVlIiwgbHR5ID0gMikgKwogIGdndGl0bGUoIkZpZ3VyYSA2LiBDb21wb25lbnRlIGVzdGFjaW9uYWwgZGUgcGVybm9jdGFjaW9uZXMiKSArCiAgeGxhYigiIikgKwogIHlsYWIoIkVmZWN0byBlc3RhY2lvbmFsIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IDE6MTIsIAogICAgICAgICAgICAgICAgICAgICBsYWJlbHMgPSBjKCJFbmUiLCAiRmViIiwgIk1hciIsICJBYnIiLCAiTWF5IiwgIkp1biIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJKdWwiLCAiQWdvIiwgIlNlcCIsICJPY3QiLCAiTm92IiwgIkRpYyIpKSArCiAgc2NhbGVfY29sb3JfZGlzY3JldGUobmFtZSA9ICJDb21wb25lbnRlIGVzdGFjaW9uYWwiLCAKICAgICAgICAgICAgICAgICAgICAgICBsYWJlbHMgPSBjKCJQZXJub2N0YWNpb25lcyIsICJQZXJub2N0YWNpb25lcyBwb3IgZMOtYSIpKSArCiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uPWMoMC4wMiwwLjk4KSwgbGVnZW5kLmp1c3RpZmljYXRpb249YygwLDEpKQpgYGAKClwKXAoKIyBJZGVudGlmaWNhY2nDs24gZGUgbWVzZXMgYXTDrXBpY29zCgpFbiBsYSBkZXNjb21wb3NpY2nDs24sIGVsIHZlY3RvciBkZSByZXNpZHVvcyBjb250aWVuZSBsYXMgY29tcG9uZW50ZXMgZGVsIGVycm9yIHkgbGEgaW50ZXJ2ZW5jacOzbi4gVmFtb3MgYSByZWFsaXphciB1biBhbsOhbGlzaXMgZ3LDoWZpY28gaW5mb3JtYWwgZGVsIHJlc2lkdW8gcXVlIG5vcyBwZXJtaXRlIGlyIGlkZW50aWZpY2FuZG8gcG9zaWJsZXMgaW50ZXJ2ZW5jaW9uZXMuCgpDb21vIGxhIGRlc2NvbXBvc2ljacOzbiBlcyBtdWx0aXBsaWNhdGl2YSwgZWwgZXJyb3IgZXMgZW4gdGFudG8gcG9yIHVubyB5IHRpZW5lIG1lZGlhIDEuIFBhcmEgYW5hbGl6YXIgbGFzIHByb3BpZWRhZGVzIGRlbCByZXNpZHVvLCB2YW1vcyBhIGNhbGN1bGFybG8gY29tbyBlcnJvciBhZGl0aXZvLiBQYXJhIGVsbG8gdmFtb3MgYSByZXN0YXIgYSBsYSBzZXJpZSBvcmlnaW5hbCBsYSBzZXJpZSBlc3RpbWFkYSwgb2J0ZW5pZGEgY29tbyBlbCBwcm9kdWN0byBkZSBsYSB0ZW5kZW5jaWEgcG9yIGxhIGVzdGFjaW9uYWxpZGFkLCBlcyBkZWNpciwgJFJfdCA9IHlfdCAtIChUX3QgKiBTX3QpJC4KCkxhIGZpZ3VyYSA3IG11ZXN0cmEgZWwgZXJyb3IgeSBsb3MgaW50ZXJ2YWxvcyBkZSBjb25maWFuemEgKElDKSBhbCA5NSUgKGzDrW5lYXMgZW4gdmVyZGUpIHkgYWwgOTkuNyUgKGzDrW5lYXMgZW4gcm9qbykuIFNlIG9ic2VydmEgdW4gdmFsb3IgY2xhcmFtZW50ZSBleHRyZW1vIHF1ZSBjcnV6YSBlbCBJQyg5OS43JSkgcG9yIGxhIHBhcnRlIGluZmVyaW9yIGRlIGxhIGdyw6FmaWNhLiBFcyBhZ29zdG8gZGUgMjAwMSwgbWVzIGVuIGVsIHF1ZSBsYXMgcGVybm9jdGFjaW9uZXMgZnVlcm9uIG11eSBpbmZlcmlvcmVzIGEgbG8gZXNwZXJhZG8uIFRhbWJpw6luIHNlIG9ic2VydmFuIG90cm9zIHZhbG9yZXMgYXTDrXBpY29zIGVuIGxvcyBxdWUgZWwgZXJyb3Igc3VwZXJhIGxhcyAyLjUgZGVzdmlhY2lvbmVzIHTDrXBpY2FzOiBhZ29zdG8geSBvY3R1YnJlIGRlIDIwMDAgeSBtYXlvIGRlIDIwMTguIAoKYGBge3J9CmVycm9yIDwtIFBlcm5vY3RhY2lvbmVzIC0gdHJlbmRjeWNsZShQZXJub2N0YWNpb25lc0Rlc011bCkgKiBzZWFzb25hbChQZXJub2N0YWNpb25lc0Rlc011bCkKCnNkZXJyb3IgPC0gc2QoZXJyb3IsIG5hLnJtID0gVFJVRSkKCmF1dG9wbG90KGVycm9yLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiRXJyb3IiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSA3LiBFcnJvciArIEludGVydmVuY2nDs24iLAogICAgICAgICBjb2xvdXIgPSAiYmxhY2siKSArCiAgZ2VvbV9obGluZSh5aW50ZXJjZXB0ID0gYygzLCAyLCAtMiwgLTMpKnNkZXJyb3IsIAogICAgICAgICAgICAgY29sb3VyID0gYygicmVkIiwgImdyZWVuIiwgImdyZWVuIiwgInJlZCIpLAogICAgICAgICAgICAgbHR5ID0gMikgKyAKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSBzZXEoMTk4MCwgMjAxOCwgNCkpIApgYGAKClwKXApcClwKCg==</div>
 <footer class="footer">
   
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
@@ -732,8 +647,8 @@ This work is licensed under a <a rel="license" href="http://creativecommons.org/
 </footer>
 
 
-</div>
-</div>
+
+
 
 </div>
 
@@ -759,7 +674,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -771,32 +686,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -15,7 +15,6 @@ library(ggplot2); theme_set(theme_bw())
 #----------------------------------------------------------
 # Importamos Pernoctaciones
 #----------------------------------------------------------
-# 
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
@@ -79,12 +78,9 @@ accuracy(PernoctacionesPre)
 # Error con origen de prediccion movil
 k <- 10                   
 h <- 5                    
-TT <- length(Pernoctaciones) 
+TT <- length(Pernoctaciones)
 s <- TT - k - h           
 
-MAPE <- matrix(NA, nrow = 4, ncol = 5)
-rownames(MAPE) <- 2:5
-colnames(MAPE) <- 1:h
 
 for (r in 2:5) {
   
@@ -98,9 +94,10 @@ for (r in 2:5) {
     fit <- dmm(train.set, r = r, h = 5)
     tmpMape[i + 1, ] <- 100*abs(test.set - fit$mean)/test.set
   }
-  MAPE[r - 1, ] <- colMeans(tmpMape)
+  tmpMape <- colMeans(tmpMape)
+  
+  cat("\nPara un orden de", r, "los errores son", formatC(tmpMape, format = "f", digits = 2))  
 }
-MAPE
 
 # El mejor modelo
 PernoctacionesPre <- dmm(Pernoctaciones, 

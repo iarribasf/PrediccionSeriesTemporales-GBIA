@@ -14,20 +14,28 @@
 
 <title>Introducción</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -44,34 +52,11 @@
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
 #rmd-source-code {
   display: none;
 }
 </style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -82,10 +67,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -102,40 +83,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -163,7 +117,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -175,7 +129,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -186,10 +140,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -201,7 +168,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -330,7 +296,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -471,6 +437,9 @@ div.tocify {
     <li>
       <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
     </li>
+    <li>
+      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Otros</li>
     <li>
@@ -486,11 +455,11 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
@@ -504,8 +473,11 @@ div.tocify {
 </div>
 
 
-<div id="introducción" class="section level1">
-<h1><span class="header-section-number">1</span> Introducción</h1>
+<p><br />
+<br />
+</p>
+<div id="las-previsiones" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Las previsiones</h1>
 <blockquote>
 <p>“Hacer previsiones supone realizar la mejor apreciación posible de algún suceso futuro.” Holton y Keating (1996).</p>
 </blockquote>
@@ -515,14 +487,19 @@ div.tocify {
 <p>Los datos temporales, <strong>series temporales</strong>, se analizan para entender el pasado y predecir el futuro posibilitando a los agentes tomar decisiones adecuadamente informados.</p>
 <p><br />
 </p>
-<div id="la-previsión-en-el-ámbito-de-los-negocios" class="section level2">
-<h2><span class="header-section-number">1.1</span> La previsión en el ámbito de los negocios</h2>
 <p>En prácticamente todas las áreas funcionales de una empresa o negocio se realiza algún tipo de previsión.</p>
 <ul>
-<li><p>Las cabeceras de prensa determinan el número de ejemplares a imprimir cada día analizando la demanda pasada de su diario.</p></li>
+<li><p>Las cabeceras de prensa determinan el número de ejemplares a imprimir cada día analizando el histórico de ventas de su diario.</p></li>
 <li><p>Los supermercados predicen la demanda de sus principales referencias (productos) a fin de ajustar su flujo logístico y evitar que se agoten en el lineal o que caduquen.</p></li>
 <li><p>Los directores de producción han de basarse en predicciones para ajustar las necesidades de materias primas y el nivel de existencias de los productos elaborados.</p></li>
 <li><p>Los directores financieros hacen previsiones de los flujos de caja para evitar tensiones en la tesorería.</p></li>
+</ul>
+<p><br />
+</p>
+<p>También en el sector público es necesario hacer previsiones. Los presupuestos generales del estado se establecen en base a un amplio conjunto de previsiones (ingresos, consumo, tipos de interés…) En general, todos los organismos y empresas públicas precisan de las predicciones en su gestión diaria.</p>
+<ul>
+<li><p><a href="https://demanda.ree.es/demanda.html">Red Eléctrica Española</a> predice el consumo eléctrico hora a hora para ajustar la oferta a la demanda.</p></li>
+<li><p>El <a href="http://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&amp;cid=1254736176953&amp;menu=ultiDatos&amp;idp=1254735572981">Instituto Nacional de Estadística</a> (INE) predice la población española para los próximos 50 años.</p></li>
 </ul>
 <p><br />
 <br />
@@ -535,21 +512,26 @@ div.tocify {
 </ul>
 <p><br />
 </p>
-</div>
-<div id="la-previsión-en-el-sector-público" class="section level2">
-<h2><span class="header-section-number">1.2</span> La previsión en el sector público</h2>
-<p>Los presupuestos generales del estado se establecen en base a un amplio conjunto de previsiones (ingresos, consumo, tipos de interés…) En general, todos los organismos y empresas públicas precisan de las predicciones en su gestión diaria.</p>
+<p>Algunas cosas son más fáciles de prever que otras. Puedes consultar múltiples páginas web con la hora en que va a salir el Sol en Valencia desde mañana hasta dentro de un año y todas ellas coinciden. Sin embargo, no encontrarás ninguna con los resultados del número premiado en la próxima lotería de Navidad. En medio están las múltiples páginas que predicen el consumo eléctrico en el largo plazo (dentro de varios años), todas ofrecen valores similares, pero no coincidentes. La previsibilidad de un acontecimiento depende de varios factores, entre ellos</p>
 <ul>
-<li><p><a href="https://demanda.ree.es/demanda.html">Red Eléctrica Española</a> predice el consumo eléctrico hora a hora para ajustar la oferta a la demanda.</p></li>
-<li><p>El <a href="http://www.ine.es/dyngs/INEbase/es/operacion.htm?c=Estadistica_C&amp;cid=1254736176953&amp;menu=ultiDatos&amp;idp=1254735572981">Instituto Nacional de Estadística</a> (INE) predice la población española para los próximos 50 años.</p></li>
+<li>nuestro conocimiento sobre los factores que afectan el acontecimiento</li>
+<li>la cantidad de información pasada disponible</li>
+<li>la semejanza del pasado con el futuro</li>
+<li>dentro de la economía, si las previsiones pueden afectar a lo que intentamos predecir.</li>
 </ul>
+<p>En el caso extremo de la previsión a corto, medio y largo plazo de la hora de la salida del Sol la precisión es absoluta porque se cumplen las cuatro condiciones, especialmente la primera. Nuestro entendimiento del movimiento de los planetas del Sistema Solar es muy preciso, tenemos abundantes datos, no cabe esperar ninguna catástrofe cósmica en breve y, desde luego, nuestra previsión no afectará en absoluto el movimiento de los planetas.</p>
+<p>Ahora bien, en las previsiones a largo plazo de la demanda de electricidad residencial solo serán razonablemente precisas porque suelen cumplirse las dos primeras condiciones, pero no las dos últimas. La demanda de electricidad está impulsada en gran medida por las temperaturas, con efectos menores por la variación del calendario, como el día de la semana y las vacaciones, y las condiciones económicas. Por lo general, se dispone de varios años de datos sobre la demanda de electricidad y de muchas décadas de datos sobre las condiciones meteorológicas. Ahora bien, para las previsiones a largo plazo (dentro de unos años) no está claro que el comportamiento de la demanda vaya a ser similar al observado en el pasado: la sustitución por equipamiento electrónico más eficiente en el hogar, la aparición de nuevo equipamiento electrónico, la penetración de dispositivos de movilidad individual eléctricos, entre otros elementos, pueden modificar notablemente el consumo eléctrico residencial. Por otro lado, si la previsión indica que la demanda eléctrica va a aumentar, es razonable pensar que también lo hará su precio y que los hogares decidan tomar medias para reducir su consumo. El resultado será que la demanda eléctrica no aumentará tanto como las predicciones indicaban.</p>
+<p>Para la lotería de Navidad tenemos muchos datos, pero no nos van a ayudar nada en la predicción porque el primer supuesto no se cumple.</p>
+<p>Es muy conveniente saber cuándo se puede pronosticar algo con precisión (consumo eléctrico en el corto plazo) y cuándo las previsiones no serán mejores que lanzar una moneda (evolución de la bolsa).</p>
+<p><br />
+</p>
+<p>El método de predicción dependerá de las características del acontecimiento que deseamos predecir. Hay métodos de previsión muy sencillos, como utilizar la observación más reciente como previsión (lo que se denomina método ingenuo), o muy complejos, como las redes neuronales. A veces, no se dispone de ningún dato porque, por ejemplo, queremos predecir las ventas de un producto totalmente nuevo. En situaciones como ésta, utilizamos la previsión de juicio o modelos de Bass.</p>
 <p><br />
 <br />
 </p>
 </div>
-</div>
-<div id="métodos-de-previsión" class="section level1">
-<h1><span class="header-section-number">2</span> Métodos de previsión</h1>
+<div id="métodos-de-previsión" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Métodos de previsión</h1>
 <p>Un método de previsión es un proceso detallado que describe los pasos a seguir desde que se plantea el problema hasta que se obtiene la previsión: recogida de la información, procesamiento de la información, estimación de la previsión, medida de incertidumbre…</p>
 <p>La literatura recoge dos grandes métodos de previsión:</p>
 <ul>
@@ -559,9 +541,9 @@ div.tocify {
 <p>En este tema hablaremos algo sobre los primeros y en los restantes temas analizaremos en detalle los segundos.</p>
 <p><br />
 </p>
-<div id="métodos-subjetivos" class="section level2">
-<h2><span class="header-section-number">2.1</span> Métodos subjetivos</h2>
-<p>Realizar predicciones a partir de opiniones y juicios subjetivos es práctica común. En muchas ocasiones las previsiones subjetivas es la única opción, tales como cuando no hay datos históricos, o cuando un nuevo producto se va a sacar al mercado, o cuando entra en el mercado un nuevo competidor, o durante un entorno de mercado único y nuevo. Por ejemplo, predecir el efecto que iba a tener la COVID en el grado de ocupación hotelera de agosto, una situación sin precedentes, requiere necesariamente de juicios subjetivos.</p>
+<div id="métodos-subjetivos" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Métodos subjetivos</h2>
+<p>Realizar predicciones a partir de opiniones y juicios subjetivos es práctica común. En muchas ocasiones las previsiones subjetivas es la única opción, tales como cuando no hay datos históricos, cuando un nuevo producto se va a sacar al mercado, cuando entra en el mercado un nuevo competidor, o cuando el entorno de mercado cambia notablemente. Por ejemplo, predecir el efecto que iba a tener la COVID en el grado de ocupación hotelera de agosto, una situación sin precedentes, requiere necesariamente de juicios subjetivos.</p>
 <p>Con los años las predicciones por métodos subjetivos han ido ganando aceptación y reconocimiento como una ciencia. En parte porque la calidad de sus predicciones ha mejorado como resultado directo del uso de metodologías mejor estructuradas y más sistemáticas.</p>
 <p>La predicciones a partir de opiniones y juicios son subjetivas y por tanto sujetas a un montón de sesgos y limitaciones. Por citar algunas:</p>
 <ul>
@@ -572,7 +554,7 @@ div.tocify {
 <li>… (la lista es larga)</li>
 </ul>
 <div id="principios-básico-en-la-implementación" class="section level3 unnumbered">
-<h3>Principios básico en la implementación</h3>
+<h3 class="unnumbered">Principios básico en la implementación</h3>
 <p>A fin de reducir el efecto adverso de estas limitaciones y sesgos, es fundamental usar una aproximación sistemática y bien estructurada, con independencia de la metodología que finalmente se vaya a seguir. Los principios a seguir son:</p>
 <ul>
 <li>Define la variable a predecir de forma clara y concisa.</li>
@@ -580,40 +562,32 @@ div.tocify {
 <li>Documenta todo el proceso con el objetivo de promover la consistencia y la replicabilidad.</li>
 <li>Justifica las predicciones para reducir los sesgos.</li>
 <li>Monitoriza las predicciones para adelantarte a irregularidades o desviaciones importantes respecto de los valores reales.</li>
-<li>Separa los predictores de los usuarios de las predicciones.</li>
+<li>Separar los que hacen las predicciones de los usuarios de dichas predicciones.</li>
 </ul>
 </div>
 <div id="algunos-métodos-subjetivos" class="section level3 unnumbered">
-<h3>Algunos métodos subjetivos</h3>
+<h3 class="unnumbered">Algunos métodos subjetivos</h3>
 <ul>
 <li><em>Jurado de opinión</em>: la predicción la realizan un conjunto de expertos por consenso.</li>
 <li><em>Predicción por analogía</em>: se realiza la predicción buscando situaciones o entornos análogos donde se conoce la información solicitada.<br />
 </li>
-<li><p><em>Método Delphi</em>: similar al jurado de opinión, pero se preserva el anonimato de los expertos y el consenso se obtiene a partir de un proceso iterativo en varias rondas:</p>
-<ol style="list-style-type: decimal">
-<li>Se elige un panel de expertos.</li>
-<li>Se solicita a cada uno su opinión respecto a las variables que se desea predecir.</li>
-<li>Los expertos devuelven sus predicciones y la justificación. Estas se resumen de forma anónima.</li>
-<li>Se distribuye a cada experto el resumen de resultados para su análisis y revisión.</li>
-<li>Los expertos revisan sus opiniones personales a partir de la información obtenida.</li>
-<li>Se repiten los pasos 3 a 5 hasta que deje de haber cambios significativos en las opiniones.</li>
-</ol></li>
+<li><em>Método Delphi</em>: similar al jurado de opinión, pero se preserva el anonimato de los expertos y el consenso se obtiene a partir de un proceso iterativo en varias rondas.</li>
 <li><em>Método de escenarios</em>: se definen una serie de posibles escenarios considerando todos los factores relevantes y se les asigna una probabilidad. Para cada escenario se obtiene, siguiendo un determinado método, la predicción deseada.</li>
-<li><p><em>Ajustes por juicios subjetivos</em>: propiamente este no es un método subjetivo. Consiste en realizar una predicción con información histórica disponible usando herramientas estadísticas para después ser ajustada a partir del juicio de expertos.</p></li>
+<li><em>Ajustes por juicios subjetivos</em>: propiamente este no es un método subjetivo. Consiste en realizar una predicción con información histórica disponible usando herramientas estadísticas para después ser ajustada a partir del juicio de expertos.</li>
 </ul>
 <p><br />
 </p>
 </div>
 </div>
-<div id="métodos-objetivos" class="section level2">
-<h2><span class="header-section-number">2.2</span> Métodos objetivos</h2>
+<div id="métodos-objetivos" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> Métodos objetivos</h2>
 <p>La predicción se obtiene principalmente a partir de los valores pasados de la propia variable a predecir aunque también se puede utilizar el valor pasado de otras variables</p>
 <p><span class="math display">\[\hat y_{t+h} = f(y_t, y_{t-1},\ldots)\]</span> donde <span class="math inline">\(\hat y_{t+h}\)</span> es la previsión que hacemos para el periodo <span class="math inline">\(t+h\)</span> con información solo hasta el periodo <span class="math inline">\(t\)</span>.</p>
 <p>Dentro de los métodos objetivos distinguiremos entre:</p>
 <ul>
 <li><p><strong>No paramétricos</strong>, donde no se asume ninguna hipótesis estadística y las predicciones se obtienen a partir de los datos pasados con cálculos <em>sencillos</em> que no comportan estimar ningún parámetro. Por ejemplo <span class="math inline">\(\hat y_{t+1} = y_t\)</span> (método ingenuo I).</p>
 <p>Veremos estas técnicas en los temas 3 a 5: métodos ingenuos, medias móviles y métodos de alisado exponencial.</p></li>
-<li><p><strong>Paramétricos</strong>, se asume una estructura estocástica en la generación de los datos, es necesario que se verifiquen ciertos supuestos estadísticos y hay que estimar parámetros. Por ejemplo <span class="math inline">\(\hat y_{t+1} = \hat \mu + \hat \phi_1 y_t\)</span> (modelo autoregresivo de orden 1).</p>
+<li><p><strong>Paramétricos</strong>, se asume una estructura estocástica en la generación de los datos, es necesario que se verifiquen ciertos supuestos estadísticos y hay que estimar parámetros. Por ejemplo <span class="math inline">\(\hat y_{t+1} = \hat \mu + \hat \phi_1 y_t\)</span> (modelo autorregresivo de orden 1).</p>
 <p>Veremos estas técnicas en los temas 6 y 7: modelos ARIMA.</p></li>
 </ul>
 <p><br />
@@ -621,14 +595,17 @@ div.tocify {
 </p>
 </div>
 </div>
-<div id="qué-haremos-y-qué-no-haremos-en-este-curso" class="section level1">
-<h1><span class="header-section-number">3</span> ¿Qué haremos y qué no haremos en este curso?</h1>
+<div id="qué-haremos-y-qué-no-haremos-en-este-curso" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> ¿Qué haremos y qué no haremos en este curso?</h1>
 <p>En este curso nos vamos a centrar en los métodos más fiables para obtener predicciones. Métodos que son replicables, cuyos resultados –las predicciones– son verificables y que son usados ampliamente por parte de organizaciones y empresas. Métodos objetivos.</p>
-<p>No podremos ver todos los métodos existentes, ¡ni aunque hubiera un grado solo para predicciones! Pero los que veremos te darán la base para aprender otros métodos de previsión: alisado exponencial con doble estacionalidad, el vecino más próximo, vectores autoregresivos, redes neuronales; y para aprender otros enfoques a la hora de hacer previsiones: modelos jerárquicos de series, boostrapping, bagging…</p>
+<p>No podremos ver todos los métodos existentes, ¡ni aunque hubiera un grado solo para predicciones! Pero los que veremos te darán la base para aprender otros métodos de previsión: alisado exponencial con doble estacionalidad, el vecino más próximo, vectores autorregresivos, redes neuronales; y para aprender otros enfoques a la hora de hacer previsiones: modelos jerárquicos de series, boostrapping, bagging…</p>
 <p>No vamos a aprender a predecir cotizaciones de bolsa. La metodología para predecir estas series es completamente diferente y muy poco exitosa. Si fuera fácil, estaríamos todos invirtiendo, no dando clases (yo) o recibiéndolas (vosotros).</p>
+<p><br />
+<br />
+</p>
 </div>
-<div id="referencias" class="section level1">
-<h1><span class="header-section-number">4</span> Referencias</h1>
+<div id="referencias" class="section level1" number="4">
+<h1 number="4"><span class="header-section-number">4</span> Referencias</h1>
 <ul>
 <li>Holton, J, y Keating, B. (1996). <em>Previsiones en los negocios</em>. Ed. ERWIN, Madrid</li>
 <li>Metcalfe, A.W. y Cowpertwait, P.S.P. (2009). <em>Introductory Time Series with R</em>. Ed. Springer, New York, NY. <a href="doi:10.1007/978-0-387-88698-5" class="uri">doi:10.1007/978-0-387-88698-5</a></li>
@@ -640,7 +617,7 @@ div.tocify {
 </p>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWNjacOzbiIKYXV0aG9yOiAiSXbDoW4gQXJyaWJhcyAoRGVwdG8uIEFuw6FsaXNpcyBFY29uw7NtaWNvLiBVbml2ZXJzaXRhdCBkZSBWYWzDqG5jaWEpIgpzdWJ0aXRsZTogIlByZXZpc2nDs24gY29uIERhdG9zIFRlbXBvcmFsZXMgKEdCSUEpIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHllcwogICAgZGZfcHJpbnQ6IGthYmxlCiAgICBmaWdfY2FwdGlvbjogbm8KICAgIGhpZ2hsaWdodDogcHlnbWVudHMKICAgIG51bWJlcl9zZWN0aW9uczogeWVzCiAgICBzZWxmX2NvbnRhaW5lZDogeWVzCiAgICB0aGVtZTogY2VydWxlYW4KICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6IDIKICAgIHRvY19mbG9hdDoKICAgICAgY29sbGFwc2VkOiB5ZXMKCi0tLQoKYGBge3IgY2h1bmtfc2V0dXAsIGVjaG8gPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KHdhcm5pbmcgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBtZXNzYWdlID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmFsaWduID0gImNlbnRlciIsIAogICAgICAgICAgICAgICAgICAgICAgZmlnLnNob3cgPSAiaG9sZCIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuaGVpZ2h0ID0gNCwKICAgICAgICAgICAgICAgICAgICAgIGZpZy53aWR0aCA9IDgsCiAgICAgICAgICAgICAgICAgICAgICBvdXQud2lkdGggPSAiODAlIikgCmBgYAoKCiMgSW50cm9kdWNjacOzbgoKPiJIYWNlciBwcmV2aXNpb25lcyBzdXBvbmUgcmVhbGl6YXIgbGEgbWVqb3IgYXByZWNpYWNpw7NuIHBvc2libGUgZGUgYWxnw7puIHN1Y2VzbyBmdXR1cm8uIiBIb2x0b24geSBLZWF0aW5nICgxOTk2KS4KCj4iVGltZSBzZXJpZXMgYXJlIGFuYWx5c2VkIHRvIHVuZGVyc3RhbmQgdGhlIHBhc3QgYW5kIHRvIHByZWRpY3QgdGhlIGZ1dHVyZS4iIE1ldGNhbGZlIHkgQ293cGVydHdhaXQgKDIwMDkpCgpMb3MgZGF0b3MgdGVtcG9yYWxlcywgX19zZXJpZXMgdGVtcG9yYWxlc19fLCBzZSBhbmFsaXphbiBwYXJhIGVudGVuZGVyIGVsIHBhc2FkbyB5IHByZWRlY2lyIGVsIGZ1dHVybyBwb3NpYmlsaXRhbmRvIGEgbG9zIGFnZW50ZXMgdG9tYXIgZGVjaXNpb25lcyBhZGVjdWFkYW1lbnRlIGluZm9ybWFkb3MuCgpcCgojIyBMYSBwcmV2aXNpw7NuIGVuIGVsIMOhbWJpdG8gZGUgbG9zIG5lZ29jaW9zCgpFbiBwcsOhY3RpY2FtZW50ZSB0b2RhcyBsYXMgw6FyZWFzIGZ1bmNpb25hbGVzIGRlIHVuYSBlbXByZXNhIG8gbmVnb2NpbyBzZSByZWFsaXphIGFsZ8O6biB0aXBvIGRlIHByZXZpc2nDs24uCgoqIExhcyBjYWJlY2VyYXMgZGUgcHJlbnNhIGRldGVybWluYW4gZWwgbsO6bWVybyBkZSBlamVtcGxhcmVzIGEgaW1wcmltaXIgY2FkYSBkw61hIGFuYWxpemFuZG8gbGEgZGVtYW5kYSBwYXNhZGEgZGUgc3UgZGlhcmlvLgoKKiBMb3Mgc3VwZXJtZXJjYWRvcyBwcmVkaWNlbiBsYSBkZW1hbmRhIGRlIHN1cyBwcmluY2lwYWxlcyByZWZlcmVuY2lhcyAocHJvZHVjdG9zKSBhIGZpbiBkZSBhanVzdGFyIHN1IGZsdWpvIGxvZ8Otc3RpY28geSBldml0YXIgcXVlIHNlIGFnb3RlbiBlbiBlbCBsaW5lYWwgbyBxdWUgY2FkdXF1ZW4uIAoKKiBMb3MgZGlyZWN0b3JlcyBkZSBwcm9kdWNjacOzbiBoYW4gZGUgYmFzYXJzZSBlbiBwcmVkaWNjaW9uZXMgcGFyYSBhanVzdGFyIGxhcyBuZWNlc2lkYWRlcyBkZSBtYXRlcmlhcyBwcmltYXMgeSBlbCBuaXZlbCBkZSBleGlzdGVuY2lhcyBkZSBsb3MgcHJvZHVjdG9zIGVsYWJvcmFkb3MuCgoqIExvcyBkaXJlY3RvcmVzIGZpbmFuY2llcm9zIGhhY2VuIHByZXZpc2lvbmVzIGRlIGxvcyBmbHVqb3MgZGUgY2FqYSBwYXJhIGV2aXRhciB0ZW5zaW9uZXMgZW4gbGEgdGVzb3JlcsOtYS4KClwKXAoKUHJlZGVjaXIgZXMgZsOhY2lsIHkgY3VhbmRvIHNlIGFjaWVydGEgcHVlZGUgcGFyZWNlciBjb3NhIGRlIHN1ZXJ0ZSBvIHVuYSBncmFuIGludHVpY2nDs24uIEN1YW5kbyBzZSBmcmFjYXNhLCBwdWVkZSBzZXIgdW4gZGVzYXN0cmUuCgoqIF9DcmVvIHF1ZSBoYXkgbWVyY2FkbyBtdW5kaWFsIHBhcmEgdGFsIHZleiBjaW5jbyBvcmRlbmFkb3Jlcy5fIChQcmVzaWRlbnRlIGRlIElCTSwgMTk0MykKKiBfTG9zIG9yZGVuYWRvcmVzIGVuIGVsIGZ1dHVybyBubyBwZXNhcsOhbiBtw6FzIGRlIDEuNSB0b25lbGFkYXMuXyAoUG9wdWxhciBNZWNoYW5pY3MsIDE5NDkpCiogX05vIGhheSByYXrDs24gcGFyYSBxdWUgY2FkYSB1bm8gcXVpZXJhIHVuIG9yZGVuYWRvciBlbiBzdSBjYXNhXy4gKFByZXNpZGVudGUgZGUgREVDLCAxOTc3OyB0cmVzIGHDsW9zIGRlc3B1w6lzIElCTSBsYW56YWJhIGFsIG1lcmNhZG8gZWwgcHJpbWVyIFBDKQoKXAoKIyMgTGEgcHJldmlzacOzbiBlbiBlbCBzZWN0b3IgcMO6YmxpY28KCkxvcyBwcmVzdXB1ZXN0b3MgZ2VuZXJhbGVzIGRlbCBlc3RhZG8gc2UgZXN0YWJsZWNlbiBlbiBiYXNlIGEgdW4gYW1wbGlvIGNvbmp1bnRvIGRlIHByZXZpc2lvbmVzIChpbmdyZXNvcywgY29uc3VtbywgdGlwb3MgZGUgaW50ZXLDqXMuLi4pIEVuIGdlbmVyYWwsIHRvZG9zIGxvcyBvcmdhbmlzbW9zIHkgZW1wcmVzYXMgcMO6YmxpY2FzIHByZWNpc2FuIGRlIGxhcyBwcmVkaWNjaW9uZXMgZW4gc3UgZ2VzdGnDs24gZGlhcmlhLgoKKiBbUmVkIEVsw6ljdHJpY2EgRXNwYcOxb2xhXShodHRwczovL2RlbWFuZGEucmVlLmVzL2RlbWFuZGEuaHRtbCkgcHJlZGljZSBlbCBjb25zdW1vIGVsw6ljdHJpY28gaG9yYSBhIGhvcmEgcGFyYSBhanVzdGFyIGxhIG9mZXJ0YSBhIGxhIGRlbWFuZGEuCgoqIEVsIFtJbnN0aXR1dG8gTmFjaW9uYWwgZGUgRXN0YWTDrXN0aWNhXShodHRwOi8vd3d3LmluZS5lcy9keW5ncy9JTkViYXNlL2VzL29wZXJhY2lvbi5odG0/Yz1Fc3RhZGlzdGljYV9DJmNpZD0xMjU0NzM2MTc2OTUzJm1lbnU9dWx0aURhdG9zJmlkcD0xMjU0NzM1NTcyOTgxKSAoSU5FKSBwcmVkaWNlIGxhIHBvYmxhY2nDs24gZXNwYcOxb2xhIHBhcmEgbG9zIHByw7N4aW1vcyA1MCBhw7Fvcy4gCgoKXApcCgojIE3DqXRvZG9zIGRlIHByZXZpc2nDs24KClVuIG3DqXRvZG8gZGUgcHJldmlzacOzbiBlcyB1biBwcm9jZXNvIGRldGFsbGFkbyBxdWUgZGVzY3JpYmUgbG9zIHBhc29zIGEgc2VndWlyIGRlc2RlIHF1ZSBzZSBwbGFudGVhIGVsIHByb2JsZW1hIGhhc3RhIHF1ZSBzZSBvYnRpZW5lIGxhIHByZXZpc2nDs246IHJlY29naWRhIGRlIGxhICBpbmZvcm1hY2nDs24sIHByb2Nlc2FtaWVudG8gZGUgbGEgaW5mb3JtYWNpw7NuLCBlc3RpbWFjacOzbiBkZSBsYSBwcmV2aXNpw7NuLCBtZWRpZGEgZGUgaW5jZXJ0aWR1bWJyZS4uLgoKTGEgbGl0ZXJhdHVyYSByZWNvZ2UgZG9zIGdyYW5kZXMgbcOpdG9kb3MgZGUgcHJldmlzacOzbjoKCiogTcOpdG9kb3Mgc3ViamV0aXZvcwoqIE3DqXRvZG9zIG9iamV0aXZvcwoKRW4gZXN0ZSB0ZW1hIGhhYmxhcmVtb3MgYWxnbyBzb2JyZSBsb3MgcHJpbWVyb3MgeSBlbiBsb3MgcmVzdGFudGVzIHRlbWFzIGFuYWxpemFyZW1vcyBlbiBkZXRhbGxlIGxvcyBzZWd1bmRvcy4KClwKCiMjIE3DqXRvZG9zIHN1YmpldGl2b3MKClJlYWxpemFyIHByZWRpY2Npb25lcyBhIHBhcnRpciBkZSBvcGluaW9uZXMgeSBqdWljaW9zIHN1YmpldGl2b3MgZXMgcHLDoWN0aWNhIGNvbcO6bi4gRW4gbXVjaGFzIG9jYXNpb25lcyBsYXMgcHJldmlzaW9uZXMgc3ViamV0aXZhcyBlcyBsYSDDum5pY2Egb3BjacOzbiwgdGFsZXMgY29tbyBjdWFuZG8gbm8gaGF5IGRhdG9zIGhpc3TDs3JpY29zLCBvIGN1YW5kbyB1biBudWV2byBwcm9kdWN0byBzZSB2YSBhIHNhY2FyIGFsIG1lcmNhZG8sIG8gY3VhbmRvIGVudHJhIGVuIGVsIG1lcmNhZG8gdW4gbnVldm8gY29tcGV0aWRvciwgbyBkdXJhbnRlIHVuIGVudG9ybm8gZGUgbWVyY2FkbyDDum5pY28geSBudWV2by4gUG9yIGVqZW1wbG8sIHByZWRlY2lyIGVsIGVmZWN0byBxdWUgaWJhIGEgdGVuZXIgbGEgQ09WSUQgZW4gZWwgZ3JhZG8gZGUgb2N1cGFjacOzbiBob3RlbGVyYSBkZSBhZ29zdG8sIHVuYSBzaXR1YWNpw7NuIHNpbiBwcmVjZWRlbnRlcywgcmVxdWllcmUgbmVjZXNhcmlhbWVudGUgZGUganVpY2lvcyBzdWJqZXRpdm9zLgoKQ29uIGxvcyBhw7FvcyBsYXMgcHJlZGljY2lvbmVzIHBvciBtw6l0b2RvcyBzdWJqZXRpdm9zIGhhbiBpZG8gZ2FuYW5kbyBhY2VwdGFjacOzbiB5IHJlY29ub2NpbWllbnRvIGNvbW8gdW5hIGNpZW5jaWEuIEVuIHBhcnRlIHBvcnF1ZSBsYSBjYWxpZGFkIGRlIHN1cyBwcmVkaWNjaW9uZXMgaGEgbWVqb3JhZG8gY29tbyByZXN1bHRhZG8gZGlyZWN0byBkZWwgdXNvIGRlIG1ldG9kb2xvZ8OtYXMgbWVqb3IgZXN0cnVjdHVyYWRhcyB5IG3DoXMgc2lzdGVtw6F0aWNhcy4gCgpMYSBwcmVkaWNjaW9uZXMgYSBwYXJ0aXIgZGUgb3BpbmlvbmVzIHkganVpY2lvcyBzb24gc3ViamV0aXZhcyB5IHBvciB0YW50byBzdWpldGFzIGEgdW4gbW9udMOzbiBkZSBzZXNnb3MgeSBsaW1pdGFjaW9uZXMuIFBvciBjaXRhciBhbGd1bmFzOgoKKiBQdWVkZW4gc2VyIHBlcmZlY3RhbWVudGUgaW5jb25zaXN0ZW50ZXMgcG9yIG11Y2hvcyBtb3Rpdm9zOiBzZSBwcmVzdGEgbcOhcyBhdGVuY2nDs24gYSBhY29udGVjaW1pZW50b3MgcHJlc2VudGVzIHF1ZSBhIGxvcyBwYXNhZG9zOyBwb2RlbW9zIGRpcmVjdGFtZW50ZSBwYXNhciBwb3IgYWx0byBpbmZvcm1hY2nDs24gcmVsZXZhbnRlOyBzZSBwdWVkZW4gY29uZnVuZGlyIGFsZ3VuYXMgcmVsYWNpb25lcyBjYXVzYWxlcy4KKiBQdWVkZW4gZXN0YXIgYWZlY3RhZGFzIHBvciBsYSBhZ2VuZGEgcG9sw610aWNhIG8gcGVyc29uYWwuCiogUHVlZGVuIHN1ZnJpciBkZWwgX2VmZWN0byBhbmNsYV86IGxhcyBwcmVkaWNjaW9uZXMgdGllbmRlbiBhIGFncnVwYXJzZSBlbiB0b3JubyBhIHVuIHZhbG9yIGluaWNpYWwgZGUgcmVmZXJlbmNpYSBmYW1pbGlhci4KKiBvIGRlbCBfZWZlY3RvIGRlIGNvbmZpcm1hY2nDs25fLCBkb25kZSBzZSBkYSBtYXMgcGVzbyBhIGxhIGluZm9ybWFjacOzbiBxdWUgY29uZmlybWEgbnVlc3RyYXMgaGlww7N0ZXNpcyBwcmV2aWFzLgoqIC4uLiAobGEgbGlzdGEgZXMgbGFyZ2EpCgojIyMgUHJpbmNpcGlvcyBiw6FzaWNvIGVuIGxhIGltcGxlbWVudGFjacOzbiB7LX0KCkEgZmluIGRlIHJlZHVjaXIgZWwgZWZlY3RvIGFkdmVyc28gZGUgZXN0YXMgbGltaXRhY2lvbmVzIHkgc2VzZ29zLCBlcyBmdW5kYW1lbnRhbCB1c2FyIHVuYSBhcHJveGltYWNpw7NuIHNpc3RlbcOhdGljYSB5IGJpZW4gZXN0cnVjdHVyYWRhLCBjb24gaW5kZXBlbmRlbmNpYSBkZSBsYSBtZXRvZG9sb2fDrWEgcXVlIGZpbmFsbWVudGUgc2UgdmF5YSBhIHNlZ3Vpci4gTG9zIHByaW5jaXBpb3MgYSBzZWd1aXIgc29uOgoKKiBEZWZpbmUgbGEgdmFyaWFibGUgYSBwcmVkZWNpciBkZSBmb3JtYSBjbGFyYSB5IGNvbmNpc2EuCiogSW1wbGVtZW50YSB1biBtw6l0b2RvIGRlIHByZXZpc2nDs24gc2lzdGVtw6F0aWNvLgoqIERvY3VtZW50YSB0b2RvIGVsIHByb2Nlc28gY29uIGVsIG9iamV0aXZvIGRlIHByb21vdmVyIGxhIGNvbnNpc3RlbmNpYSB5IGxhIHJlcGxpY2FiaWxpZGFkLgoqIEp1c3RpZmljYSBsYXMgcHJlZGljY2lvbmVzIHBhcmEgcmVkdWNpciBsb3Mgc2VzZ29zLgoqIE1vbml0b3JpemEgbGFzIHByZWRpY2Npb25lcyBwYXJhIGFkZWxhbnRhcnRlIGEgaXJyZWd1bGFyaWRhZGVzIG8gZGVzdmlhY2lvbmVzIGltcG9ydGFudGVzIHJlc3BlY3RvIGRlIGxvcyB2YWxvcmVzIHJlYWxlcy4KKiBTZXBhcmEgbG9zIHByZWRpY3RvcmVzIGRlIGxvcyB1c3VhcmlvcyBkZSBsYXMgcHJlZGljY2lvbmVzLgoKIyMjIEFsZ3Vub3MgbcOpdG9kb3Mgc3ViamV0aXZvcyB7LX0KCiogX0p1cmFkbyBkZSBvcGluacOzbl86IGxhIHByZWRpY2Npw7NuIGxhIHJlYWxpemFuIHVuIGNvbmp1bnRvIGRlIGV4cGVydG9zIHBvciBjb25zZW5zby4KKiBfUHJlZGljY2nDs24gcG9yIGFuYWxvZ8OtYV86IHNlIHJlYWxpemEgbGEgcHJlZGljY2nDs24gYnVzY2FuZG8gc2l0dWFjaW9uZXMgbyBlbnRvcm5vcyBhbsOhbG9nb3MgZG9uZGUgc2UgY29ub2NlIGxhIGluZm9ybWFjacOzbiBzb2xpY2l0YWRhLiAgCiogX03DqXRvZG8gRGVscGhpXzogc2ltaWxhciBhbCBqdXJhZG8gZGUgb3BpbmnDs24sIHBlcm8gc2UgcHJlc2VydmEgZWwgYW5vbmltYXRvIGRlIGxvcyBleHBlcnRvcyB5IGVsIGNvbnNlbnNvIHNlIG9idGllbmUgYSBwYXJ0aXIgZGUgdW4gcHJvY2VzbyBpdGVyYXRpdm8gZW4gdmFyaWFzIHJvbmRhczoKCiAgICAxLiBTZSBlbGlnZSB1biBwYW5lbCBkZSBleHBlcnRvcy4KICAgIDIuIFNlIHNvbGljaXRhIGEgY2FkYSB1bm8gc3Ugb3BpbmnDs24gcmVzcGVjdG8gYSBsYXMgdmFyaWFibGVzIHF1ZSBzZSBkZXNlYSBwcmVkZWNpci4KICAgIDMuIExvcyBleHBlcnRvcyBkZXZ1ZWx2ZW4gc3VzIHByZWRpY2Npb25lcyB5IGxhIGp1c3RpZmljYWNpw7NuLiBFc3RhcyBzZSByZXN1bWVuIGRlIGZvcm1hIGFuw7NuaW1hLgogICAgNC4gU2UgZGlzdHJpYnV5ZSBhIGNhZGEgZXhwZXJ0byBlbCByZXN1bWVuIGRlIHJlc3VsdGFkb3MgcGFyYSBzdSBhbsOhbGlzaXMgeSByZXZpc2nDs24uCiAgICA1LiBMb3MgZXhwZXJ0b3MgcmV2aXNhbiBzdXMgb3BpbmlvbmVzIHBlcnNvbmFsZXMgYSBwYXJ0aXIgZGUgbGEgaW5mb3JtYWNpw7NuIG9idGVuaWRhLgogICAgNi4gU2UgcmVwaXRlbiBsb3MgcGFzb3MgMyBhIDUgaGFzdGEgcXVlIGRlamUgZGUgaGFiZXIgY2FtYmlvcyBzaWduaWZpY2F0aXZvcyBlbiBsYXMgb3BpbmlvbmVzLgoqIF9Nw6l0b2RvIGRlIGVzY2VuYXJpb3NfOiBzZSBkZWZpbmVuIHVuYSBzZXJpZSBkZSBwb3NpYmxlcyBlc2NlbmFyaW9zIGNvbnNpZGVyYW5kbyB0b2RvcyBsb3MgZmFjdG9yZXMgcmVsZXZhbnRlcyB5IHNlIGxlcyBhc2lnbmEgdW5hIHByb2JhYmlsaWRhZC4gUGFyYSBjYWRhIGVzY2VuYXJpbyBzZSBvYnRpZW5lLCBzaWd1aWVuZG8gdW4gZGV0ZXJtaW5hZG8gbcOpdG9kbywgbGEgcHJlZGljY2nDs24gZGVzZWFkYS4KKiBfQWp1c3RlcyBwb3IganVpY2lvcyBzdWJqZXRpdm9zXzogcHJvcGlhbWVudGUgZXN0ZSBubyBlcyB1biBtw6l0b2RvIHN1YmpldGl2by4gQ29uc2lzdGUgZW4gcmVhbGl6YXIgdW5hIHByZWRpY2Npw7NuIGNvbiBpbmZvcm1hY2nDs24gaGlzdMOzcmljYSBkaXNwb25pYmxlIHVzYW5kbyBoZXJyYW1pZW50YXMgZXN0YWTDrXN0aWNhcyBwYXJhIGRlc3B1w6lzIHNlciBhanVzdGFkYSBhIHBhcnRpciBkZWwganVpY2lvIGRlIGV4cGVydG9zLgoKXAoKIyMgTcOpdG9kb3Mgb2JqZXRpdm9zCgpMYSBwcmVkaWNjacOzbiBzZSBvYnRpZW5lIHByaW5jaXBhbG1lbnRlIGEgcGFydGlyIGRlIGxvcyB2YWxvcmVzIHBhc2Fkb3MgZGUgbGEgcHJvcGlhIHZhcmlhYmxlIGEgcHJlZGVjaXIgYXVucXVlIHRhbWJpw6luIHNlIHB1ZWRlIHV0aWxpemFyIGVsIHZhbG9yIHBhc2FkbyBkZSBvdHJhcyB2YXJpYWJsZXMKCiQkXGhhdCB5X3t0K2h9ID0gZih5X3QsIHlfe3QtMX0sXGxkb3RzKSQkCmRvbmRlICRcaGF0IHlfe3QraH0kIGVzIGxhIHByZXZpc2nDs24gcXVlIGhhY2Vtb3MgcGFyYSBlbCBwZXJpb2RvICR0K2gkIGNvbiBpbmZvcm1hY2nDs24gc29sbyBoYXN0YSBlbCBwZXJpb2RvICR0JC4KCkRlbnRybyBkZSBsb3MgbcOpdG9kb3Mgb2JqZXRpdm9zIGRpc3Rpbmd1aXJlbW9zIGVudHJlOgoKKiAqKk5vIHBhcmFtw6l0cmljb3MqKiwgZG9uZGUgbm8gc2UgYXN1bWUgbmluZ3VuYSBoaXDDs3Rlc2lzIGVzdGFkw61zdGljYSB5IGxhcyBwcmVkaWNjaW9uZXMgc2Ugb2J0aWVuZW4gYSBwYXJ0aXIgZGUgbG9zIGRhdG9zIHBhc2Fkb3MgY29uIGPDoWxjdWxvcyBfc2VuY2lsbG9zXyBxdWUgbm8gY29tcG9ydGFuIGVzdGltYXIgbmluZ8O6biBwYXLDoW1ldHJvLiBQb3IgZWplbXBsbyAkXGhhdCB5X3t0KzF9ID0geV90JCAobcOpdG9kbyBpbmdlbnVvIEkpLgoKICBWZXJlbW9zIGVzdGFzIHTDqWNuaWNhcyBlbiBsb3MgdGVtYXMgMyBhIDU6IG3DqXRvZG9zIGluZ2VudW9zLCBtZWRpYXMgbcOzdmlsZXMgeSBtw6l0b2RvcyBkZSBhbGlzYWRvIGV4cG9uZW5jaWFsLgoKKiAqKlBhcmFtw6l0cmljb3MqKiwgc2UgYXN1bWUgdW5hIGVzdHJ1Y3R1cmEgZXN0b2PDoXN0aWNhIGVuIGxhIGdlbmVyYWNpw7NuIGRlIGxvcyBkYXRvcywgZXMgbmVjZXNhcmlvIHF1ZSBzZSB2ZXJpZmlxdWVuIGNpZXJ0b3Mgc3VwdWVzdG9zIGVzdGFkw61zdGljb3MgeSBoYXkgcXVlIGVzdGltYXIgcGFyw6FtZXRyb3MuIFBvciBlamVtcGxvICRcaGF0IHlfe3QrMX0gPSBcaGF0IFxtdSArIFxoYXQgXHBoaV8xIHlfdCQgKG1vZGVsbyBhdXRvcmVncmVzaXZvIGRlIG9yZGVuIDEpLgoKICBWZXJlbW9zIGVzdGFzIHTDqWNuaWNhcyBlbiBsb3MgdGVtYXMgNiB5IDc6IG1vZGVsb3MgQVJJTUEuCgpcClwKCiMgwr9RdcOpIGhhcmVtb3MgeSBxdcOpIG5vIGhhcmVtb3MgZW4gZXN0ZSBjdXJzbz8KCkVuIGVzdGUgY3Vyc28gbm9zIHZhbW9zIGEgY2VudHJhciBlbiBsb3MgbcOpdG9kb3MgbcOhcyBmaWFibGVzIHBhcmEgb2J0ZW5lciBwcmVkaWNjaW9uZXMuIE3DqXRvZG9zIHF1ZSBzb24gcmVwbGljYWJsZXMsIGN1eW9zIHJlc3VsdGFkb3MgLS1sYXMgcHJlZGljY2lvbmVzLS0gc29uIHZlcmlmaWNhYmxlcyB5IHF1ZSBzb24gdXNhZG9zIGFtcGxpYW1lbnRlIHBvciBwYXJ0ZSBkZSBvcmdhbml6YWNpb25lcyB5IGVtcHJlc2FzLiBNw6l0b2RvcyBvYmpldGl2b3MuCgpObyBwb2RyZW1vcyB2ZXIgdG9kb3MgbG9zIG3DqXRvZG9zIGV4aXN0ZW50ZXMsIMKhbmkgYXVucXVlIGh1YmllcmEgdW4gZ3JhZG8gc29sbyBwYXJhIHByZWRpY2Npb25lcyEgUGVybyBsb3MgcXVlIHZlcmVtb3MgdGUgZGFyw6FuIGxhIGJhc2UgcGFyYSBhcHJlbmRlciBvdHJvcyBtw6l0b2RvcyBkZSBwcmV2aXNpw7NuOiBhbGlzYWRvIGV4cG9uZW5jaWFsIGNvbiBkb2JsZSBlc3RhY2lvbmFsaWRhZCwgZWwgdmVjaW5vIG3DoXMgcHLDs3hpbW8sIHZlY3RvcmVzIGF1dG9yZWdyZXNpdm9zLCByZWRlcyBuZXVyb25hbGVzOyB5IHBhcmEgYXByZW5kZXIgb3Ryb3MgZW5mb3F1ZXMgYSBsYSBob3JhIGRlIGhhY2VyIHByZXZpc2lvbmVzOiBtb2RlbG9zIGplcsOhcnF1aWNvcyBkZSBzZXJpZXMsIGJvb3N0cmFwcGluZywgYmFnZ2luZy4uLgoKTm8gdmFtb3MgYSBhcHJlbmRlciBhIHByZWRlY2lyIGNvdGl6YWNpb25lcyBkZSBib2xzYS4gTGEgbWV0b2RvbG9nw61hIHBhcmEgcHJlZGVjaXIgZXN0YXMgc2VyaWVzIGVzIGNvbXBsZXRhbWVudGUgZGlmZXJlbnRlIHkgbXV5IHBvY28gZXhpdG9zYS4gU2kgZnVlcmEgZsOhY2lsLCBlc3RhcsOtYW1vcyB0b2RvcyBpbnZpcnRpZW5kbywgbm8gZGFuZG8gY2xhc2VzICh5bykgbyByZWNpYmnDqW5kb2xhcyAodm9zb3Ryb3MpLgoKIyBSZWZlcmVuY2lhcwoKKiBIb2x0b24sIEosIHkgS2VhdGluZywgQi4gKDE5OTYpLiAqUHJldmlzaW9uZXMgZW4gbG9zIG5lZ29jaW9zKi4gRWQuIEVSV0lOLCBNYWRyaWQKKiBNZXRjYWxmZSwgQS5XLiB5IENvd3BlcnR3YWl0LCBQLlMuUC4gKDIwMDkpLiAqSW50cm9kdWN0b3J5IFRpbWUgU2VyaWVzIHdpdGggUiouIEVkLiBTcHJpbmdlciwgTmV3IFlvcmssIE5ZLiBkb2k6MTAuMTAwNy85NzgtMC0zODctODg2OTgtNQoKXApcClwKXAoK</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiSW50cm9kdWNjacOzbiIKYXV0aG9yOiAiSXbDoW4gQXJyaWJhcyAoRGVwdG8uIEFuw6FsaXNpcyBFY29uw7NtaWNvLiBVbml2ZXJzaXRhdCBkZSBWYWzDqG5jaWEpIgpzdWJ0aXRsZTogIlByZXZpc2nDs24gY29uIERhdG9zIFRlbXBvcmFsZXMgKEdCSUEpIgpvdXRwdXQ6CiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHllcwogICAgZGZfcHJpbnQ6IGthYmxlCiAgICBmaWdfY2FwdGlvbjogbm8KICAgIGhpZ2hsaWdodDogcHlnbWVudHMKICAgIG51bWJlcl9zZWN0aW9uczogeWVzCiAgICBzZWxmX2NvbnRhaW5lZDogeWVzCiAgICB0aGVtZTogY2VydWxlYW4KICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6IDIKICAgIHRvY19mbG9hdDoKICAgICAgY29sbGFwc2VkOiB5ZXMKCi0tLQoKYGBge3IgY2h1bmtfc2V0dXAsIGVjaG8gPSBGQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KHdhcm5pbmcgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBtZXNzYWdlID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgY29tbWVudCA9ICIiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmFsaWduID0gImNlbnRlciIsIAogICAgICAgICAgICAgICAgICAgICAgZmlnLnNob3cgPSAiaG9sZCIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuaGVpZ2h0ID0gNCwKICAgICAgICAgICAgICAgICAgICAgIGZpZy53aWR0aCA9IDgsCiAgICAgICAgICAgICAgICAgICAgICBvdXQud2lkdGggPSAiODAlIikgCmBgYAoKXApcCgojIExhcyBwcmV2aXNpb25lcwoKPiJIYWNlciBwcmV2aXNpb25lcyBzdXBvbmUgcmVhbGl6YXIgbGEgbWVqb3IgYXByZWNpYWNpw7NuIHBvc2libGUgZGUgYWxnw7puIHN1Y2VzbyBmdXR1cm8uIiBIb2x0b24geSBLZWF0aW5nICgxOTk2KS4KCj4iVGltZSBzZXJpZXMgYXJlIGFuYWx5c2VkIHRvIHVuZGVyc3RhbmQgdGhlIHBhc3QgYW5kIHRvIHByZWRpY3QgdGhlIGZ1dHVyZS4iIE1ldGNhbGZlIHkgQ293cGVydHdhaXQgKDIwMDkpCgpMb3MgZGF0b3MgdGVtcG9yYWxlcywgX19zZXJpZXMgdGVtcG9yYWxlc19fLCBzZSBhbmFsaXphbiBwYXJhIGVudGVuZGVyIGVsIHBhc2FkbyB5IHByZWRlY2lyIGVsIGZ1dHVybyBwb3NpYmlsaXRhbmRvIGEgbG9zIGFnZW50ZXMgdG9tYXIgZGVjaXNpb25lcyBhZGVjdWFkYW1lbnRlIGluZm9ybWFkb3MuCgpcCgpFbiBwcsOhY3RpY2FtZW50ZSB0b2RhcyBsYXMgw6FyZWFzIGZ1bmNpb25hbGVzIGRlIHVuYSBlbXByZXNhIG8gbmVnb2NpbyBzZSByZWFsaXphIGFsZ8O6biB0aXBvIGRlIHByZXZpc2nDs24uCgoqIExhcyBjYWJlY2VyYXMgZGUgcHJlbnNhIGRldGVybWluYW4gZWwgbsO6bWVybyBkZSBlamVtcGxhcmVzIGEgaW1wcmltaXIgY2FkYSBkw61hIGFuYWxpemFuZG8gZWwgaGlzdMOzcmljbyBkZSB2ZW50YXMgZGUgc3UgZGlhcmlvLgoKKiBMb3Mgc3VwZXJtZXJjYWRvcyBwcmVkaWNlbiBsYSBkZW1hbmRhIGRlIHN1cyBwcmluY2lwYWxlcyByZWZlcmVuY2lhcyAocHJvZHVjdG9zKSBhIGZpbiBkZSBhanVzdGFyIHN1IGZsdWpvIGxvZ8Otc3RpY28geSBldml0YXIgcXVlIHNlIGFnb3RlbiBlbiBlbCBsaW5lYWwgbyBxdWUgY2FkdXF1ZW4uIAoKKiBMb3MgZGlyZWN0b3JlcyBkZSBwcm9kdWNjacOzbiBoYW4gZGUgYmFzYXJzZSBlbiBwcmVkaWNjaW9uZXMgcGFyYSBhanVzdGFyIGxhcyBuZWNlc2lkYWRlcyBkZSBtYXRlcmlhcyBwcmltYXMgeSBlbCBuaXZlbCBkZSBleGlzdGVuY2lhcyBkZSBsb3MgcHJvZHVjdG9zIGVsYWJvcmFkb3MuCgoqIExvcyBkaXJlY3RvcmVzIGZpbmFuY2llcm9zIGhhY2VuIHByZXZpc2lvbmVzIGRlIGxvcyBmbHVqb3MgZGUgY2FqYSBwYXJhIGV2aXRhciB0ZW5zaW9uZXMgZW4gbGEgdGVzb3JlcsOtYS4KClwKClRhbWJpw6luIGVuIGVsIHNlY3RvciBww7pibGljbyBlcyBuZWNlc2FyaW8gaGFjZXIgcHJldmlzaW9uZXMuIExvcyBwcmVzdXB1ZXN0b3MgZ2VuZXJhbGVzIGRlbCBlc3RhZG8gc2UgZXN0YWJsZWNlbiBlbiBiYXNlIGEgdW4gYW1wbGlvIGNvbmp1bnRvIGRlIHByZXZpc2lvbmVzIChpbmdyZXNvcywgY29uc3VtbywgdGlwb3MgZGUgaW50ZXLDqXMuLi4pIEVuIGdlbmVyYWwsIHRvZG9zIGxvcyBvcmdhbmlzbW9zIHkgZW1wcmVzYXMgcMO6YmxpY2FzIHByZWNpc2FuIGRlIGxhcyBwcmVkaWNjaW9uZXMgZW4gc3UgZ2VzdGnDs24gZGlhcmlhLgoKKiBbUmVkIEVsw6ljdHJpY2EgRXNwYcOxb2xhXShodHRwczovL2RlbWFuZGEucmVlLmVzL2RlbWFuZGEuaHRtbCkgcHJlZGljZSBlbCBjb25zdW1vIGVsw6ljdHJpY28gaG9yYSBhIGhvcmEgcGFyYSBhanVzdGFyIGxhIG9mZXJ0YSBhIGxhIGRlbWFuZGEuCgoqIEVsIFtJbnN0aXR1dG8gTmFjaW9uYWwgZGUgRXN0YWTDrXN0aWNhXShodHRwOi8vd3d3LmluZS5lcy9keW5ncy9JTkViYXNlL2VzL29wZXJhY2lvbi5odG0/Yz1Fc3RhZGlzdGljYV9DJmNpZD0xMjU0NzM2MTc2OTUzJm1lbnU9dWx0aURhdG9zJmlkcD0xMjU0NzM1NTcyOTgxKSAoSU5FKSBwcmVkaWNlIGxhIHBvYmxhY2nDs24gZXNwYcOxb2xhIHBhcmEgbG9zIHByw7N4aW1vcyA1MCBhw7Fvcy4gCgpcClwKClByZWRlY2lyIGVzIGbDoWNpbCB5IGN1YW5kbyBzZSBhY2llcnRhIHB1ZWRlIHBhcmVjZXIgY29zYSBkZSBzdWVydGUgbyB1bmEgZ3JhbiBpbnR1aWNpw7NuLiBDdWFuZG8gc2UgZnJhY2FzYSwgcHVlZGUgc2VyIHVuIGRlc2FzdHJlLgoKKiBfQ3JlbyBxdWUgaGF5IG1lcmNhZG8gbXVuZGlhbCBwYXJhIHRhbCB2ZXogY2luY28gb3JkZW5hZG9yZXMuXyAoUHJlc2lkZW50ZSBkZSBJQk0sIDE5NDMpCiogX0xvcyBvcmRlbmFkb3JlcyBlbiBlbCBmdXR1cm8gbm8gcGVzYXLDoW4gbcOhcyBkZSAxLjUgdG9uZWxhZGFzLl8gKFBvcHVsYXIgTWVjaGFuaWNzLCAxOTQ5KQoqIF9ObyBoYXkgcmF6w7NuIHBhcmEgcXVlIGNhZGEgdW5vIHF1aWVyYSB1biBvcmRlbmFkb3IgZW4gc3UgY2FzYV8uIChQcmVzaWRlbnRlIGRlIERFQywgMTk3NzsgdHJlcyBhw7FvcyBkZXNwdcOpcyBJQk0gbGFuemFiYSBhbCBtZXJjYWRvIGVsIHByaW1lciBQQykKClwKCkFsZ3VuYXMgY29zYXMgc29uIG3DoXMgZsOhY2lsZXMgZGUgcHJldmVyIHF1ZSBvdHJhcy4gUHVlZGVzIGNvbnN1bHRhciBtw7psdGlwbGVzIHDDoWdpbmFzIHdlYiBjb24gbGEgaG9yYSBlbiBxdWUgdmEgYSBzYWxpciBlbCBTb2wgZW4gVmFsZW5jaWEgZGVzZGUgbWHDsWFuYSBoYXN0YSBkZW50cm8gZGUgdW4gYcOxbyB5IHRvZGFzIGVsbGFzIGNvaW5jaWRlbi4gU2luIGVtYmFyZ28sIG5vIGVuY29udHJhcsOhcyBuaW5ndW5hIGNvbiBsb3MgcmVzdWx0YWRvcyBkZWwgbsO6bWVybyBwcmVtaWFkbyBlbiBsYSBwcsOzeGltYSBsb3RlcsOtYSBkZSBOYXZpZGFkLiBFbiBtZWRpbyBlc3TDoW4gbGFzIG3Dumx0aXBsZXMgcMOhZ2luYXMgcXVlIHByZWRpY2VuIGVsIGNvbnN1bW8gZWzDqWN0cmljbyBlbiBlbCBsYXJnbyBwbGF6byAoZGVudHJvIGRlIHZhcmlvcyBhw7FvcyksIHRvZGFzIG9mcmVjZW4gdmFsb3JlcyBzaW1pbGFyZXMsIHBlcm8gbm8gY29pbmNpZGVudGVzLiBMYSBwcmV2aXNpYmlsaWRhZCBkZSB1biBhY29udGVjaW1pZW50byBkZXBlbmRlIGRlIHZhcmlvcyBmYWN0b3JlcywgZW50cmUgZWxsb3MKCiogbnVlc3RybyBjb25vY2ltaWVudG8gc29icmUgbG9zIGZhY3RvcmVzIHF1ZSBhZmVjdGFuIGVsIGFjb250ZWNpbWllbnRvCiogbGEgY2FudGlkYWQgZGUgaW5mb3JtYWNpw7NuIHBhc2FkYSBkaXNwb25pYmxlCiogbGEgc2VtZWphbnphIGRlbCBwYXNhZG8gY29uIGVsIGZ1dHVybwoqIGRlbnRybyBkZSBsYSBlY29ub23DrWEsIHNpIGxhcyBwcmV2aXNpb25lcyBwdWVkZW4gYWZlY3RhciBhIGxvIHF1ZSBpbnRlbnRhbW9zIHByZWRlY2lyLgoKRW4gZWwgY2FzbyBleHRyZW1vIGRlIGxhIHByZXZpc2nDs24gYSBjb3J0bywgbWVkaW8geSBsYXJnbyBwbGF6byBkZSBsYSBob3JhIGRlIGxhIHNhbGlkYSBkZWwgU29sIGxhIHByZWNpc2nDs24gZXMgYWJzb2x1dGEgcG9ycXVlIHNlIGN1bXBsZW4gbGFzIGN1YXRybyBjb25kaWNpb25lcywgZXNwZWNpYWxtZW50ZSBsYSBwcmltZXJhLiBOdWVzdHJvIGVudGVuZGltaWVudG8gZGVsIG1vdmltaWVudG8gZGUgbG9zIHBsYW5ldGFzIGRlbCBTaXN0ZW1hIFNvbGFyIGVzIG11eSBwcmVjaXNvLCB0ZW5lbW9zIGFidW5kYW50ZXMgZGF0b3MsIG5vIGNhYmUgZXNwZXJhciBuaW5ndW5hIGNhdMOhc3Ryb2ZlIGPDs3NtaWNhIGVuIGJyZXZlIHksIGRlc2RlIGx1ZWdvLCBudWVzdHJhIHByZXZpc2nDs24gbm8gYWZlY3RhcsOhIGVuIGFic29sdXRvIGVsIG1vdmltaWVudG8gZGUgbG9zIHBsYW5ldGFzLgoKQWhvcmEgYmllbiwgZW4gbGFzIHByZXZpc2lvbmVzIGEgbGFyZ28gcGxhem8gZGUgbGEgZGVtYW5kYSBkZSBlbGVjdHJpY2lkYWQgcmVzaWRlbmNpYWwgc29sbyBzZXLDoW4gcmF6b25hYmxlbWVudGUgcHJlY2lzYXMgcG9ycXVlIHN1ZWxlbiBjdW1wbGlyc2UgbGFzIGRvcyBwcmltZXJhcyBjb25kaWNpb25lcywgcGVybyBubyBsYXMgZG9zIMO6bHRpbWFzLiBMYSBkZW1hbmRhIGRlIGVsZWN0cmljaWRhZCBlc3TDoSBpbXB1bHNhZGEgZW4gZ3JhbiBtZWRpZGEgcG9yIGxhcyB0ZW1wZXJhdHVyYXMsIGNvbiBlZmVjdG9zIG1lbm9yZXMgcG9yIGxhIHZhcmlhY2nDs24gZGVsIGNhbGVuZGFyaW8sIGNvbW8gZWwgZMOtYSBkZSBsYSBzZW1hbmEgeSBsYXMgdmFjYWNpb25lcywgeSBsYXMgY29uZGljaW9uZXMgZWNvbsOzbWljYXMuIFBvciBsbyBnZW5lcmFsLCBzZSBkaXNwb25lIGRlIHZhcmlvcyBhw7FvcyBkZSBkYXRvcyBzb2JyZSBsYSBkZW1hbmRhIGRlIGVsZWN0cmljaWRhZCB5IGRlIG11Y2hhcyBkw6ljYWRhcyBkZSBkYXRvcyBzb2JyZSBsYXMgY29uZGljaW9uZXMgbWV0ZW9yb2zDs2dpY2FzLiBBaG9yYSBiaWVuLCBwYXJhIGxhcyBwcmV2aXNpb25lcyBhIGxhcmdvIHBsYXpvIChkZW50cm8gZGUgdW5vcyBhw7Fvcykgbm8gZXN0w6EgY2xhcm8gcXVlIGVsIGNvbXBvcnRhbWllbnRvIGRlIGxhIGRlbWFuZGEgdmF5YSBhIHNlciBzaW1pbGFyIGFsIG9ic2VydmFkbyBlbiBlbCBwYXNhZG86IGxhIHN1c3RpdHVjacOzbiBwb3IgZXF1aXBhbWllbnRvIGVsZWN0csOzbmljbyBtw6FzIGVmaWNpZW50ZSBlbiBlbCBob2dhciwgbGEgYXBhcmljacOzbiBkZSBudWV2byBlcXVpcGFtaWVudG8gZWxlY3Ryw7NuaWNvLCBsYSBwZW5ldHJhY2nDs24gZGUgZGlzcG9zaXRpdm9zIGRlIG1vdmlsaWRhZCBpbmRpdmlkdWFsIGVsw6ljdHJpY29zLCBlbnRyZSBvdHJvcyBlbGVtZW50b3MsIHB1ZWRlbiBtb2RpZmljYXIgbm90YWJsZW1lbnRlIGVsIGNvbnN1bW8gZWzDqWN0cmljbyByZXNpZGVuY2lhbC4gUG9yIG90cm8gbGFkbywgc2kgbGEgcHJldmlzacOzbiBpbmRpY2EgcXVlIGxhIGRlbWFuZGEgZWzDqWN0cmljYSB2YSBhIGF1bWVudGFyLCBlcyByYXpvbmFibGUgcGVuc2FyIHF1ZSB0YW1iacOpbiBsbyBoYXLDoSBzdSBwcmVjaW8geSBxdWUgbG9zIGhvZ2FyZXMgZGVjaWRhbiB0b21hciBtZWRpYXMgcGFyYSByZWR1Y2lyIHN1IGNvbnN1bW8uIEVsIHJlc3VsdGFkbyBzZXLDoSBxdWUgbGEgZGVtYW5kYSBlbMOpY3RyaWNhIG5vIGF1bWVudGFyw6EgdGFudG8gY29tbyBsYXMgcHJlZGljY2lvbmVzIGluZGljYWJhbi4KClBhcmEgbGEgbG90ZXLDrWEgZGUgTmF2aWRhZCB0ZW5lbW9zIG11Y2hvcyBkYXRvcywgcGVybyBubyBub3MgdmFuIGEgYXl1ZGFyIG5hZGEgZW4gbGEgcHJlZGljY2nDs24gcG9ycXVlIGVsIHByaW1lciBzdXB1ZXN0byBubyBzZSBjdW1wbGUuCgpFcyBtdXkgY29udmVuaWVudGUgc2FiZXIgY3XDoW5kbyBzZSBwdWVkZSBwcm9ub3N0aWNhciBhbGdvIGNvbiBwcmVjaXNpw7NuIChjb25zdW1vIGVsw6ljdHJpY28gZW4gZWwgY29ydG8gcGxhem8pIHkgY3XDoW5kbyBsYXMgcHJldmlzaW9uZXMgbm8gc2Vyw6FuIG1lam9yZXMgcXVlIGxhbnphciB1bmEgbW9uZWRhIChldm9sdWNpw7NuIGRlIGxhIGJvbHNhKS4KClwKCkVsIG3DqXRvZG8gZGUgcHJlZGljY2nDs24gZGVwZW5kZXLDoSBkZSBsYXMgY2FyYWN0ZXLDrXN0aWNhcyBkZWwgYWNvbnRlY2ltaWVudG8gcXVlIGRlc2VhbW9zIHByZWRlY2lyLiBIYXkgbcOpdG9kb3MgZGUgcHJldmlzacOzbiBtdXkgc2VuY2lsbG9zLCBjb21vIHV0aWxpemFyIGxhIG9ic2VydmFjacOzbiBtw6FzIHJlY2llbnRlIGNvbW8gcHJldmlzacOzbiAobG8gcXVlIHNlIGRlbm9taW5hIG3DqXRvZG8gaW5nZW51byksIG8gbXV5IGNvbXBsZWpvcywgY29tbyBsYXMgcmVkZXMgbmV1cm9uYWxlcy4gQSB2ZWNlcywgbm8gc2UgZGlzcG9uZSBkZSBuaW5nw7puIGRhdG8gcG9ycXVlLCBwb3IgZWplbXBsbywgcXVlcmVtb3MgcHJlZGVjaXIgbGFzIHZlbnRhcyBkZSB1biBwcm9kdWN0byB0b3RhbG1lbnRlIG51ZXZvLiBFbiBzaXR1YWNpb25lcyBjb21vIMOpc3RhLCB1dGlsaXphbW9zIGxhIHByZXZpc2nDs24gZGUganVpY2lvIG8gbW9kZWxvcyBkZSBCYXNzLiAKClwKXAoKIyBNw6l0b2RvcyBkZSBwcmV2aXNpw7NuCgpVbiBtw6l0b2RvIGRlIHByZXZpc2nDs24gZXMgdW4gcHJvY2VzbyBkZXRhbGxhZG8gcXVlIGRlc2NyaWJlIGxvcyBwYXNvcyBhIHNlZ3VpciBkZXNkZSBxdWUgc2UgcGxhbnRlYSBlbCBwcm9ibGVtYSBoYXN0YSBxdWUgc2Ugb2J0aWVuZSBsYSBwcmV2aXNpw7NuOiByZWNvZ2lkYSBkZSBsYSAgaW5mb3JtYWNpw7NuLCBwcm9jZXNhbWllbnRvIGRlIGxhIGluZm9ybWFjacOzbiwgZXN0aW1hY2nDs24gZGUgbGEgcHJldmlzacOzbiwgbWVkaWRhIGRlIGluY2VydGlkdW1icmUuLi4KCkxhIGxpdGVyYXR1cmEgcmVjb2dlIGRvcyBncmFuZGVzIG3DqXRvZG9zIGRlIHByZXZpc2nDs246CgoqIE3DqXRvZG9zIHN1YmpldGl2b3MKKiBNw6l0b2RvcyBvYmpldGl2b3MKCkVuIGVzdGUgdGVtYSBoYWJsYXJlbW9zIGFsZ28gc29icmUgbG9zIHByaW1lcm9zIHkgZW4gbG9zIHJlc3RhbnRlcyB0ZW1hcyBhbmFsaXphcmVtb3MgZW4gZGV0YWxsZSBsb3Mgc2VndW5kb3MuCgpcCgojIyBNw6l0b2RvcyBzdWJqZXRpdm9zCgpSZWFsaXphciBwcmVkaWNjaW9uZXMgYSBwYXJ0aXIgZGUgb3BpbmlvbmVzIHkganVpY2lvcyBzdWJqZXRpdm9zIGVzIHByw6FjdGljYSBjb23Dum4uIEVuIG11Y2hhcyBvY2FzaW9uZXMgbGFzIHByZXZpc2lvbmVzIHN1YmpldGl2YXMgZXMgbGEgw7puaWNhIG9wY2nDs24sIHRhbGVzIGNvbW8gY3VhbmRvIG5vIGhheSBkYXRvcyBoaXN0w7NyaWNvcywgY3VhbmRvIHVuIG51ZXZvIHByb2R1Y3RvIHNlIHZhIGEgc2FjYXIgYWwgbWVyY2FkbywgY3VhbmRvIGVudHJhIGVuIGVsIG1lcmNhZG8gdW4gbnVldm8gY29tcGV0aWRvciwgbyBjdWFuZG8gZWwgZW50b3JubyBkZSBtZXJjYWRvIGNhbWJpYSBub3RhYmxlbWVudGUuIFBvciBlamVtcGxvLCBwcmVkZWNpciBlbCBlZmVjdG8gcXVlIGliYSBhIHRlbmVyIGxhIENPVklEIGVuIGVsIGdyYWRvIGRlIG9jdXBhY2nDs24gaG90ZWxlcmEgZGUgYWdvc3RvLCB1bmEgc2l0dWFjacOzbiBzaW4gcHJlY2VkZW50ZXMsIHJlcXVpZXJlIG5lY2VzYXJpYW1lbnRlIGRlIGp1aWNpb3Mgc3ViamV0aXZvcy4KCkNvbiBsb3MgYcOxb3MgbGFzIHByZWRpY2Npb25lcyBwb3IgbcOpdG9kb3Mgc3ViamV0aXZvcyBoYW4gaWRvIGdhbmFuZG8gYWNlcHRhY2nDs24geSByZWNvbm9jaW1pZW50byBjb21vIHVuYSBjaWVuY2lhLiBFbiBwYXJ0ZSBwb3JxdWUgbGEgY2FsaWRhZCBkZSBzdXMgcHJlZGljY2lvbmVzIGhhIG1lam9yYWRvIGNvbW8gcmVzdWx0YWRvIGRpcmVjdG8gZGVsIHVzbyBkZSBtZXRvZG9sb2fDrWFzIG1lam9yIGVzdHJ1Y3R1cmFkYXMgeSBtw6FzIHNpc3RlbcOhdGljYXMuIAoKTGEgcHJlZGljY2lvbmVzIGEgcGFydGlyIGRlIG9waW5pb25lcyB5IGp1aWNpb3Mgc29uIHN1YmpldGl2YXMgeSBwb3IgdGFudG8gc3VqZXRhcyBhIHVuIG1vbnTDs24gZGUgc2VzZ29zIHkgbGltaXRhY2lvbmVzLiBQb3IgY2l0YXIgYWxndW5hczoKCiogUHVlZGVuIHNlciBwZXJmZWN0YW1lbnRlIGluY29uc2lzdGVudGVzIHBvciBtdWNob3MgbW90aXZvczogc2UgcHJlc3RhIG3DoXMgYXRlbmNpw7NuIGEgYWNvbnRlY2ltaWVudG9zIHByZXNlbnRlcyBxdWUgYSBsb3MgcGFzYWRvczsgcG9kZW1vcyBkaXJlY3RhbWVudGUgcGFzYXIgcG9yIGFsdG8gaW5mb3JtYWNpw7NuIHJlbGV2YW50ZTsgc2UgcHVlZGVuIGNvbmZ1bmRpciBhbGd1bmFzIHJlbGFjaW9uZXMgY2F1c2FsZXMuCiogUHVlZGVuIGVzdGFyIGFmZWN0YWRhcyBwb3IgbGEgYWdlbmRhIHBvbMOtdGljYSBvIHBlcnNvbmFsLgoqIFB1ZWRlbiBzdWZyaXIgZGVsIF9lZmVjdG8gYW5jbGFfOiBsYXMgcHJlZGljY2lvbmVzIHRpZW5kZW4gYSBhZ3J1cGFyc2UgZW4gdG9ybm8gYSB1biB2YWxvciBpbmljaWFsIGRlIHJlZmVyZW5jaWEgZmFtaWxpYXIuCiogbyBkZWwgX2VmZWN0byBkZSBjb25maXJtYWNpw7NuXywgZG9uZGUgc2UgZGEgbWFzIHBlc28gYSBsYSBpbmZvcm1hY2nDs24gcXVlIGNvbmZpcm1hIG51ZXN0cmFzIGhpcMOzdGVzaXMgcHJldmlhcy4KKiAuLi4gKGxhIGxpc3RhIGVzIGxhcmdhKQoKIyMjIFByaW5jaXBpb3MgYsOhc2ljbyBlbiBsYSBpbXBsZW1lbnRhY2nDs24gey19CgpBIGZpbiBkZSByZWR1Y2lyIGVsIGVmZWN0byBhZHZlcnNvIGRlIGVzdGFzIGxpbWl0YWNpb25lcyB5IHNlc2dvcywgZXMgZnVuZGFtZW50YWwgdXNhciB1bmEgYXByb3hpbWFjacOzbiBzaXN0ZW3DoXRpY2EgeSBiaWVuIGVzdHJ1Y3R1cmFkYSwgY29uIGluZGVwZW5kZW5jaWEgZGUgbGEgbWV0b2RvbG9nw61hIHF1ZSBmaW5hbG1lbnRlIHNlIHZheWEgYSBzZWd1aXIuIExvcyBwcmluY2lwaW9zIGEgc2VndWlyIHNvbjoKCiogRGVmaW5lIGxhIHZhcmlhYmxlIGEgcHJlZGVjaXIgZGUgZm9ybWEgY2xhcmEgeSBjb25jaXNhLgoqIEltcGxlbWVudGEgdW4gbcOpdG9kbyBkZSBwcmV2aXNpw7NuIHNpc3RlbcOhdGljby4KKiBEb2N1bWVudGEgdG9kbyBlbCBwcm9jZXNvIGNvbiBlbCBvYmpldGl2byBkZSBwcm9tb3ZlciBsYSBjb25zaXN0ZW5jaWEgeSBsYSByZXBsaWNhYmlsaWRhZC4KKiBKdXN0aWZpY2EgbGFzIHByZWRpY2Npb25lcyBwYXJhIHJlZHVjaXIgbG9zIHNlc2dvcy4KKiBNb25pdG9yaXphIGxhcyBwcmVkaWNjaW9uZXMgcGFyYSBhZGVsYW50YXJ0ZSBhIGlycmVndWxhcmlkYWRlcyBvIGRlc3ZpYWNpb25lcyBpbXBvcnRhbnRlcyByZXNwZWN0byBkZSBsb3MgdmFsb3JlcyByZWFsZXMuCiogU2VwYXJhciBsb3MgcXVlIGhhY2VuIGxhcyBwcmVkaWNjaW9uZXMgZGUgbG9zIHVzdWFyaW9zIGRlIGRpY2hhcyBwcmVkaWNjaW9uZXMuCgojIyMgQWxndW5vcyBtw6l0b2RvcyBzdWJqZXRpdm9zIHstfQoKKiBfSnVyYWRvIGRlIG9waW5pw7NuXzogbGEgcHJlZGljY2nDs24gbGEgcmVhbGl6YW4gdW4gY29uanVudG8gZGUgZXhwZXJ0b3MgcG9yIGNvbnNlbnNvLgoqIF9QcmVkaWNjacOzbiBwb3IgYW5hbG9nw61hXzogc2UgcmVhbGl6YSBsYSBwcmVkaWNjacOzbiBidXNjYW5kbyBzaXR1YWNpb25lcyBvIGVudG9ybm9zIGFuw6Fsb2dvcyBkb25kZSBzZSBjb25vY2UgbGEgaW5mb3JtYWNpw7NuIHNvbGljaXRhZGEuICAKKiBfTcOpdG9kbyBEZWxwaGlfOiBzaW1pbGFyIGFsIGp1cmFkbyBkZSBvcGluacOzbiwgcGVybyBzZSBwcmVzZXJ2YSBlbCBhbm9uaW1hdG8gZGUgbG9zIGV4cGVydG9zIHkgZWwgY29uc2Vuc28gc2Ugb2J0aWVuZSBhIHBhcnRpciBkZSB1biBwcm9jZXNvIGl0ZXJhdGl2byBlbiB2YXJpYXMgcm9uZGFzLgoqIF9Nw6l0b2RvIGRlIGVzY2VuYXJpb3NfOiBzZSBkZWZpbmVuIHVuYSBzZXJpZSBkZSBwb3NpYmxlcyBlc2NlbmFyaW9zIGNvbnNpZGVyYW5kbyB0b2RvcyBsb3MgZmFjdG9yZXMgcmVsZXZhbnRlcyB5IHNlIGxlcyBhc2lnbmEgdW5hIHByb2JhYmlsaWRhZC4gUGFyYSBjYWRhIGVzY2VuYXJpbyBzZSBvYnRpZW5lLCBzaWd1aWVuZG8gdW4gZGV0ZXJtaW5hZG8gbcOpdG9kbywgbGEgcHJlZGljY2nDs24gZGVzZWFkYS4KKiBfQWp1c3RlcyBwb3IganVpY2lvcyBzdWJqZXRpdm9zXzogcHJvcGlhbWVudGUgZXN0ZSBubyBlcyB1biBtw6l0b2RvIHN1YmpldGl2by4gQ29uc2lzdGUgZW4gcmVhbGl6YXIgdW5hIHByZWRpY2Npw7NuIGNvbiBpbmZvcm1hY2nDs24gaGlzdMOzcmljYSBkaXNwb25pYmxlIHVzYW5kbyBoZXJyYW1pZW50YXMgZXN0YWTDrXN0aWNhcyBwYXJhIGRlc3B1w6lzIHNlciBhanVzdGFkYSBhIHBhcnRpciBkZWwganVpY2lvIGRlIGV4cGVydG9zLgoKXAoKIyMgTcOpdG9kb3Mgb2JqZXRpdm9zCgpMYSBwcmVkaWNjacOzbiBzZSBvYnRpZW5lIHByaW5jaXBhbG1lbnRlIGEgcGFydGlyIGRlIGxvcyB2YWxvcmVzIHBhc2Fkb3MgZGUgbGEgcHJvcGlhIHZhcmlhYmxlIGEgcHJlZGVjaXIgYXVucXVlIHRhbWJpw6luIHNlIHB1ZWRlIHV0aWxpemFyIGVsIHZhbG9yIHBhc2FkbyBkZSBvdHJhcyB2YXJpYWJsZXMKCiQkXGhhdCB5X3t0K2h9ID0gZih5X3QsIHlfe3QtMX0sXGxkb3RzKSQkCmRvbmRlICRcaGF0IHlfe3QraH0kIGVzIGxhIHByZXZpc2nDs24gcXVlIGhhY2Vtb3MgcGFyYSBlbCBwZXJpb2RvICR0K2gkIGNvbiBpbmZvcm1hY2nDs24gc29sbyBoYXN0YSBlbCBwZXJpb2RvICR0JC4KCkRlbnRybyBkZSBsb3MgbcOpdG9kb3Mgb2JqZXRpdm9zIGRpc3Rpbmd1aXJlbW9zIGVudHJlOgoKKiAqKk5vIHBhcmFtw6l0cmljb3MqKiwgZG9uZGUgbm8gc2UgYXN1bWUgbmluZ3VuYSBoaXDDs3Rlc2lzIGVzdGFkw61zdGljYSB5IGxhcyBwcmVkaWNjaW9uZXMgc2Ugb2J0aWVuZW4gYSBwYXJ0aXIgZGUgbG9zIGRhdG9zIHBhc2Fkb3MgY29uIGPDoWxjdWxvcyBfc2VuY2lsbG9zXyBxdWUgbm8gY29tcG9ydGFuIGVzdGltYXIgbmluZ8O6biBwYXLDoW1ldHJvLiBQb3IgZWplbXBsbyAkXGhhdCB5X3t0KzF9ID0geV90JCAobcOpdG9kbyBpbmdlbnVvIEkpLgoKICBWZXJlbW9zIGVzdGFzIHTDqWNuaWNhcyBlbiBsb3MgdGVtYXMgMyBhIDU6IG3DqXRvZG9zIGluZ2VudW9zLCBtZWRpYXMgbcOzdmlsZXMgeSBtw6l0b2RvcyBkZSBhbGlzYWRvIGV4cG9uZW5jaWFsLgoKKiAqKlBhcmFtw6l0cmljb3MqKiwgc2UgYXN1bWUgdW5hIGVzdHJ1Y3R1cmEgZXN0b2PDoXN0aWNhIGVuIGxhIGdlbmVyYWNpw7NuIGRlIGxvcyBkYXRvcywgZXMgbmVjZXNhcmlvIHF1ZSBzZSB2ZXJpZmlxdWVuIGNpZXJ0b3Mgc3VwdWVzdG9zIGVzdGFkw61zdGljb3MgeSBoYXkgcXVlIGVzdGltYXIgcGFyw6FtZXRyb3MuIFBvciBlamVtcGxvICRcaGF0IHlfe3QrMX0gPSBcaGF0IFxtdSArIFxoYXQgXHBoaV8xIHlfdCQgKG1vZGVsbyBhdXRvcnJlZ3Jlc2l2byBkZSBvcmRlbiAxKS4KCiAgVmVyZW1vcyBlc3RhcyB0w6ljbmljYXMgZW4gbG9zIHRlbWFzIDYgeSA3OiBtb2RlbG9zIEFSSU1BLgoKXApcCgojIMK/UXXDqSBoYXJlbW9zIHkgcXXDqSBubyBoYXJlbW9zIGVuIGVzdGUgY3Vyc28/CgpFbiBlc3RlIGN1cnNvIG5vcyB2YW1vcyBhIGNlbnRyYXIgZW4gbG9zIG3DqXRvZG9zIG3DoXMgZmlhYmxlcyBwYXJhIG9idGVuZXIgcHJlZGljY2lvbmVzLiBNw6l0b2RvcyBxdWUgc29uIHJlcGxpY2FibGVzLCBjdXlvcyByZXN1bHRhZG9zIC0tbGFzIHByZWRpY2Npb25lcy0tIHNvbiB2ZXJpZmljYWJsZXMgeSBxdWUgc29uIHVzYWRvcyBhbXBsaWFtZW50ZSBwb3IgcGFydGUgZGUgb3JnYW5pemFjaW9uZXMgeSBlbXByZXNhcy4gTcOpdG9kb3Mgb2JqZXRpdm9zLgoKTm8gcG9kcmVtb3MgdmVyIHRvZG9zIGxvcyBtw6l0b2RvcyBleGlzdGVudGVzLCDCoW5pIGF1bnF1ZSBodWJpZXJhIHVuIGdyYWRvIHNvbG8gcGFyYSBwcmVkaWNjaW9uZXMhIFBlcm8gbG9zIHF1ZSB2ZXJlbW9zIHRlIGRhcsOhbiBsYSBiYXNlIHBhcmEgYXByZW5kZXIgb3Ryb3MgbcOpdG9kb3MgZGUgcHJldmlzacOzbjogYWxpc2FkbyBleHBvbmVuY2lhbCBjb24gZG9ibGUgZXN0YWNpb25hbGlkYWQsIGVsIHZlY2lubyBtw6FzIHByw7N4aW1vLCB2ZWN0b3JlcyBhdXRvcnJlZ3Jlc2l2b3MsIHJlZGVzIG5ldXJvbmFsZXM7IHkgcGFyYSBhcHJlbmRlciBvdHJvcyBlbmZvcXVlcyBhIGxhIGhvcmEgZGUgaGFjZXIgcHJldmlzaW9uZXM6IG1vZGVsb3MgamVyw6FycXVpY29zIGRlIHNlcmllcywgYm9vc3RyYXBwaW5nLCBiYWdnaW5nLi4uCgpObyB2YW1vcyBhIGFwcmVuZGVyIGEgcHJlZGVjaXIgY290aXphY2lvbmVzIGRlIGJvbHNhLiBMYSBtZXRvZG9sb2fDrWEgcGFyYSBwcmVkZWNpciBlc3RhcyBzZXJpZXMgZXMgY29tcGxldGFtZW50ZSBkaWZlcmVudGUgeSBtdXkgcG9jbyBleGl0b3NhLiBTaSBmdWVyYSBmw6FjaWwsIGVzdGFyw61hbW9zIHRvZG9zIGludmlydGllbmRvLCBubyBkYW5kbyBjbGFzZXMgKHlvKSBvIHJlY2liacOpbmRvbGFzICh2b3NvdHJvcykuCgpcClwKCiMgUmVmZXJlbmNpYXMKCiogSG9sdG9uLCBKLCB5IEtlYXRpbmcsIEIuICgxOTk2KS4gKlByZXZpc2lvbmVzIGVuIGxvcyBuZWdvY2lvcyouIEVkLiBFUldJTiwgTWFkcmlkCiogTWV0Y2FsZmUsIEEuVy4geSBDb3dwZXJ0d2FpdCwgUC5TLlAuICgyMDA5KS4gKkludHJvZHVjdG9yeSBUaW1lIFNlcmllcyB3aXRoIFIqLiBFZC4gU3ByaW5nZXIsIE5ldyBZb3JrLCBOWS4gZG9pOjEwLjEwMDcvOTc4LTAtMzg3LTg4Njk4LTUKClwKXApcClwKCg==</div>
 <footer class="footer">
   
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
@@ -648,6 +625,8 @@ div.tocify {
 This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
   
 </footer>
+
+
 
 
 </div>
@@ -677,7 +656,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -691,6 +670,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

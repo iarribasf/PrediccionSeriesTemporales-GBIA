@@ -14,17 +14,25 @@
 
 <title>Pernoctaciones en alojamientos turísticos de turistas extranjeros</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -38,28 +46,37 @@
     </style>
 
 
-<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -68,9 +85,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -124,42 +141,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 })();
 </script>
-<style type="text/css">
-  pre:not([class]) {
-    background-color: white;
-  }
-</style>
 
 
 <style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
 #rmd-source-code {
   display: none;
 }
 </style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -170,10 +159,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -190,40 +175,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -251,7 +209,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -263,7 +221,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -274,10 +232,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -289,7 +260,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -486,6 +456,9 @@ $(document).ready(function () {
     <li>
       <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
     </li>
+    <li>
+      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Otros</li>
     <li>
@@ -501,11 +474,11 @@ $(document).ready(function () {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
 <li><a id="rmd-download-source" href="#">Download Rmd</a></li>
 </ul>
 </div>
@@ -521,12 +494,14 @@ $(document).ready(function () {
 <div id="TOC">
 <ul>
 <li><a href="#introducción"><span class="toc-section-number">1</span> Introducción</a></li>
-<li><a href="#predicción-por-métodos-simples-para-la-serie-anual"><span class="toc-section-number">2</span> Predicción por métodos simples para la serie anual</a><ul>
+<li><a href="#predicción-por-métodos-simples-para-la-serie-anual"><span class="toc-section-number">2</span> Predicción por métodos simples para la serie anual</a>
+<ul>
 <li><a href="#identificación-del-método-sencillo-con-mejor-ajuste"><span class="toc-section-number">2.1</span> Identificación del método sencillo con mejor ajuste</a></li>
 <li><a href="#identificación-del-método-sencillo-con-mejor-predicción-extra-muestral"><span class="toc-section-number">2.2</span> Identificación del método sencillo con mejor predicción extra-muestral</a></li>
 <li><a href="#predicciones"><span class="toc-section-number">2.3</span> Predicciones</a></li>
 </ul></li>
-<li><a href="#predicción-por-el-método-ingenuo-con-estacionalidad"><span class="toc-section-number">3</span> Predicción por el método ingenuo con estacionalidad</a><ul>
+<li><a href="#predicción-por-el-método-ingenuo-con-estacionalidad"><span class="toc-section-number">3</span> Predicción por el método ingenuo con estacionalidad</a>
+<ul>
 <li><a href="#validación"><span class="toc-section-number">3.1</span> Validación</a></li>
 </ul></li>
 </ul>
@@ -535,109 +510,109 @@ $(document).ready(function () {
 <p><br />
 <br />
 </p>
-<div id="introducción" class="section level1">
-<h1><span class="header-section-number">1</span> Introducción</h1>
+<div id="introducción" class="section level1" number="1">
+<h1 number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
 <p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">Pernoctaciones &lt;-<span class="st"> </span><span class="kw">ts</span>(Pernoctaciones[, <span class="dv">2</span>], <span class="dt">start =</span> <span class="dv">2000</span>, <span class="dt">frequency =</span> <span class="dv">12</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">autoplot</span>(Pernoctaciones<span class="op">/</span><span class="dv">1000000</span>,</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">         <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>))  </a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">ts</span>(Pernoctaciones[, <span class="dv">2</span>], <span class="at">start =</span> <span class="dv">2000</span>, <span class="at">frequency =</span> <span class="dv">12</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones&quot;</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>))  </span></code></pre></div>
 <p><img src="03-09-Ejemplo3_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>Vamos a ajustar y predecir esta serie por métodos sencillos. La calidad de ajuste que obtengamos y la capacidad predictiva serán el punto de referencia cuando apliquemos metodologías más complejas de predicción.</p>
 <p><br />
 <br />
 </p>
 </div>
-<div id="predicción-por-métodos-simples-para-la-serie-anual" class="section level1">
-<h1><span class="header-section-number">2</span> Predicción por métodos simples para la serie anual</h1>
+<div id="predicción-por-métodos-simples-para-la-serie-anual" class="section level1" number="2">
+<h1 number="2"><span class="header-section-number">2</span> Predicción por métodos simples para la serie anual</h1>
 <p>Vamos a empezar considerando la serie anual de Pernoctaciones, en millones, para identificar el método sencillo de predicción más adecuado.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">PernoctacionesAnual =<span class="st"> </span><span class="kw">aggregate</span>(Pernoctaciones<span class="op">/</span><span class="dv">1000000</span>, <span class="dt">FUN =</span> sum)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">autoplot</span>(PernoctacionesAnual,</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">         <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">         <span class="dt">main =</span> <span class="st">&quot;Figura 2. Pernoctaciones&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">breaks=</span> <span class="kw">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesAnual <span class="ot">=</span> <span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">FUN =</span> sum)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesAnual,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 2. Pernoctaciones&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code></pre></div>
 <p><img src="03-09-Ejemplo3_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<div id="identificación-del-método-sencillo-con-mejor-ajuste" class="section level2">
-<h2><span class="header-section-number">2.1</span> Identificación del método sencillo con mejor ajuste</h2>
+<div id="identificación-del-método-sencillo-con-mejor-ajuste" class="section level2" number="2.1">
+<h2 number="2.1"><span class="header-section-number">2.1</span> Identificación del método sencillo con mejor ajuste</h2>
 <p>Para series sin estacionalidad tenemos tres aproximaciones por métodos sencillos: media simple, método ingenuo I y método de la deriva. Veamos en primer lugar cual de ellos ajusta mejor a los datos, es decir, cual ofrece las mejores predicciones intra-muestrales a un periodo vista.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mediaPernoctaciones &lt;-<span class="st"> </span><span class="kw">meanf</span>(PernoctacionesAnual, <span class="dt">h =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">naivePernoctaciones &lt;-<span class="st"> </span><span class="kw">naive</span>(PernoctacionesAnual, <span class="dt">h =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">derivaPernoctaciones &lt;-<span class="st"> </span><span class="kw">rwf</span>(PernoctacionesAnual,  <span class="dt">h =</span> <span class="dv">5</span>, <span class="dt">drift =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="kw">autoplot</span>(PernoctacionesAnual, <span class="dt">series =</span> <span class="st">&quot;Pernoctaciones&quot;</span>,</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">                <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">                <span class="dt">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8">                <span class="dt">main =</span> <span class="st">&quot;Figura 3. Pernoctaciones y predicción por métodos sencillos&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="st">  </span><span class="kw">autolayer</span>(mediaPernoctaciones, <span class="dt">series=</span><span class="st">&quot;Media&quot;</span>, <span class="dt">PI =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="st">  </span><span class="kw">autolayer</span>(naivePernoctaciones, <span class="dt">series=</span><span class="st">&quot;Ingenuo&quot;</span>, <span class="dt">PI =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="st">  </span><span class="kw">autolayer</span>(derivaPernoctaciones, <span class="dt">series=</span><span class="st">&quot;Deriva&quot;</span>, <span class="dt">PI =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="st">  </span><span class="kw">scale_colour_discrete</span>(<span class="dt">limits=</span><span class="kw">c</span>(<span class="st">&quot;Pernoctaciones&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;Ingenuo&quot;</span>, <span class="st">&quot;Deriva&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="st">  </span><span class="kw">guides</span>(<span class="dt">colour =</span> <span class="kw">guide_legend</span>(<span class="dt">title =</span> <span class="st">&quot;Métodos&quot;</span>)) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb4-14" data-line-number="14"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">legend.position=</span><span class="kw">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="dt">legend.justification=</span><span class="kw">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mediaPernoctaciones <span class="ot">&lt;-</span> <span class="fu">meanf</span>(PernoctacionesAnual, <span class="at">h =</span> <span class="dv">5</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>naivePernoctaciones <span class="ot">&lt;-</span> <span class="fu">naive</span>(PernoctacionesAnual, <span class="at">h =</span> <span class="dv">5</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>derivaPernoctaciones <span class="ot">&lt;-</span> <span class="fu">rwf</span>(PernoctacionesAnual,  <span class="at">h =</span> <span class="dv">5</span>, <span class="at">drift =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesAnual, <span class="at">series =</span> <span class="st">&quot;Pernoctaciones&quot;</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">main =</span> <span class="st">&quot;Figura 3. Pernoctaciones y predicción por métodos sencillos&quot;</span>) <span class="sc">+</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mediaPernoctaciones, <span class="at">series=</span><span class="st">&quot;Media&quot;</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(naivePernoctaciones, <span class="at">series=</span><span class="st">&quot;Ingenuo&quot;</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(derivaPernoctaciones, <span class="at">series=</span><span class="st">&quot;Deriva&quot;</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Pernoctaciones&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;Ingenuo&quot;</span>, <span class="st">&quot;Deriva&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Métodos&quot;</span>)) <span class="sc">+</span> </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code></pre></div>
 <p><img src="03-09-Ejemplo3_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p>La figura 3 muestra que solo el método con deriva captura la tendencia decreciente observada en los últimos años. Veamos la capacidad de ajuste de cada método</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">tmp &lt;-<span class="st"> </span><span class="kw">rbind</span>(</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">accuracy</span>(mediaPernoctaciones),</a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="kw">accuracy</span>(naivePernoctaciones),</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="kw">accuracy</span>(derivaPernoctaciones)</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">tmp &lt;-<span class="st"> </span><span class="kw">round</span>(tmp,<span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw">rownames</span>(tmp) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Ingenuo I&quot;</span>,<span class="st">&quot;Deriva&quot;</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">tmp</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(mediaPernoctaciones),</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(naivePernoctaciones),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(derivaPernoctaciones)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">round</span>(tmp,<span class="dv">2</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(tmp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Media&quot;</span>,<span class="st">&quot;Ingenuo I&quot;</span>,<span class="st">&quot;Deriva&quot;</span>)</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>tmp</span></code></pre></div>
 <pre><code>             ME RMSE  MAE   MPE MAPE MASE ACF1
 Media      0.00 8.56 7.08 -1.36 9.73 2.22 0.81
 Ingenuo I -0.76 3.83 3.18 -1.07 4.45 1.00 0.42
 Deriva     0.00 3.75 3.14 -0.01 4.44 0.99 0.42</code></pre>
-<p>Tanto el método ingenuo I, como el método de la deriva resultan igualmente buenos respecto a su ajuste a los datos (MAPE de 4.4%. El primero, porque repetir el último dato siempre es una buena estrategia para series que no cambian bruscamente de nivel. El segundo, porque considerar la pendiente media pasada es también una buena estrategia, que solo fallará en los periodos de cambio de tendencia.</p>
+<p>Tanto el método ingenuo I, como el método de la deriva resultan igualmente buenos respecto a su ajuste a los datos (MAPE de 4.4%). El primero, porque repetir el último dato siempre es una buena estrategia para predicciones a cortísimo plazo. El segundo, porque considerar la pendiente media pasada es también una buena estrategia, que solo fallará en los periodos de cambio de tendencia. Sin embargo, en ningún caso el intervalo de confianza de las predicciones será de utilidad.</p>
 <p><br />
 </p>
 </div>
-<div id="identificación-del-método-sencillo-con-mejor-predicción-extra-muestral" class="section level2">
-<h2><span class="header-section-number">2.2</span> Identificación del método sencillo con mejor predicción extra-muestral</h2>
+<div id="identificación-del-método-sencillo-con-mejor-predicción-extra-muestral" class="section level2" number="2.2">
+<h2 number="2.2"><span class="header-section-number">2.2</span> Identificación del método sencillo con mejor predicción extra-muestral</h2>
 <p>Ya hemos visto que para los dos mejores métodos el error es próximo al 4.4%. Este valor es la estimación del <em>error en la previsión intra-muestral y a un periodo vista</em>. A fin de poder estimar mejor la capacidad predictiva de los dos métodos vamos a aplicar el método de <strong>origen de predicción móvil</strong> para obtener los errores extra-muestrales según el horizonte de previsión.</p>
 <p>Asumiremos que necesitamos 10 años para obtener un buena estimación. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde 1 mes hasta 5 meses.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">k &lt;-<span class="st"> </span><span class="dv">10</span>                  <span class="co">#Minimo numero de datos para estimar</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">h &lt;-<span class="st"> </span><span class="dv">5</span>                   <span class="co">#Horizonte de las prediciciones</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3">TT &lt;-<span class="st"> </span><span class="kw">length</span>(PernoctacionesAnual) <span class="co">#Longitud serie</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">s &lt;-<span class="st"> </span>TT <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span>h           <span class="co">#Total de estimaciones</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">mapeNaiveI &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">mapeDeriva &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span>s) {</a>
-<a class="sourceLine" id="cb7-10" data-line-number="10">  train.set &lt;-<span class="st"> </span><span class="kw">subset</span>(PernoctacionesAnual, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k)</a>
-<a class="sourceLine" id="cb7-11" data-line-number="11">  test.set &lt;-<span class="st">  </span><span class="kw">subset</span>(PernoctacionesAnual, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h)</a>
-<a class="sourceLine" id="cb7-12" data-line-number="12">  </a>
-<a class="sourceLine" id="cb7-13" data-line-number="13">  fcast &lt;-<span class="st"> </span><span class="kw">naive</span>(train.set, <span class="dt">h =</span> h)</a>
-<a class="sourceLine" id="cb7-14" data-line-number="14">  mapeNaiveI[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
-<a class="sourceLine" id="cb7-15" data-line-number="15">  </a>
-<a class="sourceLine" id="cb7-16" data-line-number="16">  fcast &lt;-<span class="st"> </span><span class="kw">rwf</span>(train.set, <span class="dt">h =</span> h,  <span class="dt">drift =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-17" data-line-number="17">  mapeDeriva[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fcast<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
-<a class="sourceLine" id="cb7-18" data-line-number="18">  </a>
-<a class="sourceLine" id="cb7-19" data-line-number="19">}</a>
-<a class="sourceLine" id="cb7-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb7-21" data-line-number="21">mapeNaiveI &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeNaiveI)</a>
-<a class="sourceLine" id="cb7-22" data-line-number="22">mapeDeriva &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeDeriva)</a>
-<a class="sourceLine" id="cb7-23" data-line-number="23"></a>
-<a class="sourceLine" id="cb7-24" data-line-number="24">mapeNaiveI</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span>                  </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">5</span>                   </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(PernoctacionesAnual) </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h          </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>mapeNaiveI <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>mapeDeriva <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(PernoctacionesAnual, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(PernoctacionesAnual, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">naive</span>(train.set, <span class="at">h =</span> h)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  mapeNaiveI[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">rwf</span>(train.set, <span class="at">h =</span> h,  <span class="at">drift =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  mapeDeriva[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>mapeNaiveI <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeNaiveI)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>mapeDeriva <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeDeriva)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>mapeNaiveI</span></code></pre></div>
 <pre><code>[1]  2.985332  7.049167 10.655383 13.277976 14.983711</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">mapeDeriva</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>mapeDeriva</span></code></pre></div>
 <pre><code>[1]  6.114206 13.076614 19.426799 24.525387 28.532432</code></pre>
 <p>La conclusión es clara, con independencia del horizonte temporal, el método Ingenuo I es el que ofrece las mejores predicciones.</p>
 <p>Para el método Ingenuo I, el error de previsión extra-muestral a un periodo (3%) es menor que el error de ajuste (4.4%). Por otro lado, no parece aconsejable utilizar este método para predicciones más allá de dos años vista porque el error porcentual crece rápidamente.</p>
 <p><br />
 </p>
 </div>
-<div id="predicciones" class="section level2">
-<h2><span class="header-section-number">2.3</span> Predicciones</h2>
+<div id="predicciones" class="section level2" number="2.3">
+<h2 number="2.3"><span class="header-section-number">2.3</span> Predicciones</h2>
 <p>Una vez identificado el mejor método sencillo de ajuste para la serie anual, mostramos las predicciones numéricamente.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">naivePernoctaciones</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>naivePernoctaciones</span></code></pre></div>
 <pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
 2020       75.70578 70.79836 80.61319 68.20054 83.21102
 2021       75.70578 68.76565 82.64591 65.09176 86.31979
@@ -650,12 +625,12 @@ Deriva     0.00 3.75 3.14 -0.01 4.44 0.99 0.42</code></pre>
 </p>
 </div>
 </div>
-<div id="predicción-por-el-método-ingenuo-con-estacionalidad" class="section level1">
-<h1><span class="header-section-number">3</span> Predicción por el método ingenuo con estacionalidad</h1>
+<div id="predicción-por-el-método-ingenuo-con-estacionalidad" class="section level1" number="3">
+<h1 number="3"><span class="header-section-number">3</span> Predicción por el método ingenuo con estacionalidad</h1>
 <p>Vamos ahora a ajustar y predecir la serie mensual de pernoctaciones por el método más sencillo posible, el método ingenuo con estacionalidad. Recordemos que en este modelo la predicción para un mes consiste en la última observación del mismo mes disponible.</p>
 <p>Solicitaremos un horizonte de predicciones de 36 meses <code>h = 36</code> (aunque solo mostramos los 12 primeros meses).</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">PernoctacionesPre &lt;-<span class="st"> </span><span class="kw">snaive</span>(Pernoctaciones, <span class="dt">h =</span> <span class="dv">36</span>, <span class="dt">level =</span> <span class="fl">0.95</span>)</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2">PernoctacionesPre</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesPre <span class="ot">&lt;-</span> <span class="fu">snaive</span>(Pernoctaciones, <span class="at">h =</span> <span class="dv">36</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>PernoctacionesPre</span></code></pre></div>
 <pre><code>         Point Forecast    Lo 95    Hi 95
 Jan 2020        4303008  3508475  5097541
 Feb 2020        4276924  3482391  5071457
@@ -670,51 +645,52 @@ Oct 2020        5933838  5139305  6728371
 Nov 2020        4103339  3308806  4897872
 Dec 2020        4114637  3320104  4909170</code></pre>
 <p>La calidad del ajuste es bastante buena, con un MAPE de 5.3% y un RMSE de 400 mil pernoctaciones (o 300 mil si usamos el MAE). Sin embargo, el ACF1, cercano a uno es 1, indica que hay mucho rango de mejora en la predicción por intervalo.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">accuracy</span>(PernoctacionesPre)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(PernoctacionesPre)</span></code></pre></div>
 <pre><code>                    ME     RMSE      MAE       MPE     MAPE MASE      ACF1
 Training set -63285.89 405381.2 308385.7 -1.163295 5.318728    1 0.7222781</code></pre>
 <p><br />
 <br />
 </p>
 <p>La figura 4 muestra los valores de predicción para los próximos tres años. Observa que las predicciones para 2020 se mantienen constantes y son iguales a las pernoctaciones de 2019.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">autoplot</span>(PernoctacionesPre,</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">         <span class="dt">xlab =</span> <span class="st">&quot;&quot;</span>,</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">         <span class="dt">ylab =</span> <span class="st">&quot;Noches&quot;</span>,</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">         <span class="dt">main =</span> <span class="st">&quot;Figura 4. Pernoctaciones (2000-2019) y predicción (2020-2022)&quot;</span>,</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">         <span class="dt">PI =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesPre,</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches&quot;</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 4. Pernoctaciones (2000-2019) y predicción (2020-2022)&quot;</span>,</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">PI =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
 <p><img src="03-09-Ejemplo3_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" /></p>
 <p><br />
 </p>
-<div id="validación" class="section level2">
-<h2><span class="header-section-number">3.1</span> Validación</h2>
+<div id="validación" class="section level2" number="3.1">
+<h2 number="3.1"><span class="header-section-number">3.1</span> Validación</h2>
 <p>Vamos de nuevo a aplicar el método de <strong>origen de predicción móvil</strong> para obtener los errores extra-muestrales según el horizonte de previsión.</p>
 <p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=120\)</span>, y que el horizonte temporal es un año, <span class="math inline">\(h = 12\)</span> meses.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">k &lt;-<span class="st"> </span><span class="dv">120</span>                 <span class="co">#Minimo numero de datos para estimar</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">h &lt;-<span class="st"> </span><span class="dv">12</span>                  <span class="co">#Horizonte de las predicicones</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">TT &lt;-<span class="st"> </span><span class="kw">length</span>(Pernoctaciones)  <span class="co">#Longitud serie</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">s &lt;-<span class="st"> </span>TT <span class="op">-</span><span class="st"> </span>k <span class="op">-</span><span class="st"> </span>h          <span class="co">#Total de estimaciones</span></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">mapeSnaive &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="ot">NA</span>, s <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, h)</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="op">:</span>s) {</a>
-<a class="sourceLine" id="cb18-8" data-line-number="8">  train.set &lt;-<span class="st"> </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k)</a>
-<a class="sourceLine" id="cb18-9" data-line-number="9">  test.set &lt;-<span class="st">  </span><span class="kw">subset</span>(Pernoctaciones, <span class="dt">start =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span><span class="dv">1</span>, <span class="dt">end =</span> i <span class="op">+</span><span class="st"> </span>k <span class="op">+</span><span class="st"> </span>h)</a>
-<a class="sourceLine" id="cb18-10" data-line-number="10">  </a>
-<a class="sourceLine" id="cb18-11" data-line-number="11">  fit &lt;-<span class="st"> </span><span class="kw">snaive</span>(train.set, <span class="dt">h =</span> h)</a>
-<a class="sourceLine" id="cb18-12" data-line-number="12">  mapeSnaive[i <span class="op">+</span><span class="st"> </span><span class="dv">1</span>,] &lt;-<span class="st"> </span><span class="dv">100</span><span class="op">*</span><span class="kw">abs</span>(test.set <span class="op">-</span><span class="st"> </span>fit<span class="op">$</span>mean)<span class="op">/</span>test.set</a>
-<a class="sourceLine" id="cb18-13" data-line-number="13">}</a>
-<a class="sourceLine" id="cb18-14" data-line-number="14"></a>
-<a class="sourceLine" id="cb18-15" data-line-number="15">mapeSnaive &lt;-<span class="st"> </span><span class="kw">colMeans</span>(mapeSnaive)</a>
-<a class="sourceLine" id="cb18-16" data-line-number="16">mapeSnaive</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                 </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                  </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(Pernoctaciones)  </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h          </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>mapeSnaive <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(Pernoctaciones, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(Pernoctaciones, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  mapeSnaive[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fit<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>mapeSnaive <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeSnaive)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>mapeSnaive</span></code></pre></div>
 <pre><code> [1] 4.883350 4.834164 4.828850 4.826510 4.791348 4.758310 4.744558 4.720736
  [9] 4.681830 4.673242 4.644297 4.638341</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>, <span class="dt">y =</span> mapeSnaive)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Figura 5. Error de predicción según horizonte temporal&quot;</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw">xlab</span>(<span class="st">&quot;Horizonte temporal de predicción&quot;) +</span></a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="st">  ylab(&quot;</span>MAPE<span class="st">&quot;) +</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="st">  scale_x_continuous(breaks= 1:12)</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeSnaive)) <span class="sc">+</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Figura 5. Error de predicción según horizonte temporal&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Horizonte temporal de predicción&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;MAPE&quot;</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">5</span>) <span class="sc">+</span> </span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code></pre></div>
 <p><img src="03-09-Ejemplo3_files/figure-html/unnamed-chunk-12-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>La figura 5 muestra el error de previsión extra-muestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve entre el 4.6% y el 4.9%.</p>
+<p>La figura 5 muestra el error de previsión extra-muestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve entre el 4.6% y el 4.9%. La serie Pernoctaciones es tan sencilla que la mejor predicción a corto plazo es repetir la última observación del mismo mes.</p>
 <p><br />
 <br />
 <br />
@@ -723,7 +699,7 @@ Training set -63285.89 405381.2 308385.7 -1.163295 5.318728    1 0.7222781</code
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIk3DqXRvZG8gaW5nZW51byIKYXV0aG9yOiAiSXbDoW4gQXJyaWJhcyAoRGVwdG8uIEFuw6FsaXNpcyBFY29uw7NtaWNvLiBVbml2ZXJzaXRhdCBkZSBWYWzDqG5jaWEpIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICB0aGVtZTogY2VydWxlYW4KICAgIGhpZ2hsaWdodDogcHlnbWVudHMgCiAgICBmaWdfY2FwdGlvbjogZmFsc2UKICAgIGRmX3ByaW50OiBrYWJsZQogICAgdG9jOiB0cnVlCiAgICB0b2NfZGVwdGg6IDIKICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQogICAgc2VsZl9jb250YWluZWQ6IHRydWUKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKLS0tCgpgYGB7ciBjaHVua19zZXR1cCwgZWNobyA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIG1lc3NhZ2UgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuYWxpZ24gPSAiY2VudGVyIiwgCiAgICAgICAgICAgICAgICAgICAgICBmaWcuc2hvdyA9ICJob2xkIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5oZWlnaHQgPSA0LAogICAgICAgICAgICAgICAgICAgICAgZmlnLndpZHRoID0gOCwKICAgICAgICAgICAgICAgICAgICAgIG91dC53aWR0aCA9ICI4MCUiKSAKYGBgCgpgYGB7ciBvcHRpb25zX3NldHVwLCBlY2hvID0gRkFMU0V9Cm9wdGlvbnMoc2NpcGVuID0gOTk5KSAjLSBwYXJhIHF1aXRhciBsYSBub3RhY2lvbiBjaWVudGlmaWNhCmBgYAoKYGBge3IgbGlicmVyaWFzLCBlY2hvID0gRkFMU0V9CmxpYnJhcnkoZm9yZWNhc3QpCmxpYnJhcnkoZ2dwbG90Mik7IHRoZW1lX3NldCh0aGVtZV9idygpKQpsaWJyYXJ5KGdyaWRFeHRyYSkKbGlicmFyeShncmlkKQpgYGAKClwKXAoKIyBJbnRyb2R1Y2Npw7NuCgpDb25zaWRlcmVtb3MgZGUgbnVldm8gbGEgc2VyaWUgdGVtcG9yYWwgY29ycmVzcG9uZGllbnRlIGFsIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgcXVlIGxvcyB0dXJpc3RhcyBleHRyYW5qZXJvcyByZWFsaXphbiBlbiBFc3Bhw7FhIGVuIGFsb2phbWllbnRvcyB0dXLDrXN0aWNvcyBhdXRvcml6YWRvcyAocXVlIGxsYW1hcmVtb3MgUGVybm9jdGFjaW9uZXMgZW4gYWRlbGFudGUpLiBFc3RhIHNlcmllIGVzdMOhIGRpc3BvbmlibGUgZW4gRXVyb3N0YXQgZGVzZGUgZW5lcm8gZGUgMjAwMCBoYXN0YSBkaWNpZW1icmUgZGUgMjAxOSwgdW4gdG90YWwgZGUgMjAgYcOxb3MgeSAyNDAgb2JzZXJ2YWNpb25lcy4KCkxhIHNlcmllIHByZXNlbnRhIHRlbmRlbmNpYSBkZWNyZWNpZW50ZSBoYXN0YSBmaW5hbGVzIGRlIGxhIHByaW1lcmEgZMOpY2FkYSBkZWwgcHJlc2VudGUgc2lnbG8geSBsdWVnbyBjcmVjaWVudGUgaGFzdGEgbG9zIGRvcyDDumx0aW1vcyBhw7Fvcy4gTGEgZXN0YWNpb25hbGlkYWQgZGUgb3JkZW4gMTIgZXN0YSBkZXRlcm1pbmFkYSBwb3IgbGFzIHZhY2FjaW9uZXMgZGUgdmVyYW5vLiBFbCBlc3F1ZW1hIGVzIG11bHRpcGxpY2F0aXZvLgoKYGBge3J9CgpQZXJub2N0YWNpb25lcyA8LSByZWFkLmNzdjIoIi4vc2VyaWVzL1Blcm5vY3RhY2lvbmVzLmNzdiIsIGhlYWRlciA9IFRSVUUpClBlcm5vY3RhY2lvbmVzIDwtIHRzKFBlcm5vY3RhY2lvbmVzWywgMl0sIHN0YXJ0ID0gMjAwMCwgZnJlcXVlbmN5ID0gMTIpCmBgYAoKYGBge3J9CmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDEuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgIApgYGAKClZhbW9zIGEgYWp1c3RhciB5IHByZWRlY2lyIGVzdGEgc2VyaWUgcG9yIG3DqXRvZG9zIHNlbmNpbGxvcy4gTGEgY2FsaWRhZCBkZSBhanVzdGUgcXVlIG9idGVuZ2Ftb3MgeSBsYSBjYXBhY2lkYWQgcHJlZGljdGl2YSBzZXLDoW4gZWwgcHVudG8gZGUgcmVmZXJlbmNpYSBjdWFuZG8gYXBsaXF1ZW1vcyBtZXRvZG9sb2fDrWFzIG3DoXMgY29tcGxlamFzIGRlIHByZWRpY2Npw7NuLgoKXApcCgojIFByZWRpY2Npw7NuIHBvciBtw6l0b2RvcyBzaW1wbGVzIHBhcmEgbGEgc2VyaWUgYW51YWwKClZhbW9zIGEgZW1wZXphciBjb25zaWRlcmFuZG8gbGEgc2VyaWUgYW51YWwgZGUgUGVybm9jdGFjaW9uZXMsIGVuIG1pbGxvbmVzLCBwYXJhIGlkZW50aWZpY2FyIGVsIG3DqXRvZG8gc2VuY2lsbG8gZGUgcHJlZGljY2nDs24gbcOhcyBhZGVjdWFkby4KCmBgYHtyfQpQZXJub2N0YWNpb25lc0FudWFsID0gYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsIEZVTiA9IHN1bSkKCmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzQW51YWwsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDIuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgCmBgYAoKIyMgSWRlbnRpZmljYWNpw7NuIGRlbCBtw6l0b2RvIHNlbmNpbGxvIGNvbiBtZWpvciBhanVzdGUKClBhcmEgc2VyaWVzIHNpbiBlc3RhY2lvbmFsaWRhZCB0ZW5lbW9zIHRyZXMgYXByb3hpbWFjaW9uZXMgcG9yIG3DqXRvZG9zIHNlbmNpbGxvczogbWVkaWEgc2ltcGxlLCBtw6l0b2RvIGluZ2VudW8gSSB5IG3DqXRvZG8gZGUgbGEgZGVyaXZhLiBWZWFtb3MgZW4gcHJpbWVyIGx1Z2FyIGN1YWwgZGUgZWxsb3MgYWp1c3RhIG1lam9yIGEgbG9zIGRhdG9zLCBlcyBkZWNpciwgY3VhbCBvZnJlY2UgbGFzIG1lam9yZXMgcHJlZGljY2lvbmVzIGludHJhLW11ZXN0cmFsZXMgYSB1biBwZXJpb2RvIHZpc3RhLgoKYGBge3J9Cm1lZGlhUGVybm9jdGFjaW9uZXMgPC0gbWVhbmYoUGVybm9jdGFjaW9uZXNBbnVhbCwgaCA9IDUpCm5haXZlUGVybm9jdGFjaW9uZXMgPC0gbmFpdmUoUGVybm9jdGFjaW9uZXNBbnVhbCwgaCA9IDUpCmRlcml2YVBlcm5vY3RhY2lvbmVzIDwtIHJ3ZihQZXJub2N0YWNpb25lc0FudWFsLCAgaCA9IDUsIGRyaWZ0ID0gVFJVRSkKCmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzQW51YWwsIHNlcmllcyA9ICJQZXJub2N0YWNpb25lcyIsCiAgICAgICAgICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgICAgICAgICB5bGFiID0gIk5vY2hlcyAobWlsbG9uZXMpIiwKICAgICAgICAgICAgICAgIG1haW4gPSAiRmlndXJhIDMuIFBlcm5vY3RhY2lvbmVzIHkgcHJlZGljY2nDs24gcG9yIG3DqXRvZG9zIHNlbmNpbGxvcyIpICsKICBhdXRvbGF5ZXIobWVkaWFQZXJub2N0YWNpb25lcywgc2VyaWVzPSJNZWRpYSIsIFBJID0gRkFMU0UpICsKICBhdXRvbGF5ZXIobmFpdmVQZXJub2N0YWNpb25lcywgc2VyaWVzPSJJbmdlbnVvIiwgUEkgPSBGQUxTRSkgKwogIGF1dG9sYXllcihkZXJpdmFQZXJub2N0YWNpb25lcywgc2VyaWVzPSJEZXJpdmEiLCBQSSA9IEZBTFNFKSArCiAgc2NhbGVfY29sb3VyX2Rpc2NyZXRlKGxpbWl0cz1jKCJQZXJub2N0YWNpb25lcyIsICJNZWRpYSIsICJJbmdlbnVvIiwgIkRlcml2YSIpKSArCiAgZ3VpZGVzKGNvbG91ciA9IGd1aWRlX2xlZ2VuZCh0aXRsZSA9ICJNw6l0b2RvcyIpKSArIAogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbj1jKDAuMDIsMC45OCksIGxlZ2VuZC5qdXN0aWZpY2F0aW9uPWMoMCwxKSkKYGBgCgpMYSBmaWd1cmEgMyBtdWVzdHJhIHF1ZSBzb2xvIGVsIG3DqXRvZG8gY29uIGRlcml2YSBjYXB0dXJhIGxhIHRlbmRlbmNpYSBkZWNyZWNpZW50ZSBvYnNlcnZhZGEgZW4gbG9zIMO6bHRpbW9zIGHDsW9zLiBWZWFtb3MgbGEgY2FwYWNpZGFkIGRlIGFqdXN0ZSBkZSBjYWRhIG3DqXRvZG8KCmBgYHtyfQp0bXAgPC0gcmJpbmQoCiAgYWNjdXJhY3kobWVkaWFQZXJub2N0YWNpb25lcyksCiAgYWNjdXJhY3kobmFpdmVQZXJub2N0YWNpb25lcyksCiAgYWNjdXJhY3koZGVyaXZhUGVybm9jdGFjaW9uZXMpCikKdG1wIDwtIHJvdW5kKHRtcCwyKQpyb3duYW1lcyh0bXApIDwtIGMoIk1lZGlhIiwiSW5nZW51byBJIiwiRGVyaXZhIikKdG1wCmBgYAoKVGFudG8gZWwgbcOpdG9kbyBpbmdlbnVvIEksIGNvbW8gZWwgbcOpdG9kbyBkZSBsYSBkZXJpdmEgcmVzdWx0YW4gaWd1YWxtZW50ZSBidWVub3MgcmVzcGVjdG8gYSBzdSBhanVzdGUgYSBsb3MgZGF0b3MgKE1BUEUgZGUgNC40JS4gRWwgcHJpbWVybywgcG9ycXVlIHJlcGV0aXIgZWwgw7psdGltbyBkYXRvIHNpZW1wcmUgZXMgdW5hIGJ1ZW5hIGVzdHJhdGVnaWEgcGFyYSBzZXJpZXMgcXVlIG5vIGNhbWJpYW4gYnJ1c2NhbWVudGUgZGUgbml2ZWwuIEVsIHNlZ3VuZG8sIHBvcnF1ZSBjb25zaWRlcmFyIGxhIHBlbmRpZW50ZSBtZWRpYSBwYXNhZGEgZXMgdGFtYmnDqW4gdW5hIGJ1ZW5hIGVzdHJhdGVnaWEsIHF1ZSBzb2xvIGZhbGxhcsOhIGVuIGxvcyBwZXJpb2RvcyBkZSBjYW1iaW8gZGUgdGVuZGVuY2lhLgoKXAoKIyMgSWRlbnRpZmljYWNpw7NuIGRlbCBtw6l0b2RvIHNlbmNpbGxvIGNvbiBtZWpvciBwcmVkaWNjacOzbiBleHRyYS1tdWVzdHJhbAoKWWEgaGVtb3MgdmlzdG8gcXVlIHBhcmEgbG9zIGRvcyBtZWpvcmVzIG3DqXRvZG9zIGVsIGVycm9yIGVzIHByw7N4aW1vIGFsIDQuNCUuIEVzdGUgdmFsb3IgZXMgbGEgZXN0aW1hY2nDs24gZGVsIF9lcnJvciBlbiBsYSBwcmV2aXNpw7NuIGludHJhLW11ZXN0cmFsIHkgYSB1biBwZXJpb2RvIHZpc3RhXy4gQSBmaW4gZGUgcG9kZXIgZXN0aW1hciBtZWpvciBsYSBjYXBhY2lkYWQgcHJlZGljdGl2YSBkZSBsb3MgZG9zIG3DqXRvZG9zIHZhbW9zIGEgYXBsaWNhciBlbCBtw6l0b2RvIGRlIF9fb3JpZ2VuIGRlIHByZWRpY2Npw7NuIG3Ds3ZpbF9fIHBhcmEgb2J0ZW5lciBsb3MgZXJyb3JlcyBleHRyYS1tdWVzdHJhbGVzIHNlZ8O6biBlbCBob3Jpem9udGUgZGUgcHJldmlzacOzbi4KCkFzdW1pcmVtb3MgcXVlIG5lY2VzaXRhbW9zIDEwIGHDsW9zIHBhcmEgb2J0ZW5lciB1biBidWVuYSBlc3RpbWFjacOzbi4gTGEgc2lndWllbnRlIHJ1dGluYSBwZXJtaXRlIG9idGVuZXIgZWwgTUFQRSBwYXJhIHByZXZpc2lvbmVzIGNvbiB1biBob3Jpem9udGUgdGVtcG9yYWwgZGVzZGUgMSBtZXMgaGFzdGEgNSBtZXNlcy4KCmBgYHtyfQprIDwtIDEwICAgICAgICAgICAgICAgICAgI01pbmltbyBudW1lcm8gZGUgZGF0b3MgcGFyYSBlc3RpbWFyCmggPC0gNSAgICAgICAgICAgICAgICAgICAjSG9yaXpvbnRlIGRlIGxhcyBwcmVkaWNpY2lvbmVzClRUIDwtIGxlbmd0aChQZXJub2N0YWNpb25lc0FudWFsKSAjTG9uZ2l0dWQgc2VyaWUKcyA8LSBUVCAtIGsgLSBoICAgICAgICAgICAjVG90YWwgZGUgZXN0aW1hY2lvbmVzCgptYXBlTmFpdmVJIDwtIG1hdHJpeChOQSwgcyArIDEsIGgpCm1hcGVEZXJpdmEgPC0gbWF0cml4KE5BLCBzICsgMSwgaCkKCmZvciAoaSBpbiAwOnMpIHsKICB0cmFpbi5zZXQgPC0gc3Vic2V0KFBlcm5vY3RhY2lvbmVzQW51YWwsIHN0YXJ0ID0gaSArIDEsIGVuZCA9IGkgKyBrKQogIHRlc3Quc2V0IDwtICBzdWJzZXQoUGVybm9jdGFjaW9uZXNBbnVhbCwgc3RhcnQgPSBpICsgayArIDEsIGVuZCA9IGkgKyBrICsgaCkKICAKICBmY2FzdCA8LSBuYWl2ZSh0cmFpbi5zZXQsIGggPSBoKQogIG1hcGVOYWl2ZUlbaSArIDEsXSA8LSAxMDAqYWJzKHRlc3Quc2V0IC0gZmNhc3QkbWVhbikvdGVzdC5zZXQKICAKICBmY2FzdCA8LSByd2YodHJhaW4uc2V0LCBoID0gaCwgIGRyaWZ0ID0gVFJVRSkKICBtYXBlRGVyaXZhW2kgKyAxLF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGZjYXN0JG1lYW4pL3Rlc3Quc2V0CiAgCn0KCm1hcGVOYWl2ZUkgPC0gY29sTWVhbnMobWFwZU5haXZlSSkKbWFwZURlcml2YSA8LSBjb2xNZWFucyhtYXBlRGVyaXZhKQoKbWFwZU5haXZlSQptYXBlRGVyaXZhCmBgYAoKTGEgY29uY2x1c2nDs24gZXMgY2xhcmEsIGNvbiBpbmRlcGVuZGVuY2lhIGRlbCBob3Jpem9udGUgdGVtcG9yYWwsIGVsIG3DqXRvZG8gSW5nZW51byBJIGVzIGVsIHF1ZSBvZnJlY2UgbGFzIG1lam9yZXMgcHJlZGljY2lvbmVzLgoKUGFyYSBlbCBtw6l0b2RvIEluZ2VudW8gSSwgZWwgZXJyb3IgZGUgcHJldmlzacOzbiBleHRyYS1tdWVzdHJhbCBhIHVuIHBlcmlvZG8gKDMlKSBlcyBtZW5vciBxdWUgZWwgZXJyb3IgZGUgYWp1c3RlICg0LjQlKS4gUG9yIG90cm8gbGFkbywgbm8gcGFyZWNlIGFjb25zZWphYmxlIHV0aWxpemFyIGVzdGUgbcOpdG9kbyBwYXJhIHByZWRpY2Npb25lcyBtw6FzIGFsbMOhIGRlIGRvcyBhw7FvcyB2aXN0YSBwb3JxdWUgZWwgZXJyb3IgcG9yY2VudHVhbCBjcmVjZSByw6FwaWRhbWVudGUuCgpcCgojIyBQcmVkaWNjaW9uZXMKClVuYSB2ZXogaWRlbnRpZmljYWRvIGVsIG1lam9yIG3DqXRvZG8gc2VuY2lsbG8gZGUgYWp1c3RlIHBhcmEgbGEgc2VyaWUgYW51YWwsIG1vc3RyYW1vcyBsYXMgcHJlZGljY2lvbmVzIG51bcOpcmljYW1lbnRlLgpgYGB7cn0KbmFpdmVQZXJub2N0YWNpb25lcwpgYGAKCioqTm90YToqKiBsYSBDb3ZpZC0xOSBoYSBzdXB1ZXN0byB1biBfc2hvY2tfIGRlIHVuYSBtYWduaXR1ZCBpbmVzcGVyYWRhIGVuIHRvZG9zIGxvcyBhc3BlY3RvcyBkZSBsYSBzb2NpZWRhZCBhIG5pdmVsIG11bmRpYWwgeSwgZW4gY29uY3JldG8sIHBhcmEgZWwgdHVyaXNtbyBuYWNpb25hbCBlIGludGVybmFjaW9uYWwuIEVzIHBvciBlbGxvIHF1ZSB0b2RhcyBsYXMgcHJlZGljY2lvbmVzIHF1ZSBhcGFyZWNlbiBlbiBlc3RlIGVqZW1wbG8gZGUgYXBsaWNhY2nDs24geSBsb3Mgc2lndWllbnRlcyBzb2JyZS1lc3RpbWFyw6FuIGVub3JtZW1lbnRlIGxhcyBjaWZyYXMgZGUgUGVybm9jdGFjaW9uZXMgcmVhbGVzLiBDdWFscXVpZXIgbcOpdG9kbyBkZSBwcmVkaWNjacOzbiBhc3VtZSBxdWUgbGFzIGNvbmRpY2lvbmVzIGRlbCBlbnRvcm5vIGVuIHF1ZSBzZSBhcGxpY2Egbm8gdmFuIGEgY2FtYmlhciBlbiBlbCBmdXR1cm8uCgoKXApcCgojIFByZWRpY2Npw7NuIHBvciBlbCBtw6l0b2RvIGluZ2VudW8gY29uIGVzdGFjaW9uYWxpZGFkCgpWYW1vcyBhaG9yYSBhIGFqdXN0YXIgeSBwcmVkZWNpciBsYSBzZXJpZSBtZW5zdWFsIGRlIHBlcm5vY3RhY2lvbmVzIHBvciBlbCBtw6l0b2RvIG3DoXMgc2VuY2lsbG8gcG9zaWJsZSwgZWwgbcOpdG9kbyBpbmdlbnVvIGNvbiBlc3RhY2lvbmFsaWRhZC4gUmVjb3JkZW1vcyBxdWUgZW4gZXN0ZSBtb2RlbG8gbGEgcHJlZGljY2nDs24gcGFyYSB1biBtZXMgY29uc2lzdGUgZW4gbGEgw7psdGltYSBvYnNlcnZhY2nDs24gZGVsIG1pc21vIG1lcyBkaXNwb25pYmxlLgoKU29saWNpdGFyZW1vcyB1biBob3Jpem9udGUgZGUgcHJlZGljY2lvbmVzIGRlIDM2IG1lc2VzIGBoID0gMzZgIChhdW5xdWUgc29sbyBtb3N0cmFtb3MgbG9zIDEyIHByaW1lcm9zIG1lc2VzKS4KCmBgYHtyLCBldmFsID0gRkFMU0V9ClBlcm5vY3RhY2lvbmVzUHJlIDwtIHNuYWl2ZShQZXJub2N0YWNpb25lcywgaCA9IDM2LCBsZXZlbCA9IDAuOTUpClBlcm5vY3RhY2lvbmVzUHJlCmBgYAoKYGBge3IsIGVjaG8gPSBGQUxTRX0KUGVybm9jdGFjaW9uZXNQcmUgPC0gc25haXZlKFBlcm5vY3RhY2lvbmVzLCBoID0gMTIsIGxldmVsID0gMC45NSkKUGVybm9jdGFjaW9uZXNQcmUKUGVybm9jdGFjaW9uZXNQcmUgPC0gc25haXZlKFBlcm5vY3RhY2lvbmVzLCBoID0gMzYsIGxldmVsID0gMC45NSkKYGBgCgpMYSBjYWxpZGFkIGRlbCBhanVzdGUgZXMgYmFzdGFudGUgYnVlbmEsIGNvbiB1biBNQVBFIGRlIDUuMyUgeSB1biBSTVNFIGRlIDQwMCBtaWwgcGVybm9jdGFjaW9uZXMgKG8gMzAwIG1pbCBzaSB1c2Ftb3MgZWwgTUFFKS4gU2luIGVtYmFyZ28sIGVsIEFDRjEsIGNlcmNhbm8gYSB1bm8gZXMgMSwgaW5kaWNhIHF1ZSBoYXkgbXVjaG8gcmFuZ28gZGUgbWVqb3JhIGVuIGxhIHByZWRpY2Npw7NuIHBvciBpbnRlcnZhbG8uCiAKYGBge3J9CmFjY3VyYWN5KFBlcm5vY3RhY2lvbmVzUHJlKQpgYGAKIApcClwKCkxhIGZpZ3VyYSA0IG11ZXN0cmEgbG9zIHZhbG9yZXMgZGUgcHJlZGljY2nDs24gcGFyYSBsb3MgcHLDs3hpbW9zIHRyZXMgYcOxb3MuIE9ic2VydmEgcXVlIGxhcyBwcmVkaWNjaW9uZXMgcGFyYSAyMDIwIHNlIG1hbnRpZW5lbiBjb25zdGFudGVzIHkgc29uIGlndWFsZXMgYSBsYXMgcGVybm9jdGFjaW9uZXMgZGUgMjAxOS4KCmBgYHtyfQphdXRvcGxvdChQZXJub2N0YWNpb25lc1ByZSwKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIk5vY2hlcyIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDQuIFBlcm5vY3RhY2lvbmVzICgyMDAwLTIwMTkpIHkgcHJlZGljY2nDs24gKDIwMjAtMjAyMikiLAogICAgICAgICBQSSA9IEZBTFNFKQpgYGAKClwKCiMjIFZhbGlkYWNpw7NuCgpWYW1vcyBkZSBudWV2byBhIGFwbGljYXIgZWwgbcOpdG9kbyBkZSBfX29yaWdlbiBkZSBwcmVkaWNjacOzbiBtw7N2aWxfXyBwYXJhIG9idGVuZXIgbG9zIGVycm9yZXMgZXh0cmEtbXVlc3RyYWxlcyBzZWfDum4gZWwgaG9yaXpvbnRlIGRlIHByZXZpc2nDs24uCgpBc3VtaW1vcyBxdWUgc2UgcHJlY2lzYW4gZGlleiBhw7FvcyBwYXJhIGhhY2VyIHVuYSBidWVuYSBlc3RpbWFjacOzbiwgJGs9MTIwJCwgeSBxdWUgZWwgaG9yaXpvbnRlIHRlbXBvcmFsIGVzIHVuIGHDsW8sICRoID0gMTIkIG1lc2VzLgogIApgYGB7cn0gIAprIDwtIDEyMCAgICAgICAgICAgICAgICAgI01pbmltbyBudW1lcm8gZGUgZGF0b3MgcGFyYSBlc3RpbWFyCmggPC0gMTIgICAgICAgICAgICAgICAgICAjSG9yaXpvbnRlIGRlIGxhcyBwcmVkaWNpY29uZXMKVFQgPC0gbGVuZ3RoKFBlcm5vY3RhY2lvbmVzKSAgI0xvbmdpdHVkIHNlcmllCnMgPC0gVFQgLSBrIC0gaCAgICAgICAgICAjVG90YWwgZGUgZXN0aW1hY2lvbmVzCgptYXBlU25haXZlIDwtIG1hdHJpeChOQSwgcyArIDEsIGgpCmZvciAoaSBpbiAwOnMpIHsKICB0cmFpbi5zZXQgPC0gc3Vic2V0KFBlcm5vY3RhY2lvbmVzLCBzdGFydCA9IGkgKyAxLCBlbmQgPSBpICsgaykKICB0ZXN0LnNldCA8LSAgc3Vic2V0KFBlcm5vY3RhY2lvbmVzLCBzdGFydCA9IGkgKyBrICsgMSwgZW5kID0gaSArIGsgKyBoKQogIAogIGZpdCA8LSBzbmFpdmUodHJhaW4uc2V0LCBoID0gaCkKICBtYXBlU25haXZlW2kgKyAxLF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGZpdCRtZWFuKS90ZXN0LnNldAp9CgptYXBlU25haXZlIDwtIGNvbE1lYW5zKG1hcGVTbmFpdmUpCm1hcGVTbmFpdmUKCmdncGxvdCgpICsKICBnZW9tX2xpbmUoYWVzKHggPSAxOjEyLCB5ID0gbWFwZVNuYWl2ZSkpICsKICBnZ3RpdGxlKCJGaWd1cmEgNS4gRXJyb3IgZGUgcHJlZGljY2nDs24gc2Vnw7puIGhvcml6b250ZSB0ZW1wb3JhbCIpICsKICB4bGFiKCJIb3Jpem9udGUgdGVtcG9yYWwgZGUgcHJlZGljY2nDs24iKSArCiAgeWxhYigiTUFQRSIpICsKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSAxOjEyKQpgYGAKCkxhIGZpZ3VyYSA1IG11ZXN0cmEgZWwgZXJyb3IgZGUgcHJldmlzacOzbiBleHRyYS1tdWVzdHJhbCBzZWfDum4gZWwgaG9yaXpvbnRlIGRlIHByZXZpc2nDs24uIEN1aWRhZG8gY29uIGxhIGludGVycHJldGFjacOzbi4gRWwgZXJyb3IgcHLDoWN0aWNhbWVudGUgbm8gdmFyw61hIGNvbiBlbCBob3Jpem9udGUgdGVtcG9yYWwgeSBzZSBtdWV2ZSBlbnRyZSBlbCA0LjYlIHkgZWwgNC45JS4KClwKXApcClwKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIk3DqXRvZG8gaW5nZW51byIKYXV0aG9yOiAiSXbDoW4gQXJyaWJhcyAoRGVwdG8uIEFuw6FsaXNpcyBFY29uw7NtaWNvLiBVbml2ZXJzaXRhdCBkZSBWYWzDqG5jaWEpIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICB0aGVtZTogY2VydWxlYW4KICAgIGhpZ2hsaWdodDogcHlnbWVudHMgCiAgICBmaWdfY2FwdGlvbjogZmFsc2UKICAgIGRmX3ByaW50OiBrYWJsZQogICAgdG9jOiB0cnVlCiAgICB0b2NfZGVwdGg6IDIKICAgIG51bWJlcl9zZWN0aW9uczogdHJ1ZQogICAgc2VsZl9jb250YWluZWQ6IHRydWUKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKLS0tCgpgYGB7ciBjaHVua19zZXR1cCwgZWNobyA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIG1lc3NhZ2UgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuYWxpZ24gPSAiY2VudGVyIiwgCiAgICAgICAgICAgICAgICAgICAgICBmaWcuc2hvdyA9ICJob2xkIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5oZWlnaHQgPSA0LAogICAgICAgICAgICAgICAgICAgICAgZmlnLndpZHRoID0gOCwKICAgICAgICAgICAgICAgICAgICAgIG91dC53aWR0aCA9ICI4MCUiKSAKYGBgCgpgYGB7ciBvcHRpb25zX3NldHVwLCBlY2hvID0gRkFMU0V9Cm9wdGlvbnMoc2NpcGVuID0gOTk5KSAjLSBwYXJhIHF1aXRhciBsYSBub3RhY2lvbiBjaWVudGlmaWNhCmBgYAoKYGBge3IgbGlicmVyaWFzLCBlY2hvID0gRkFMU0V9CmxpYnJhcnkoZm9yZWNhc3QpCmxpYnJhcnkoZ2dwbG90Mik7IHRoZW1lX3NldCh0aGVtZV9idygpKQpsaWJyYXJ5KGdyaWRFeHRyYSkKbGlicmFyeShncmlkKQpgYGAKClwKXAoKIyBJbnRyb2R1Y2Npw7NuCgpDb25zaWRlcmVtb3MgZGUgbnVldm8gbGEgc2VyaWUgdGVtcG9yYWwgY29ycmVzcG9uZGllbnRlIGFsIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgcXVlIGxvcyB0dXJpc3RhcyBleHRyYW5qZXJvcyByZWFsaXphbiBlbiBFc3Bhw7FhIGVuIGFsb2phbWllbnRvcyB0dXLDrXN0aWNvcyBhdXRvcml6YWRvcyAocXVlIGxsYW1hcmVtb3MgUGVybm9jdGFjaW9uZXMgZW4gYWRlbGFudGUpLiBFc3RhIHNlcmllIGVzdMOhIGRpc3BvbmlibGUgZW4gRXVyb3N0YXQgZGVzZGUgZW5lcm8gZGUgMjAwMCBoYXN0YSBkaWNpZW1icmUgZGUgMjAxOSwgdW4gdG90YWwgZGUgMjAgYcOxb3MgeSAyNDAgb2JzZXJ2YWNpb25lcy4KCkxhIHNlcmllIHByZXNlbnRhIHRlbmRlbmNpYSBkZWNyZWNpZW50ZSBoYXN0YSBmaW5hbGVzIGRlIGxhIHByaW1lcmEgZMOpY2FkYSBkZWwgcHJlc2VudGUgc2lnbG8geSBsdWVnbyBjcmVjaWVudGUgaGFzdGEgbG9zIGRvcyDDumx0aW1vcyBhw7Fvcy4gTGEgZXN0YWNpb25hbGlkYWQgZGUgb3JkZW4gMTIgZXN0YSBkZXRlcm1pbmFkYSBwb3IgbGFzIHZhY2FjaW9uZXMgZGUgdmVyYW5vLiBFbCBlc3F1ZW1hIGVzIG11bHRpcGxpY2F0aXZvLgoKYGBge3J9CgpQZXJub2N0YWNpb25lcyA8LSByZWFkLmNzdjIoIi4vc2VyaWVzL1Blcm5vY3RhY2lvbmVzLmNzdiIsIGhlYWRlciA9IFRSVUUpClBlcm5vY3RhY2lvbmVzIDwtIHRzKFBlcm5vY3RhY2lvbmVzWywgMl0sIHN0YXJ0ID0gMjAwMCwgZnJlcXVlbmN5ID0gMTIpCmBgYAoKYGBge3J9CmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDEuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgIApgYGAKClZhbW9zIGEgYWp1c3RhciB5IHByZWRlY2lyIGVzdGEgc2VyaWUgcG9yIG3DqXRvZG9zIHNlbmNpbGxvcy4gTGEgY2FsaWRhZCBkZSBhanVzdGUgcXVlIG9idGVuZ2Ftb3MgeSBsYSBjYXBhY2lkYWQgcHJlZGljdGl2YSBzZXLDoW4gZWwgcHVudG8gZGUgcmVmZXJlbmNpYSBjdWFuZG8gYXBsaXF1ZW1vcyBtZXRvZG9sb2fDrWFzIG3DoXMgY29tcGxlamFzIGRlIHByZWRpY2Npw7NuLgoKXApcCgojIFByZWRpY2Npw7NuIHBvciBtw6l0b2RvcyBzaW1wbGVzIHBhcmEgbGEgc2VyaWUgYW51YWwKClZhbW9zIGEgZW1wZXphciBjb25zaWRlcmFuZG8gbGEgc2VyaWUgYW51YWwgZGUgUGVybm9jdGFjaW9uZXMsIGVuIG1pbGxvbmVzLCBwYXJhIGlkZW50aWZpY2FyIGVsIG3DqXRvZG8gc2VuY2lsbG8gZGUgcHJlZGljY2nDs24gbcOhcyBhZGVjdWFkby4KCmBgYHtyfQpQZXJub2N0YWNpb25lc0FudWFsID0gYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsIEZVTiA9IHN1bSkKCmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzQW51YWwsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDIuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgCmBgYAoKIyMgSWRlbnRpZmljYWNpw7NuIGRlbCBtw6l0b2RvIHNlbmNpbGxvIGNvbiBtZWpvciBhanVzdGUKClBhcmEgc2VyaWVzIHNpbiBlc3RhY2lvbmFsaWRhZCB0ZW5lbW9zIHRyZXMgYXByb3hpbWFjaW9uZXMgcG9yIG3DqXRvZG9zIHNlbmNpbGxvczogbWVkaWEgc2ltcGxlLCBtw6l0b2RvIGluZ2VudW8gSSB5IG3DqXRvZG8gZGUgbGEgZGVyaXZhLiBWZWFtb3MgZW4gcHJpbWVyIGx1Z2FyIGN1YWwgZGUgZWxsb3MgYWp1c3RhIG1lam9yIGEgbG9zIGRhdG9zLCBlcyBkZWNpciwgY3VhbCBvZnJlY2UgbGFzIG1lam9yZXMgcHJlZGljY2lvbmVzIGludHJhLW11ZXN0cmFsZXMgYSB1biBwZXJpb2RvIHZpc3RhLgoKYGBge3J9Cm1lZGlhUGVybm9jdGFjaW9uZXMgPC0gbWVhbmYoUGVybm9jdGFjaW9uZXNBbnVhbCwgaCA9IDUpCm5haXZlUGVybm9jdGFjaW9uZXMgPC0gbmFpdmUoUGVybm9jdGFjaW9uZXNBbnVhbCwgaCA9IDUpCmRlcml2YVBlcm5vY3RhY2lvbmVzIDwtIHJ3ZihQZXJub2N0YWNpb25lc0FudWFsLCAgaCA9IDUsIGRyaWZ0ID0gVFJVRSkKCmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzQW51YWwsIHNlcmllcyA9ICJQZXJub2N0YWNpb25lcyIsCiAgICAgICAgICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgICAgICAgICB5bGFiID0gIk5vY2hlcyAobWlsbG9uZXMpIiwKICAgICAgICAgICAgICAgIG1haW4gPSAiRmlndXJhIDMuIFBlcm5vY3RhY2lvbmVzIHkgcHJlZGljY2nDs24gcG9yIG3DqXRvZG9zIHNlbmNpbGxvcyIpICsKICBhdXRvbGF5ZXIobWVkaWFQZXJub2N0YWNpb25lcywgc2VyaWVzPSJNZWRpYSIsIFBJID0gRkFMU0UpICsKICBhdXRvbGF5ZXIobmFpdmVQZXJub2N0YWNpb25lcywgc2VyaWVzPSJJbmdlbnVvIiwgUEkgPSBGQUxTRSkgKwogIGF1dG9sYXllcihkZXJpdmFQZXJub2N0YWNpb25lcywgc2VyaWVzPSJEZXJpdmEiLCBQSSA9IEZBTFNFKSArCiAgc2NhbGVfY29sb3VyX2Rpc2NyZXRlKGxpbWl0cz1jKCJQZXJub2N0YWNpb25lcyIsICJNZWRpYSIsICJJbmdlbnVvIiwgIkRlcml2YSIpKSArCiAgZ3VpZGVzKGNvbG91ciA9IGd1aWRlX2xlZ2VuZCh0aXRsZSA9ICJNw6l0b2RvcyIpKSArIAogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbj1jKDAuMDIsMC45OCksIGxlZ2VuZC5qdXN0aWZpY2F0aW9uPWMoMCwxKSkKYGBgCgpMYSBmaWd1cmEgMyBtdWVzdHJhIHF1ZSBzb2xvIGVsIG3DqXRvZG8gY29uIGRlcml2YSBjYXB0dXJhIGxhIHRlbmRlbmNpYSBkZWNyZWNpZW50ZSBvYnNlcnZhZGEgZW4gbG9zIMO6bHRpbW9zIGHDsW9zLiBWZWFtb3MgbGEgY2FwYWNpZGFkIGRlIGFqdXN0ZSBkZSBjYWRhIG3DqXRvZG8KCmBgYHtyfQp0bXAgPC0gcmJpbmQoCiAgYWNjdXJhY3kobWVkaWFQZXJub2N0YWNpb25lcyksCiAgYWNjdXJhY3kobmFpdmVQZXJub2N0YWNpb25lcyksCiAgYWNjdXJhY3koZGVyaXZhUGVybm9jdGFjaW9uZXMpCikKdG1wIDwtIHJvdW5kKHRtcCwyKQpyb3duYW1lcyh0bXApIDwtIGMoIk1lZGlhIiwiSW5nZW51byBJIiwiRGVyaXZhIikKdG1wCmBgYAoKVGFudG8gZWwgbcOpdG9kbyBpbmdlbnVvIEksIGNvbW8gZWwgbcOpdG9kbyBkZSBsYSBkZXJpdmEgcmVzdWx0YW4gaWd1YWxtZW50ZSBidWVub3MgcmVzcGVjdG8gYSBzdSBhanVzdGUgYSBsb3MgZGF0b3MgKE1BUEUgZGUgNC40JSkuIEVsIHByaW1lcm8sIHBvcnF1ZSByZXBldGlyIGVsIMO6bHRpbW8gZGF0byBzaWVtcHJlIGVzIHVuYSBidWVuYSBlc3RyYXRlZ2lhIHBhcmEgcHJlZGljY2lvbmVzIGEgY29ydMOtc2ltbyBwbGF6by4gRWwgc2VndW5kbywgcG9ycXVlIGNvbnNpZGVyYXIgbGEgcGVuZGllbnRlIG1lZGlhIHBhc2FkYSBlcyB0YW1iacOpbiB1bmEgYnVlbmEgZXN0cmF0ZWdpYSwgcXVlIHNvbG8gZmFsbGFyw6EgZW4gbG9zIHBlcmlvZG9zIGRlIGNhbWJpbyBkZSB0ZW5kZW5jaWEuIFNpbiBlbWJhcmdvLCBlbiBuaW5nw7puIGNhc28gZWwgaW50ZXJ2YWxvIGRlIGNvbmZpYW56YSBkZSBsYXMgcHJlZGljY2lvbmVzIHNlcsOhIGRlIHV0aWxpZGFkLgoKXAoKIyMgSWRlbnRpZmljYWNpw7NuIGRlbCBtw6l0b2RvIHNlbmNpbGxvIGNvbiBtZWpvciBwcmVkaWNjacOzbiBleHRyYS1tdWVzdHJhbAoKWWEgaGVtb3MgdmlzdG8gcXVlIHBhcmEgbG9zIGRvcyBtZWpvcmVzIG3DqXRvZG9zIGVsIGVycm9yIGVzIHByw7N4aW1vIGFsIDQuNCUuIEVzdGUgdmFsb3IgZXMgbGEgZXN0aW1hY2nDs24gZGVsIF9lcnJvciBlbiBsYSBwcmV2aXNpw7NuIGludHJhLW11ZXN0cmFsIHkgYSB1biBwZXJpb2RvIHZpc3RhXy4gQSBmaW4gZGUgcG9kZXIgZXN0aW1hciBtZWpvciBsYSBjYXBhY2lkYWQgcHJlZGljdGl2YSBkZSBsb3MgZG9zIG3DqXRvZG9zIHZhbW9zIGEgYXBsaWNhciBlbCBtw6l0b2RvIGRlIF9fb3JpZ2VuIGRlIHByZWRpY2Npw7NuIG3Ds3ZpbF9fIHBhcmEgb2J0ZW5lciBsb3MgZXJyb3JlcyBleHRyYS1tdWVzdHJhbGVzIHNlZ8O6biBlbCBob3Jpem9udGUgZGUgcHJldmlzacOzbi4KCkFzdW1pcmVtb3MgcXVlIG5lY2VzaXRhbW9zIDEwIGHDsW9zIHBhcmEgb2J0ZW5lciB1biBidWVuYSBlc3RpbWFjacOzbi4gTGEgc2lndWllbnRlIHJ1dGluYSBwZXJtaXRlIG9idGVuZXIgZWwgTUFQRSBwYXJhIHByZXZpc2lvbmVzIGNvbiB1biBob3Jpem9udGUgdGVtcG9yYWwgZGVzZGUgMSBtZXMgaGFzdGEgNSBtZXNlcy4KCmBgYHtyfQprIDwtIDEwICAgICAgICAgICAgICAgICAgCmggPC0gNSAgICAgICAgICAgICAgICAgICAKVFQgPC0gbGVuZ3RoKFBlcm5vY3RhY2lvbmVzQW51YWwpIApzIDwtIFRUIC0gayAtIGggICAgICAgICAgCgptYXBlTmFpdmVJIDwtIG1hdHJpeChOQSwgcyArIDEsIGgpCm1hcGVEZXJpdmEgPC0gbWF0cml4KE5BLCBzICsgMSwgaCkKCmZvciAoaSBpbiAwOnMpIHsKICB0cmFpbi5zZXQgPC0gc3Vic2V0KFBlcm5vY3RhY2lvbmVzQW51YWwsIHN0YXJ0ID0gaSArIDEsIGVuZCA9IGkgKyBrKQogIHRlc3Quc2V0IDwtICBzdWJzZXQoUGVybm9jdGFjaW9uZXNBbnVhbCwgc3RhcnQgPSBpICsgayArIDEsIGVuZCA9IGkgKyBrICsgaCkKICAKICBmY2FzdCA8LSBuYWl2ZSh0cmFpbi5zZXQsIGggPSBoKQogIG1hcGVOYWl2ZUlbaSArIDEsXSA8LSAxMDAqYWJzKHRlc3Quc2V0IC0gZmNhc3QkbWVhbikvdGVzdC5zZXQKICAKICBmY2FzdCA8LSByd2YodHJhaW4uc2V0LCBoID0gaCwgIGRyaWZ0ID0gVFJVRSkKICBtYXBlRGVyaXZhW2kgKyAxLF0gPC0gMTAwKmFicyh0ZXN0LnNldCAtIGZjYXN0JG1lYW4pL3Rlc3Quc2V0CiAgCn0KCm1hcGVOYWl2ZUkgPC0gY29sTWVhbnMobWFwZU5haXZlSSkKbWFwZURlcml2YSA8LSBjb2xNZWFucyhtYXBlRGVyaXZhKQoKbWFwZU5haXZlSQptYXBlRGVyaXZhCmBgYAoKTGEgY29uY2x1c2nDs24gZXMgY2xhcmEsIGNvbiBpbmRlcGVuZGVuY2lhIGRlbCBob3Jpem9udGUgdGVtcG9yYWwsIGVsIG3DqXRvZG8gSW5nZW51byBJIGVzIGVsIHF1ZSBvZnJlY2UgbGFzIG1lam9yZXMgcHJlZGljY2lvbmVzLgoKUGFyYSBlbCBtw6l0b2RvIEluZ2VudW8gSSwgZWwgZXJyb3IgZGUgcHJldmlzacOzbiBleHRyYS1tdWVzdHJhbCBhIHVuIHBlcmlvZG8gKDMlKSBlcyBtZW5vciBxdWUgZWwgZXJyb3IgZGUgYWp1c3RlICg0LjQlKS4gUG9yIG90cm8gbGFkbywgbm8gcGFyZWNlIGFjb25zZWphYmxlIHV0aWxpemFyIGVzdGUgbcOpdG9kbyBwYXJhIHByZWRpY2Npb25lcyBtw6FzIGFsbMOhIGRlIGRvcyBhw7FvcyB2aXN0YSBwb3JxdWUgZWwgZXJyb3IgcG9yY2VudHVhbCBjcmVjZSByw6FwaWRhbWVudGUuCgpcCgojIyBQcmVkaWNjaW9uZXMKClVuYSB2ZXogaWRlbnRpZmljYWRvIGVsIG1lam9yIG3DqXRvZG8gc2VuY2lsbG8gZGUgYWp1c3RlIHBhcmEgbGEgc2VyaWUgYW51YWwsIG1vc3RyYW1vcyBsYXMgcHJlZGljY2lvbmVzIG51bcOpcmljYW1lbnRlLgpgYGB7cn0KbmFpdmVQZXJub2N0YWNpb25lcwpgYGAKCioqTm90YToqKiBsYSBDb3ZpZC0xOSBoYSBzdXB1ZXN0byB1biBfc2hvY2tfIGRlIHVuYSBtYWduaXR1ZCBpbmVzcGVyYWRhIGVuIHRvZG9zIGxvcyBhc3BlY3RvcyBkZSBsYSBzb2NpZWRhZCBhIG5pdmVsIG11bmRpYWwgeSwgZW4gY29uY3JldG8sIHBhcmEgZWwgdHVyaXNtbyBuYWNpb25hbCBlIGludGVybmFjaW9uYWwuIEVzIHBvciBlbGxvIHF1ZSB0b2RhcyBsYXMgcHJlZGljY2lvbmVzIHF1ZSBhcGFyZWNlbiBlbiBlc3RlIGVqZW1wbG8gZGUgYXBsaWNhY2nDs24geSBsb3Mgc2lndWllbnRlcyBzb2JyZS1lc3RpbWFyw6FuIGVub3JtZW1lbnRlIGxhcyBjaWZyYXMgZGUgUGVybm9jdGFjaW9uZXMgcmVhbGVzLiBDdWFscXVpZXIgbcOpdG9kbyBkZSBwcmVkaWNjacOzbiBhc3VtZSBxdWUgbGFzIGNvbmRpY2lvbmVzIGRlbCBlbnRvcm5vIGVuIHF1ZSBzZSBhcGxpY2Egbm8gdmFuIGEgY2FtYmlhciBlbiBlbCBmdXR1cm8uCgoKXApcCgojIFByZWRpY2Npw7NuIHBvciBlbCBtw6l0b2RvIGluZ2VudW8gY29uIGVzdGFjaW9uYWxpZGFkCgpWYW1vcyBhaG9yYSBhIGFqdXN0YXIgeSBwcmVkZWNpciBsYSBzZXJpZSBtZW5zdWFsIGRlIHBlcm5vY3RhY2lvbmVzIHBvciBlbCBtw6l0b2RvIG3DoXMgc2VuY2lsbG8gcG9zaWJsZSwgZWwgbcOpdG9kbyBpbmdlbnVvIGNvbiBlc3RhY2lvbmFsaWRhZC4gUmVjb3JkZW1vcyBxdWUgZW4gZXN0ZSBtb2RlbG8gbGEgcHJlZGljY2nDs24gcGFyYSB1biBtZXMgY29uc2lzdGUgZW4gbGEgw7psdGltYSBvYnNlcnZhY2nDs24gZGVsIG1pc21vIG1lcyBkaXNwb25pYmxlLgoKU29saWNpdGFyZW1vcyB1biBob3Jpem9udGUgZGUgcHJlZGljY2lvbmVzIGRlIDM2IG1lc2VzIGBoID0gMzZgIChhdW5xdWUgc29sbyBtb3N0cmFtb3MgbG9zIDEyIHByaW1lcm9zIG1lc2VzKS4KCmBgYHtyLCBldmFsID0gRkFMU0V9ClBlcm5vY3RhY2lvbmVzUHJlIDwtIHNuYWl2ZShQZXJub2N0YWNpb25lcywgaCA9IDM2LCBsZXZlbCA9IDAuOTUpClBlcm5vY3RhY2lvbmVzUHJlCmBgYAoKYGBge3IsIGVjaG8gPSBGQUxTRX0KUGVybm9jdGFjaW9uZXNQcmUgPC0gc25haXZlKFBlcm5vY3RhY2lvbmVzLCBoID0gMTIsIGxldmVsID0gMC45NSkKUGVybm9jdGFjaW9uZXNQcmUKUGVybm9jdGFjaW9uZXNQcmUgPC0gc25haXZlKFBlcm5vY3RhY2lvbmVzLCBoID0gMzYsIGxldmVsID0gMC45NSkKYGBgCgpMYSBjYWxpZGFkIGRlbCBhanVzdGUgZXMgYmFzdGFudGUgYnVlbmEsIGNvbiB1biBNQVBFIGRlIDUuMyUgeSB1biBSTVNFIGRlIDQwMCBtaWwgcGVybm9jdGFjaW9uZXMgKG8gMzAwIG1pbCBzaSB1c2Ftb3MgZWwgTUFFKS4gU2luIGVtYmFyZ28sIGVsIEFDRjEsIGNlcmNhbm8gYSB1bm8gZXMgMSwgaW5kaWNhIHF1ZSBoYXkgbXVjaG8gcmFuZ28gZGUgbWVqb3JhIGVuIGxhIHByZWRpY2Npw7NuIHBvciBpbnRlcnZhbG8uCiAKYGBge3J9CmFjY3VyYWN5KFBlcm5vY3RhY2lvbmVzUHJlKQpgYGAKIApcClwKCkxhIGZpZ3VyYSA0IG11ZXN0cmEgbG9zIHZhbG9yZXMgZGUgcHJlZGljY2nDs24gcGFyYSBsb3MgcHLDs3hpbW9zIHRyZXMgYcOxb3MuIE9ic2VydmEgcXVlIGxhcyBwcmVkaWNjaW9uZXMgcGFyYSAyMDIwIHNlIG1hbnRpZW5lbiBjb25zdGFudGVzIHkgc29uIGlndWFsZXMgYSBsYXMgcGVybm9jdGFjaW9uZXMgZGUgMjAxOS4KCmBgYHtyfQphdXRvcGxvdChQZXJub2N0YWNpb25lc1ByZSwKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIk5vY2hlcyIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDQuIFBlcm5vY3RhY2lvbmVzICgyMDAwLTIwMTkpIHkgcHJlZGljY2nDs24gKDIwMjAtMjAyMikiLAogICAgICAgICBQSSA9IEZBTFNFKQpgYGAKClwKCiMjIFZhbGlkYWNpw7NuCgpWYW1vcyBkZSBudWV2byBhIGFwbGljYXIgZWwgbcOpdG9kbyBkZSBfX29yaWdlbiBkZSBwcmVkaWNjacOzbiBtw7N2aWxfXyBwYXJhIG9idGVuZXIgbG9zIGVycm9yZXMgZXh0cmEtbXVlc3RyYWxlcyBzZWfDum4gZWwgaG9yaXpvbnRlIGRlIHByZXZpc2nDs24uCgpBc3VtaW1vcyBxdWUgc2UgcHJlY2lzYW4gZGlleiBhw7FvcyBwYXJhIGhhY2VyIHVuYSBidWVuYSBlc3RpbWFjacOzbiwgJGs9MTIwJCwgeSBxdWUgZWwgaG9yaXpvbnRlIHRlbXBvcmFsIGVzIHVuIGHDsW8sICRoID0gMTIkIG1lc2VzLgogIApgYGB7cn0gIAprIDwtIDEyMCAgICAgICAgICAgICAgICAgCmggPC0gMTIgICAgICAgICAgICAgICAgICAKVFQgPC0gbGVuZ3RoKFBlcm5vY3RhY2lvbmVzKSAgCnMgPC0gVFQgLSBrIC0gaCAgICAgICAgICAKCm1hcGVTbmFpdmUgPC0gbWF0cml4KE5BLCBzICsgMSwgaCkKZm9yIChpIGluIDA6cykgewogIHRyYWluLnNldCA8LSBzdWJzZXQoUGVybm9jdGFjaW9uZXMsIHN0YXJ0ID0gaSArIDEsIGVuZCA9IGkgKyBrKQogIHRlc3Quc2V0IDwtICBzdWJzZXQoUGVybm9jdGFjaW9uZXMsIHN0YXJ0ID0gaSArIGsgKyAxLCBlbmQgPSBpICsgayArIGgpCiAgCiAgZml0IDwtIHNuYWl2ZSh0cmFpbi5zZXQsIGggPSBoKQogIG1hcGVTbmFpdmVbaSArIDEsXSA8LSAxMDAqYWJzKHRlc3Quc2V0IC0gZml0JG1lYW4pL3Rlc3Quc2V0Cn0KCm1hcGVTbmFpdmUgPC0gY29sTWVhbnMobWFwZVNuYWl2ZSkKbWFwZVNuYWl2ZQoKZ2dwbG90KCkgKwogIGdlb21fbGluZShhZXMoeCA9IDE6MTIsIHkgPSBtYXBlU25haXZlKSkgKwogIGdndGl0bGUoIkZpZ3VyYSA1LiBFcnJvciBkZSBwcmVkaWNjacOzbiBzZWfDum4gaG9yaXpvbnRlIHRlbXBvcmFsIikgKwogIHhsYWIoIkhvcml6b250ZSB0ZW1wb3JhbCBkZSBwcmVkaWNjacOzbiIpICsKICB5bGFiKCJNQVBFIikgKwogIHlsaW0oMCwgNSkgKyAKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSAxOjEyKQpgYGAKCkxhIGZpZ3VyYSA1IG11ZXN0cmEgZWwgZXJyb3IgZGUgcHJldmlzacOzbiBleHRyYS1tdWVzdHJhbCBzZWfDum4gZWwgaG9yaXpvbnRlIGRlIHByZXZpc2nDs24uIEN1aWRhZG8gY29uIGxhIGludGVycHJldGFjacOzbi4gRWwgZXJyb3IgcHLDoWN0aWNhbWVudGUgbm8gdmFyw61hIGNvbiBlbCBob3Jpem9udGUgdGVtcG9yYWwgeSBzZSBtdWV2ZSBlbnRyZSBlbCA0LjYlIHkgZWwgNC45JS4gTGEgc2VyaWUgUGVybm9jdGFjaW9uZXMgZXMgdGFuIHNlbmNpbGxhIHF1ZSBsYSBtZWpvciBwcmVkaWNjacOzbiBhIGNvcnRvIHBsYXpvIGVzIHJlcGV0aXIgbGEgw7psdGltYSBvYnNlcnZhY2nDs24gZGVsIG1pc21vIG1lcy4KClwKXApcClwKCg==</div>
 <footer class="footer">
   
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
@@ -731,6 +707,8 @@ Training set -63285.89 405381.2 308385.7 -1.163295 5.318728    1 0.7222781</code
 This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
   
 </footer>
+
+
 
 
 
@@ -758,7 +736,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>

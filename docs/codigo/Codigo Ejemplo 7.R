@@ -59,17 +59,12 @@ nsdiffs(log(Pernoctaciones))
 # Identificacion
 #----------------------------------------------------------
 # Auto.arima
-Bisiestos <- 1*(monthdays(Pernoctaciones) == 29)
-
-d0801 <- 1*(cycle(Pernoctaciones) == 8 & trunc(time(Pernoctaciones)) == 2001)
-d0802 <- 1*(cycle(Pernoctaciones) == 8 & trunc(time(Pernoctaciones)) == 2002)
-d0817 <- 1*(cycle(Pernoctaciones) == 8 & trunc(time(Pernoctaciones)) == 2017)
-d0402 <- 1*(cycle(Pernoctaciones) == 4 & trunc(time(Pernoctaciones)) == 2002)
-d0714 <- 1*(cycle(Pernoctaciones) == 7 & trunc(time(Pernoctaciones)) == 2014)
+DiasMes <- monthdays(Pernoctaciones)
+SemanaSanta <- easter(Pernoctaciones)
 
 auto.arima(Pernoctaciones, d = 1, D = 1,
            lambda = 0,
-           xreg = cbind(Bisiestos, d0801, d0802, d0817, d0402, d0714))
+           xreg = cbind(DiasMes, SemanaSanta))
 
 # Seas
 summary(seas(Pernoctaciones))
@@ -106,7 +101,6 @@ SemanaSanta <- table(bizdays)
 SemanaSanta <- ts(SemanaSanta, start = 2000, frequency = 12)
 SemanaSanta
 SemanaSanta <- (monthdays(SemanaSanta) - SemanaSanta)/12 #Nuestra SS tiene 12 dias
-SemanaSanta[cycle(SemanaSanta) == 4] <- -SemanaSanta[cycle(SemanaSanta) == 3]  
 round(SemanaSanta, 2)
 
 pSemanaSanta <- subset(SemanaSanta, start = length(SemanaSanta) - 35)
@@ -115,7 +109,7 @@ SemanaSanta <- subset(SemanaSanta, end = length(SemanaSanta) - 36)
 # Ajuste
 Arima1 <- Arima(Pernoctaciones, 
                 order = c(1, 1, 1),  
-                seasonal = list(order = c(0, 1, 1), period = 12),
+                seasonal = c(0, 1, 1),
                 lambda = 0,
                 xreg = SemanaSanta)
 Arima1
@@ -140,7 +134,7 @@ d0513 <- 1*(cycle(Pernoctaciones) == 5 & trunc(time(Pernoctaciones)) == 2013)
 #Ajuste
 Arima2 <- Arima(Pernoctaciones, 
                 order = c(1, 1, 1),  
-                seasonal = list(order = c(0, 1, 1), period = 12),
+                seasonal = c(0, 1, 1),
                 lambda = 0,
                 xreg = cbind(SemanaSanta, d0411, d0513))
 Arima2
@@ -196,7 +190,7 @@ autoplot(pArima2,
 #
 #
 #----------------------------------------------------------
-# Comparacion entre modelo
+# Comparacion entre modelos
 #----------------------------------------------------------
 # Error de ajuste
 Arima22 <- Arima(Pernoctaciones, 
@@ -223,17 +217,18 @@ mapeAlisadoLog <- matrix(NA, s + 1, h)
 mapeArima <- matrix(NA, s + 1, h)
 mapeArimaLog <- matrix(NA, s + 1, h)
 
-X <- cbind(SemanaSanta, d0411, d0513)
+
+X <- data.frame(cbind(SemanaSanta, d0411, d0513))
 
 for (i in 0:s) {
   train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
   test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h) 
   
-  X.train <- X[(i + 1):(i + k),]
+  X.train <- data.frame(X[(i + 1):(i + k),])
   hay <- colSums(X.train)
   X.train <- X.train[, hay>0]
   
-  X.test <- X[(i + k + 1):(i + k + h),]
+  X.test <- data.frame(X[(i + k + 1):(i + k + h),])
   X.test <- X.test[, hay>0]
   
   #Ingenuo
@@ -247,29 +242,29 @@ for (i in 0:s) {
   
   #Alisado con log
   fit <- ets(train.set, model = "AAA", damped = TRUE, lambda = 0)
-  fcast <- forecast(fit, h = h, biasadj = TRUE) 
+  fcast <- forecast(fit, h = h) 
   mapeAlisadoLog[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
   
   #Arima sin log
   fit <- try(Arima(train.set, 
                    order = c(1, 1, 1),
-                   seasonal = list(order = c(0, 1, 1), period = 12),
-                   xreg = X.train), silent = TRUE)
+                   seasonal = c(0, 1, 1),
+                   xreg = as.matrix(X.train)), silent = TRUE)
   
   if (!is.element("try-error", class(fit))) {
-    fcast <- forecast(fit, h = h, xreg = X.test) 
+    fcast <- forecast(fit, h = h, xreg = as.matrix(X.test))
     mapeArima[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
   }
   
   #Arima con log
   fit <- try(Arima(train.set, 
                    order = c(1, 1, 1),
-                   seasonal = list(order = c(0, 1, 1), period = 12),
+                   seasonal = c(0, 1, 1),
                    lambda = 0,
-                   xreg = X.train), silent = TRUE)
+                   xreg = as.matrix(X.train)), silent = TRUE)
   
   if (!is.element("try-error", class(fit))) {
-    fcast <- forecast(fit, h = h, xreg = X.test, biasadj = TRUE) 
+    fcast <- forecast(fit, h = h, xreg = as.matrix(X.test), biasadj = TRUE) 
     mapeArimaLog[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
   }
   
@@ -292,3 +287,4 @@ ggplot() +
   ylab("MAPE") +
   scale_x_continuous(breaks= 1:12) +
   scale_color_discrete(name = "Modelos")
+

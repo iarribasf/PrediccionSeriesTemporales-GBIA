@@ -113,14 +113,14 @@ ggAcf(diff(log(nacimientos), lag = 12), lag = 48)
 ggAcf(diff(diff(nacimientos, lag=12)), lag = 48)
 ggAcf(diff(diff(log(nacimientos), lag=12)), lag = 48)
 
-# Autocorrelaciones
-ggAcf(diff(diff(nacimientos), lag = 12), 
-      lag=12, 
-      plot = FALSE)
-
-#- Ergodicidad
+# Diferenciaciones
 ndiffs(nacimientos)
 nsdiffs(nacimientos)
+
+# Autocorrelaciones
+ggAcf(diff(diff(nacimientos), lag = 12), 
+      lag = 12, 
+      plot = FALSE)
 #----------------------------------------------------------
 #
 #
@@ -196,45 +196,41 @@ autoplot(parima010,
 # Aforo de vehículos
 #----------------------------------------------------------
 # Transformacion
-autoplot(log(aforo), 
+autoplot(aforo, 
          xlab = "log(Aforo)", 
          ylab = "", 
          main = "")
-autoplot(diff(log(aforo)), 
+autoplot(diff(aforo), 
          xlab = "Una diferencia de log(Aforo)", 
          ylab = "", 
          main = "")
-autoplot(diff(log(aforo), differences = 2), 
+autoplot(diff(aforo, differences = 2), 
          xlab = "Dos diferencias de log(Aforo)", 
          ylab = "", 
          main = "")
 
-ggAcf(log(aforo), 
+ggAcf(aforo, 
       xlab = "", 
       ylab = "FAC", 
       main = "")
-ggAcf(diff(log(aforo)), 
+ggAcf(diff(aforo), 
       xlab = "", 
       ylab = "FAC", 
       main = "")
-ggAcf(diff(log(aforo), differences = 2), 
+ggAcf(diff(aforo, differences = 2), 
       xlab = "", 
       ylab = "FAC", 
       main = "")
 
-ndiffs(log(aforo))
+ndiffs(aforo)
 
-# Identificacion
-auto.arima(aforo, 
-           lambda = 0)
+# Identificacion, Intervencion y Estimacion
+auto.arima(aforo)
 
-# Estimacion
-arima022 <- Arima(aforo, 
-                  order = c(0, 2, 2),
-                  lambda = 0)
+arima212 <- Arima(aforo, 
+                  order = c(2, 1, 2))
 
-# Intervencion
-error <- residuals(arima022)
+error <- residuals(arima212)
 sderror <- sd(error)
 
 autoplot(error, series="Error",
@@ -248,45 +244,18 @@ autoplot(error, series="Error",
   geom_point() +
   scale_x_continuous(breaks= seq(1960, 2014, 4)) 
 
-# Identificacion y Estimacion
 d1979 <- 1*(time(error) == 1979)
-d1981 <- 1*(time(error) == 1981)
-d1984 <- 1*(time(error) == 1984)
 d2011 <- 1*(time(error) == 2011)
 
-auto.arima(aforo, 
-           lambda = 0, 
-           xreg = cbind(d1979, d1981, d1984, d2011))
+auto.arima(aforo,
+           xreg = cbind(d1979,  d2011))
 
-arima120 <- Arima(aforo, 
-                  order = c(1, 2, 0), 
-                  lambda = 0,  
-                  xreg = cbind(d1979, d1981, d1984, d2011))
-arima120
+arima210 <- Arima(aforo, 
+                  order = c(2, 1, 0),
+                  xreg = cbind(d1979, d2011))
+arima210
 
-# Coeficientes significativos
-wald.test(b = coef(arima120), 
-          Sigma = vcov(arima120), 
-          Terms = 1)
-
-wald.test(b = coef(arima120), 
-          Sigma = vcov(arima120), 
-          Terms = 2)
-
-wald.test(b = coef(arima120), 
-          Sigma = vcov(arima120), 
-          Terms = 3)
-
-wald.test(b = coef(arima120), 
-          Sigma = vcov(arima120), 
-          Terms = 4)
-
-wald.test(b = coef(arima120), 
-          Sigma = vcov(arima120), 
-          Terms = 5)
-
-# Intervencion
-error <- residuals(arima120)
+error <- residuals(arima210)
 sderror <- sd(error)
 
 autoplot(error, series="Error",
@@ -300,104 +269,81 @@ autoplot(error, series="Error",
   geom_point() +
   scale_x_continuous(breaks= seq(1960, 2014, 4)) 
 
+# Validacion: Coeficientes significativos
+wald.test(b = coef(arima210), 
+          Sigma = vcov(arima210), 
+          Terms = 1)
+
+wald.test(b = coef(arima210), 
+          Sigma = vcov(arima210), 
+          Terms = 2)
+
+wald.test(b = coef(arima210), 
+          Sigma = vcov(arima210), 
+          Terms = 3)
+
 # Error de ajuste
-accuracy(arima120)
+accuracy(arima210)
 
 # Prevision
-parima120 <- forecast(arima120, 
+parima210 <- forecast(arima210, 
                       h = 5, 
                       level = 95,
-                      xreg = cbind(d1979=rep(0, 5), d1981=rep(0, 5), 
-                                   d1984=rep(0, 5), d2011=rep(0, 5)))
-parima120
+                      xreg = cbind(d1979=rep(0, 5), d1981=rep(0, 5)))
 
-autoplot(parima120, 
+parima210
+
+autoplot(parima210, 
          ylab = 'Vehículos (000)',
          main = 'Aforo (1960-2018) y predicción (2019-2023)') +
   scale_x_continuous(breaks= seq(1960, 2023, 4)) 
-#----------------------------------------------------------
-#
-#
-#
-#----------------------------------------------------------
-# Aforo de vehículos: eleccion del proceso
-#----------------------------------------------------------
-p <- 0:3
-d <- 0:2
-q <- 0:3
-l <- 0:1
 
-parametros <- expand.grid(p,d,q,l)
+# Validación con origen de predicción movil
+k <- 30                  
+h <- 5                    
+T <- length(aforo)     
+s <- T - k - h    
 
-colnames(parametros) <- c("p", "d", "q", "log")
+mapeArima <- matrix(NA, s + 1, h)
 
-k <- 40                 
-h <-  5                 
-TT <- length(aforo)     
-s <- TT - k - h         
+X <- data.frame(cbind(d1979, d2011))
 
-MAPE <- matrix(NA, nrow(parametros), h)
-
-for (para in 1:nrow(parametros)) {
+for (i in 0:s) {
+  train.set <- subset(aforo, start = i + 1, end = i + k)
+  test.set <-  subset(aforo, start = i + k + 1, end = i + k + h) 
   
-  identificacion <- as.numeric(parametros[para, - 4])
-  mapeArima <- matrix(NA, s + 1, h)
-  for (i in 0:s) {
-    train.set <- subset(aforo, start = i + 1, end = i + k)
-    test.set <-  subset(aforo, start = i + k + 1, end = i + k + h)
-    
-    if(parametros[para, 4] == 0) 
-      fit <- Arima(train.set, order = identificacion, method = "ML") else 
-        fit <- Arima(train.set, order = identificacion, 
-                     lambda = 0, method = "ML")
-    fcast <- forecast(fit, h = h)
-    mapeArima[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  X.train <- data.frame(X[(i + 1):(i + k),])
+  hay <- colSums(X.train)
+  X.train <- X.train[, hay>0]
+  
+  X.test <- data.frame(X[(i + k + 1):(i + k + h),])
+  X.test <- X.test[, hay>0]
+  
+  if (length(X.train) > 0) {
+    fit <- try(Arima(train.set, 
+                     order = c(2, 1, 0),
+                     xreg=as.matrix(X.train)))
+  } else {
+    fit <- try(Arima(train.set, 
+                     order = c(2, 1, 0)))
   }
   
-  MAPE[para, ] <- colMeans(mapeArima)
-  
+  if (!is.element("try-error", class(fit))) {
+    if (length(X.train) > 0) 
+      fcast <- forecast(fit, h = h, xreg = as.matrix(X.test)) else
+        fcast <- forecast(fit, h = h)
+      mapeArima[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  }
 }
 
-# Mejores modelos si h = 1
-ii <- order(MAPE[, 1], 
-            decreasing = FALSE)
-
-cbind(parametros[ii[1:3],], 
-      error = round(MAPE[ii[1:3], 1], 3))
-
-# Mejores modelos si h = 2
-ii <- order(MAPE[, 2], 
-            decreasing = FALSE)
-
-cbind(parametros[ii[1:3],], 
-      error = round(MAPE[ii[1:3], 2], 3))
-
-# Mejores modelos si h = 3
-ii <- order(MAPE[, 3], 
-            decreasing = FALSE)
-
-cbind(parametros[ii[1:3],], 
-      error = round(MAPE[ii[1:3], 3], 3))
-
-# Mejores modelos si h = 4
-ii <- order(MAPE[, 4], 
-            decreasing = FALSE)
-
-cbind(parametros[ii[1:3],], 
-      error = round(MAPE[ii[1:3], 4], 3))
-
-# Mejores modelos si h = 5
-ii <- order(MAPE[, 5], 
-            decreasing = FALSE)
-
-cbind(parametros[ii[1:3],], 
-      error = round(MAPE[ii[1:3], 5], 3))
+mapeArima <- colMeans(mapeArima, na.rm = TRUE)
+mapeArima
 #----------------------------------------------------------
 #
 #
 #
 #----------------------------------------------------------
-# Consumo de alimnetos per capita
+# Consumo de alimentos per capita
 #----------------------------------------------------------
 # Transformacion
 autoplot(alimentospc, 
@@ -420,14 +366,12 @@ ggAcf(diff(alimentospc),
 
 ndiffs(alimentospc)
 
-# Identificacion
+# Identificacion, Intervencion y Estimacion
 auto.arima(alimentospc)
 
-# Estimacion
 arima100 <- Arima(alimentospc, 
                   order = c(1, 0, 0))
 
-# Intervencion
 error <- residuals(arima100)
 sderror <- sd(error)
 
@@ -442,9 +386,22 @@ autoplot(error, series="Error",
   geom_point() +
   scale_x_continuous(breaks= seq(1987, 2018, 3)) 
 
+d1993 <- 1* (time(alimentospc) == 1993)
+d1995 <- 1* (time(alimentospc) == 1995)
+d2009 <- 1* (time(alimentospc) == 2009)
+
+arima100 <- Arima(alimentospc, 
+                  include.constant = TRUE,
+                  order = c(1, 0, 0),
+                  xreg = cbind(d1993, d1995, d2009))
+arima100
+
 # Significatividad
 wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 1)
 wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 2)
+wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 3)
+wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 4)
+wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 5)
 
 # Error de ajuste
 accuracy(arima100)
@@ -452,7 +409,8 @@ accuracy(arima100)
 # Prediccion
 parima100 <- forecast(arima100, 
                       h = 5, 
-                      level = 95)
+                      level = 95,
+                      xreg = cbind(rep(0, 5), rep(0, 5), rep(0, 5)))
 
 parima100
 

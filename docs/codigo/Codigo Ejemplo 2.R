@@ -15,7 +15,6 @@ library(ggplot2); theme_set(theme_bw())
 #----------------------------------------------------------
 # Importamos Pernoctaciones
 #----------------------------------------------------------
-# 
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
@@ -35,8 +34,8 @@ autoplot(Pernoctaciones/1000000,
 #----------------------------------------------------------
 # Esquema
 #----------------------------------------------------------
-CasosAnual = as.numeric(aggregate(Pernoctaciones, FUN = sum))
-DesviacionAnual = as.numeric(aggregate(Pernoctaciones, FUN = sd))
+CasosAnual = aggregate(Pernoctaciones, FUN = sum)
+DesviacionAnual = aggregate(Pernoctaciones, FUN = sd)
 
 ggplot() +
   geom_point(aes(x = CasosAnual, y = DesviacionAnual), size = 2) +

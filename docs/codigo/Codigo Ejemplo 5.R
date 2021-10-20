@@ -44,10 +44,12 @@ autoplot(PernoctacionesAnual,
   scale_x_continuous(breaks= seq(2000, 2020, 2)) 
 
 # Ajuste
-PernoctacionesAnualEts <- ets(PernoctacionesAnual, 
-                              model = "ZZZ")
+PernoctacionesAnualEts <- ets(PernoctacionesAnual)
 
 summary(PernoctacionesAnualEts) 
+
+# Prediccion
+forecast(PernoctacionesAnualEts, h = 5, level = 95)
 #----------------------------------------------------------
 #
 #
@@ -56,8 +58,7 @@ summary(PernoctacionesAnualEts)
 # Alisado exponencial para la serie mensual
 #----------------------------------------------------------
 # Ajuste
-PernoctacionesEts <- ets(Pernoctaciones, 
-                         model = "ZZZ")
+PernoctacionesEts <- ets(Pernoctaciones)
 
 summary(PernoctacionesEts) 
 
@@ -118,7 +119,7 @@ for (i in 0:s) {
   train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
   test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
   
-  fit <- ets(train.set, model = "MAM", damped = FALSE)
+  fit <- ets(train.set, model = "MAM", damped = TRUE)
   fcast<-forecast(fit, h = h)
   mapeAlisado[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
 }
@@ -131,6 +132,7 @@ ggplot() +
   ggtitle("Error de predicción según horizonte temporal") +
   xlab("Horizonte temporal de predicción") +
   ylab("MAPE") +
+  ylim(0, 6) + 
   scale_x_continuous(breaks= 1:12)
 #----------------------------------------------------------
 #

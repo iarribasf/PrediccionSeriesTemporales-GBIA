@@ -18,6 +18,7 @@ library(ggplot2); theme_set(theme_bw())
 # Libros
 libros <- read.csv2("./series/libros.csv", 
                     header = TRUE)
+
 libros <- ts(libros[, 2], 
              start = 1993, 
              frequency  = 1)
@@ -27,20 +28,6 @@ autoplot(libros,
          ylab = "Títulos",
          main = "Títulos publicados (libros y folletos)")
 
-# Nacimientos
-nacimientos <- read.csv2("./series/nacimientos.csv", 
-                         header = TRUE)
-
-nacimientos <- ts(nacimientos[, 2],
-                  start = c(1975, 1),
-                  frequency = 12)
-
-nacimientos <- aggregate(nacimientos, FUN = sum)
-
-autoplot(nacimientos,
-         xlab = "",
-         ylab = "Bebés",
-         main = "Nacimientos")
 #----------------------------------------------------------
 #
 #
@@ -58,7 +45,7 @@ mm <- function(x, r = 3, h = 5) {
   inicio <- start(x)
   frecuencia <-frequency(x)
   
-  z$mm <- filter(x, rep(1/r, r), side = 1)
+  z$mm <- stats::filter(x, rep(1/r, r), side = 1)
   z$fitted <- ts(c(NA, z$mm[-TT]), start = inicio, freq = frecuencia)
   z$mean <- ts(rep(z$mm[TT], h), start = time(x)[TT] + 1/frecuencia, freq = frecuencia)
   z$residuals <- x - z$fitted
@@ -97,8 +84,8 @@ dmm <- function(x, r = 3, h = 5) {
   inicio <- start(x)
   frecuencia <-frequency(x)
   
-  z$mm1 <- filter(x, rep(1/r, r), side = 1)
-  z$mm2 <- filter(z$mm1, rep(1/r, r), side = 1)
+  z$mm1 <- stats::filter(x, rep(1/r, r), side = 1)
+  z$mm2 <- stats::filter(z$mm1, rep(1/r, r), side = 1)
   
   z$l <- 2 * z$mm1 - z$mm2
   z$b <- 2 * (z$mm1 - z$mm2) / (r - 1)
@@ -110,45 +97,36 @@ dmm <- function(x, r = 3, h = 5) {
   z
 }
 
-# Nacimientos
-for (r in 2:10) {
-  dmmNacimientos <- dmm(nacimientos, r = r)
-  print(c(r, accuracy(dmmNacimientos)[5]))
-}
+# Libros
+accuracy(dmmLibros2 <- dmm(libros, r = 2))
+accuracy(dmmLibros3 <- dmm(libros, r = 3))
+accuracy(dmmLibros4 <- dmm(libros, r = 4))
 
+k <- 15              
+h <- 3               
+TT <- length(libros) 
+s <- TT - k - h      
 
-k <- 30                   
-h <- 5                    
-TT <- length(nacimientos) 
-s <- TT - k - h           
-
-MAPE <- matrix(NA, nrow = 9, ncol = 5)
-rownames(MAPE) <- 2:10
-colnames(MAPE) <- 1:h
-
-for (r in 2:10) {
+for(r in 2:4){
   
   tmpMape <- matrix(NA, s + 1, h)
-  
   for (i in 0:s) {
     
-    train.set <- subset(nacimientos, start = i + 1, end = i + k)
-    test.set <-  subset(nacimientos, start = i + k + 1, end = i + k + h)
+    train.set <- subset(libros, start = i + 1, end = i + k)
+    test.set <-  subset(libros, start = i + k + 1, end = i + k + h)
     
-    dmmNacimientos <- dmm(train.set, r = r, h = h)
-    tmpMape[i + 1, ] <- 100*abs(test.set - dmmNacimientos$mean)/test.set
+    dmmLibros <- dmm(train.set, r = r, h = h)
+    tmpMape[i + 1, ] <- 100*abs(test.set - dmmLibros$mean)/test.set
   }
-  MAPE[r - 1, ] <- colMeans(tmpMape)
+  tmpMape <- colMeans(tmpMape)
+  
+  cat("\nPara un orden de", r, "los errores son", formatC(tmpMape, format = "f", digits = 2)) 
+  
 }
-MAPE
 
-dmmNacimiemtos <- dmm(nacimientos, 
-                      r = 2, 
-                      h = 5)
-
-autoplot(nacimientos, series = "Nacimientos",
+autoplot(dmmLibros3,
          xlab = "",
-         ylab = "Bebés",
-         main = "Nacimientos y predicción con doble media móvil de orden 2") +
-  autolayer(dmmNacimiemtos$fitted, series = "Pred. intra") + 
-  autolayer(dmmNacimiemtos$mean, series = "Pred. extra")
+         ylab = "Títulos",
+         main = "Libros y predicción con doble media móvil de orden 3") +
+  autolayer(dmmLibros3$fitted) +
+  theme(legend.position="none")

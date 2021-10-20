@@ -6,10 +6,10 @@
 #
 #----------------------------------------------------------
 # Librerias
-library(aod)
 library(forecast)
 library(ggplot2); theme_set(theme_bw())
 library(seasonal)
+library(aod)
 library(timeDate)
 #----------------------------------------------------------
 #
@@ -29,7 +29,7 @@ autoplot(Pasajeros, colour = "darkblue",
          xlab = "",
          ylab = "Millones de pasajeros",
          main = "Pasajeros en transporte urbano (datos mensuales)") +
-  scale_x_continuous(breaks= seq(1996, 2019, 2)) 
+  scale_x_continuous(breaks= seq(1996, 2020, 2)) 
 #----------------------------------------------------------
 #
 #
@@ -97,7 +97,6 @@ bizdays <- format(biz, format = "%Y-%m")
 DiasPreSanta <- table(bizdays)
 DiasPreSanta <- ts(DiasPreSanta, start = 1996, frequency = 12)
 DiasPreSanta <- (monthdays(DiasPreSanta) - DiasPreSanta)/4
-DiasPreSanta[cycle(DiasPreSanta) == 4] <- -DiasPreSanta[cycle(DiasPreSanta) == 3]  
 
 pDiasPreSanta <- subset(DiasPreSanta, start = length(DiasPreSanta) - 59)
 DiasPreSanta <- subset(DiasPreSanta, end = length(DiasPreSanta) - 60)
@@ -115,7 +114,6 @@ bizdays <- format(biz, format = "%Y-%m")
 DiasPascua <- table(bizdays)
 DiasPascua <- ts(DiasPascua, start = 1996, frequency = 12)
 DiasPascua <- (monthdays(DiasPascua) - DiasPascua)/5
-DiasPascua[cycle(DiasPascua) == 4] <- -DiasPascua[cycle(DiasPascua) == 3]  
 
 pDiasPascua <- subset(DiasPascua, start = length(DiasPascua) - 59)
 DiasPascua <- subset(DiasPascua, end = length(DiasPascua) - 60)
@@ -132,11 +130,11 @@ autoplot(PasajerosAnual, colour = "darkblue",
          xlab = "",
          ylab = "Millones de pasajeros",
          main = "Pasajeros en transporte urbano (datos anuales)") +
-  scale_x_continuous(breaks= seq(1996, 2019, 2))
+  scale_x_continuous(breaks= seq(1996, 2020, 2))
 
 # Esquema
-MediaAnual = as.numeric(aggregate(Pasajeros, FUN = mean))
-DesviacionAnual = as.numeric(aggregate(Pasajeros, FUN = sd))
+MediaAnual = aggregate(Pasajeros, FUN = mean)
+DesviacionAnual = aggregate(Pasajeros, FUN = sd)
 
 ggplot() +
   geom_point(aes(x = MediaAnual, y = DesviacionAnual), size = 2) +
@@ -184,7 +182,7 @@ autoplot(error,
   geom_hline(yintercept = c(3, 2, -2, -3)*sderror, 
              colour = c("red", "green", "green", "red"),
              lty = 2) + 
-  scale_x_continuous(breaks= seq(1996, 2019, 4))
+  scale_x_continuous(breaks= seq(1996, 2020, 2))
 
 PasajerosStl <- stl(PasajerosDL[,1], s.window = "periodic", robust = TRUE)
 
@@ -199,7 +197,7 @@ autoplot(error,
   geom_hline(yintercept = c(3, 2, -2, -3)*sderror, 
              colour = c("red", "green", "green", "red"),
              lty = 2) + 
-  scale_x_continuous(breaks= seq(1996, 2019, 4))
+  scale_x_continuous(breaks= seq(1996, 2020, 2))
 #----------------------------------------------------------
 #
 #
@@ -224,7 +222,7 @@ autoplot(PasajerosSnaive,
 # Alisado exponencial
 #----------------------------------------------------------
 # Ajuste
-PasajerosEts <- ets(Pasajeros, model = "ZZZ")
+PasajerosEts <- ets(Pasajeros)
 
 # Error de ajuste
 summary(PasajerosEts) 
@@ -270,7 +268,6 @@ autoplot(error,
 ets(PasajerosDL)$method
 ets(Pasajeros, lambda = 0)$method
 
-
 k <- 120                 
 h <- 12                  
 TT <- length(Pasajeros)  
@@ -292,7 +289,7 @@ for (i in 0:s) {
   mapeAlisadoPas[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
   
   fit <- ets(train.set, model = "AAA", damped = TRUE, lambda = 0)
-  fcast <- forecast(fit, h = h, biasadj = TRUE)
+  fcast <- forecast(fit, h = h)
   mapeAlisadolPas[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
   
   fit <- ets(trainDL.set, model = "MAA", damped = TRUE)
@@ -303,12 +300,6 @@ for (i in 0:s) {
 errorAlisadoPas <- colMeans(mapeAlisadoPas)
 errorAlisadoPasDL <- colMeans(mapeAlisadoPasDL)
 errorAlisadolPas <- colMeans(mapeAlisadolPas)
-
-datos <- cbind(1:12, errorAlisadoPas, errorAlisadoPasDL, errorAlisadolPas)
-colnames(datos) <- c("Horizonte", "Pasajeros", 
-                     "Pasajeros por día laborable", "Pasajeros (log)")
-
-datos
 
 datos <- data.frame(
   factor = c(rep("Pasajeros", 12), 
@@ -384,7 +375,7 @@ summary(seas(log(Pasajeros)))
 PasajerosAri <- Arima(Pasajeros, 
                       lambda = 0,
                       order = c(0, 1, 1),  
-                      seasonal = list(order = c(0, 1, 1), period = 12),
+                      seasonal = c(0, 1, 1), 
                       xreg = cbind(DiasLaborables, DiasNoLaborables, 
                                    LunesNavidad, DiasPreSanta, DiasPascua))
 PasajerosAri
@@ -410,7 +401,7 @@ d0310 <- 1*(trunc(time(Pasajeros)) == 2010 & cycle(Pasajeros) == 3)
 PasajerosAri <- Arima(Pasajeros,
                       lambda = 0,
                       order = c(0, 1, 1),  
-                      seasonal = list(order = c(0, 1, 1), period = 12),
+                      seasonal = c(0, 1, 1),
                       xreg = cbind(DiasLaborables, DiasNoLaborables, 
                                    LunesNavidad, DiasPreSanta, DiasPascua,
                                    d0402, d0805, d0806, d0310))
@@ -468,29 +459,20 @@ for (i in 0:s) {
   X.test <- X[(i + k + 1):(i + k + h),]
   X.test <- X.test[, hay>0]
   
-  if (length(X.train) > 0) {
-    fit <- try(Arima(train.set, 
-                     lambda = 0,
-                     order = c(0, 1, 1),
-                     seasonal = list(order = c(0, 1, 1), period = 12),
-                     xreg=X.train), silent = TRUE)} else {
-                       fit <- try(Arima(train.set,
-                                        lambda = 0,
-                                        order = c(0, 1, 1),
-                                        seasonal = list(order = c(0, 1, 1), 
-                                                        period = 12)), 
-                                  silent = TRUE)
-                     }
+  fit <- try(Arima(train.set, 
+                   lambda = 0,
+                   order = c(0, 1, 1),
+                   seasonal = c(0, 1, 1),
+                   xreg=X.train), silent = TRUE)
   
   if (!is.element("try-error", class(fit))) {
-    if (length(X.train) > 0) fcast <- forecast(fit, h = h, xreg = X.test) else
-      fcast <- forecast(fit, h = h)
+    fcast <- forecast(fit, h = h, xreg = X.test)
     mapeArima[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
   }
 }
 
 errorArima <- colMeans(mapeArima, na.rm = TRUE)
-errorArima
+round(errorArima, 2)
 
 # Predicción 
 pPasajerosAri <- forecast(PasajerosAri, 
@@ -500,6 +482,7 @@ pPasajerosAri <- forecast(PasajerosAri,
                                        rep(0, 60), rep(0, 60), 
                                        rep(0 ,60), rep(0, 60)), 
                           level = 95)
+
 autoplot(pPasajerosAri, 
          xlab = "",
          ylab = "",

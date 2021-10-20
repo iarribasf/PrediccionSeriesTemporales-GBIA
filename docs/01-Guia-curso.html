@@ -11,20 +11,28 @@
 
 
 
-<title>01-Guia-curso.utf8</title>
+<title>01-Guia-curso.knit</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
 <script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/anchor-sections-1.0/anchor-sections.css" rel="stylesheet" />
-<script src="site_libs/anchor-sections-1.0/anchor-sections.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -40,32 +48,7 @@
 
 
 
-<style type="text/css">
-h1 {
-  font-size: 34px;
-}
-h1.title {
-  font-size: 38px;
-}
-h2 {
-  font-size: 30px;
-}
-h3 {
-  font-size: 24px;
-}
-h4 {
-  font-size: 18px;
-}
-h5 {
-  font-size: 16px;
-}
-h6 {
-  font-size: 12px;
-}
-.table th:not([align]) {
-  text-align: left;
-}
-</style>
+
 
 <link rel="stylesheet" href="styles.css" type="text/css" />
 
@@ -76,10 +59,6 @@ h6 {
   max-width: 940px;
   margin-left: auto;
   margin-right: auto;
-}
-code {
-  color: inherit;
-  background-color: rgba(0, 0, 0, 0.04);
 }
 img {
   max-width:100%;
@@ -96,40 +75,13 @@ button.code-folding-btn:focus {
 summary {
   display: list-item;
 }
+pre code {
+  padding: 0;
+}
 </style>
 
 
 <style type="text/css">
-/* padding for bootstrap navbar */
-body {
-  padding-top: 51px;
-  padding-bottom: 40px;
-}
-/* offset scroll position for anchor links (for fixed navbar)  */
-.section h1 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h2 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h3 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h4 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h5 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
-.section h6 {
-  padding-top: 56px;
-  margin-top: -56px;
-}
 .dropdown-submenu {
   position: relative;
 }
@@ -157,7 +109,7 @@ body {
   margin-right: -10px;
 }
 .dropdown-submenu:hover>a:after {
-  border-left-color: #ffffff;
+  border-left-color: #adb5bd;
 }
 .dropdown-submenu.pull-left {
   float: none;
@@ -169,7 +121,7 @@ body {
 }
 </style>
 
-<script>
+<script type="text/javascript">
 // manage active state of menu based on current page
 $(document).ready(function () {
   // active menu anchor
@@ -180,10 +132,23 @@ $(document).ready(function () {
   var menuAnchor = $('a[href="' + href + '"]');
 
   // mark it active
-  menuAnchor.parent().addClass('active');
+  menuAnchor.tab('show');
 
   // if it's got a parent navbar menu mark it active as well
   menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
 });
 </script>
 
@@ -195,7 +160,6 @@ $(document).ready(function () {
   max-height: 500px;
   min-height: 44px;
   overflow-y: auto;
-  background: white;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -321,7 +285,7 @@ div.tocify {
 
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
+<div class="row">
 <div class="col-xs-12 col-sm-4 col-md-3">
 <div id="TOC" class="tocify">
 </div>
@@ -462,6 +426,9 @@ div.tocify {
     <li>
       <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
     </li>
+    <li>
+      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Otros</li>
     <li>
@@ -477,7 +444,7 @@ div.tocify {
   </div><!--/.container -->
 </div><!--/.navbar -->
 
-<div class="fluid-row" id="header">
+<div id="header">
 
 
 
@@ -506,10 +473,10 @@ div.tocify {
 <p>El programa de la asignatura contiene 7 temas distribuidos entre sesiones teóricas de una hora y prácticas de tres horas:</p>
 <ul>
 <li>Tema 1. Introducción</li>
-<li>Tema 2. Series temporales. Definición y componentes</li>
+<li>Tema 2. Definición y componentes</li>
 <li>Tema 3: Métodos ingenuos de predicción. Evaluación de predicciones.</li>
 <li>Tema 4: Método de medias móviles.</li>
-<li>Tema 5: Técnicas de alisado exponencial.</li>
+<li>Tema 5: Métodos de alisado exponencial.</li>
 <li>Tema 6. Modelos ARIMA</li>
 <li>Tema 7. Modelos ARIMA con estacionalidad</li>
 </ul>
@@ -526,7 +493,7 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li><em>Tiempo de teórica</em>: durante las clases teóricas, de una hora de duración, veremos conceptos nucleares de cada tema de forma precisa y rigurosa, en lenguaje natural, gráfico y formal. El material teórico lo podéis encontrar en la sección <strong>Diapos</strong>.</li>
 <li><em>Tiempo de práctica</em>: durante las clases prácticas también veremos algo de teoría (material en <strong>Diapos</strong>), pero inmediatamente la practicaremos a partir del código y de los ficheros de datos que podéis encontrar en la sección <a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/04-Recursos-R.html"><strong>Recursos de R</strong></a> y aprenderemos el manejo de R para el análisis de series temporales.</li>
-<li><em>Tiempo de evaluación</em>: tras cada tema realizaréis una prueba tipo test para valorar si habéis adquirido los conocimientos teóricos y las habilidades practicas básicas. Estas pruebas serán de evaluación continua del curso.</li>
+<li><em>Tiempo de evaluación</em>: tras cada tema realizaréis una prueba tipo test para valorar si habéis adquirido los conocimientos teóricos y las habilidades practicas básicas. Además, eventualmente realizaremos breves controles en clase. Sin embargo, el grueso de la evaluación consistirá en dos trabajos prácticos. Estas pruebas serán de evaluación continua del curso.</li>
 </ol>
 <p><br />
 </p>
@@ -540,16 +507,13 @@ div.tocify {
 </div>
 <div id="evaluación" class="section level2">
 <h2>Evaluación</h2>
-<p>La <strong>evaluación continua supondrá un 60%</strong> de la nota de la asignatura.</p>
+<p>La <strong>evaluación continua supondrá un 100%</strong> de la nota de la asignatura.</p>
 <ul>
-<li>Tras la mayoría de los temas se realizará una <strong>prueba tipo test</strong>. La prueba contendrá preguntas de respuesta múltiple, numérica, verdadero/falso, etc.</li>
-<li>La prueba se enviará a través de vuestro correo de la universidad y se indicará el plazo para realizarla y subir la plantilla de respuestas como una <em>Tarea de Aulavirtual</em>.</li>
-<li>La evaluación continua <strong>es recuperable de cara a la segunda convocatoria</strong>.</li>
-</ul>
-<p>En la fecha convenida se realizará un <strong>examen que supondrá el restante 40%</strong> de la nota de la asignatura.</p>
-<ul>
-<li>El examen tendrá tanto apartados de teoría como preguntas prácticas.</li>
-<li>Será condición imprescindible para la superación de la asignatura aprobar el examen escrito.</li>
+<li><p>Tras cada una de las unidades temáticas se realizará una <strong>prueba tipo test</strong> con preguntas de respuesta múltiple, numérica, verdadero/falso, etc. La prueba se enviará a través de vuestro correo de la universidad y se indicará el plazo para realizarla (dos o tres días) y subir la plantilla de respuestas como una <em>Tarea de Aulavirtual</em>. (30%)</p></li>
+<li><p>Eventualmente se realizarán <strong>breves controles</strong> en clase a través de pruebas tipo test. (20%)</p></li>
+<li><p>Realizaréis dos <strong>trabajos prácticos</strong> extensos que cubrirán todos los conceptos vistos en clase. (50%)</p></li>
+<li><p>De la a evaluación continua <strong>son recuperables los test y los trabajos prácticos</strong> de cara a la segunda convocatoria, pero no lo serán los controles.</p></li>
+<li><p>Tienes más información en <a href="https://iarribasf.github.io/PrediccionSeriesTemporales-GBIA/05-Evaluacion_Continua.html"><strong>Evaluación Continua</strong></a></p></li>
 </ul>
 <p><br />
 <br />
@@ -565,6 +529,8 @@ div.tocify {
 This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
   
 </footer>
+
+
 
 
 </div>
@@ -594,7 +560,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
+    $(this).parent().toggleClass('nav-tabs-open');
   });
 });
 </script>
@@ -603,6 +569,9 @@ $(document).ready(function () {
 
 <script>
 $(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
 
     // move toc-ignore selectors from section div to header
     $('div.section.toc-ignore')

@@ -15,7 +15,6 @@ library(ggplot2); theme_set(theme_bw())
 #----------------------------------------------------------
 # Importamos Pernoctaciones
 #----------------------------------------------------------
-# 
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
@@ -66,11 +65,10 @@ accuracy(naivePernoctaciones)
 accuracy(derivaPernoctaciones)
 
 # Error con origen de predicciones movil
-
-k <- 10 
-h <- 5  
-TT <- length(PernoctacionesAnual)
-s <- TT - k - h 
+k <- 10                  
+h <- 5                   
+TT <- length(PernoctacionesAnual) 
+s <- TT - k - h          
 
 mapeNaiveI <- matrix(NA, s + 1, h)
 mapeDeriva <- matrix(NA, s + 1, h)
@@ -139,4 +137,6 @@ ggplot() +
   ggtitle("Error de predicción según horizonte temporal") +
   xlab("Horizonte temporal de predicción") +
   ylab("MAPE") +
+  ylim(0, 5) + 
   scale_x_continuous(breaks= 1:12)
+

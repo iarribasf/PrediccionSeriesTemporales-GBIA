@@ -51,6 +51,10 @@ mediaLibros <- meanf(libros, h = 5)
 naiveLibros <- naive(libros, h = 5)
 derivaLibros <- rwf(libros,  h = 5, drift = TRUE)
 
+summary(mediaLibros)
+summary(naiveLibros) 
+summary(derivaLibros)
+
 accuracy(mediaLibros)
 accuracy(naiveLibros)
 accuracy(derivaLibros)
@@ -137,25 +141,20 @@ autoplot(nacimientos, series = "Nacimientos",
 # Evaluación de las predicciones:  Origen de predicción móvil
 #----------------------------------------------------------
 # Nacimientos
-k <- 120                  
-h <- 36                   
-TT <- length(nacimientos) 
+nacAnual <- aggregate(nacimientos, FUN = sum)
+k <- 20                   
+h <- 5                    
+TT <- length(nacAnual)    
 s <- TT - k - h           
 
-mapeSnaive <- matrix(NA, s + 1, h)
+mapeRwf <- matrix(NA, s + 1, h)
 for (i in 0:s) {
-  train.set <- subset(nacimientos, start = i + 1, end = i + k)
-  test.set <-  subset(nacimientos, start = i + k + 1, end = i + k + h)
+  train.set <- subset(nacAnual, start = i + 1, end = i + k)
+  test.set <-  subset(nacAnual, start = i + k + 1, end = i + k + h)
   
-  fcast <- snaive(train.set, h = h)
-  mapeSnaive[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  fcast <- rwf(train.set, h = h, drift = TRUE)
+  mapeRwf[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
 }
 
-mapeSnaive <- colMeans(mapeSnaive)
-
-ggplot() +
-  geom_line(aes(x = 1:h, y = mapeSnaive)) +
-  ggtitle("Error de predicción según horizonte temporal") +
-  xlab("Horizonte temporal de predicción") +
-  ylab("MAPE") +
-  scale_x_continuous(breaks= 1:h)
+mapeRwf <- colMeans(mapeRwf)
+round(mapeRwf, 2)
