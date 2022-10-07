@@ -18,14 +18,14 @@ library(ggplot2); theme_set(theme_bw())
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
-Pernoctaciones <- ts(Pernoctaciones[,2], 
+Pernoctaciones <- ts(Pernoctaciones[, 2], 
                      start = 2000, 
-                     freq = 12)
+                     frequency = 12)
 
 autoplot(Pernoctaciones/1000000,
          xlab = "",
          ylab = "Noches (millones)",
-         main = "Pernoctaciones") +
+         main = "") +
   scale_x_continuous(breaks= seq(2000, 2020, 2)) 
 #----------------------------------------------------------
 #
@@ -34,16 +34,15 @@ autoplot(Pernoctaciones/1000000,
 #----------------------------------------------------------
 # Metodo ingenuo para la serie anual
 #----------------------------------------------------------
-PernoctacionesAnual = aggregate(Pernoctaciones/1000000, 
-                                FUN = sum)
+PernoctacionesAnual <- aggregate(Pernoctaciones/1000000, FUN = sum)
 
 autoplot(PernoctacionesAnual,
          xlab = "",
          ylab = "Noches (millones)",
-         main = "Pernoctaciones") +
+         main = "") +
   scale_x_continuous(breaks= seq(2000, 2020, 2)) 
 
-# Ajustes
+# Ajustes por metodos sencillos
 mediaPernoctaciones <- meanf(PernoctacionesAnual, h = 5)
 naivePernoctaciones <- naive(PernoctacionesAnual, h = 5)
 derivaPernoctaciones <- rwf(PernoctacionesAnual,  h = 5, drift = TRUE)
@@ -51,7 +50,7 @@ derivaPernoctaciones <- rwf(PernoctacionesAnual,  h = 5, drift = TRUE)
 autoplot(PernoctacionesAnual, series = "Pernoctaciones",
          xlab = "",
          ylab = "Noches (millones)",
-         main = "Pernoctaciones y predicción por métodos sencillos") +
+         main = "") +
   autolayer(mediaPernoctaciones, series="Media", PI = FALSE) +
   autolayer(naivePernoctaciones, series="Ingenuo", PI = FALSE) +
   autolayer(derivaPernoctaciones, series="Deriva", PI = FALSE) +
@@ -92,7 +91,7 @@ mapeNaiveI
 mapeDeriva
 
 # Predicciones
-naivePernoctaciones
+derivaPernoctaciones
 #----------------------------------------------------------
 #
 #
@@ -101,7 +100,10 @@ naivePernoctaciones
 # Metodo ingenuo con estacionalidad
 #----------------------------------------------------------
 # Ajuste
-PernoctacionesPre <- snaive(Pernoctaciones, h = 36, level = 0.95)
+PernoctacionesPre <- snaive(Pernoctaciones, 
+                            h = 36, 
+                            level = 0.95)
+
 PernoctacionesPre
 
 # Error de ajuste
@@ -117,7 +119,7 @@ autoplot(PernoctacionesPre,
 # Error con origen de prediccion movil
 k <- 120                 
 h <- 12                  
-TT <- length(Pernoctaciones)
+TT <- length(Pernoctaciones)  
 s <- TT - k - h          
 
 mapeSnaive <- matrix(NA, s + 1, h)
@@ -134,9 +136,8 @@ mapeSnaive
 
 ggplot() +
   geom_line(aes(x = 1:12, y = mapeSnaive)) +
-  ggtitle("Error de predicción según horizonte temporal") +
+  ggtitle("") +
   xlab("Horizonte temporal de predicción") +
   ylab("MAPE") +
-  ylim(0, 5) + 
   scale_x_continuous(breaks= 1:12)
 

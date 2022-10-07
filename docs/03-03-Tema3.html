@@ -1,63 +1,26 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)">
 
-
-<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
-
-
-<title>Métodos sencillos de predicción. Evaluación de predicciones</title>
-
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
+<title>Predicción con Datos Temporales - Métodos sencillos de predicción. Evaluación de predicciones</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -96,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -109,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,503 +84,368 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
   }
-})();
-</script>
+}</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<style type="text/css">
-#rmd-source-code {
-  display: none;
-}
-</style>
-
-
-<link rel="stylesheet" href="styles.css" type="text/css" />
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
-
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="nav-fixed">
 
-
-<div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-  </a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="01-Guia-curso.html">
-    <span class="fa fa-graduation-cap"></span>
-     
-    Guía del curso
-  </a>
-</li>
-<li>
-  <a href="02-Logistica.html">
-    <span class="fa fa-laptop"></span>
-     
-    Logística
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
-    Diapos
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Teoría</li>
-    <li>
-      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
-    </li>
-    <li>
-      <a href="03-02-Tema2.html">Tema 2: Definición</a>
-    </li>
-    <li>
-      <a href="03-03-Tema3.html">Tema 3: Métodos sencillos</a>
-    </li>
-    <li>
-      <a href="03-04-Tema4.html">Tema 4: Media móvil</a>
-    </li>
-    <li>
-      <a href="03-05-Tema5.html">Tema 5: Alisado</a>
-    </li>
-    <li>
-      <a href="03-06-Tema6.html">Tema 6: ARIMA</a>
-    </li>
-    <li>
-      <a href="03-07-Tema7.html">Tema 7: SARIMA</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Ejemplo de aplicación</li>
-    <li>
-      <a href="03-08-Ejemplo2.html">Ejemplo Tema 2</a>
-    </li>
-    <li>
-      <a href="03-09-Ejemplo3.html">Ejemplo Tema 3</a>
-    </li>
-    <li>
-      <a href="03-10-Ejemplo4.html">Ejemplo Tema 4</a>
-    </li>
-    <li>
-      <a href="03-11-Ejemplo5.html">Ejemplo Tema 5</a>
-    </li>
-    <li>
-      <a href="03-12-Ejemplo6.html">Ejemplo Tema 6</a>
-    </li>
-    <li>
-      <a href="03-13-Ejemplo7.html">Ejemplo Tema 7</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Otro ejemplo</li>
-    <li>
-      <a href="03-14-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="04-Recursos-R.html">
-    <span class="fa fa-code"></span>
-     
-    Recursos de R
-  </a>
-</li>
-<li>
-  <a href="05-Evaluacion_Continua.html">
-    <span class="fa fa-edit"></span>
-     
-    Evaluacion Continua
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-download"></span>
-     
-    Más
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">R</li>
-    <li>
-      <a href="https://cran.r-project.org">Dónde está R</a>
-    </li>
-    <li>
-      <a href="https://rstudio.com">Donde está RStudio</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Markdown</li>
-    <li>
-      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
-    </li>
-    <li>
-      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
-    </li>
-    <li>
-      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Otros</li>
-    <li>
-      <a href="https://www.r-bloggers.com">Blog sobre R</a>
-    </li>
-    <li>
-      <a href="https://bookdown.org">Libros online que debes conocer</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
-<div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Predicción con Datos Temporales</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Inicio</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
 </ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./01-Guia-curso.html">Guía del curso</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./02-Logistica.html">Logística</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Diapos</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
+        <li class="dropdown-header">Teoría</li>
+        <li>
+    <a class="dropdown-item" href="./03-01-Tema1.html">
+ <span class="dropdown-text">Tema 1: Introducción</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-02-Tema2.html">
+ <span class="dropdown-text">Tema 2: Definición</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-03-Tema3.html">
+ <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-04-Tema4.html">
+ <span class="dropdown-text">Tema 4: Media móvil</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-05-Tema5.html">
+ <span class="dropdown-text">Tema 5: Alisado</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-06-Tema6.html">
+ <span class="dropdown-text">Tema 6: ARIMA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-07-Tema7.html">
+ <span class="dropdown-text">Tema 7: SARIMA</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Ejemplo de aplicación</li>
+        <li>
+    <a class="dropdown-item" href="./03-08-Ejemplo2.html">
+ <span class="dropdown-text">Ejemplo Tema 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-09-Ejemplo3.html">
+ <span class="dropdown-text">Ejemplo Tema 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-10-Ejemplo4.html">
+ <span class="dropdown-text">Ejemplo Tema 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-11-Ejemplo5.html">
+ <span class="dropdown-text">Ejemplo Tema 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-12-Ejemplo6.html">
+ <span class="dropdown-text">Ejemplo Tema 6</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-13-Ejemplo7.html">
+ <span class="dropdown-text">Ejemplo Tema 7</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Otro ejemplo</li>
+        <li>
+    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html">
+ <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">Píldoras</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
+        <li>
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
+ <span class="dropdown-text">Bootstrapping para IC</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
+ <span class="dropdown-text">Múltiples componentes estacionales</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
+ <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
+ <span class="dropdown-text">Series acotadas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
+ <span class="dropdown-text">Valores perdidos y outliers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./05-Recursos-R.html">Recursos de la asignatura</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./06-Evaluacion_Continua.html">Evaluacion Continua</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
+        <li class="dropdown-header">R</li>
+        <li>
+    <a class="dropdown-item" href="https://cran.r-project.org">
+ <span class="dropdown-text">Dónde está R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rstudio.com">
+ <span class="dropdown-text">Donde está RStudio</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Markdown</li>
+        <li>
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
+ <span class="dropdown-text">Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
+ <span class="dropdown-text">R Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
+ <span class="dropdown-text">R Markdown (pdf)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
+ <span class="dropdown-text">Quatro</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Otros</li>
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com">
+ <span class="dropdown-text">Blog sobre R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://bookdown.org">
+ <span class="dropdown-text">Libros online que debes conocer</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
+  <li><a href="#criterios-de-calidad" id="toc-criterios-de-calidad" class="nav-link" data-scroll-target="#criterios-de-calidad"><span class="toc-section-number">2</span>  Criterios de calidad</a>
+  <ul class="collapse">
+  <li><a href="#notación-y-definiciones" id="toc-notación-y-definiciones" class="nav-link" data-scroll-target="#notación-y-definiciones"><span class="toc-section-number">2.1</span>  Notación y definiciones</a></li>
+  <li><a href="#medidas-de-precisión-de-la-predicción" id="toc-medidas-de-precisión-de-la-predicción" class="nav-link" data-scroll-target="#medidas-de-precisión-de-la-predicción"><span class="toc-section-number">2.2</span>  Medidas de precisión de la predicción</a></li>
+  </ul></li>
+  <li><a href="#métodos-sencillos-de-predicción" id="toc-métodos-sencillos-de-predicción" class="nav-link" data-scroll-target="#métodos-sencillos-de-predicción"><span class="toc-section-number">3</span>  Métodos sencillos de predicción</a>
+  <ul class="collapse">
+  <li><a href="#métodos-sencillos-de-predicción-1" id="toc-métodos-sencillos-de-predicción-1" class="nav-link" data-scroll-target="#métodos-sencillos-de-predicción-1"><span class="toc-section-number">3.1</span>  Métodos sencillos de predicción</a>
+  <ul class="collapse">
+  <li><a href="#series-sin-tendencia-y-sin-estacionalidad" id="toc-series-sin-tendencia-y-sin-estacionalidad" class="nav-link" data-scroll-target="#series-sin-tendencia-y-sin-estacionalidad">Series <em>sin</em> tendencia y <em>sin</em> estacionalidad</a></li>
+  <li><a href="#series-con-tendencia-y-sin-estacionalidad" id="toc-series-con-tendencia-y-sin-estacionalidad" class="nav-link" data-scroll-target="#series-con-tendencia-y-sin-estacionalidad">Series <em>con</em> tendencia y <em>sin</em> estacionalidad</a></li>
+  <li><a href="#series-sin-tendencia-y-con-estacionalidad" id="toc-series-sin-tendencia-y-con-estacionalidad" class="nav-link" data-scroll-target="#series-sin-tendencia-y-con-estacionalidad">Series <em>sin</em> tendencia y <em>con</em> estacionalidad</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-de-aplicación" id="toc-ejemplo-de-aplicación" class="nav-link" data-scroll-target="#ejemplo-de-aplicación"><span class="toc-section-number">3.2</span>  Ejemplo de aplicación</a>
+  <ul class="collapse">
+  <li><a href="#serie-libros" id="toc-serie-libros" class="nav-link" data-scroll-target="#serie-libros">Serie Libros</a></li>
+  <li><a href="#serie-nacimientos" id="toc-serie-nacimientos" class="nav-link" data-scroll-target="#serie-nacimientos">Serie Nacimientos</a></li>
+  <li><a href="#serie-demanda-eléctrica" id="toc-serie-demanda-eléctrica" class="nav-link" data-scroll-target="#serie-demanda-eléctrica">Serie Demanda eléctrica</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#evaluación-de-las-predicciones" id="toc-evaluación-de-las-predicciones" class="nav-link" data-scroll-target="#evaluación-de-las-predicciones"><span class="toc-section-number">4</span>  Evaluación de las predicciones</a>
+  <ul class="collapse">
+  <li><a href="#validación-por-la-metodología-de-training-settest-set-para-series-temporales" id="toc-validación-por-la-metodología-de-training-settest-set-para-series-temporales" class="nav-link" data-scroll-target="#validación-por-la-metodología-de-training-settest-set-para-series-temporales"><span class="toc-section-number">4.1</span>  Validación por la metodología de <em>Training set/Test set</em> para Series Temporales</a>
+  <ul class="collapse">
+  <li><a href="#serie-libros-1" id="toc-serie-libros-1" class="nav-link" data-scroll-target="#serie-libros-1">Serie Libros</a></li>
+  <li><a href="#serie-nacimientos-1" id="toc-serie-nacimientos-1" class="nav-link" data-scroll-target="#serie-nacimientos-1">Serie Nacimientos</a></li>
+  <li><a href="#serie-demanda-eléctrica-1" id="toc-serie-demanda-eléctrica-1" class="nav-link" data-scroll-target="#serie-demanda-eléctrica-1">Serie Demanda eléctrica</a></li>
+  </ul></li>
+  <li><a href="#validación-cruzada-para-series-temporales" id="toc-validación-cruzada-para-series-temporales" class="nav-link" data-scroll-target="#validación-cruzada-para-series-temporales"><span class="toc-section-number">4.2</span>  Validación cruzada para Series Temporales</a>
+  <ul class="collapse">
+  <li><a href="#ejemplo-de-aplicación-con-nacimientos" id="toc-ejemplo-de-aplicación-con-nacimientos" class="nav-link" data-scroll-target="#ejemplo-de-aplicación-con-nacimientos">Ejemplo de aplicación con Nacimientos</a></li>
+  <li><a href="#ejemplo-de-aplicación-con-demanda-eléctrica" id="toc-ejemplo-de-aplicación-con-demanda-eléctrica" class="nav-link" data-scroll-target="#ejemplo-de-aplicación-con-demanda-eléctrica">Ejemplo de aplicación con Demanda eléctrica</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"><span class="toc-section-number">5</span>  Resumen de los comandos utilizados</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Métodos sencillos de predicción. Evaluación de predicciones</h1>
+<p class="subtitle lead">Previsión con Datos Temporales (GBIA)</p>
 </div>
 
 
 
-<h1 class="title toc-ignore">Métodos sencillos de predicción. Evaluación de predicciones</h1>
-<h3 class="subtitle">Previsión con Datos Temporales (GBIA)</h3>
-<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Iván Arribas (Depto. Análisis Económico. Universitat de València) </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
 
 </div>
+<div class="cell" data-layout-align="center">
 
+</div>
+<div class="cell" data-layout-align="center">
 
-<p><br />
-<br />
+</div>
+<p><br>
+<br>
 </p>
-<div id="introducción" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Introducción</h1>
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>En muchos casos es preciso aplicar un método de predicción rápido y sencillo:</p>
 <ul>
 <li>A causa del elevado número de series que tienen que ser analizadas.</li>
 <li>Debido a la rapidez con que las predicciones se han de dar.</li>
 </ul>
-<p>Actualmente existen muchos métodos sencillos de predicción, entre lo que cabe destacar dos:</p>
+<p>Actualmente existen muchos métodos sencillos de predicción, entre los que cabe destacar dos:</p>
 <ul>
 <li><strong>Métodos de media móvil</strong> (Tema 4).</li>
 <li><strong>Métodos de alisado exponencial</strong> (Tema 5).</li>
 </ul>
 <p>Estas técnicas, a pesar de su sencillez, son bastante adecuadas cuando la previsión es a corto plazo:</p>
-<blockquote>
-<p>“Statistically sophisticated or complex methods do not necessarily produce more accurate forecasts than simpler ones.” Makridakis y Hibon (2000).</p>
+<blockquote class="blockquote">
+<p>“Statistically sophisticated or complex methods do not necessarily produce more accurate forecasts than simpler ones.” <span class="citation" data-cites="Makridakis00">Makridakis and Hibon (<a href="#ref-Makridakis00" role="doc-biblioref">2000</a>)</span></p>
 </blockquote>
 <p>Pero hay métodos aún más sencillos que quedan englobados bajo el paraguas de <strong>métodos sencillos</strong> que veremos en este tema.</p>
-<p><br />
-<br />
+<p><br>
+<br>
 </p>
-</div>
-<div id="criterios-de-calidad" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Criterios de calidad</h1>
+</section>
+<section id="criterios-de-calidad" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Criterios de calidad</h1>
 <p>En este tema y en los siguientes se verán diferentes métodos para predecir una serie temporal. Así, es preciso definir criterios de bondad de ajuste que permitan estimar tanto la calidad del ajuste como de las predicciones de un método.</p>
-<blockquote>
-<p>“The rankings of the performance of the various methods vary according to the accuracy measure being used.” Makridakis y Hibon (2000).</p>
+<blockquote class="blockquote">
+<p>“The rankings of the performance of the various methods vary according to the accuracy measure being used.” <span class="citation" data-cites="Makridakis00">Makridakis and Hibon (<a href="#ref-Makridakis00" role="doc-biblioref">2000</a>)</span></p>
 </blockquote>
-<p><br />
+<p><br>
 </p>
-<div id="notación-y-definiciones" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Notación y definiciones</h2>
+<section id="notación-y-definiciones" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="notación-y-definiciones"><span class="header-section-number">2.1</span> Notación y definiciones</h2>
 <p>Dada una serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span>, se define:</p>
 <ul>
-<li><strong>Previsión <span class="math inline">\(h\)</span> periodos adelante</strong>, como la previsión de la serie para el periodo <span class="math inline">\(t+h\)</span> disponiendo de información hasta el periodo <span class="math inline">\(t\)</span>, y se denota por <span class="math inline">\(\hat{y}_{t+h|t}\)</span>. Por simplicidad lo escribiremos también como <span class="math inline">\(\hat{y}_{t+h}\)</span>.</li>
+<li><strong>Previsión</strong> <span class="math inline">\(h\)</span> periodos adelante, como la previsión de la serie para el periodo <span class="math inline">\(t+h\)</span> disponiendo de información hasta el periodo <span class="math inline">\(t\)</span>, y se denota por <span class="math inline">\(\hat{y}_{t+h|t}\)</span>. Por simplicidad lo escribiremos también como <span class="math inline">\(\hat{y}_{t+h}\)</span>.</li>
 </ul>
 <ul>
-<li>Así, <span class="math inline">\(\hat{y}_{t+1|t}\)</span> es la <strong>previsión un periodo adelante</strong> o a un periodo vista. Es decir, la previsión de la serie en <span class="math inline">\(t+1\)</span> desde el periodo <span class="math inline">\(t\)</span>.</li>
+<li>Así, <span class="math inline">\(\hat{y}_{t+1|t}\)</span> es la <strong>previsión un periodo adelante</strong> o a un periodo vista. Es decir, la previsión de la serie en el periodo <span class="math inline">\(t+1\)</span> desde el periodo <span class="math inline">\(t\)</span>.</li>
 </ul>
-<ul>
-<li>De nuevo, por simplicidad denotaremos a <span class="math inline">\(\hat{y}_{t+1|t}\)</span> como <span class="math inline">\(\hat{y}_{t+1}\)</span>; y como <span class="math inline">\(\hat{y}_{t}\)</span> a la previsión en <span class="math inline">\(t\)</span>, con datos hasta el periodo <span class="math inline">\(t-1\)</span> (<span class="math inline">\(\hat{y}_{t} = \hat{y}_{t|t-1}\)</span>).</li>
-</ul>
+<p>Por simplicidad denotaremos a <span class="math inline">\(\hat{y}_{t+1|t}\)</span> como <span class="math inline">\(\hat{y}_{t+1}\)</span>; y como <span class="math inline">\(\hat{y}_{t}\)</span> a la previsión en <span class="math inline">\(t\)</span>, con datos hasta el periodo <span class="math inline">\(t-1\)</span> (<span class="math inline">\(\hat{y}_{t} = \hat{y}_{t|t-1}\)</span>).</p>
 <p>Se define como <strong>error de previsión</strong> a un periodo vista a <span class="math display">\[\hat{e}_t=y_t-\hat{y}_t,\]</span> de forma que la serie <span class="math inline">\(\{\hat{e}_t\}_{t=1}^T\)</span> nos permitirá definir varios criterios de calidad de ajuste.</p>
-<p><br />
+<p><br>
 </p>
-</div>
-<div id="medidas-de-precisión-de-la-predicción" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Medidas de precisión de la predicción</h2>
+</section>
+<section id="medidas-de-precisión-de-la-predicción" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="medidas-de-precisión-de-la-predicción"><span class="header-section-number">2.2</span> Medidas de precisión de la predicción</h2>
 <p>Dada una serie <span class="math inline">\(\{y_t\}_{t=1}^T\)</span>, un método de predicción y su vector de errores asociado <span class="math inline">\(\{\hat{e}_t\}_{t=1}^T\)</span>, podemos definir múltiples medidas de calidad del método de predicción que hacen referencia a la presencia de sesgo en las predicciones, la magnitud del error cometido y la calidad del intervalo de confianza de las predicciones. Las más habituales son (siglas en inglés):</p>
 <ul>
 <li>Error medio (ME): <span class="math inline">\(\frac{1}{T}\sum_{t=1}^T \hat{e}_t\)</span></li>
@@ -638,16 +466,12 @@ div.tocify {
 <li>Error porcentual absoluto medio simétrico (sMAPE): <span class="math inline">\(\frac{200}{T}\sum_{t=1}^T \Big|\frac{\hat{e}_t}{y_t + \hat{y}_t}\Big|\)</span></li>
 </ul>
 <ul>
-<li>Error escalado absoluto medio (MASE): <span class="math inline">\(\big(\frac{1}{T}\sum_{t=1}^T |\hat{e}_t|\big)/q\)</span>, donde <span class="math inline">\(q\)</span> es el error absoluto medio para un método ingenuo de predicción:
-<ul>
-<li><span class="math inline">\(q=\frac{1}{T-1}\sum_{t=2}^T |y_t-y_{t-1}|\)</span> para series <em>sin</em> estacionalidad</li>
-<li><span class="math inline">\(q=\frac{1}{T-m}\sum_{t=m+1}^T |y_t-y_{t-m}|\)</span> para series <em>con</em> estacionalidad</li>
-</ul></li>
+<li>Error escalado absoluto medio (MASE): <span class="math inline">\(\big(\frac{1}{T}\sum_{t=1}^T |\hat{e}_t|\big)/q\)</span>, donde <span class="math inline">\(q\)</span> es el error absoluto medio para un método ingenuo de predicción: el método ingenuo I para series sin estacionalidad y el método ingenuo con estacionalidad para series con estacionalidad.</li>
 </ul>
 <ul>
 <li>Correlación entre <span class="math inline">\(\hat{e}_t\)</span> y <span class="math inline">\(\hat{e}_{t-1}\)</span> (ACF1).</li>
 </ul>
-<p><br />
+<p><br>
 </p>
 <p>ME y MPE permiten valorar el sesgo de las predicciones (que estas estén sistemáticamente por encima o por debajo de los valores reales).</p>
 <ul>
@@ -668,36 +492,49 @@ div.tocify {
 <li>Cuanto más cercano a 0, mejor es el método usado respecto del método ingenuo</li>
 <li>Su complementario a 1 se puede interpretar como la tasa de mejora</li>
 </ul>
-<p>ACF1 evalúa la capacidad de mejora que hay en la estimación del intervalo de confianza de las predicciones. Lo veremos con más detalle en el tema de modelos ARIMA. Por ahora basta saber que:</p>
+<p>ACF1 permite saber si la fórmula usada para estimar el intervalo de confianza de las predicciones es válida. Lo veremos con más detalle en el tema de modelos ARIMA. Por ahora basta saber que:</p>
 <ul>
-<li>Un valor muy cercano a 0 indica que hay poca capacidad de mejora.</li>
-<li>Un valor cercano a 1 o -1 indica que hay mucha capacidad de mejora.</li>
+<li>Un valor muy cercano a 0 indica que la fórmula es válida.</li>
+<li>Valore mínimamente alejados de 0 indican que la fórmula no es válida.</li>
 </ul>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Cálculo del intervalo de confianza de las predicciones
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ve a la Píldora <em>Bootstrapping para intervalos de predicción</em> para saber más sobre las fórmulas usadas para estimar el intervalo de confianza de las predicciones y alternativas de cálculo cuando estas fórmulas no son válidas.</p>
+</div>
+</div>
 <p>Las <em>medias</em> se pueden sustituir por <em>medianas</em>. Esto es especialmente útil cuando para algunas observaciones hay errores atípicamente altos.</p>
-<p><br />
+<p><br>
 </p>
-<p>Si para realizar la predicción del periodo <span class="math inline">\(t\)</span> se usa una metodología que utiliza datos hasta dicho periodo, se hablará de <strong>predicción y error intra-muestral</strong>. En caso contrario, la predicción del periodo <span class="math inline">\(t\)</span> usa una metodología que solo necesita de datos hasta el periodo <span class="math inline">\(t-1\)</span>, se hablará de <strong>predicción y error extra-muestral</strong>.</p>
-<p>Si los indicadores de calidad se basan en predicciones intra-muestrales a un periodo vista, presentan dos problemas. Primero, evalúan el error de predicción a un periodo vista, cuando en muchas situaciones reales las predicciones se realizan sobre un horizonte temporal más amplio. Segundo, son errores intra-muestrales, resultantes de predecir los mismos datos que sha usado el método para calcular la predicción y, por tanto, sobre-estiman la capacidad predictiva del modelo.</p>
-<p>Veremos durante en este tema métodos de evaluación de la calidad de las predicciones que superan estas limitaciones.</p>
-<p><br />
-<br />
+<p>Si para realizar la predicción del periodo <span class="math inline">\(t\)</span> se usa una metodología que utiliza datos incluido dicho periodo, se hablará de <strong>predicción y error intra-muestral</strong>. En caso contrario, si la predicción del periodo <span class="math inline">\(t\)</span> usa una metodología que solo necesita de datos hasta el periodo <span class="math inline">\(t-1\)</span>, se hablará de <strong>predicción y error extra-muestral</strong>.</p>
+<p>Los indicadores de calidad que se basan en predicciones intra-muestrales a un periodo vista presentan dos problemas. Primero, evalúan el error de predicción a un periodo vista, cuando en muchas situaciones reales las predicciones se realizan sobre un horizonte temporal más amplio. Segundo, son errores intra-muestrales, resultantes de predecir los mismos datos que ha usado el método para calcular la predicción y, por tanto, sobrestiman la capacidad predictiva del modelo.</p>
+<p>Veremos en el epígrafe 4 de este tema métodos de evaluación de la calidad de las predicciones que superan estas limitaciones.</p>
+<p><br>
+<br>
 </p>
-</div>
-</div>
-<div id="métodos-sencillos-de-predicción" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Métodos sencillos de predicción</h1>
+</section>
+</section>
+<section id="métodos-sencillos-de-predicción" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Métodos sencillos de predicción</h1>
 <p>Algunos métodos de predicción son extremadamente sencillos y sorprendentemente eficaces. A veces son denominados métodos ingenuos. Estos métodos:</p>
 <ul>
 <li>posibilitan realizar predicciones prácticamente sin realizar ningún cálculo.</li>
 <li>como son muy sencillos, dan las previsiones con mayor error (menos precisas). El error de un método sencillo sirve de punto de referencia (<em>benchmark</em>) para valorar la necesidad de aplicar otros métodos más complicados con el objetivo de mejorar la calidad de las predicciones.</li>
 </ul>
 <p>Veamos algunos métodos sencillos y sus funciones en el paquete <code>forecast</code>.</p>
-<p><br />
+<p><br>
 </p>
-<div id="métodos-sencillos-de-predicción-1" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Métodos sencillos de predicción</h2>
-<div id="series-sin-tendencia-y-sin-estacionalidad" class="section level3 unnumbered">
-<h3 class="unnumbered">Series <em>sin</em> tendencia y <em>sin</em> estacionalidad</h3>
+<section id="métodos-sencillos-de-predicción-1" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="métodos-sencillos-de-predicción-1"><span class="header-section-number">3.1</span> Métodos sencillos de predicción</h2>
+<section id="series-sin-tendencia-y-sin-estacionalidad" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="series-sin-tendencia-y-sin-estacionalidad">Series <em>sin</em> tendencia y <em>sin</em> estacionalidad</h3>
 <p><strong>Método de la Media</strong>: <span class="math inline">\(\hat{y}_{T+h}=(y_1+\ldots,y_T)/T\)</span>.</p>
 <ul>
 <li>La predicción para cualquier periodo futuro es la <strong>media</strong> de las observaciones disponibles previas.</li>
@@ -709,196 +546,344 @@ div.tocify {
 <li>Función de <code>R</code>: <code>naive(y, h)</code> o <code>rwf(y, h)</code> (<em>rw</em> de random walk)</li>
 <li>Para series sin estacionalidad este es el método ingenuo de comparación del MASE.</li>
 </ul>
-</div>
-<div id="series-con-tendencia-y-sin-estacionalidad" class="section level3 unnumbered">
-<h3 class="unnumbered">Series <em>con</em> tendencia y <em>sin</em> estacionalidad</h3>
+</section>
+<section id="series-con-tendencia-y-sin-estacionalidad" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="series-con-tendencia-y-sin-estacionalidad">Series <em>con</em> tendencia y <em>sin</em> estacionalidad</h3>
 <p><strong>Método ingenuo II</strong>: <span class="math inline">\(\hat{y}_{T+h}=y_T + h(y_T-y_{T-1})\)</span>.</p>
 <ul>
 <li>La predicción <span class="math inline">\(h\)</span> periodos adelante es la <strong>última observación</strong> disponible más <span class="math inline">\(h\)</span> veces el <strong>último incremento</strong> observado.</li>
-<li>No tiene función en <code>R</code>, pero se podría emular mediante la función <code>holt</code> (véase epígrafe de 5.5 Alisado exponencial de Holt).</li>
+<li>No tiene función en <code>R</code>, pero se podría emular mediante la función <code>ets</code> (véase epígrafe de 5.5 del tema 5, Alisado exponencial de Holt).</li>
 </ul>
 <p><strong>Método de la deriva</strong>: <span class="math inline">\(\hat{y}_{T+h}=y_T+h\frac{y_T - y_1}{T-1}\)</span>.</p>
 <ul>
 <li>La predicción <span class="math inline">\(h\)</span> periodos adelante es la <strong>última observación</strong> disponible más <span class="math inline">\(h\)</span> veces el <strong>incremento medio</strong> observado.</li>
 <li>Función de <code>R</code>: <code>rwf(y, h, drift = TRUE)</code></li>
 </ul>
-</div>
-<div id="series-sin-tendencia-y-con-estacionalidad" class="section level3 unnumbered">
-<h3 class="unnumbered">Series <em>sin</em> tendencia y <em>con</em> estacionalidad</h3>
+</section>
+<section id="series-sin-tendencia-y-con-estacionalidad" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="series-sin-tendencia-y-con-estacionalidad">Series <em>sin</em> tendencia y <em>con</em> estacionalidad</h3>
 <p><strong>Método ingenuo con estacionalidad</strong>: <span class="math inline">\(\hat{y}_{T+h}=y_{T-m(k+1)}\)</span>.</p>
 <ul>
-<li><span class="math inline">\(k\)</span> es la parte entera de <span class="math inline">\((h-1)/m\)</span>, es decir, el número de años completos en el periodo de predicción previo al periodo <span class="math inline">\(T+h\)</span>.</li>
+<li><span class="math inline">\(k\)</span> es la parte entera de <span class="math inline">\((h-1)/m\)</span>, es decir, el número de estaciones completas en el periodo de predicción previo al periodo <span class="math inline">\(T+h\)</span>.</li>
 <li>La predicción para un periodo es la <strong>última observación disponible de la misma estación que la fecha que se desea predecir</strong>.</li>
 <li>Función de <code>R</code>: <code>snaive(y, h)</code></li>
 <li>Para series con estacionalidad este es el método ingenuo de comparación del MASE</li>
 </ul>
-<p><strong>No hay métodos sencillos cuando la serie tiene tendencia y estacionalidad</strong>, aunque la aplicación del método ingenuo con estacionalidad suele ser muy efectiva.</p>
-<p><br />
+<p><strong>No hay métodos sencillos cuando la serie tiene tendencia y estacionalidad</strong>, así que se suele usar el método ingenuo con estacionalidad.</p>
+<p><br>
 </p>
+</section>
+</section>
+<section id="ejemplo-de-aplicación" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="ejemplo-de-aplicación"><span class="header-section-number">3.2</span> Ejemplo de aplicación</h2>
+<section id="serie-libros" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="serie-libros">Serie Libros</h3>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/libros.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">ts</span>(libros[ ,<span class="dv">2</span>], <span class="at">start =</span> <span class="dv">1993</span>, <span class="at">frequency  =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Las siguientes salidas muestra el resultado de la aplicación de algunos de estos métodos sencillos a la serie Libros (número de títulos publicados anualmente en España desde 1993 hasta 2019), con independencia de su adecuación dadas las componentes de esta serie.</p>
+<p>Los métodos de la Media e Ingenuo I realizan una predicción constante, el primero la media de títulos en el periodo de análisis (61873) y el segundo el último dato observado (64154). El método de deriva ofrece una predicción creciente porque la serie Libros tiene una pendiente media positiva en el periodo de análisis.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(mediaLibros <span class="ot">&lt;-</span> <span class="fu">meanf</span>(libros, <span class="at">h =</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95   Hi 95
+2020       61873.93 47672.32 76075.53 39674.35 84073.5
+2021       61873.93 47672.32 76075.53 39674.35 84073.5
+2022       61873.93 47672.32 76075.53 39674.35 84073.5
+2023       61873.93 47672.32 76075.53 39674.35 84073.5
+2024       61873.93 47672.32 76075.53 39674.35 84073.5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(naiveLibros <span class="ot">&lt;-</span> <span class="fu">naive</span>(libros, <span class="at">h =</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+2020          64154 56581.87 71726.13 52573.42 75734.58
+2021          64154 53445.39 74862.61 47776.59 80531.41
+2022          64154 51038.68 77269.32 44095.85 84212.15
+2023          64154 49009.73 79298.27 40992.84 87315.16
+2024          64154 47222.19 81085.81 38259.04 90048.96</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(derivaLibros <span class="ot">&lt;-</span> <span class="fu">rwf</span>(libros,  <span class="at">h =</span> <span class="dv">5</span>, <span class="at">drift =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
+2020       65053.85 57421.83 72685.86 53381.69 76726.00
+2021       65953.69 54954.79 76952.60 49132.32 82775.06
+2022       66853.54 53135.50 80571.58 45873.60 87833.47
+2023       67753.38 51632.77 83874.00 43099.04 92407.73
+2024       68653.23 50321.73 86984.74 40617.61 96688.85</code></pre>
 </div>
 </div>
-<div id="ejemplo-de-aplicación" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Ejemplo de aplicación</h2>
-<div id="serie-libros" class="section level3 unnumbered">
-<h3 class="unnumbered">Serie Libros</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;./series/libros.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">ts</span>(libros[ ,<span class="dv">2</span>], <span class="at">start =</span> <span class="dv">1993</span>, <span class="at">frequency  =</span> <span class="dv">1</span>)</span></code></pre></div>
-<p>En la figura 1 se muestra el resultado gráfico de la aplicación de algunos de estos métodos sencillos a la serie Libros (número de títulos publicados anualmente en España desde 1993 hasta 2018), con independencia de su adecuación dadas las componentes de esta serie. Se ha fijado un horizonte de previsión de cinco años (<code>h = 5</code>). El argumento <code>PI = FALSE</code> hace que no se impriman los intervalos de confianza de las predicciones.</p>
-<p>Los métodos de la Media e Ingenuo I realizan una predicción constante, el primero la media de títulos en el periodo de análisis (61786) y el segundo el último dato observado (62180). El método de deriva ofrece una predicción creciente porque la serie Libros tiene una pendiente media positiva en el periodo de análisis.</p>
-<p>Recuerda que debes cargar las librerías <code>forecast</code> y <code>ggplot2</code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(mediaLibros <span class="ot">&lt;-</span> <span class="fu">meanf</span>(libros, <span class="at">h =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>     Point Forecast   Lo 80    Hi 80    Lo 95    Hi 95
-2019       61786.23 47291.7 76280.76 39108.25 84464.21
-2020       61786.23 47291.7 76280.76 39108.25 84464.21
-2021       61786.23 47291.7 76280.76 39108.25 84464.21
-2022       61786.23 47291.7 76280.76 39108.25 84464.21
-2023       61786.23 47291.7 76280.76 39108.25 84464.21</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>(naiveLibros <span class="ot">&lt;-</span> <span class="fu">naive</span>(libros, <span class="at">h =</span> <span class="dv">5</span>))</span></code></pre></div>
-<pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-2019          62180 54474.50 69885.50 50395.46 73964.54
-2020          62180 51282.78 73077.22 45514.14 78845.86
-2021          62180 48833.68 75526.32 41768.57 82591.43
-2022          62180 46769.00 77591.00 38610.91 85749.09
-2023          62180 44949.98 79410.02 35828.96 88531.04</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(derivaLibros <span class="ot">&lt;-</span> <span class="fu">rwf</span>(libros,  <span class="at">h =</span> <span class="dv">5</span>, <span class="at">drift =</span> <span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95    Hi 95
-2019       63036.88 55252.76 70821.00 51132.10 74941.66
-2020       63893.76 52667.34 75120.18 46724.44 81063.08
-2021       64750.64 50739.23 78762.05 43322.03 86179.25
-2022       65607.52 49131.65 82083.39 40409.84 90805.20
-2023       66464.40 47717.76 85211.04 37793.89 95134.91</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(libros, <span class="at">series =</span> <span class="st">&quot;Libros&quot;</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">&quot;Títulos&quot;</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">main =</span> <span class="st">&quot;Figura 1. Libros y predicción por métodos sencillos&quot;</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mediaLibros, <span class="at">series=</span><span class="st">&quot;Media&quot;</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(naiveLibros, <span class="at">series=</span><span class="st">&quot;Ingenuo&quot;</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(derivaLibros, <span class="at">series=</span><span class="st">&quot;Deriva&quot;</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">&quot;Libros&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;Ingenuo&quot;</span>, <span class="st">&quot;Deriva&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">&quot;Métodos&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code></pre></div>
-<p><img src="03-03-Tema3_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>En la <a href="#fig-librossencillos">Figura&nbsp;1</a> muestra el resultado gráfico de la aplicación de estos métodos. Se ha fijado un horizonte de previsión de cinco años (<code>h = 5</code>). El argumento <code>PI = FALSE</code> hace que no se impriman los intervalos de confianza de las predicciones.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(libros, <span class="at">series =</span> <span class="st">"Libros"</span>,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Títulos"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mediaLibros, <span class="at">series=</span><span class="st">"Media"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(naiveLibros, <span class="at">series=</span><span class="st">"Ingenuo"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(derivaLibros, <span class="at">series=</span><span class="st">"Deriva"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">"Libros"</span>, <span class="st">"Media"</span>, <span class="st">"Ingenuo"</span>, <span class="st">"Deriva"</span>)) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Métodos"</span>)) <span class="sc">+</span> </span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-librossencillos" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-03-Tema3_files/figure-html/fig-librossencillos-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Libros y predicción por métodos sencillos</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Con la función <code>accuracy</code> se puede obtener el error de predicción intra-muestral a un periodo vista de cada método:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(mediaLibros)</span>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(mediaLibros)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(naiveLibros)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(derivaLibros)</span></code></pre></div>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(derivaLibros)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
 <pre><code>              ME     RMSE     MAE   MPE  MAPE MASE  ACF1
-Media       0.00 10595.53 8155.92 -3.17 14.03 1.76  0.77
-Ingenuo I 856.88  6012.63 4626.40  1.27  7.30 1.00 -0.04
-Deriva      0.00  5951.26 4364.46 -0.13  6.87 0.94 -0.04</code></pre>
+Media       0.00 10407.07 7938.30 -3.06 13.66 1.75  0.77
+Ingenuo I 899.85  5908.57 4524.38  1.34  7.14 1.00 -0.04
+Deriva      0.00  5839.64 4229.65 -0.13  6.66 0.93 -0.04</code></pre>
+</div>
+</div>
 <p>Podemos destacar que:</p>
 <ul>
 <li>El método de <em>Media</em> presenta una baja calidad de ajuste debido a que la serie Libros tiene tendencia (MAPE = 14%). Además, el intervalo de confianza de las predicciones no es fiable (ACF1 = 0.77).</li>
-<li>El método de <em>Deriva</em> tiene la mejor calidad de ajuste, con un error porcentual del 6.9% (MAPE), y un error medio aproximado de 6,000 títulos (RMSE). No presenta sesgo (ME = 0) y el intervalo de confianza de las predicciones es fiable (ACF1 = -0.04).</li>
-<li>El método <em>Ingenuo I</em> tiene buena calidad de ajuste, pero las previsiones están ligeramente sesgadas (ME = 857).</li>
+<li>El método de <em>Deriva</em> tiene la mejor calidad de ajuste, con un error porcentual del 6.7% (MAPE), y un error medio aproximado de 6000 títulos (RMSE). No presenta sesgo (ME = 0) y el intervalo de confianza de las predicciones es fiable (ACF1 = -0.04).</li>
+<li>El método <em>Ingenuo I</em> tiene buena calidad de ajuste, pero las previsiones están ligeramente sesgadas (ME = 900).</li>
 <li>Para series sin estacionalidad el método sencillo de comparación usado en el cálculo del MASE es el <em>Ingenuo I</em>. Es por ello que este indicador vale 1 para este método.</li>
 <li>El error medio (ME) siempre será nulo para el método de la <em>Media</em> y de la <em>Deriva</em>, lo que indica que nos equivocamos tanto por exceso como por defecto. Esta es una buena propiedad, que el método <em>Ingenuo I</em> no verifica.</li>
 </ul>
-</div>
-<div id="serie-nacimientos" class="section level3 unnumbered">
-<h3 class="unnumbered">Serie Nacimientos</h3>
-<p>Podemos usar el método ingenuo con estacionalidad con la serie Nacimientos para obtener una previsión a dos años vista. El error absoluto porcentual medio es del 3.6%. Es decir, aplicando algo tan simple como predecir el número de nacimientos para un mes como los nacimientos del mismo mes del año previo, tenemos ya un error de predicción muy bajo. La figura 2 muestra la serie y la predicción que, debido al método usado, no incorpora la tendencia decreciente de los últimos años.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;./series/nacimientos.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+</section>
+<section id="serie-nacimientos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="serie-nacimientos">Serie Nacimientos</h3>
+<p>Podemos usar el método ingenuo con estacionalidad con la serie Nacimientos para obtener una previsión a dos años vista. El error absoluto porcentual medio es del 3.6%. Es decir, aplicando algo tan simple como predecir el número de nacimientos para un mes como los nacimientos del mismo mes del año previo, tenemos ya un error de predicción muy bajo. La <a href="#fig-nacimientossencillo">Figura&nbsp;2</a> muestra la serie y la predicción que, debido al método usado, no incorpora la tendencia decreciente de los últimos años.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/nacimientos.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">ts</span>(nacimientos[, <span class="dv">2</span>],</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1975</span>, <span class="dv">1</span>),</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">frequency =</span> <span class="dv">12</span>)</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>(snaive.nacimientos <span class="ot">&lt;-</span> <span class="fu">snaive</span>(nacimientos, <span class="at">h =</span> <span class="dv">24</span>, <span class="at">level =</span> <span class="dv">95</span>))</span></code></pre></div>
-<pre><code>         Point Forecast   Lo 95   Hi 95
-Jan 2019          31772 28378.6 35165.4
-Feb 2019          28211 24817.6 31604.4
-Mar 2019          30340 26946.6 33733.4
-Apr 2019          29436 26042.6 32829.4
-May 2019          31061 27667.6 34454.4
-Jun 2019          30546 27152.6 33939.4
-Jul 2019          32521 29127.6 35914.4
-Aug 2019          33059 29665.6 36452.4
-Sep 2019          31406 28012.6 34799.4
-Oct 2019          33059 29665.6 36452.4
-Nov 2019          30696 27302.6 34089.4
-Dec 2019          30670 27276.6 34063.4
-Jan 2020          31772 26973.0 36571.0
-Feb 2020          28211 23412.0 33010.0
-Mar 2020          30340 25541.0 35139.0
-Apr 2020          29436 24637.0 34235.0
-May 2020          31061 26262.0 35860.0
-Jun 2020          30546 25747.0 35345.0
-Jul 2020          32521 27722.0 37320.0
-Aug 2020          33059 28260.0 37858.0
-Sep 2020          31406 26607.0 36205.0
-Oct 2020          33059 28260.0 37858.0
-Nov 2020          30696 25897.0 35495.0
-Dec 2020          30670 25871.0 35469.0</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(snaive.nacimientos)</span></code></pre></div>
-<pre><code>                    ME     RMSE      MAE       MPE     MAPE MASE      ACF1
-Training set -574.8081 1731.361 1396.684 -1.456378 3.647108    1 0.7179587</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(snaive.nacimientos,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Nacimientos&quot;</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 2. Nacimientos y predicción por el método Ingenuo con estacionalidad&quot;</span>)</span></code></pre></div>
-<p><img src="03-03-Tema3_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><br />
-<br />
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>(snaive.nacimientos <span class="ot">&lt;-</span> <span class="fu">snaive</span>(nacimientos, <span class="at">h =</span> <span class="dv">24</span>, <span class="at">level =</span> <span class="dv">95</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         Point Forecast    Lo 95    Hi 95
+Jan 2020          30858 27484.08 34231.92
+Feb 2020          27324 23950.08 30697.92
+Mar 2020          29333 25959.08 32706.92
+Apr 2020          28780 25406.08 32153.92
+May 2020          29732 26358.08 33105.92
+Jun 2020          28475 25101.08 31848.92
+Jul 2020          31329 27955.08 34702.92
+Aug 2020          31134 27760.08 34507.92
+Sep 2020          31083 27709.08 34456.92
+Oct 2020          31896 28522.08 35269.92
+Nov 2020          29610 26236.08 32983.92
+Dec 2020          29193 25819.08 32566.92
+Jan 2021          30858 26086.55 35629.45
+Feb 2021          27324 22552.55 32095.45
+Mar 2021          29333 24561.55 34104.45
+Apr 2021          28780 24008.55 33551.45
+May 2021          29732 24960.55 34503.45
+Jun 2021          28475 23703.55 33246.45
+Jul 2021          31329 26557.55 36100.45
+Aug 2021          31134 26362.55 35905.45
+Sep 2021          31083 26311.55 35854.45
+Oct 2021          31896 27124.55 36667.45
+Nov 2021          29610 24838.55 34381.45
+Dec 2021          29193 24421.55 33964.45</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(snaive.nacimientos)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    ME    RMSE      MAE       MPE     MAPE MASE      ACF1
+Training set -588.3163 1721.42 1389.544 -1.512298 3.647559    1 0.7170624</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Interpretación de ACF1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>¿Es fiable el intervalo de confianza calculado para las predicciones?</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(snaive.nacimientos,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Nacimientos"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-nacimientossencillo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-03-Tema3_files/figure-html/fig-nacimientossencillo-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Nacimientos y predicción por el método Ingenuo con estacionalidad</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="serie-demanda-eléctrica" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="serie-demanda-eléctrica">Serie Demanda eléctrica</h3>
+<p>Podemos usar el método ingenuo con estacionalidad con la serie Demanda eléctrica, que tiene una estacionalidad de orden 7, pero no parece presentar tendencia. El error absoluto porcentual medio es del 4% o 43 GWh (RMSE), un error razonablemente reducido. Sin embargo, como ya pasaba con nacimientos, el ACF1 indica que la fórmula usada para el cálculo del intervalo de confianza de las predicciones no es válida.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>snaive.electricidad <span class="ot">&lt;-</span> <span class="fu">snaive</span>(electricidad, <span class="at">h =</span> <span class="dv">28</span>, <span class="at">level =</span> <span class="dv">95</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(snaive.electricidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    ME     RMSE      MAE        MPE     MAPE MASE      ACF1
+Training set -2.117489 42.99794 27.93245 -0.4964111 4.000218    1 0.7096965</code></pre>
+</div>
+</div>
+<p>La <a href="#fig-electricidadsencillo">Figura&nbsp;3</a> muestra la serie y la predicción a cuatro semanas vista. Debido a que la semana de referencia para predecir es la semana de Navidad, donde el consumo eléctrico es inferior al usual, las predicciones resultan ser claramente incorrectas. Este es un buen ejemplo de la diferencia entre calidad de ajuste y calidad de las predicciones.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(snaive.electricidad,</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"GWh"</span>,</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-electricidadsencillo" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-03-Tema3_files/figure-html/fig-electricidadsencillo-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Demanda eléctrica y predicción por el método Ingenuo con estacionalidad</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br>
+<br>
 </p>
-</div>
-</div>
-</div>
-<div id="evaluación-de-las-predicciones" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Evaluación de las predicciones</h1>
+</section>
+</section>
+</section>
+<section id="evaluación-de-las-predicciones" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Evaluación de las predicciones</h1>
 <p>Las medidas que hemos usado hasta ahora para valorar la calidad de las predicciones son realmente medidas de bondad de ajuste, es decir, medidas de la calidad de <strong>previsiones intra-muestrales a un periodo vista</strong>. Valoran en que medida los datos se ajustan a un patrón o modelo, pero no evalúan la calidad de la previsiones ante nuevos datos.</p>
-<p>En este epígrafe vamos a ver dos metodologías que podemos usar para valorar la calidad de las <strong>previsiones extra-muestrales</strong>, que es realmente lo que nos interesa. Estas dos metodologías están relacionadas con los métodos de <em>Training set/Test set</em> y <em>Cross-validation</em> que viste en <em>Previsión con datos transversales</em>, pero adaptadas a datos temporales.</p>
-<div id="validación-por-la-metodología-de-training-settest-set-para-series-temporales" class="section level2" number="4.1">
-<h2 number="4.1"><span class="header-section-number">4.1</span> Validación por la metodología de <em>Training set/Test set</em> para Series Temporales</h2>
-<p>Vamos a mejorar la estimación de la calidad de las predicciones obteniendo las medidas de error para <strong>previsiones extra-muestrales a varios periodos vista</strong> usando la filosofía del método <em>training set/test set</em>. Dividimos la serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span> en dos subseries, los primeros datos <span class="math inline">\(\{y_t\}_{t=1}^{T_0}\)</span>, <span class="math inline">\(T_0 &lt; T\)</span> se usarán para estimar el modelo, y los últimos datos <span class="math inline">\(\{y_t\}_{t={T_0+1}}^{T}\)</span> para validar el modelo.</p>
-<p>Esta metodología, muy efectiva para datos de corte transversal, genera dos problemas cuando se aplica a series temporales: <em>i</em>) el error obtenido es una mezcla de errores de predicción a corto, medio y largo plazo difícil de valorar; <em>ii</em>) los resultados dependen tremendamente del punto de corte temporal seleccionado.</p>
-<div id="serie-libros-1" class="section level3 unnumbered">
-<h3 class="unnumbered">Serie Libros</h3>
-<p>Vamos a reservar, por ejemplo, las últimas 6 observaciones de la serie Libros y ajustar el modelo con las restantes. Después usaremos este modelo para calcular las predicciones a 6 periodos vista y compararlas con los valores reales de la serie.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las observaciones intra- y extra-muestrales</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>librosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">end =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">6</span>)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>librosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">start =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">5</span>)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimamos el modelo con todos los datos menos los 6 ultimos y</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># predecimos los 6 años que hemos quitado de la serie </span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>librosExtraPre <span class="ot">&lt;-</span> <span class="fu">rwf</span>(librosIntra,  <span class="at">h =</span> <span class="dv">6</span>, <span class="at">drift =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Vemos la calidad del ajuste. Primero la predicción y luego los datos reales</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(librosExtraPre, librosExtra)</span></code></pre></div>
-<pre><code>                    ME     RMSE      MAE    MPE  MAPE MASE  ACF1 Theil&#39;s U
+<p>En este epígrafe vamos a ver dos metodologías que podemos usar para valorar la calidad de las <strong>previsiones extra-muestrales</strong>, que es realmente lo que nos interesa. Estas dos metodologías están relacionadas con los métodos de <em>Training set/Test set</em> y <em>Cross-validation</em> que has visto ya en el grado, pero adaptadas a datos temporales.</p>
+<section id="validación-por-la-metodología-de-training-settest-set-para-series-temporales" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="validación-por-la-metodología-de-training-settest-set-para-series-temporales"><span class="header-section-number">4.1</span> Validación por la metodología de <em>Training set/Test set</em> para Series Temporales</h2>
+<p>Vamos a mejorar la estimación de la calidad de las predicciones obteniendo las medidas de error para <strong>previsiones extra-muestrales a varios periodos vista</strong> usando la filosofía del método <em>training set/test set</em>. Dividimos la serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span> en dos subseries. Los primeros datos <span class="math inline">\(\{y_t\}_{t=1}^{T_0}\)</span>, <span class="math inline">\(T_0 &lt; T\)</span>, se usarán para estimar el modelo; y los últimos datos <span class="math inline">\(\{y_t\}_{t={T_0+1}}^{T}\)</span> para validar el modelo.</p>
+<p>Esta metodología, muy efectiva para datos de corte transversal, genera dos problemas cuando se aplica a series temporales: <em>i</em>) el error obtenido es una mezcla de errores de predicción a corto, medio y largo plazo; <em>ii</em>) los resultados dependen tremendamente del punto de corte temporal seleccionado.</p>
+<section id="serie-libros-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="serie-libros-1">Serie Libros</h3>
+<p>Vamos a reservar, por ejemplo, las últimas 7 observaciones de la serie Libros (años 2013 a 2019) y ajustar el modelo con las restantes. Después usaremos este modelo para calcular las predicciones a 7 periodos vista y compararlas con los valores reales de la serie.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las observaciones intra- y extra-muestrales</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>librosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">end =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">7</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>librosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">start =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">6</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estimamos el modelo con todos los datos menos los 7 ultimos y</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># predecimos los 7 años que hemos quitado de la serie </span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>librosExtraPre <span class="ot">&lt;-</span> <span class="fu">rwf</span>(librosIntra,  <span class="at">h =</span> <span class="dv">7</span>, <span class="at">drift =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Vemos la calidad del ajuste. Primero la predicción y luego los datos reales</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(librosExtraPre, librosExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>                    ME     RMSE      MAE    MPE  MAPE MASE  ACF1 Theil's U
 Training set      0.00  5863.85  4279.52  -0.05  6.53 0.87 -0.19        NA
-Test set     -15759.36 15817.29 15759.36 -26.65 26.65 3.22 -0.24      6.19</code></pre>
-<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intra-muestral</strong> de <strong>1993 a 2012</strong> es del 6.5%; mientras que el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extra-muestral</strong> de <strong>2013 a 2018</strong> es del 26.6%. Ademas, para el periodo extra-muestral el error medio (ME) es negativo y muy elevado, un indicativo de que las previsiones están segadas (sobre-estiman la realidad). En resumen, la calidad del modelo se deteriora muy rápidamente en cuanto nos salimos de las condiciones óptimas.</p>
-<p>Un gráfico puede ayudar a entender este proceso de validación. En la figura 3:</p>
+Test set     -15817.32 15867.44 15817.32 -26.44 26.44 3.23 -0.21       6.4</code></pre>
+</div>
+</div>
+<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intra-muestral</strong> de <strong>1993 a 2012</strong> es del 6.5%; mientras que el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extra-muestral</strong> de <strong>2014 a 2019</strong> es del 26.4%. Ademas, para el periodo extra-muestral el error medio (ME) es negativo y muy elevado, un indicativo de que las previsiones están segadas (sobrestiman la realidad). En resumen, la calidad del modelo se deteriora muy rápidamente en cuanto nos salimos de las condiciones óptimas.</p>
+<p>Un gráfico puede ayudar a entender este proceso de validación. En la <a href="#fig-librostraintest">Figura&nbsp;4</a>:</p>
 <ul>
-<li>La línea de puntos vertical separa el periodo muestral (1993-2012) usado para estimar el modelo, del periodo extra-muestral (2013-2018) usado sólo para hacer las previsiones.</li>
-<li>La serie Libros aparece como una línea sólida en negro, desde 1993 hasta 2018.</li>
+<li>La línea de puntos vertical separa el periodo muestral (1993-2012) usado para estimar el modelo, del periodo extra-muestral (2013-2019) usado sólo para hacer las previsiones.</li>
+<li>La serie Libros aparece como una línea sólida en negro, desde 1993 hasta 2019.</li>
 <li>La previsión <em>intra</em>-muestral (a un periodo vista) de la serie Libros aparece como una línea azul.</li>
 <li>La línea en rojo es la previsión <em>extra</em>-muestral a largo plazo. Observa que todas las previsiones están por encima del valor real de la serie.</li>
 <li>Al lado de cada previsión (intra- y extra-muestral) se ha indicado el error estimado (MAPE).</li>
 </ul>
 <p>Claramente estos resultados dependen del punto de corte seleccionado.</p>
-<p><img src="03-03-Tema3_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-librostraintest" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-03-Tema3_files/figure-html/fig-librostraintest-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;4: Libros, predicción intra- y extra-muestral</figcaption><p></p>
+</figure>
 </div>
-<div id="serie-nacimientos-1" class="section level3 unnumbered">
-<h3 class="unnumbered">Serie Nacimientos</h3>
+</div>
+</div>
+<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importamcia del punto de corte
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prueba a reservar las últimas 6 observaciones de la serie Libros y repite el análisis.</p>
+</div>
+</div>
+</section>
+<section id="serie-nacimientos-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="serie-nacimientos-1">Serie Nacimientos</h3>
 <p>Calculamos de nuevo los diferentes criterios de bondad de ajuste para valorar la calidad de las previsiones extra-muestrales a largo plazo. En este caso vamos a reservar los últimos 36 meses como periodo extra-muestral.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>nacimientosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacimientos, <span class="at">end =</span> <span class="fu">length</span>(nacimientos) <span class="sc">-</span> <span class="dv">36</span>)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>nacimientosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacimientos, <span class="at">start =</span> <span class="fu">length</span>(nacimientos) <span class="sc">-</span> <span class="dv">35</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>nacimientosExtraPre <span class="ot">&lt;-</span> <span class="fu">snaive</span>(nacimientosIntra, <span class="at">h =</span> <span class="dv">36</span>)</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(nacimientosExtraPre, nacimientosExtra)</span></code></pre></div>
-<pre><code>                   ME    RMSE     MAE   MPE MAPE MASE ACF1 Theil&#39;s U
-Training set  -518.93 1742.83 1394.96 -1.26 3.59 1.00 0.72        NA
-Test set     -2342.47 2783.26 2440.75 -7.37 7.66 1.75 0.68      1.68</code></pre>
-<p><img src="03-03-Tema3_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Las previsiones extra-muestrales muestran una menor pendiente que los casos reales de nacimientos. Así, conforme se avanza en el horizonte temporal las previsiones se van alejando de la realidad y el error extra-muestral es del 7.7%, reducido pero que duplica el error de estimación intra-muestral (3.6%).</p>
-<p><br />
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>nacimientosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacimientos, <span class="at">end =</span> <span class="fu">length</span>(nacimientos) <span class="sc">-</span> <span class="dv">36</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>nacimientosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacimientos, <span class="at">start =</span> <span class="fu">length</span>(nacimientos) <span class="sc">-</span> <span class="dv">35</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>nacimientosExtraPre <span class="ot">&lt;-</span> <span class="fu">snaive</span>(nacimientosIntra, <span class="at">h =</span> <span class="dv">36</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(nacimientosExtraPre, nacimientosExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   ME    RMSE     MAE   MPE MAPE MASE ACF1 Theil's U
+Training set  -529.76 1734.21 1389.62 -1.30 3.59 1.00 0.72        NA
+Test set     -2926.75 3221.74 2926.75 -9.57 9.57 2.11 0.69      1.89</code></pre>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-nacimientostraintest" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-03-Tema3_files/figure-html/fig-nacimientostraintest-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;5: Nacimientos, predicción intra- y extra-muestral</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Las previsiones extra-muestrales muestran una menor pendiente que los casos reales de nacimientos. Así, conforme se avanza en el horizonte temporal las previsiones se van alejando de la realidad y el error extra-muestral es del 9.6%, no tan reducido como el error de estimación intra-muestral (3.6%).</p>
+</section>
+<section id="serie-demanda-eléctrica-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="serie-demanda-eléctrica-1">Serie Demanda eléctrica</h3>
+<p>Para la serie de consumo eléctrico vamos a reservar las 8 últimas semanas (56 días) como periodo extra-muestral.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>electricidadIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">end =</span> <span class="fu">length</span>(electricidad) <span class="sc">-</span> <span class="dv">56</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>electricidadExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">start =</span> <span class="fu">length</span>(electricidad) <span class="sc">-</span> <span class="dv">55</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>electricidadExtraPre <span class="ot">&lt;-</span> <span class="fu">snaive</span>(electricidadIntra, <span class="at">h =</span> <span class="dv">56</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(electricidadExtraPre, electricidadExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stdout">
+<pre><code>                ME  RMSE   MAE   MPE  MAPE MASE ACF1 Theil's U
+Training set -1.78 39.17 25.09 -0.41  3.57 1.00 0.68        NA
+Test set     59.30 86.23 73.54  7.82 10.14 2.93 0.48      1.55</code></pre>
+</div>
+</div>
+<p>El error intra-muestral obtenido es del 3.6%, que prácticamente se triplica al obtener el error de previsión extra-muestral (10.1%). El elevado valor positivo del error medio indica que las previsiones extra-muestrales subestiman el consumo real de electricidad.</p>
+<p><br>
 </p>
-</div>
-</div>
-<div id="validación-cruzada-para-series-temporales" class="section level2" number="4.2">
-<h2 number="4.2"><span class="header-section-number">4.2</span> Validación cruzada para Series Temporales</h2>
+</section>
+</section>
+<section id="validación-cruzada-para-series-temporales" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="validación-cruzada-para-series-temporales"><span class="header-section-number">4.2</span> Validación cruzada para Series Temporales</h2>
 <p>Hemos visto dos alternativas para evaluar la calidad de un método de predicción de series temporales, uno basado en predicciones intra-muestrales a un periodo vista y otro basado en predicciones extra-muestrales a largo plazo, ambas con sus inconvenientes.</p>
 <p>Veamos ahora una técnica, basada en el concepto de validación cruzada (<em>cross validation</em>) que permite obtener de forma individualizada los errores de previsión extra-muestral a un periodo vista, a dos periodos vista, etc.</p>
 <p>Supongamos que para estimar el modelo se necesita un mínimo de <span class="math inline">\(k\)</span> observaciones y que se desea predecir hasta un horizonte temporal <span class="math inline">\(h\)</span>.</p>
@@ -908,201 +893,257 @@ Test set     -2342.47 2783.26 2440.75 -7.37 7.66 1.75 0.68      1.68</code></pre
 <li><p>Repetimos este proceso desplazando el número de observaciones seleccionadas para la estimación un periodo adelante. Es decir, ahora usamos las observaciones <span class="math inline">\(2,3,...,k+1\)</span> para estimar el modelo, predecimos las observaciones desde <span class="math inline">\(k+2\)</span> hasta <span class="math inline">\(k+1+h\)</span> y calculamos el error de predicción.</p></li>
 <li><p>Iteramos el proceso, desplazando cada vez las observaciones de la estimación un periodo adelante.</p></li>
 <li><p>En general para <span class="math inline">\(i=0,1,...,T-k-h\)</span>, donde <span class="math inline">\(T\)</span> es el número total de observaciones:</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Seleccionamos las observaciones <span class="math inline">\(i+1,i+2,...,i+k\)</span> para estimar el modelo.</li>
 <li>Predecimos las observaciones desde <span class="math inline">\(i+k+1\)</span> hasta <span class="math inline">\(i+k+h\)</span>.</li>
 <li>Calculamos el error de predicción para las observaciones desde <span class="math inline">\(i+k+1\)</span> hasta <span class="math inline">\(i+k+h\)</span>.</li>
 <li>Para cada horizonte temporal de predicción se calcula la medida de error deseada.</li>
 </ol></li>
 </ul>
-<p><br />
-<br />
+<p><br>
+<br>
 </p>
-<p><img src="imagenes/RollingWindows.png" /></p>
+<div id="fig-rollingwindows" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./imagenes/RollingWindows.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;6: Descripción del proceso de origen de predicción móvil</figcaption><p></p>
+</figure>
+</div>
 <p>Este procedimiento se denomina <strong>origen de predicción móvil</strong> (<em>rolling forecast origin</em>) o <em>rolling windows</em>.</p>
 <p>Cuando se aplica esta metodología hay que tener en cuenta que los resultados pueden depender del número <span class="math inline">\(k\)</span> de datos usados para la estimación del modelo.</p>
-<div id="ejemplo-de-aplicación-con-nacimientos" class="section level3 unnumbered">
-<h3 class="unnumbered">Ejemplo de aplicación con Nacimientos</h3>
-<p>Vamos a aplicar la metodología previa a la serie anual de Nacimientos. Asumimos que se precisan veinte años para hacer una buena estimación, <span class="math inline">\(k=20\)</span>, y que el horizonte temporal es de cinco años, <span class="math inline">\(h = 5\)</span>. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde uno a cinco años.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>nacAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(nacimientos, <span class="at">FUN =</span> sum)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">20</span>                   <span class="co">#Minimo numero de datos para estimar</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">5</span>                    <span class="co">#Horizonte de las prediciciones</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(nacAnual)    <span class="co">#Longitud serie</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h           <span class="co">#Total de estimaciones</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacAnual, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(nacAnual, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">rwf</span>(train.set, <span class="at">h =</span> h, <span class="at">drift =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  mapeRwf[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeRwf)</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mapeRwf, <span class="dv">2</span>)</span></code></pre></div>
-<pre><code>[1]  4.21  8.16 12.15 16.20 20.42</code></pre>
-<p>El error de previsión extra-muestral crece linealmente con el horizonte de previsión. Para el primer año el error de predicción se mantiene en un moderado 4.2%. Sin embargo, para el segundo año de predicción el MAPE salta al 8.2% y para los restantes años sigue creciendo rápidamente. Predecir usando la tendencia media solo es un buen método para predecir a un año vista.</p>
-<p><br />
-<br />
+<section id="ejemplo-de-aplicación-con-nacimientos" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejemplo-de-aplicación-con-nacimientos">Ejemplo de aplicación con Nacimientos</h3>
+<p>Vamos a aplicar la metodología previa a la serie anual de Nacimientos. Asumimos que se precisan veinte años para hacer una buena estimación, <span class="math inline">\(k=20\)</span>, y que el horizonte temporal es de cinco años, <span class="math inline">\(h = 5\)</span>. Como la serie es anual, usaremos el método de la deriva para predecir. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde uno a cinco años.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>nacAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(nacimientos, <span class="at">FUN =</span> sum)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">20</span>                   <span class="co">#Minimo numero de datos para estimar</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">5</span>                    <span class="co">#Horizonte de las prediciciones</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(nacAnual)    <span class="co">#Longitud serie</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h           <span class="co">#Total de estimaciones</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacAnual, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(nacAnual, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">rwf</span>(train.set, <span class="at">h =</span> h, <span class="at">drift =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  mapeRwf[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeRwf)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mapeRwf, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  4.13  8.07 12.16 16.38 20.67</code></pre>
+</div>
+</div>
+<p>El error de previsión extra-muestral crece linealmente con el horizonte de previsión. Para el primer año el error de predicción se mantiene en un moderado 4.1%. Sin embargo, para el segundo año de predicción el MAPE salta al 8.1% y para los restantes años sigue creciendo rápidamente. Predecir usando la tendencia media solo es un buen método para predecir a un año vista.</p>
+</section>
+<section id="ejemplo-de-aplicación-con-demanda-eléctrica" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="ejemplo-de-aplicación-con-demanda-eléctrica">Ejemplo de aplicación con Demanda eléctrica</h3>
+<p>Ahora aplicaremos la metodología origen de predicción móvil la serie de Demanda eléctrica. En este caso se asumirá que se precisan veinte semanas para hacer una buena estimación, <span class="math inline">\(k = 140\)</span>, y que el horizonte temporal es de 4 semanas, <span class="math inline">\(h = 28\)</span>. Como la serie tiene estacionalidad, usaremos el método ingenuo con estacionalidad para predecir. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde uno a 28 días.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">140</span>                  <span class="co">#Minimo numero de datos para estimar</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">28</span>                   <span class="co">#Horizonte de las prediciciones</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(electricidad)<span class="co">#Longitud serie</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h           <span class="co">#Total de estimaciones</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  mapeRwf[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeRwf)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mapeRwf, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 3.29 3.31 3.40 3.45 3.52 3.53 3.53 4.55 4.59 4.60 4.60 4.60 4.60 4.60 5.10
+[16] 5.12 5.12 5.13 5.14 5.18 5.28 6.29 6.35 6.41 6.48 6.54 6.61 6.72</code></pre>
+</div>
+</div>
+<p>El error de previsión extra-muestral crece lentamente con el horizonte de previsión. Para predicciones a un día vista el error de predicción es del 3.3%, para 14 días vista sube hasta el 4.6% y a 28 días vista alcanza el 6.7%.</p>
+<p><br>
+<br>
 </p>
-</div>
-</div>
-</div>
-<div id="resumen-de-los-comandos-utilizados" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Resumen de los comandos utilizados</h1>
-<table>
+</section>
+</section>
+</section>
+<section id="resumen-de-los-comandos-utilizados" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Resumen de los comandos utilizados</h1>
+<table class="table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 47%">
+</colgroup>
 <thead>
 <tr class="header">
-<th align="left">Función</th>
-<th align="left">Paquete</th>
-<th align="left">Descripción</th>
+<th style="text-align: left;">Función</th>
+<th style="text-align: left;">Paquete</th>
+<th style="text-align: left;">Descripción</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="left"><code>meanf</code></td>
-<td align="left">forecast</td>
-<td align="left">Predicción por media</td>
+<td style="text-align: left;"><code>meanf</code></td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">Predicción por media</td>
 </tr>
 <tr class="even">
-<td align="left"><code>naive</code></td>
-<td align="left">forecast</td>
-<td align="left">Predicción por método ingenuo I</td>
+<td style="text-align: left;"><code>naive</code></td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">Predicción por método ingenuo I</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>rwf</code></td>
-<td align="left">forecast</td>
-<td align="left">Predicción con tendencia media</td>
+<td style="text-align: left;"><code>rwf</code></td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">Predicción por tendencia media</td>
 </tr>
 <tr class="even">
-<td align="left"><code>snaive</code></td>
-<td align="left">forecast</td>
-<td align="left">Predicción por método ingenuo con estacionalidad</td>
+<td style="text-align: left;"><code>snaive</code></td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">Predicción por método ingenuo con estacionalidad</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>accuracy</code></td>
-<td align="left">forecast</td>
-<td align="left">Calculo de la precisión del modelo</td>
+<td style="text-align: left;"><code>accuracy</code></td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">Calculo de la precisión del modelo</td>
 </tr>
 <tr class="even">
-<td align="left"><code>forecast</code></td>
-<td align="left">forecast</td>
-<td align="left">Predice valores extra-muestrales futuros de la serie</td>
+<td style="text-align: left;"><code>forecast</code></td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">Predice valores extra-muestrales futuros de la serie</td>
 </tr>
 <tr class="odd">
-<td align="left"><code>fitted</code></td>
-<td align="left">stats</td>
-<td align="left">Obtiene las predicciones a un periodo vista intra-muestrales</td>
+<td style="text-align: left;"><code>fitted</code></td>
+<td style="text-align: left;">stats</td>
+<td style="text-align: left;">Obtiene las predicciones a un periodo vista intra-muestrales</td>
 </tr>
 </tbody>
 </table>
-<p><br />
-<br />
-</p>
-</div>
-<div id="referencias" class="section level1" number="6">
-<h1 number="6"><span class="header-section-number">6</span> Referencias</h1>
-<ul>
-<li>Makridakis, S. y Hibon, M. (2000). <em>The M3-Competition: results, conclusions and implications</em>. International Journal of Forecasting, 16(4), pp. 451–476. <a href="doi:10.1016/S0169-2070(00)00057-1" class="uri">doi:10.1016/S0169-2070(00)00057-1</a></li>
-</ul>
-<p><br />
-<br />
-<br />
-<br />
-</p>
-</div>
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTcOpdG9kb3Mgc2VuY2lsbG9zIGRlIHByZWRpY2Npw7NuLiBFdmFsdWFjacOzbiBkZSBwcmVkaWNjaW9uZXMiCnN1YnRpdGxlOiAiUHJldmlzacOzbiBjb24gRGF0b3MgVGVtcG9yYWxlcyAoR0JJQSkiCmF1dGhvcjogIkl2w6FuIEFycmliYXMgKERlcHRvLiBBbsOhbGlzaXMgRWNvbsOzbWljby4gVW5pdmVyc2l0YXQgZGUgVmFsw6huY2lhKSIKb3V0cHV0OiAKICBodG1sX2RvY3VtZW50OgogICAgY29kZV9kb3dubG9hZDogeWVzCiAgICBkZl9wcmludDoga2FibGUKICAgIGZpZ19jYXB0aW9uOiBubwogICAgaGlnaGxpZ2h0OiBweWdtZW50cwogICAgbnVtYmVyX3NlY3Rpb25zOiB5ZXMKICAgIHNlbGZfY29udGFpbmVkOiB5ZXMKICAgIHRoZW1lOiBjZXJ1bGVhbgogICAgdG9jOiB5ZXMKICAgIHRvY19kZXB0aDogMgogICAgdG9jX2Zsb2F0OgogICAgICBjb2xsYXBzZWQ6IHllcwotLS0KCmBgYHtyIGNodW5rX3NldHVwLCBlY2hvID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCh3YXJuaW5nID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgbWVzc2FnZSA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5hbGlnbiA9ICJjZW50ZXIiLCAKICAgICAgICAgICAgICAgICAgICAgIGZpZy5zaG93ID0gImhvbGQiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmhlaWdodCA9IDQsCiAgICAgICAgICAgICAgICAgICAgICBmaWcud2lkdGggPSA4LAogICAgICAgICAgICAgICAgICAgICAgb3V0LndpZHRoID0gIjgwJSIpIApgYGAKCmBgYHtyIG9wdGlvbnNfc2V0dXAsIGVjaG8gPSBGQUxTRX0Kb3B0aW9ucyhzY2lwZW4gPSA5OTkpICMtIHBhcmEgcXVpdGFyIGxhIG5vdGFjaW9uIGNpZW50aWZpY2EKYGBgCgpgYGB7ciBsaWJyZXJpYXMsIGVjaG8gPSBGQUxTRX0KbGlicmFyeSgiUkNvbG9yQnJld2VyIikKbGlicmFyeShmb3JlY2FzdCkKbGlicmFyeShnZ3Bsb3QyKTsgdGhlbWVfc2V0KHRoZW1lX2J3KCkpCmxpYnJhcnkoZ3JpZEV4dHJhKQpsaWJyYXJ5KGdyaWQpCmBgYAoKXApcCgojIEludHJvZHVjY2nDs24KCkVuIG11Y2hvcyBjYXNvcyBlcyBwcmVjaXNvIGFwbGljYXIgdW4gbcOpdG9kbyBkZSBwcmVkaWNjacOzbiByw6FwaWRvIHkgc2VuY2lsbG86CgoqIEEgY2F1c2EgZGVsIGVsZXZhZG8gbsO6bWVybyBkZSBzZXJpZXMgcXVlIHRpZW5lbiBxdWUgc2VyIGFuYWxpemFkYXMuCiogRGViaWRvIGEgbGEgcmFwaWRleiBjb24gcXVlIGxhcyBwcmVkaWNjaW9uZXMgc2UgaGFuIGRlIGRhci4KICAgICAgCkFjdHVhbG1lbnRlIGV4aXN0ZW4gbXVjaG9zIG3DqXRvZG9zIHNlbmNpbGxvcyBkZSBwcmVkaWNjacOzbiwgZW50cmUgbG8gcXVlIGNhYmUgZGVzdGFjYXIgZG9zOgoKKiBfX03DqXRvZG9zIGRlIG1lZGlhIG3Ds3ZpbF9fIChUZW1hIDQpLgoqIF9fTcOpdG9kb3MgZGUgYWxpc2FkbyBleHBvbmVuY2lhbF9fIChUZW1hIDUpLgogICAgCkVzdGFzIHTDqWNuaWNhcywgYSBwZXNhciBkZSBzdSBzZW5jaWxsZXosIHNvbiBiYXN0YW50ZSBhZGVjdWFkYXMgY3VhbmRvIGxhIHByZXZpc2nDs24gZXMgYSBjb3J0byBwbGF6bzoKCj4iU3RhdGlzdGljYWxseSBzb3BoaXN0aWNhdGVkIG9yIGNvbXBsZXggbWV0aG9kcyBkbyBub3QgbmVjZXNzYXJpbHkgcHJvZHVjZSBtb3JlIGFjY3VyYXRlIGZvcmVjYXN0cyB0aGFuIHNpbXBsZXIgb25lcy4iIE1ha3JpZGFraXMgeSBIaWJvbiAoMjAwMCkuCiAgICAgIApQZXJvIGhheSBtw6l0b2RvcyBhw7puIG3DoXMgc2VuY2lsbG9zIHF1ZSBxdWVkYW4gZW5nbG9iYWRvcyBiYWpvIGVsIHBhcmFndWFzIGRlICoqbcOpdG9kb3Mgc2VuY2lsbG9zKiogcXVlIHZlcmVtb3MgZW4gZXN0ZSB0ZW1hLiAKClwKXAoKIyBDcml0ZXJpb3MgZGUgY2FsaWRhZAoKRW4gZXN0ZSB0ZW1hIHkgZW4gbG9zIHNpZ3VpZW50ZXMgc2UgdmVyw6FuIGRpZmVyZW50ZXMgbcOpdG9kb3MgcGFyYSBwcmVkZWNpciB1bmEgc2VyaWUgdGVtcG9yYWwuIEFzw60sIGVzIHByZWNpc28gZGVmaW5pciBjcml0ZXJpb3MgZGUgYm9uZGFkIGRlIGFqdXN0ZSBxdWUgcGVybWl0YW4gZXN0aW1hciB0YW50byBsYSBjYWxpZGFkIGRlbCBhanVzdGUgY29tbyBkZSBsYXMgcHJlZGljY2lvbmVzIGRlIHVuIG3DqXRvZG8uCgo+ICJUaGUgcmFua2luZ3Mgb2YgdGhlIHBlcmZvcm1hbmNlIG9mIHRoZSB2YXJpb3VzIG1ldGhvZHMgdmFyeSBhY2NvcmRpbmcgdG8gdGhlIGFjY3VyYWN5IG1lYXN1cmUgYmVpbmcgdXNlZC4iICBNYWtyaWRha2lzIHkgSGlib24gKDIwMDApLgogICAgIApcCgojIyBOb3RhY2nDs24geSBkZWZpbmljaW9uZXMKCgogCkRhZGEgdW5hIHNlcmllIHRlbXBvcmFsICRce3lfdFx9X3t0PTF9XlQkLCBzZSBkZWZpbmU6CgoqIF9fUHJldmlzacOzbiAkaCQgcGVyaW9kb3MgYWRlbGFudGVfXywgY29tbyBsYSBwcmV2aXNpw7NuIGRlIGxhIHNlcmllIHBhcmEgZWwgcGVyaW9kbyAkdCtoJCBkaXNwb25pZW5kbyBkZSBpbmZvcm1hY2nDs24gaGFzdGEgZWwgcGVyaW9kbyAkdCQsIHkgc2UgZGVub3RhIHBvciAkXGhhdHt5fV97dCtofHR9JC4gUG9yIHNpbXBsaWNpZGFkIGxvIGVzY3JpYmlyZW1vcyB0YW1iacOpbiBjb21vICRcaGF0e3l9X3t0K2h9JC4KClx2c3BhY2V7MC4zY219CgoqIEFzw60sICRcaGF0e3l9X3t0KzF8dH0kIGVzIGxhIF9fcHJldmlzacOzbiB1biBwZXJpb2RvIGFkZWxhbnRlX18gbyBhIHVuIHBlcmlvZG8gdmlzdGEuIEVzIGRlY2lyLCBsYSBwcmV2aXNpw7NuIGRlIGxhIHNlcmllIGVuICR0KzEkIGRlc2RlIGVsIHBlcmlvZG8gJHQkLgoKXHZzcGFjZXswLjNjbX0KCiogRGUgbnVldm8sIHBvciBzaW1wbGljaWRhZCBkZW5vdGFyZW1vcyBhICRcaGF0e3l9X3t0KzF8dH0kIGNvbW8gJFxoYXR7eX1fe3QrMX0kOyB5IGNvbW8gJFxoYXR7eX1fe3R9JCBhIGxhIHByZXZpc2nDs24gZW4gJHQkLCBjb24gZGF0b3MgaGFzdGEgZWwgcGVyaW9kbyAkdC0xJCAoJFxoYXR7eX1fe3R9ID0gXGhhdHt5fV97dHx0LTF9JCkuCgpTZSBkZWZpbmUgY29tbyBfX2Vycm9yIGRlIHByZXZpc2nDs25fXyBhIHVuIHBlcmlvZG8gdmlzdGEgYSAKJCRcaGF0e2V9X3Q9eV90LVxoYXR7eX1fdCwkJApkZSBmb3JtYSBxdWUgbGEgc2VyaWUgJFx7XGhhdHtlfV90XH1fe3Q9MX1eVCQgbm9zIHBlcm1pdGlyw6EgZGVmaW5pciB2YXJpb3MgY3JpdGVyaW9zIGRlIGNhbGlkYWQgZGUgYWp1c3RlLiAKICAKXAoKIyMgTWVkaWRhcyBkZSBwcmVjaXNpw7NuIGRlIGxhIHByZWRpY2Npw7NuCiAKRGFkYSB1bmEgc2VyaWUgJFx7eV90XH1fe3Q9MX1eVCQsIHVuIG3DqXRvZG8gZGUgcHJlZGljY2nDs24geSBzdSB2ZWN0b3IgZGUgZXJyb3JlcyBhc29jaWFkbyAkXHtcaGF0e2V9X3RcfV97dD0xfV5UJCwgcG9kZW1vcyBkZWZpbmlyIG3Dumx0aXBsZXMgbWVkaWRhcyBkZSBjYWxpZGFkIGRlbCBtw6l0b2RvIGRlIHByZWRpY2Npw7NuIHF1ZSBoYWNlbiByZWZlcmVuY2lhIGEgbGEgcHJlc2VuY2lhIGRlIHNlc2dvIGVuIGxhcyBwcmVkaWNjaW9uZXMsIGxhIG1hZ25pdHVkIGRlbCBlcnJvciBjb21ldGlkbyB5IGxhIGNhbGlkYWQgZGVsIGludGVydmFsbyBkZSBjb25maWFuemEgZGUgbGFzIHByZWRpY2Npb25lcy4gTGFzIG3DoXMgaGFiaXR1YWxlcyBzb24gKHNpZ2xhcyBlbiBpbmdsw6lzKToKCiogRXJyb3IgbWVkaW8gKE1FKTogJFxmcmFjezF9e1R9XHN1bV97dD0xfV5UIFxoYXR7ZX1fdCQKClx2c3BhY2V7MC4zY219CgoqIF9fUmHDrXogZGVsIGVycm9yIGN1YWRyw6F0aWNvIG1lZGlvIChSTVNFKV9fOiAkXHNxcnR7XGZyYWN7MX17VH1cc3VtX3t0PTF9XlQgXGhhdHtlfV4yX3R9JAoKXHZzcGFjZXswLjNjbX0KCiogRXJyb3IgYWJzb2x1dG8gbWVkaW8gKE1BRSk6ICRcZnJhY3sxfXtUfVxzdW1fe3Q9MX1eVCB8XGhhdHtlfV90fCQKClx2c3BhY2V7MC4zY219CgoqIEVycm9yIHBvcmNlbnR1YWwgbWVkaW8gKE1QRSk6ICRcZnJhY3sxMDB9e1R9XHN1bV97dD0xfV5UIFxmcmFje1xoYXR7ZX1fdH17eV90fSQKClx2c3BhY2V7MC4zY219CgoqIF9fRXJyb3IgcG9yY2VudHVhbCBhYnNvbHV0byBtZWRpbyAoTUFQRSlfXzogJFxmcmFjezEwMH17VH1cc3VtX3t0PTF9XlQgXGJpZ3xcZnJhY3tcaGF0e2V9X3R9e3lfdH1cYmlnfCQKClx2c3BhY2V7MC4zY219CgoqIEVycm9yIHBvcmNlbnR1YWwgYWJzb2x1dG8gbWVkaW8gc2ltw6l0cmljbyAoc01BUEUpOiAkXGZyYWN7MjAwfXtUfVxzdW1fe3Q9MX1eVCBcQmlnfFxmcmFje1xoYXR7ZX1fdH17eV90ICsgXGhhdHt5fV90fVxCaWd8JAoKXHZzcGFjZXswLjNjbX0KCiogRXJyb3IgZXNjYWxhZG8gYWJzb2x1dG8gbWVkaW8gKE1BU0UpOiAkXGJpZyhcZnJhY3sxfXtUfVxzdW1fe3Q9MX1eVCB8XGhhdHtlfV90fFxiaWcpL3EkLCBkb25kZSAkcSQgZXMgZWwgZXJyb3IgYWJzb2x1dG8gbWVkaW8gcGFyYSB1biBtw6l0b2RvIGluZ2VudW8gZGUgcHJlZGljY2nDs246CiAgKiAkcT1cZnJhY3sxfXtULTF9XHN1bV97dD0yfV5UIHx5X3QteV97dC0xfXwkIHBhcmEgc2VyaWVzIF9zaW5fIGVzdGFjaW9uYWxpZGFkCiAgKiAkcT1cZnJhY3sxfXtULW19XHN1bV97dD1tKzF9XlQgfHlfdC15X3t0LW19fCQgcGFyYSBzZXJpZXMgX2Nvbl8gZXN0YWNpb25hbGlkYWQKClx2c3BhY2V7MC4zY219CgoqIENvcnJlbGFjacOzbiBlbnRyZSAkXGhhdHtlfV90JCB5ICRcaGF0e2V9X3t0LTF9JCAoQUNGMSkuCgpcCgpNRSB5IE1QRSBwZXJtaXRlbiB2YWxvcmFyIGVsIHNlc2dvIGRlIGxhcyBwcmVkaWNjaW9uZXMgKHF1ZSBlc3RhcyBlc3TDqW4gc2lzdGVtw6F0aWNhbWVudGUgcG9yIGVuY2ltYSBvIHBvciBkZWJham8gZGUgbG9zIHZhbG9yZXMgcmVhbGVzKS4KCiogTG8gZXNwZXJhZG8gZXMgdW4gdmFsb3IgY2VyY2FubyBhIGNlcm8gKGNvbiByZWxhY2nDs24gYWwgdmFsb3IgbWVkaW8gZGUgbGEgc2VyaWUpLiBWYWxvcmVzIG11eSBhbGVqYWRvcyBkZSBjZXJvIHNvbiBpbmRpY2Fkb3JlcyBkZSBzZXNnbyBkZSBwcmVkaWNjacOzbi4KClJNU0UgeSBNQUUgaW5kaWNhbiBlbCBlcnJvciBtZWRpbyBjb21ldGlkbywgbWVkaWRvIGVuIGxhcyBtaXNtYXMgdW5pZGFkZXMgcXVlIGxhIHNlcmllIHRlbXBvcmFsLgoKKiBFc3TDoW4gYWNvdGFkYXMgaW5mZXJpb3JtZW50ZSBwb3IgZWwgdmFsb3Igw7NwdGltbyBkZSAwLCBwZXJvIG5vIGhheSBjb3RhIHN1cGVyaW9yLgoKTUFQRSB5IHNNQVBFIGluZGljYW4gZWwgZXJyb3IgcG9yY2VudHVhbCBtZWRpbyBjb21ldGlkby4KCiogRXN0w6FuIGFjb3RhZGFzIGluZmVyaW9ybWVudGUgcG9yIGVsIHZhbG9yIMOzcHRpbW8gZGUgMCUsIHkgbGEgY290YSBzdXBlcmlvciBuYXR1cmFsIGVzIDEwMCUsIGF1bnF1ZSBwb2Ryw61hIHNvYnJlcGFzYXJzZS4KKiBTaSAkeV90JCBwdWVkZSB2YWxlciAwLCBlbnRvbmNlcyBNQVBFIG5vIHNlIHB1ZWRlIGNhbGN1bGFyLiBBZGVtw6FzLCBNQVBFIHBlbmFsaXphIG3DoXMgbG9zIGVycm9yZXMgbmVnYXRpdm9zIGZyZW50ZSBhIGxvcyBlcnJvcmVzIHBvc2l0aXZvcy4gTGEgbWVkaWRhIGRlIHByZWNpc2nDs24gc01BUEUgc2UgZGVmaW5lIGEgZmluIGRlIGNvcnJlZ2lyIGVzdG9zIHByb2JsZW1hcy4KICAgICAgCk1BU0UgZXMgbGEgcmF0aW8gZW50cmUgZWwgZXJyb3IgZGVsIG3DqXRvZG8gdXNhZG8geSBlbCBlcnJvciBkZSB1biBtw6l0b2RvIGluZ2VudW8gZGUgcHJlZGljY2nDs24uIFBlcm1pdGUgc2FiZXIgY3XDoW50byBnYW5hbW9zIGVuIGNhcGFjaWRhZCBwcmVkaWN0aXZhIGFsIHBhc2FyIGRlIHVuIG3DqXRvZG8gaW5nZW51byBhIG90cm8gbcOhcyBjb21wbGljYWRvLgoKKiBVbiB2YWxvciBjZXJjYW5vIGEgMSBpbmRpY2EgcXVlIGVsIG3DqXRvZG8gdXNhZG8gbm8gZXMgbWVqb3IgcXVlIGVsIG3DqXRvZG8gaW5nZW51bwoqIEN1YW50byBtw6FzIGNlcmNhbm8gYSAwLCBtZWpvciBlcyBlbCBtw6l0b2RvIHVzYWRvIHJlc3BlY3RvIGRlbCBtw6l0b2RvIGluZ2VudW8KKiBTdSBjb21wbGVtZW50YXJpbyBhIDEgc2UgcHVlZGUgaW50ZXJwcmV0YXIgY29tbyBsYSB0YXNhIGRlIG1lam9yYQoKQUNGMSBldmFsw7phIGxhIGNhcGFjaWRhZCBkZSBtZWpvcmEgcXVlIGhheSBlbiBsYSBlc3RpbWFjacOzbiBkZWwgaW50ZXJ2YWxvIGRlIGNvbmZpYW56YSBkZSBsYXMgcHJlZGljY2lvbmVzLiBMbyB2ZXJlbW9zIGNvbiBtw6FzIGRldGFsbGUgZW4gZWwgdGVtYSBkZSBtb2RlbG9zIEFSSU1BLiBQb3IgYWhvcmEgYmFzdGEgc2FiZXIgcXVlOgoKKiBVbiB2YWxvciBtdXkgY2VyY2FubyBhIDAgaW5kaWNhIHF1ZSBoYXkgcG9jYSBjYXBhY2lkYWQgZGUgbWVqb3JhLgoqIFVuIHZhbG9yIGNlcmNhbm8gYSAxIG8gLTEgaW5kaWNhIHF1ZSBoYXkgbXVjaGEgY2FwYWNpZGFkIGRlIG1lam9yYS4KCkxhcyBfbWVkaWFzXyBzZSBwdWVkZW4gc3VzdGl0dWlyIHBvciBfbWVkaWFuYXNfLiBFc3RvIGVzIGVzcGVjaWFsbWVudGUgw7p0aWwgY3VhbmRvIHBhcmEgYWxndW5hcyBvYnNlcnZhY2lvbmVzIGhheSBlcnJvcmVzIGF0w61waWNhbWVudGUgYWx0b3MuCgpcCgpTaSBwYXJhIHJlYWxpemFyIGxhIHByZWRpY2Npw7NuIGRlbCBwZXJpb2RvICR0JCBzZSB1c2EgdW5hIG1ldG9kb2xvZ8OtYSBxdWUgdXRpbGl6YSBkYXRvcyBoYXN0YSBkaWNobyBwZXJpb2RvLCBzZSBoYWJsYXLDoSBkZSAqKnByZWRpY2Npw7NuIHkgZXJyb3IgaW50cmEtbXVlc3RyYWwqKi4gRW4gY2FzbyBjb250cmFyaW8sIGxhIHByZWRpY2Npw7NuIGRlbCBwZXJpb2RvICR0JCB1c2EgdW5hIG1ldG9kb2xvZ8OtYSBxdWUgc29sbyBuZWNlc2l0YSBkZSBkYXRvcyBoYXN0YSBlbCBwZXJpb2RvICR0LTEkLCBzZSBoYWJsYXLDoSBkZSAqKnByZWRpY2Npw7NuIHkgZXJyb3IgZXh0cmEtbXVlc3RyYWwqKi4KClNpIGxvcyBpbmRpY2Fkb3JlcyBkZSBjYWxpZGFkIHNlIGJhc2FuIGVuIHByZWRpY2Npb25lcyBpbnRyYS1tdWVzdHJhbGVzIGEgdW4gcGVyaW9kbyB2aXN0YSwgcHJlc2VudGFuIGRvcyBwcm9ibGVtYXMuIFByaW1lcm8sIGV2YWzDumFuIGVsIGVycm9yIGRlIHByZWRpY2Npw7NuIGEgdW4gcGVyaW9kbyB2aXN0YSwgY3VhbmRvIGVuIG11Y2hhcyBzaXR1YWNpb25lcyByZWFsZXMgbGFzIHByZWRpY2Npb25lcyBzZSByZWFsaXphbiBzb2JyZSB1biBob3Jpem9udGUgdGVtcG9yYWwgbcOhcyBhbXBsaW8uIFNlZ3VuZG8sIHNvbiBlcnJvcmVzIGludHJhLW11ZXN0cmFsZXMsIHJlc3VsdGFudGVzIGRlIHByZWRlY2lyIGxvcyBtaXNtb3MgZGF0b3MgcXVlIHNoYSB1c2FkbyBlbCBtw6l0b2RvIHBhcmEgY2FsY3VsYXIgbGEgcHJlZGljY2nDs24geSwgcG9yIHRhbnRvLCBzb2JyZS1lc3RpbWFuIGxhIGNhcGFjaWRhZCBwcmVkaWN0aXZhIGRlbCBtb2RlbG8uCgpWZXJlbW9zIGR1cmFudGUgZW4gZXN0ZSB0ZW1hIG3DqXRvZG9zIGRlIGV2YWx1YWNpw7NuIGRlIGxhIGNhbGlkYWQgZGUgbGFzIHByZWRpY2Npb25lcyBxdWUgc3VwZXJhbiBlc3RhcyBsaW1pdGFjaW9uZXMuCgpcClwKCiMgTcOpdG9kb3Mgc2VuY2lsbG9zIGRlIHByZWRpY2Npw7NuCgpBbGd1bm9zIG3DqXRvZG9zIGRlIHByZWRpY2Npw7NuIHNvbiBleHRyZW1hZGFtZW50ZSBzZW5jaWxsb3MgeSBzb3JwcmVuZGVudGVtZW50ZSBlZmljYWNlcy4gQSB2ZWNlcyBzb24gZGVub21pbmFkb3MgbcOpdG9kb3MgaW5nZW51b3MuIEVzdG9zIG3DqXRvZG9zOgoKKiBwb3NpYmlsaXRhbiByZWFsaXphciBwcmVkaWNjaW9uZXMgcHLDoWN0aWNhbWVudGUgc2luIHJlYWxpemFyIG5pbmfDum4gY8OhbGN1bG8uIAoqIGNvbW8gc29uIG11eSBzZW5jaWxsb3MsIGRhbiBsYXMgcHJldmlzaW9uZXMgY29uIG1heW9yIGVycm9yIChtZW5vcyBwcmVjaXNhcykuIEVsIGVycm9yIGRlIHVuIG3DqXRvZG8gc2VuY2lsbG8gc2lydmUgZGUgcHVudG8gZGUgcmVmZXJlbmNpYSAoX2JlbmNobWFya18pIHBhcmEgdmFsb3JhciBsYSBuZWNlc2lkYWQgZGUgYXBsaWNhciBvdHJvcyBtw6l0b2RvcyBtw6FzIGNvbXBsaWNhZG9zIGNvbiBlbCBvYmpldGl2byBkZSBtZWpvcmFyIGxhIGNhbGlkYWQgZGUgbGFzIHByZWRpY2Npb25lcy4gCgpWZWFtb3MgYWxndW5vcyBtw6l0b2RvcyBzZW5jaWxsb3MgeSBzdXMgZnVuY2lvbmVzIGVuIGVsIHBhcXVldGUgYGZvcmVjYXN0YC4KClwKCiMjIE3DqXRvZG9zIHNlbmNpbGxvcyBkZSBwcmVkaWNjacOzbgoKIyMjIFNlcmllcyBfc2luXyB0ZW5kZW5jaWEgeSBfc2luXyBlc3RhY2lvbmFsaWRhZCB7LX0KCioqTcOpdG9kbyBkZSBsYSBNZWRpYSoqOiAkXGhhdHt5fV97VCtofT0oeV8xK1xsZG90cyx5X1QpL1QkLgoKKiBMYSBwcmVkaWNjacOzbiBwYXJhIGN1YWxxdWllciBwZXJpb2RvIGZ1dHVybyBlcyBsYSBfX21lZGlhX18gZGUgbGFzIG9ic2VydmFjaW9uZXMgZGlzcG9uaWJsZXMgcHJldmlhcy4KKiBGdW5jacOzbiBkZSBgUmA6IGBtZWFuZih5LCBoKWAKICAgIAoqKk3DqXRvZG8gaW5nZW51byBJKio6ICRcaGF0e3l9X3tUK2h9PXlfVCQuCgoqIExhIHByZWRpY2Npw7NuIHBhcmEgY3VhbHF1aWVyIHBlcmlvZG8gZnV0dXJvIGVzIGxhIF9fw7psdGltYV9fIG9ic2VydmFjacOzbiBkaXNwb25pYmxlLgoqIEZ1bmNpw7NuIGRlIGBSYDogYG5haXZlKHksIGgpYCBvIGByd2YoeSwgaClgIChfcndfIGRlIHJhbmRvbSB3YWxrKQoqIFBhcmEgc2VyaWVzIHNpbiBlc3RhY2lvbmFsaWRhZCBlc3RlIGVzIGVsIG3DqXRvZG8gaW5nZW51byBkZSBjb21wYXJhY2nDs24gZGVsIE1BU0UuCgoKIyMjIFNlcmllcyBfY29uXyB0ZW5kZW5jaWEgeSBfc2luXyBlc3RhY2lvbmFsaWRhZCB7LX0KCioqTcOpdG9kbyBpbmdlbnVvIElJKio6ICRcaGF0e3l9X3tUK2h9PXlfVCArIGgoeV9ULXlfe1QtMX0pJC4KCiogTGEgcHJlZGljY2nDs24gJGgkIHBlcmlvZG9zIGFkZWxhbnRlIGVzIGxhIF9fw7psdGltYSBvYnNlcnZhY2nDs25fXyBkaXNwb25pYmxlIG3DoXMgJGgkIHZlY2VzIGVsIF9fw7psdGltbyBpbmNyZW1lbnRvX18gb2JzZXJ2YWRvLiAKKiBObyB0aWVuZSBmdW5jacOzbiBlbiBgUmAsIHBlcm8gc2UgcG9kcsOtYSBlbXVsYXIgbWVkaWFudGUgbGEgZnVuY2nDs24gYGhvbHRgICh2w6lhc2UgZXDDrWdyYWZlIGRlIDUuNSBBbGlzYWRvIGV4cG9uZW5jaWFsIGRlIEhvbHQpLgogICAgICAKKipNw6l0b2RvIGRlIGxhIGRlcml2YSoqOiAkXGhhdHt5fV97VCtofT15X1QraFxmcmFje3lfVCAtIHlfMX17VC0xfSQuCgoqIExhIHByZWRpY2Npw7NuICRoJCBwZXJpb2RvcyBhZGVsYW50ZSBlcyBsYSBfX8O6bHRpbWEgb2JzZXJ2YWNpw7NuX18gZGlzcG9uaWJsZSBtw6FzICRoJCB2ZWNlcyBlbCBfX2luY3JlbWVudG8gbWVkaW9fXyBvYnNlcnZhZG8uCiogRnVuY2nDs24gZGUgYFJgOiBgcndmKHksIGgsIGRyaWZ0ID0gVFJVRSlgICAKCgojIyMgU2VyaWVzIF9zaW5fIHRlbmRlbmNpYSB5IF9jb25fIGVzdGFjaW9uYWxpZGFkIHstfQoKKipNw6l0b2RvIGluZ2VudW8gY29uIGVzdGFjaW9uYWxpZGFkKio6ICRcaGF0e3l9X3tUK2h9PXlfe1QtbShrKzEpfSQuCgoqICRrJCBlcyBsYSBwYXJ0ZSBlbnRlcmEgZGUgJChoLTEpL20kLCBlcyBkZWNpciwgZWwgbsO6bWVybyBkZSBhw7FvcyBjb21wbGV0b3MgZW4gZWwgcGVyaW9kbyBkZSBwcmVkaWNjacOzbiBwcmV2aW8gYWwgcGVyaW9kbyAkVCtoJC4KKiBMYSBwcmVkaWNjacOzbiBwYXJhIHVuIHBlcmlvZG8gZXMgbGEgX1/Dumx0aW1hIG9ic2VydmFjacOzbiBkaXNwb25pYmxlIGRlIGxhIG1pc21hIGVzdGFjacOzbiBxdWUgbGEgZmVjaGEgcXVlIHNlIGRlc2VhIHByZWRlY2lyX18uCiogRnVuY2nDs24gZGUgYFJgOiBgc25haXZlKHksIGgpYAoqIFBhcmEgc2VyaWVzIGNvbiBlc3RhY2lvbmFsaWRhZCBlc3RlIGVzIGVsIG3DqXRvZG8gaW5nZW51byBkZSBjb21wYXJhY2nDs24gZGVsIE1BU0UKICAgIApfX05vIGhheSBtw6l0b2RvcyBzZW5jaWxsb3MgY3VhbmRvIGxhIHNlcmllIHRpZW5lIHRlbmRlbmNpYSB5IGVzdGFjaW9uYWxpZGFkX18sIGF1bnF1ZSBsYSBhcGxpY2FjacOzbiBkZWwgbcOpdG9kbyBpbmdlbnVvIGNvbiBlc3RhY2lvbmFsaWRhZCBzdWVsZSBzZXIgbXV5IGVmZWN0aXZhLgoKXAoKIyMgRWplbXBsbyBkZSBhcGxpY2FjacOzbgoKIyMjIFNlcmllIExpYnJvcyB7LX0KIApgYGB7cn0KbGlicm9zIDwtIHJlYWQuY3N2MigiLi9zZXJpZXMvbGlicm9zLmNzdiIsIGhlYWRlciA9IFRSVUUpCmxpYnJvcyA8LSB0cyhsaWJyb3NbICwyXSwgc3RhcnQgPSAxOTkzLCBmcmVxdWVuY3kgID0gMSkKYGBgCgpFbiBsYSBmaWd1cmEgMSBzZSBtdWVzdHJhIGVsIHJlc3VsdGFkbyBncsOhZmljbyBkZSBsYSBhcGxpY2FjacOzbiBkZSBhbGd1bm9zIGRlIGVzdG9zIG3DqXRvZG9zIHNlbmNpbGxvcyBhIGxhIHNlcmllIExpYnJvcyAobsO6bWVybyBkZSB0w610dWxvcyBwdWJsaWNhZG9zIGFudWFsbWVudGUgZW4gRXNwYcOxYSBkZXNkZSAxOTkzIGhhc3RhIDIwMTgpLCBjb24gaW5kZXBlbmRlbmNpYSBkZSBzdSBhZGVjdWFjacOzbiBkYWRhcyBsYXMgY29tcG9uZW50ZXMgZGUgZXN0YSBzZXJpZS4gU2UgaGEgZmlqYWRvIHVuIGhvcml6b250ZSBkZSBwcmV2aXNpw7NuIGRlIGNpbmNvIGHDsW9zIChgaCA9IDVgKS4gRWwgYXJndW1lbnRvIGBQSSA9IEZBTFNFYCBoYWNlIHF1ZSBubyBzZSBpbXByaW1hbiBsb3MgaW50ZXJ2YWxvcyBkZSBjb25maWFuemEgZGUgbGFzIHByZWRpY2Npb25lcy4KCkxvcyBtw6l0b2RvcyBkZSBsYSBNZWRpYSBlIEluZ2VudW8gSSByZWFsaXphbiB1bmEgcHJlZGljY2nDs24gY29uc3RhbnRlLCBlbCBwcmltZXJvIGxhIG1lZGlhIGRlIHTDrXR1bG9zIGVuIGVsIHBlcmlvZG8gZGUgYW7DoWxpc2lzIChgciBhcy5pbnRlZ2VyKG1lYW4obGlicm9zKSlgKSB5IGVsIHNlZ3VuZG8gZWwgw7psdGltbyBkYXRvIG9ic2VydmFkbyAoYHIgdGFpbChhcy5pbnRlZ2VyKGxpYnJvcyksIG49MSlgKS4gRWwgbcOpdG9kbyBkZSBkZXJpdmEgb2ZyZWNlIHVuYSBwcmVkaWNjacOzbiBjcmVjaWVudGUgcG9ycXVlIGxhIHNlcmllIExpYnJvcyB0aWVuZSB1bmEgcGVuZGllbnRlIG1lZGlhIHBvc2l0aXZhIGVuIGVsIHBlcmlvZG8gZGUgYW7DoWxpc2lzLgoKUmVjdWVyZGEgcXVlIGRlYmVzIGNhcmdhciBsYXMgbGlicmVyw61hcyBgZm9yZWNhc3RgIHkgYGdncGxvdDJgLgoKYGBge3J9CihtZWRpYUxpYnJvcyA8LSBtZWFuZihsaWJyb3MsIGggPSA1KSkKKG5haXZlTGlicm9zIDwtIG5haXZlKGxpYnJvcywgaCA9IDUpKQooZGVyaXZhTGlicm9zIDwtIHJ3ZihsaWJyb3MsICBoID0gNSwgZHJpZnQgPSBUUlVFKSkKIAoKYXV0b3Bsb3QobGlicm9zLCBzZXJpZXMgPSAiTGlicm9zIiwKICAgICAgICAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgICAgICAgIHlsYWIgPSAiVMOtdHVsb3MiLAogICAgICAgICAgICAgICAgbWFpbiA9ICJGaWd1cmEgMS4gTGlicm9zIHkgcHJlZGljY2nDs24gcG9yIG3DqXRvZG9zIHNlbmNpbGxvcyIpICsKICBhdXRvbGF5ZXIobWVkaWFMaWJyb3MsIHNlcmllcz0iTWVkaWEiLCBQSSA9IEZBTFNFKSArCiAgYXV0b2xheWVyKG5haXZlTGlicm9zLCBzZXJpZXM9IkluZ2VudW8iLCBQSSA9IEZBTFNFKSArCiAgYXV0b2xheWVyKGRlcml2YUxpYnJvcywgc2VyaWVzPSJEZXJpdmEiLCBQSSA9IEZBTFNFKSArCiAgc2NhbGVfY29sb3VyX2Rpc2NyZXRlKGxpbWl0cz1jKCJMaWJyb3MiLCAiTWVkaWEiLCAiSW5nZW51byIsICJEZXJpdmEiKSkgKwogIGd1aWRlcyhjb2xvdXIgPSBndWlkZV9sZWdlbmQodGl0bGUgPSAiTcOpdG9kb3MiKSkgKyAKICB0aGVtZShsZWdlbmQucG9zaXRpb249YygwLjAyLDAuOTgpLCBsZWdlbmQuanVzdGlmaWNhdGlvbj1jKDAsMSkpCmBgYAoKQ29uIGxhIGZ1bmNpw7NuIGBhY2N1cmFjeWAgc2UgcHVlZGUgb2J0ZW5lciBlbCBlcnJvciBkZSBwcmVkaWNjacOzbiBpbnRyYS1tdWVzdHJhbCBhIHVuIHBlcmlvZG8gdmlzdGEgZGUgY2FkYSBtw6l0b2RvOgoKYGBge3IsIGV2YWwgPSBGQUxTRX0KYWNjdXJhY3kobWVkaWFMaWJyb3MpCmFjY3VyYWN5KG5haXZlTGlicm9zKQphY2N1cmFjeShkZXJpdmFMaWJyb3MpCmBgYAoKYGBge3IsIGVjaG89RkFMU0V9CnRtcCA8LSByYmluZCgKICBhY2N1cmFjeShtZWRpYUxpYnJvcyksCiAgYWNjdXJhY3kobmFpdmVMaWJyb3MpLAogIGFjY3VyYWN5KGRlcml2YUxpYnJvcykKKQp0bXAgPC0gcm91bmQodG1wLDIpCnJvd25hbWVzKHRtcCkgPC0gYygiTWVkaWEiLCJJbmdlbnVvIEkiLCJEZXJpdmEiKQp0bXAKYGBgCgpQb2RlbW9zIGRlc3RhY2FyIHF1ZToKCiogRWwgbcOpdG9kbyBkZSBfTWVkaWFfIHByZXNlbnRhIHVuYSBiYWphIGNhbGlkYWQgZGUgYWp1c3RlIGRlYmlkbyBhIHF1ZSBsYSBzZXJpZSBMaWJyb3MgdGllbmUgdGVuZGVuY2lhIChNQVBFID0gIDE0JSkuIEFkZW3DoXMsIGVsIGludGVydmFsbyBkZSBjb25maWFuemEgZGUgbGFzIHByZWRpY2Npb25lcyBubyBlcyBmaWFibGUgKEFDRjEgPSAwLjc3KS4KKiBFbCBtw6l0b2RvIGRlIF9EZXJpdmFfIHRpZW5lIGxhIG1lam9yIGNhbGlkYWQgZGUgYWp1c3RlLCBjb24gdW4gZXJyb3IgcG9yY2VudHVhbCBkZWwgNi45JSAoTUFQRSksIHkgdW4gZXJyb3IgbWVkaW8gYXByb3hpbWFkbyBkZSA2LDAwMCB0w610dWxvcyAoUk1TRSkuIE5vIHByZXNlbnRhIHNlc2dvIChNRSA9IDApIHkgZWwgaW50ZXJ2YWxvIGRlIGNvbmZpYW56YSBkZSBsYXMgcHJlZGljY2lvbmVzIGVzIGZpYWJsZSAoQUNGMSA9IC0wLjA0KS4KKiBFbCBtw6l0b2RvIF9JbmdlbnVvIElfIHRpZW5lIGJ1ZW5hIGNhbGlkYWQgZGUgYWp1c3RlLCBwZXJvIGxhcyBwcmV2aXNpb25lcyBlc3TDoW4gbGlnZXJhbWVudGUgc2VzZ2FkYXMgKE1FID0gODU3KS4KKiBQYXJhIHNlcmllcyBzaW4gZXN0YWNpb25hbGlkYWQgZWwgbcOpdG9kbyBzZW5jaWxsbyBkZSBjb21wYXJhY2nDs24gdXNhZG8gZW4gZWwgY8OhbGN1bG8gZGVsIE1BU0UgZXMgZWwgX0luZ2VudW8gSV8uIEVzIHBvciBlbGxvIHF1ZSBlc3RlIGluZGljYWRvciB2YWxlIDEgcGFyYSBlc3RlIG3DqXRvZG8uCiogRWwgZXJyb3IgbWVkaW8gKE1FKSBzaWVtcHJlIHNlcsOhIG51bG8gcGFyYSBlbCBtw6l0b2RvIGRlIGxhIF9NZWRpYV8geSBkZSBsYSBfRGVyaXZhXywgbG8gcXVlIGluZGljYSBxdWUgbm9zIGVxdWl2b2NhbW9zIHRhbnRvIHBvciBleGNlc28gY29tbyBwb3IgZGVmZWN0by4gRXN0YSBlcyB1bmEgYnVlbmEgcHJvcGllZGFkLCBxdWUgZWwgbcOpdG9kbyBfSW5nZW51byBJXyBubyB2ZXJpZmljYS4KCiMjIyBTZXJpZSBOYWNpbWllbnRvcyB7LX0KClBvZGVtb3MgdXNhciBlbCBtw6l0b2RvIGluZ2VudW8gY29uIGVzdGFjaW9uYWxpZGFkIGNvbiBsYSBzZXJpZSBOYWNpbWllbnRvcyBwYXJhIG9idGVuZXIgdW5hIHByZXZpc2nDs24gYSBkb3MgYcOxb3MgdmlzdGEuIEVsIGVycm9yIGFic29sdXRvIHBvcmNlbnR1YWwgbWVkaW8gZXMgZGVsIDMuNiUuIEVzIGRlY2lyLCBhcGxpY2FuZG8gYWxnbyB0YW4gc2ltcGxlIGNvbW8gcHJlZGVjaXIgZWwgbsO6bWVybyBkZSBuYWNpbWllbnRvcyBwYXJhIHVuIG1lcyBjb21vIGxvcyBuYWNpbWllbnRvcyBkZWwgbWlzbW8gbWVzIGRlbCBhw7FvIHByZXZpbywgdGVuZW1vcyB5YSB1biBlcnJvciBkZSBwcmVkaWNjacOzbiBtdXkgYmFqby4gTGEgZmlndXJhIDIgbXVlc3RyYSBsYSBzZXJpZSB5IGxhIHByZWRpY2Npw7NuIHF1ZSwgZGViaWRvIGFsIG3DqXRvZG8gdXNhZG8sIG5vIGluY29ycG9yYSBsYSB0ZW5kZW5jaWEgZGVjcmVjaWVudGUgZGUgbG9zIMO6bHRpbW9zIGHDsW9zLgoKYGBge3J9Cm5hY2ltaWVudG9zIDwtIHJlYWQuY3N2MigiLi9zZXJpZXMvbmFjaW1pZW50b3MuY3N2IiwgaGVhZGVyID0gVFJVRSkKbmFjaW1pZW50b3MgPC0gdHMobmFjaW1pZW50b3NbLCAyXSwKICAgICAgICAgICAgICAgICAgc3RhcnQgPSBjKDE5NzUsIDEpLAogICAgICAgICAgICAgICAgICBmcmVxdWVuY3kgPSAxMikKCihzbmFpdmUubmFjaW1pZW50b3MgPC0gc25haXZlKG5hY2ltaWVudG9zLCBoID0gMjQsIGxldmVsID0gOTUpKQphY2N1cmFjeShzbmFpdmUubmFjaW1pZW50b3MpCgphdXRvcGxvdChzbmFpdmUubmFjaW1pZW50b3MsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOYWNpbWllbnRvcyIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDIuIE5hY2ltaWVudG9zIHkgcHJlZGljY2nDs24gcG9yIGVsIG3DqXRvZG8gSW5nZW51byBjb24gZXN0YWNpb25hbGlkYWQiKQpgYGAKCgpcClwKCiMgRXZhbHVhY2nDs24gZGUgbGFzIHByZWRpY2Npb25lcwoKTGFzIG1lZGlkYXMgcXVlIGhlbW9zIHVzYWRvIGhhc3RhIGFob3JhIHBhcmEgdmFsb3JhciBsYSBjYWxpZGFkIGRlIGxhcyBwcmVkaWNjaW9uZXMgc29uIHJlYWxtZW50ZSBtZWRpZGFzIGRlIGJvbmRhZCBkZSBhanVzdGUsIGVzIGRlY2lyLCBtZWRpZGFzIGRlIGxhIGNhbGlkYWQgZGUgX19wcmV2aXNpb25lcyBpbnRyYS1tdWVzdHJhbGVzIGEgdW4gcGVyaW9kbyB2aXN0YV9fLiBWYWxvcmFuIGVuIHF1ZSBtZWRpZGEgbG9zIGRhdG9zIHNlIGFqdXN0YW4gYSB1biBwYXRyw7NuIG8gbW9kZWxvLCBwZXJvIG5vIGV2YWzDumFuIGxhIGNhbGlkYWQgZGUgbGEgcHJldmlzaW9uZXMgYW50ZSBudWV2b3MgZGF0b3MuCgpFbiBlc3RlIGVww61ncmFmZSB2YW1vcyBhIHZlciBkb3MgbWV0b2RvbG9nw61hcyBxdWUgcG9kZW1vcyB1c2FyIHBhcmEgdmFsb3JhciBsYSBjYWxpZGFkIGRlIGxhcyBfX3ByZXZpc2lvbmVzIGV4dHJhLW11ZXN0cmFsZXNfXywgcXVlIGVzIHJlYWxtZW50ZSBsbyBxdWUgbm9zIGludGVyZXNhLiBFc3RhcyBkb3MgbWV0b2RvbG9nw61hcyBlc3TDoW4gcmVsYWNpb25hZGFzIGNvbiBsb3MgbcOpdG9kb3MgZGUgX1RyYWluaW5nIHNldC9UZXN0IHNldF8geSBfQ3Jvc3MtdmFsaWRhdGlvbl8gcXVlIHZpc3RlIGVuIF9QcmV2aXNpw7NuIGNvbiBkYXRvcyB0cmFuc3ZlcnNhbGVzXywgcGVybyBhZGFwdGFkYXMgYSBkYXRvcyB0ZW1wb3JhbGVzLgoKIyMgVmFsaWRhY2nDs24gcG9yIGxhIG1ldG9kb2xvZ8OtYSBkZSBfVHJhaW5pbmcgc2V0L1Rlc3Qgc2V0XyBwYXJhIFNlcmllcyBUZW1wb3JhbGVzCgpWYW1vcyBhIG1lam9yYXIgbGEgZXN0aW1hY2nDs24gZGUgbGEgY2FsaWRhZCBkZSBsYXMgcHJlZGljY2lvbmVzIG9idGVuaWVuZG8gbGFzIG1lZGlkYXMgZGUgZXJyb3IgcGFyYSBfX3ByZXZpc2lvbmVzIGV4dHJhLW11ZXN0cmFsZXMgYSB2YXJpb3MgcGVyaW9kb3MgdmlzdGFfXyB1c2FuZG8gbGEgZmlsb3NvZsOtYSBkZWwgbcOpdG9kbyBfdHJhaW5pbmcgc2V0L3Rlc3Qgc2V0Xy4gRGl2aWRpbW9zIGxhIHNlcmllIHRlbXBvcmFsICRce3lfdFx9X3t0PTF9XlQkIGVuIGRvcyBzdWJzZXJpZXMsIGxvcyBwcmltZXJvcyBkYXRvcyAkXHt5X3RcfV97dD0xfV57VF8wfSQsICRUXzAgPCBUJCBzZSB1c2Fyw6FuIHBhcmEgZXN0aW1hciBlbCBtb2RlbG8sIHkgbG9zIMO6bHRpbW9zIGRhdG9zICRce3lfdFx9X3t0PXtUXzArMX19XntUfSQgcGFyYSB2YWxpZGFyIGVsIG1vZGVsby4KCkVzdGEgbWV0b2RvbG9nw61hLCBtdXkgZWZlY3RpdmEgcGFyYSBkYXRvcyBkZSBjb3J0ZSB0cmFuc3ZlcnNhbCwgZ2VuZXJhIGRvcyBwcm9ibGVtYXMgY3VhbmRvIHNlIGFwbGljYSBhIHNlcmllcyB0ZW1wb3JhbGVzOiBfaV8pIGVsIGVycm9yIG9idGVuaWRvIGVzIHVuYSBtZXpjbGEgZGUgZXJyb3JlcyBkZSBwcmVkaWNjacOzbiBhIGNvcnRvLCBtZWRpbyB5IGxhcmdvIHBsYXpvIGRpZsOtY2lsIGRlIHZhbG9yYXI7IF9paV8pIGxvcyByZXN1bHRhZG9zIGRlcGVuZGVuIHRyZW1lbmRhbWVudGUgZGVsIHB1bnRvIGRlIGNvcnRlIHRlbXBvcmFsIHNlbGVjY2lvbmFkby4KCiMjIyBTZXJpZSBMaWJyb3Mgey19CgpWYW1vcyBhIHJlc2VydmFyLCBwb3IgZWplbXBsbywgbGFzIMO6bHRpbWFzIDYgb2JzZXJ2YWNpb25lcyBkZSBsYSBzZXJpZSBMaWJyb3MgeSBhanVzdGFyIGVsIG1vZGVsbyBjb24gbGFzIHJlc3RhbnRlcy4gRGVzcHXDqXMgdXNhcmVtb3MgZXN0ZSBtb2RlbG8gcGFyYSBjYWxjdWxhciBsYXMgcHJlZGljY2lvbmVzIGEgNiBwZXJpb2RvcyB2aXN0YSB5IGNvbXBhcmFybGFzIGNvbiBsb3MgdmFsb3JlcyByZWFsZXMgZGUgbGEgc2VyaWUuIAoKYGBge3IsIGV2YWwgPSBGQUxTRX0KIyBEZWZpbmltb3MgbGFzIG9ic2VydmFjaW9uZXMgaW50cmEtIHkgZXh0cmEtbXVlc3RyYWxlcwpsaWJyb3NJbnRyYSA8LSBzdWJzZXQobGlicm9zLCBlbmQgPSBsZW5ndGgobGlicm9zKSAtIDYpCmxpYnJvc0V4dHJhIDwtIHN1YnNldChsaWJyb3MsIHN0YXJ0ID0gbGVuZ3RoKGxpYnJvcykgLSA1KQoKIyBFc3RpbWFtb3MgZWwgbW9kZWxvIGNvbiB0b2RvcyBsb3MgZGF0b3MgbWVub3MgbG9zIDYgdWx0aW1vcyB5CiMgcHJlZGVjaW1vcyBsb3MgNiBhw7FvcyBxdWUgaGVtb3MgcXVpdGFkbyBkZSBsYSBzZXJpZSAKbGlicm9zRXh0cmFQcmUgPC0gcndmKGxpYnJvc0ludHJhLCAgaCA9IDYsIGRyaWZ0ID0gVFJVRSkKCiMgVmVtb3MgbGEgY2FsaWRhZCBkZWwgYWp1c3RlLiBQcmltZXJvIGxhIHByZWRpY2Npw7NuIHkgbHVlZ28gbG9zIGRhdG9zIHJlYWxlcwphY2N1cmFjeShsaWJyb3NFeHRyYVByZSwgbGlicm9zRXh0cmEpCmBgYAoKYGBge3IsIGVjaG8gPSBGQUxTRX0KIyBEZWZpbmltb3MgbGFzIG9ic2VydmFjaW9uZXMgaW50cmEtIHkgZXh0cmEtbXVlc3RyYWxlcwpsaWJyb3NJbnRyYSA8LSBzdWJzZXQobGlicm9zLCBlbmQgPSBsZW5ndGgobGlicm9zKSAtIDYpCmxpYnJvc0V4dHJhIDwtIHN1YnNldChsaWJyb3MsIHN0YXJ0ID0gbGVuZ3RoKGxpYnJvcykgLSA1KQoKIyBFc3RpbWFtb3MgZWwgbW9kZWxvIGNvbiB0b2RvcyBsb3MgZGF0b3MgbWVub3MgbG9zIDYgdWx0aW1vcyB5CiMgcHJlZGVjaW1vcyBsb3MgNyBhw7FvcyBxdWUgaGVtb3MgcXVpdGFkbyBkZSBsYSBzZXJpZSAKbGlicm9zRXh0cmFQcmUgPC0gcndmKGxpYnJvc0ludHJhLCAgaCA9IDYsIGRyaWZ0ID0gVFJVRSkKCiMgVmVtb3MgbGEgY2FsaWRhZCBkZWwgYWp1c3RlLiBQcmltZXJvIGxhIHByZWRpY2Npw7NuIHkgbHVlZ28gbG9zIGRhdG9zIHJlYWxlcwpyb3VuZChhY2N1cmFjeShsaWJyb3NFeHRyYVByZSwgbGlicm9zRXh0cmEpLCAyKQoKZXJyb3IubXVlc3RyYWwuMSA8LSByb3VuZChhY2N1cmFjeShsaWJyb3NFeHRyYVByZSwgbGlicm9zRXh0cmEpWzEsNV0sIDEpCmVycm9yLmV4dHJhbXVlc3RyYWwubiA8LSByb3VuZChhY2N1cmFjeShsaWJyb3NFeHRyYVByZSwgbGlicm9zRXh0cmEpWzIsNV0sMSkKYGBgCgpBdGVuZGllbmRvIGFsIE1BUEUgc2UgdGllbmUgcXVlIGVsIGVycm9yIGRlIF9fcHJldmlzacOzbiBhIHVuIHBlcmlvZG8gdmlzdGFfXyBlbiBlbCBfX3BlcmlvZG8gaW50cmEtbXVlc3RyYWxfXyBkZSBfXzE5OTMgYSAyMDEyX18gZXMgZGVsIGByIGVycm9yLm11ZXN0cmFsLjFgJTsgbWllbnRyYXMgcXVlIGVsIGVycm9yIGRlIF9fcHJldmlzacOzbiBhIGxhcmdvIHBsYXpvX18gZW4gZWwgX19wZXJpb2RvIGV4dHJhLW11ZXN0cmFsX18gZGUgX18yMDEzIGEgMjAxOF9fIGVzIGRlbCBgciBlcnJvci5leHRyYW11ZXN0cmFsLm5gJS4gQWRlbWFzLCBwYXJhIGVsIHBlcmlvZG8gZXh0cmEtbXVlc3RyYWwgZWwgZXJyb3IgbWVkaW8gKE1FKSBlcyBuZWdhdGl2byB5IG11eSBlbGV2YWRvLCB1biBpbmRpY2F0aXZvIGRlIHF1ZSBsYXMgcHJldmlzaW9uZXMgZXN0w6FuIHNlZ2FkYXMgKHNvYnJlLWVzdGltYW4gbGEgcmVhbGlkYWQpLiBFbiByZXN1bWVuLCBsYSBjYWxpZGFkIGRlbCBtb2RlbG8gc2UgZGV0ZXJpb3JhIG11eSByw6FwaWRhbWVudGUgZW4gY3VhbnRvIG5vcyBzYWxpbW9zIGRlIGxhcyBjb25kaWNpb25lcyDDs3B0aW1hcy4gCgpVbiBncsOhZmljbyBwdWVkZSBheXVkYXIgYSBlbnRlbmRlciBlc3RlIHByb2Nlc28gZGUgdmFsaWRhY2nDs24uIEVuIGxhIGZpZ3VyYSAzOgoKKiBMYSBsw61uZWEgZGUgcHVudG9zIHZlcnRpY2FsIHNlcGFyYSBlbCBwZXJpb2RvIG11ZXN0cmFsICgxOTkzLTIwMTIpIHVzYWRvIHBhcmEgZXN0aW1hciBlbCBtb2RlbG8sIGRlbCBwZXJpb2RvIGV4dHJhLW11ZXN0cmFsICgyMDEzLTIwMTgpIHVzYWRvIHPDs2xvIHBhcmEgaGFjZXIgbGFzIHByZXZpc2lvbmVzLgoqIExhIHNlcmllIExpYnJvcyBhcGFyZWNlIGNvbW8gdW5hIGzDrW5lYSBzw7NsaWRhIGVuIG5lZ3JvLCBkZXNkZSAxOTkzIGhhc3RhIDIwMTguCiogTGEgcHJldmlzacOzbiBfaW50cmFfLW11ZXN0cmFsIChhIHVuIHBlcmlvZG8gdmlzdGEpIGRlIGxhIHNlcmllIExpYnJvcyBhcGFyZWNlIGNvbW8gdW5hIGzDrW5lYSBhenVsLgoqIExhIGzDrW5lYSBlbiByb2pvIGVzIGxhIHByZXZpc2nDs24gX2V4dHJhXy1tdWVzdHJhbCBhIGxhcmdvIHBsYXpvLiBPYnNlcnZhIHF1ZSB0b2RhcyBsYXMgcHJldmlzaW9uZXMgZXN0w6FuIHBvciBlbmNpbWEgZGVsIHZhbG9yIHJlYWwgZGUgbGEgc2VyaWUuCiogQWwgbGFkbyBkZSBjYWRhIHByZXZpc2nDs24gKGludHJhLSB5IGV4dHJhLW11ZXN0cmFsKSBzZSBoYSBpbmRpY2FkbyBlbCBlcnJvciBlc3RpbWFkbyAoTUFQRSkuCgpDbGFyYW1lbnRlIGVzdG9zIHJlc3VsdGFkb3MgZGVwZW5kZW4gZGVsIHB1bnRvIGRlIGNvcnRlIHNlbGVjY2lvbmFkby4KCmBgYHtyLGVjaG89RkFMU0V9CmF1dG9wbG90KGxpYnJvcywgc2VyaWVzID0gIkxpYnJvcyIsCiAgICAgICAgIG1haW49IkZpZ3VyYSAzLiBMaWJyb3MsIHByZWRpY2Npw7NuIGludHJhLSB5IGV4dHJhLW11ZXN0cmFsIiwKICAgICAgICAgeGxhYj0iIiwgCiAgICAgICAgIHlsYWI9IlTDrXR1bG9zIgogICAgICAgICApICsKICBhdXRvbGF5ZXIoZml0dGVkKGxpYnJvc0V4dHJhUHJlKSwgc2VyaWVzID0gIkxpYnJvcyAoYWp1c3RhZGEpIikgKyAKICBhdXRvbGF5ZXIobGlicm9zRXh0cmFQcmUkbWVhbiwgc2VyaWVzID0gIlByZWRpY2Npw7NuIikgKyAKICBnZW9tX3ZsaW5lKHhpbnRlcmNlcHQgPSAyMDEyLjUsIGx0eSA9IDIsIGNvbCA9ICJibGFjayIpICsKICBzY2FsZV9jb2xvdXJfbWFudWFsKHZhbHVlcz1jKCJMaWJyb3MiPSJibGFjayIsCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiTGlicm9zIChhanVzdGFkYSkiPSJibHVlIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiUHJlZGljY2nDs24iID0gInJlZCIpKSArCiAgZ3VpZGVzKGNvbG91ciA9IGd1aWRlX2xlZ2VuZCh0aXRsZSA9ICJTZXJpZXMiKSkgKwogIGFubm90YXRlKCJ0ZXh0IiwgeD0xOTk5LCB5PTY1MDAwLCBsYWJlbD0iNi41JSIsIGNvbG91ciA9ICJibHVlIikgKwogIGFubm90YXRlKCJ0ZXh0IiwgeD0yMDE2LCB5PTcyMDAwLCBsYWJlbD0iMjYuNyUiLCBjb2xvdXIgPSAicmVkIikgKwogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbj1jKDAuMDIsMC45OCksIGxlZ2VuZC5qdXN0aWZpY2F0aW9uPWMoMCwxKSkgCmBgYAoKIyMjIFNlcmllIE5hY2ltaWVudG9zIHstfQoKQ2FsY3VsYW1vcyBkZSBudWV2byBsb3MgZGlmZXJlbnRlcyBjcml0ZXJpb3MgZGUgYm9uZGFkIGRlIGFqdXN0ZSBwYXJhIHZhbG9yYXIgbGEgY2FsaWRhZCBkZSBsYXMgcHJldmlzaW9uZXMgZXh0cmEtbXVlc3RyYWxlcyBhIGxhcmdvIHBsYXpvLiBFbiBlc3RlIGNhc28gdmFtb3MgYSByZXNlcnZhciBsb3Mgw7psdGltb3MgMzYgbWVzZXMgY29tbyBwZXJpb2RvIGV4dHJhLW11ZXN0cmFsLgogIApgYGB7ciwgZXZhbCA9IEZBTFNFfQpuYWNpbWllbnRvc0ludHJhIDwtIHN1YnNldChuYWNpbWllbnRvcywgZW5kID0gbGVuZ3RoKG5hY2ltaWVudG9zKSAtIDM2KQpuYWNpbWllbnRvc0V4dHJhIDwtIHN1YnNldChuYWNpbWllbnRvcywgc3RhcnQgPSBsZW5ndGgobmFjaW1pZW50b3MpIC0gMzUpCgpuYWNpbWllbnRvc0V4dHJhUHJlIDwtIHNuYWl2ZShuYWNpbWllbnRvc0ludHJhLCBoID0gMzYpCgphY2N1cmFjeShuYWNpbWllbnRvc0V4dHJhUHJlLCBuYWNpbWllbnRvc0V4dHJhKQpgYGAKCmBgYHtyLCBlY2hvID0gRkFMU0V9Cm5hY2ltaWVudG9zSW50cmEgPC0gc3Vic2V0KG5hY2ltaWVudG9zLCBlbmQgPSBsZW5ndGgobmFjaW1pZW50b3MpIC0gMzYpCm5hY2ltaWVudG9zRXh0cmEgPC0gc3Vic2V0KG5hY2ltaWVudG9zLCBzdGFydCA9IGxlbmd0aChuYWNpbWllbnRvcykgLSAzNSkKCm5hY2ltaWVudG9zRXh0cmFQcmUgPC0gc25haXZlKG5hY2ltaWVudG9zSW50cmEsIGggPSAzNikKCnJvdW5kKGFjY3VyYWN5KG5hY2ltaWVudG9zRXh0cmFQcmUsIG5hY2ltaWVudG9zRXh0cmEpLCAyKQpgYGAKCmBgYHtyLCBlY2hvID0gRkFMU0V9CmF1dG9wbG90KG5hY2ltaWVudG9zLCBzZXJpZXMgPSAiTmFjaW1pZW50b3MiLAogICAgICAgICBtYWluPSJGaWd1cmEgNC4gTmFjaW1pZW50b3MsIHByZWRpY2Npw7NuIGludHJhLSB5IGV4dHJhLW11ZXN0cmFsIiwKICAgICAgICAgeGxhYj0iIiwgCiAgICAgICAgIHlsYWI9Ik5hY2ltaWVudG9zIgogICAgICAgICApICsKICBhdXRvbGF5ZXIoZml0dGVkKG5hY2ltaWVudG9zRXh0cmFQcmUpLCBzZXJpZXMgPSAiTmFjaW1pZW50b3MgKGFqdXN0YWRhKSIpICsgCiAgYXV0b2xheWVyKG5hY2ltaWVudG9zRXh0cmFQcmUkbWVhbiwgc2VyaWVzID0gIlByZWRpY2Npw7NuIikgKyAKICBzY2FsZV9jb2xvdXJfbWFudWFsKHZhbHVlcz1jKCJOYWNpbWllbnRvcyI9ImJsYWNrIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJOYWNpbWllbnRvcyAoYWp1c3RhZGEpIj0iYmx1ZSIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIlByZWRpY2Npw7NuIiA9ICJyZWQiKSkgKwogIGd1aWRlcyhjb2xvdXIgPSBndWlkZV9sZWdlbmQodGl0bGUgPSAiU2VyaWVzIikpICsKICBhbm5vdGF0ZSgidGV4dCIsIHg9MjAxMiwgeT00NTAwMCwgbGFiZWw9IjMuNiUiLCBjb2xvdXIgPSAiYmx1ZSIpICsKICBhbm5vdGF0ZSgidGV4dCIsIHg9MjAxOCwgeT00MDAwMCwgbGFiZWw9IjcuNyUiLCBjb2xvdXIgPSAicmVkIikgKyAKICB0aGVtZShsZWdlbmQucG9zaXRpb249YygwLjk4LDAuOTgpLCBsZWdlbmQuanVzdGlmaWNhdGlvbj1jKDEsMSkpIApgYGAKCkxhcyBwcmV2aXNpb25lcyBleHRyYS1tdWVzdHJhbGVzIG11ZXN0cmFuIHVuYSBtZW5vciBwZW5kaWVudGUgcXVlIGxvcyBjYXNvcyByZWFsZXMgZGUgbmFjaW1pZW50b3MuIEFzw60sIGNvbmZvcm1lIHNlIGF2YW56YSBlbiBlbCBob3Jpem9udGUgdGVtcG9yYWwgbGFzIHByZXZpc2lvbmVzIHNlIHZhbiBhbGVqYW5kbyBkZSBsYSByZWFsaWRhZCB5IGVsIGVycm9yIGV4dHJhLW11ZXN0cmFsIGVzIGRlbCA3LjclLCByZWR1Y2lkbyBwZXJvIHF1ZSBkdXBsaWNhIGVsIGVycm9yIGRlIGVzdGltYWNpw7NuIGludHJhLW11ZXN0cmFsICgzLjYlKS4KClwKCiMjIFZhbGlkYWNpw7NuIGNydXphZGEgcGFyYSBTZXJpZXMgVGVtcG9yYWxlcwoKSGVtb3MgdmlzdG8gZG9zIGFsdGVybmF0aXZhcyBwYXJhIGV2YWx1YXIgbGEgY2FsaWRhZCBkZSB1biBtw6l0b2RvIGRlIHByZWRpY2Npw7NuIGRlIHNlcmllcyB0ZW1wb3JhbGVzLCB1bm8gYmFzYWRvIGVuIHByZWRpY2Npb25lcyBpbnRyYS1tdWVzdHJhbGVzIGEgdW4gcGVyaW9kbyB2aXN0YSB5IG90cm8gYmFzYWRvIGVuIHByZWRpY2Npb25lcyBleHRyYS1tdWVzdHJhbGVzIGEgbGFyZ28gcGxhem8sIGFtYmFzIGNvbiBzdXMgaW5jb252ZW5pZW50ZXMuCgpWZWFtb3MgYWhvcmEgdW5hIHTDqWNuaWNhLCBiYXNhZGEgZW4gZWwgY29uY2VwdG8gZGUgdmFsaWRhY2nDs24gY3J1emFkYSAoX2Nyb3NzIHZhbGlkYXRpb25fKSBxdWUgcGVybWl0ZSBvYnRlbmVyIGRlIGZvcm1hIGluZGl2aWR1YWxpemFkYSBsb3MgZXJyb3JlcyBkZSBwcmV2aXNpw7NuIGV4dHJhLW11ZXN0cmFsIGEgdW4gcGVyaW9kbyB2aXN0YSwgYSBkb3MgcGVyaW9kb3MgdmlzdGEsIGV0Yy4KClN1cG9uZ2Ftb3MgcXVlIHBhcmEgZXN0aW1hciBlbCBtb2RlbG8gc2UgbmVjZXNpdGEgdW4gbcOtbmltbyBkZSAkayQgb2JzZXJ2YWNpb25lcyB5IHF1ZSBzZSBkZXNlYSBwcmVkZWNpciBoYXN0YSB1biBob3Jpem9udGUgdGVtcG9yYWwgJGgkLgoKKiBTZWxlY2Npb25hbW9zIGxhcyBvYnNlcnZhY2lvbmVzICQxLDIsLi4uLGskIHBhcmEgZXN0aW1hciBlbCBtb2RlbG8geSBwcmVkZWNpbW9zIGxhcyBvYnNlcnZhY2lvbmVzIGRlc2RlICRrKzEkIGhhc3RhICRrK2gkLiBUZW5lbW9zLCBwb3IgdGFudG8sICRoJCBwcmVkaWNjaW9uZXMuCiogQ2FsY3VsYW1vcyBlbCBlcnJvciBkZSBwcmVkaWNjacOzbiBwYXJhIGxhcyBwcmVkaWNjaW9uZXMgZGVzZGUgJGsrMSQgaGFzdGEgJGsraCQuCiogUmVwZXRpbW9zIGVzdGUgcHJvY2VzbyBkZXNwbGF6YW5kbyBlbCBuw7ptZXJvIGRlIG9ic2VydmFjaW9uZXMgc2VsZWNjaW9uYWRhcyBwYXJhIGxhIGVzdGltYWNpw7NuIHVuIHBlcmlvZG8gYWRlbGFudGUuIEVzIGRlY2lyLCBhaG9yYSB1c2Ftb3MgbGFzIG9ic2VydmFjaW9uZXMgJDIsMywuLi4saysxJCBwYXJhIGVzdGltYXIgZWwgbW9kZWxvLCBwcmVkZWNpbW9zIGxhcyBvYnNlcnZhY2lvbmVzIGRlc2RlICRrKzIkIGhhc3RhICRrKzEraCQgeSBjYWxjdWxhbW9zIGVsIGVycm9yIGRlIHByZWRpY2Npw7NuLgoqIEl0ZXJhbW9zIGVsIHByb2Nlc28sIGRlc3BsYXphbmRvIGNhZGEgdmV6IGxhcyBvYnNlcnZhY2lvbmVzIGRlIGxhIGVzdGltYWNpw7NuIHVuIHBlcmlvZG8gYWRlbGFudGUuCiogRW4gZ2VuZXJhbCBwYXJhICRpPTAsMSwuLi4sVC1rLWgkLCBkb25kZSAkVCQgZXMgZWwgbsO6bWVybyB0b3RhbCBkZSBvYnNlcnZhY2lvbmVzOgogIAogIDEuIFNlbGVjY2lvbmFtb3MgbGFzIG9ic2VydmFjaW9uZXMgJGkrMSxpKzIsLi4uLGkrayQgcGFyYSBlc3RpbWFyIGVsIG1vZGVsby4KICAyLiBQcmVkZWNpbW9zIGxhcyBvYnNlcnZhY2lvbmVzIGRlc2RlICRpK2srMSQgaGFzdGEgJGkraytoJC4KICAzLiBDYWxjdWxhbW9zIGVsIGVycm9yIGRlIHByZWRpY2Npw7NuIHBhcmEgbGFzIG9ic2VydmFjaW9uZXMgZGVzZGUgJGkraysxJCBoYXN0YSAkaStrK2gkLgogIDQuIFBhcmEgY2FkYSBob3Jpem9udGUgdGVtcG9yYWwgZGUgcHJlZGljY2nDs24gc2UgY2FsY3VsYSBsYSBtZWRpZGEgZGUgZXJyb3IgZGVzZWFkYS4KClwKXAoKIVtdKC4vaW1hZ2VuZXMvUm9sbGluZ1dpbmRvd3MucG5nKQoKRXN0ZSBwcm9jZWRpbWllbnRvIHNlIGRlbm9taW5hIF9fb3JpZ2VuIGRlIHByZWRpY2Npw7NuIG3Ds3ZpbF9fIChfcm9sbGluZyBmb3JlY2FzdCBvcmlnaW5fKSBvIF9yb2xsaW5nIHdpbmRvd3NfLgoKQ3VhbmRvIHNlIGFwbGljYSBlc3RhIG1ldG9kb2xvZ8OtYSBoYXkgcXVlIHRlbmVyIGVuIGN1ZW50YSBxdWUgbG9zIHJlc3VsdGFkb3MgcHVlZGVuIGRlcGVuZGVyIGRlbCBuw7ptZXJvICRrJCBkZSBkYXRvcyB1c2Fkb3MgcGFyYSBsYSBlc3RpbWFjacOzbiBkZWwgbW9kZWxvLgoKIyMjIEVqZW1wbG8gZGUgYXBsaWNhY2nDs24gY29uIE5hY2ltaWVudG9zIHstfQoKVmFtb3MgYSBhcGxpY2FyIGxhIG1ldG9kb2xvZ8OtYSBwcmV2aWEgYSBsYSBzZXJpZSBhbnVhbCBkZSBOYWNpbWllbnRvcy4gQXN1bWltb3MgcXVlIHNlIHByZWNpc2FuIHZlaW50ZSBhw7FvcyBwYXJhIGhhY2VyIHVuYSBidWVuYSBlc3RpbWFjacOzbiwgJGs9MjAkLCB5IHF1ZSBlbCBob3Jpem9udGUgdGVtcG9yYWwgZXMgZGUgY2luY28gYcOxb3MsICRoID0gNSQuIExhIHNpZ3VpZW50ZSBydXRpbmEgcGVybWl0ZSBvYnRlbmVyIGVsIE1BUEUgcGFyYSBwcmV2aXNpb25lcyBjb24gdW4gaG9yaXpvbnRlIHRlbXBvcmFsIGRlc2RlIHVubyBhIGNpbmNvIGHDsW9zLgogIApgYGB7cn0gIApuYWNBbnVhbCA8LSBhZ2dyZWdhdGUobmFjaW1pZW50b3MsIEZVTiA9IHN1bSkKayA8LSAyMCAgICAgICAgICAgICAgICAgICAjTWluaW1vIG51bWVybyBkZSBkYXRvcyBwYXJhIGVzdGltYXIKaCA8LSA1ICAgICAgICAgICAgICAgICAgICAjSG9yaXpvbnRlIGRlIGxhcyBwcmVkaWNpY2lvbmVzClRUIDwtIGxlbmd0aChuYWNBbnVhbCkgICAgI0xvbmdpdHVkIHNlcmllCnMgPC0gVFQgLSBrIC0gaCAgICAgICAgICAgI1RvdGFsIGRlIGVzdGltYWNpb25lcwoKbWFwZVJ3ZiA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQpmb3IgKGkgaW4gMDpzKSB7CiAgdHJhaW4uc2V0IDwtIHN1YnNldChuYWNBbnVhbCwgc3RhcnQgPSBpICsgMSwgZW5kID0gaSArIGspCiAgdGVzdC5zZXQgPC0gIHN1YnNldChuYWNBbnVhbCwgc3RhcnQgPSBpICsgayArIDEsIGVuZCA9IGkgKyBrICsgaCkKICAKICBmY2FzdCA8LSByd2YodHJhaW4uc2V0LCBoID0gaCwgZHJpZnQgPSBUUlVFKQogIG1hcGVSd2ZbaSArIDEsXSA8LSAxMDAqYWJzKHRlc3Quc2V0IC0gZmNhc3QkbWVhbikvdGVzdC5zZXQKfQoKbWFwZVJ3ZiA8LSBjb2xNZWFucyhtYXBlUndmKQpyb3VuZChtYXBlUndmLCAyKQpgYGAKCkVsIGVycm9yIGRlIHByZXZpc2nDs24gZXh0cmEtbXVlc3RyYWwgY3JlY2UgbGluZWFsbWVudGUgY29uIGVsIGhvcml6b250ZSBkZSBwcmV2aXNpw7NuLiBQYXJhIGVsIHByaW1lciBhw7FvIGVsIGVycm9yIGRlIHByZWRpY2Npw7NuIHNlIG1hbnRpZW5lIGVuIHVuIG1vZGVyYWRvIDQuMiUuIFNpbiBlbWJhcmdvLCBwYXJhIGVsIHNlZ3VuZG8gYcOxbyBkZSBwcmVkaWNjacOzbiBlbCBNQVBFIHNhbHRhIGFsIDguMiUgeSBwYXJhIGxvcyByZXN0YW50ZXMgYcOxb3Mgc2lndWUgY3JlY2llbmRvIHLDoXBpZGFtZW50ZS4gUHJlZGVjaXIgdXNhbmRvIGxhIHRlbmRlbmNpYSBtZWRpYSBzb2xvIGVzIHVuIGJ1ZW4gbcOpdG9kbyBwYXJhIHByZWRlY2lyIGEgdW4gYcOxbyB2aXN0YS4KClwKXAoKIyBSZXN1bWVuIGRlIGxvcyBjb21hbmRvcyB1dGlsaXphZG9zCgoKfEZ1bmNpw7NuICB8UGFxdWV0ZSB8IERlc2NyaXBjacOzbiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICB8Cnw6LS0tLS0tLS0tLS0tLS18Oi0tLS0tLS0tLS0tfDotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLXwKfGBtZWFuZmAgICAgICAgIHxmb3JlY2FzdCAgfFByZWRpY2Npw7NuIHBvciBtZWRpYSB8CnxgbmFpdmVgICAgICAgICB8Zm9yZWNhc3QgIHxQcmVkaWNjacOzbiBwb3IgbcOpdG9kbyBpbmdlbnVvIEkgfAp8YHJ3ZmAgICAgICAgICAgfGZvcmVjYXN0ICB8UHJlZGljY2nDs24gY29uIHRlbmRlbmNpYSBtZWRpYSB8Cnxgc25haXZlYAkgICAgICB8Zm9yZWNhc3QgIHxQcmVkaWNjacOzbiBwb3IgbcOpdG9kbyBpbmdlbnVvIGNvbiBlc3RhY2lvbmFsaWRhZCB8CnxgYWNjdXJhY3lgCSAgICB8Zm9yZWNhc3QgIHxDYWxjdWxvIGRlIGxhIHByZWNpc2nDs24gZGVsIG1vZGVsbyB8CnxgZm9yZWNhc3RgICAgICB8Zm9yZWNhc3QgIHxQcmVkaWNlIHZhbG9yZXMgZXh0cmEtbXVlc3RyYWxlcyBmdXR1cm9zIGRlIGxhIHNlcmllIHwKfGBmaXR0ZWRgICAgICAgIHxzdGF0cyAgICAgfE9idGllbmUgbGFzIHByZWRpY2Npb25lcyBhIHVuIHBlcmlvZG8gdmlzdGEgaW50cmEtbXVlc3RyYWxlc3wKClwKXAoKIyBSZWZlcmVuY2lhcwoKKiBNYWtyaWRha2lzLCBTLiB5ICBIaWJvbiwgTS4gKDIwMDApLiBfVGhlIE0zLUNvbXBldGl0aW9uOiByZXN1bHRzLCBjb25jbHVzaW9ucyBhbmQgaW1wbGljYXRpb25zXy4gSW50ZXJuYXRpb25hbCBKb3VybmFsIG9mIEZvcmVjYXN0aW5nLCAxNig0KSwgcHAuIDQ1MeKAkzQ3Ni4gZG9pOjEwLjEwMTYvUzAxNjktMjA3MCgwMCkwMDA1Ny0xCgoKXApcClwKXAo=</div>
-<footer class="footer">
-  
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+<p><br>
 <br>
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
-  
+<br>
+<br>
+</p>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Makridakis00" class="csl-entry" role="doc-biblioentry">
+Makridakis, Spyros, and Michèle Hibon. 2000. <span>“The M3-Competition: Results, Conclusions and Implications.”</span> <em>International Journal of Forecasting</em> 16 (4): 451–76. <a href="https://doi.org/10.1016/S0169-2070(00)00057-1">https://doi.org/10.1016/S0169-2070(00)00057-1</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
 </footer>
 
 
 
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
-  });
-});
-</script>
-
-<!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("03-03-Tema3.Rmd");
-});
-</script>
-
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-</body>
-</html>
+</body></html>

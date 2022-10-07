@@ -1,60 +1,26 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)">
 
-
-<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
-
-
-<title>Pernoctaciones en alojamientos turísticos de turistas extranjeros</title>
-
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
+<title>Predicción con Datos Temporales - Pernoctaciones en alojamientos turísticos de turistas extranjeros</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -93,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -106,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -118,584 +84,591 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
 </style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
   }
-})();
-</script>
+}</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<style type="text/css">
-#rmd-source-code {
-  display: none;
-}
-</style>
-
-
-<link rel="stylesheet" href="styles.css" type="text/css" />
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-
-
-
-
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="nav-fixed">
 
-
-<div class="container-fluid main-container">
-
-
-
-
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Predicción con Datos Temporales</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Inicio</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./01-Guia-curso.html">Guía del curso</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./02-Logistica.html">Logística</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Diapos</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
+        <li class="dropdown-header">Teoría</li>
+        <li>
+    <a class="dropdown-item" href="./03-01-Tema1.html">
+ <span class="dropdown-text">Tema 1: Introducción</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-02-Tema2.html">
+ <span class="dropdown-text">Tema 2: Definición</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-03-Tema3.html">
+ <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-04-Tema4.html">
+ <span class="dropdown-text">Tema 4: Media móvil</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-05-Tema5.html">
+ <span class="dropdown-text">Tema 5: Alisado</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-06-Tema6.html">
+ <span class="dropdown-text">Tema 6: ARIMA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-07-Tema7.html">
+ <span class="dropdown-text">Tema 7: SARIMA</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Ejemplo de aplicación</li>
+        <li>
+    <a class="dropdown-item" href="./03-08-Ejemplo2.html">
+ <span class="dropdown-text">Ejemplo Tema 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-09-Ejemplo3.html">
+ <span class="dropdown-text">Ejemplo Tema 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-10-Ejemplo4.html">
+ <span class="dropdown-text">Ejemplo Tema 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-11-Ejemplo5.html">
+ <span class="dropdown-text">Ejemplo Tema 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-12-Ejemplo6.html">
+ <span class="dropdown-text">Ejemplo Tema 6</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-13-Ejemplo7.html">
+ <span class="dropdown-text">Ejemplo Tema 7</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Otro ejemplo</li>
+        <li>
+    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html">
+ <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">Píldoras</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
+        <li>
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
+ <span class="dropdown-text">Bootstrapping para IC</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
+ <span class="dropdown-text">Múltiples componentes estacionales</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
+ <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
+ <span class="dropdown-text">Series acotadas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
+ <span class="dropdown-text">Valores perdidos y outliers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./05-Recursos-R.html">Recursos de la asignatura</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./06-Evaluacion_Continua.html">Evaluacion Continua</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
+        <li class="dropdown-header">R</li>
+        <li>
+    <a class="dropdown-item" href="https://cran.r-project.org">
+ <span class="dropdown-text">Dónde está R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rstudio.com">
+ <span class="dropdown-text">Donde está RStudio</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Markdown</li>
+        <li>
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
+ <span class="dropdown-text">Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
+ <span class="dropdown-text">R Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
+ <span class="dropdown-text">R Markdown (pdf)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
+ <span class="dropdown-text">Quatro</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Otros</li>
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com">
+ <span class="dropdown-text">Blog sobre R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://bookdown.org">
+ <span class="dropdown-text">Libros online que debes conocer</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
+  <li><a href="#análisis-preliminar-gráfico" id="toc-análisis-preliminar-gráfico" class="nav-link" data-scroll-target="#análisis-preliminar-gráfico"><span class="toc-section-number">2</span>  Análisis preliminar gráfico</a></li>
+  <li><a href="#análisis-de-las-componentes" id="toc-análisis-de-las-componentes" class="nav-link" data-scroll-target="#análisis-de-las-componentes"><span class="toc-section-number">3</span>  Análisis de las componentes</a>
+  <ul class="collapse">
+  <li><a href="#tendencia" id="toc-tendencia" class="nav-link" data-scroll-target="#tendencia"><span class="toc-section-number">3.1</span>  Tendencia</a></li>
+  <li><a href="#estacionalidad" id="toc-estacionalidad" class="nav-link" data-scroll-target="#estacionalidad"><span class="toc-section-number">3.2</span>  Estacionalidad</a></li>
+  </ul></li>
+  <li><a href="#descomposición" id="toc-descomposición" class="nav-link" data-scroll-target="#descomposición"><span class="toc-section-number">4</span>  Descomposición</a></li>
+  <li><a href="#identificación-de-meses-atípicos" id="toc-identificación-de-meses-atípicos" class="nav-link" data-scroll-target="#identificación-de-meses-atípicos"><span class="toc-section-number">5</span>  Identificación de meses atípicos</a></li>
+  </ul>
+</nav>
     </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-  </a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="01-Guia-curso.html">
-    <span class="fa fa-graduation-cap"></span>
-     
-    Guía del curso
-  </a>
-</li>
-<li>
-  <a href="02-Logistica.html">
-    <span class="fa fa-laptop"></span>
-     
-    Logística
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
-    Diapos
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Teoría</li>
-    <li>
-      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
-    </li>
-    <li>
-      <a href="03-02-Tema2.html">Tema 2: Definición</a>
-    </li>
-    <li>
-      <a href="03-03-Tema3.html">Tema 3: Métodos sencillos</a>
-    </li>
-    <li>
-      <a href="03-04-Tema4.html">Tema 4: Media móvil</a>
-    </li>
-    <li>
-      <a href="03-05-Tema5.html">Tema 5: Alisado</a>
-    </li>
-    <li>
-      <a href="03-06-Tema6.html">Tema 6: ARIMA</a>
-    </li>
-    <li>
-      <a href="03-07-Tema7.html">Tema 7: SARIMA</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Ejemplo de aplicación</li>
-    <li>
-      <a href="03-08-Ejemplo2.html">Ejemplo Tema 2</a>
-    </li>
-    <li>
-      <a href="03-09-Ejemplo3.html">Ejemplo Tema 3</a>
-    </li>
-    <li>
-      <a href="03-10-Ejemplo4.html">Ejemplo Tema 4</a>
-    </li>
-    <li>
-      <a href="03-11-Ejemplo5.html">Ejemplo Tema 5</a>
-    </li>
-    <li>
-      <a href="03-12-Ejemplo6.html">Ejemplo Tema 6</a>
-    </li>
-    <li>
-      <a href="03-13-Ejemplo7.html">Ejemplo Tema 7</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Otro ejemplo</li>
-    <li>
-      <a href="03-14-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="04-Recursos-R.html">
-    <span class="fa fa-code"></span>
-     
-    Recursos de R
-  </a>
-</li>
-<li>
-  <a href="05-Evaluacion_Continua.html">
-    <span class="fa fa-edit"></span>
-     
-    Evaluacion Continua
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-download"></span>
-     
-    Más
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">R</li>
-    <li>
-      <a href="https://cran.r-project.org">Dónde está R</a>
-    </li>
-    <li>
-      <a href="https://rstudio.com">Donde está RStudio</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Markdown</li>
-    <li>
-      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
-    </li>
-    <li>
-      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
-    </li>
-    <li>
-      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Otros</li>
-    <li>
-      <a href="https://www.r-bloggers.com">Blog sobre R</a>
-    </li>
-    <li>
-      <a href="https://bookdown.org">Libros online que debes conocer</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-<div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
-</ul>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Pernoctaciones en alojamientos turísticos de turistas extranjeros</h1>
+<p class="subtitle lead">Descriptiva</p>
 </div>
 
 
 
-<h1 class="title toc-ignore">Pernoctaciones en alojamientos turísticos de turistas extranjeros</h1>
-<h3 class="subtitle">Descriptiva</h3>
-<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Iván Arribas (Depto. Análisis Económico. Universitat de València) </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
 
 </div>
+<div class="cell" data-layout-align="center">
 
-<div id="TOC">
-<ul>
-<li><a href="#introducción"><span class="toc-section-number">1</span> Introducción</a></li>
-<li><a href="#análisis-preliminar-gráfico"><span class="toc-section-number">2</span> Análisis preliminar gráfico</a></li>
-<li><a href="#análisis-de-las-componentes"><span class="toc-section-number">3</span> Análisis de las componentes</a>
-<ul>
-<li><a href="#tendencia"><span class="toc-section-number">3.1</span> Tendencia</a></li>
-<li><a href="#estacionalidad"><span class="toc-section-number">3.2</span> Estacionalidad</a></li>
-</ul></li>
-<li><a href="#descomposición"><span class="toc-section-number">4</span> Descomposición</a></li>
-<li><a href="#identificación-de-meses-atípicos"><span class="toc-section-number">5</span> Identificación de meses atípicos</a></li>
-</ul>
 </div>
+<div class="cell" data-layout-align="center">
 
-<p><br />
-<br />
+</div>
+<p><br>
+<br>
 </p>
-<div id="introducción" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Introducción</h1>
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Vamos a considerar la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
 <p>La serie y su fechado están en el fichero “Pernoctaciones.csv”.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">&quot;./series/Pernoctaciones.csv&quot;</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">ts</span>(Pernoctaciones[,<span class="dv">2</span>], <span class="at">start =</span> <span class="dv">2000</span>, <span class="at">freq =</span> <span class="dv">12</span>)</span></code></pre></div>
-<p><br />
-<br />
-</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">ts</span>(Pernoctaciones[,<span class="dv">2</span>], </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">start =</span> <span class="dv">2000</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">freq =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="análisis-preliminar-gráfico" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Análisis preliminar gráfico</h1>
-<p>La gráfica de la serie temporal (figura 1) muestra una <strong>tendencia</strong> decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, aunque en los dos últimos años se ha producido una caída en el número de pernoctaciones.</p>
-<p>Las líneas verticales de la figura 1 marcan los meses de enero de cada año y permiten identificar mejor la posible <strong>componente estacional</strong>. Las pernoctaciones aumentan notablemente en verano, especialmente en Julio y Agosto, asociadas a las vacaciones estivales. En menor medida se observa el efecto de la Semana Santa. Más adelante haremos un análisis detallado de la estacionalidad.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>,</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 1. Pernoctaciones&quot;</span>) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-2-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Parece que conforme disminuye el número pernoctaciones, también disminuye la amplitud estacional. Al inicio del siglo la diferencia entre los meses con más y con menos pernoctaciones superaba los 8 millones de pernoctaciones, mientras que a finales de la primera década esta diferencia no llegaba a los 7 millones de pernoctaciones. Parece, por tanto, que estamos ante un <strong>esquema multiplicativo</strong>. Para confirmar este aspecto, se ha realizado un gráfico de puntos entre el numero anual de pernoctaciones y la desviación típica intra-anual (figura 2).</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>CasosAnual <span class="ot">=</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sum)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>DesviacionAnual <span class="ot">=</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sd)</span>
+<p><br>
+<br>
+</p>
+</section>
+<section id="análisis-preliminar-gráfico" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Análisis preliminar gráfico</h1>
+<p>La gráfica de la serie temporal (<a href="#fig-Pernoctaciones">Figura&nbsp;1</a>) muestra una <strong>tendencia</strong> suavemente decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, aunque en los dos últimos años se ha producido una caída en el número de pernoctaciones.</p>
+<p>Las líneas verticales de la <a href="#fig-Pernoctaciones">Figura&nbsp;1</a> marcan los meses de enero de cada año y permiten identificar mejor la posible <strong>componente estacional</strong>. Las pernoctaciones aumentan notablemente en verano, especialmente en Julio y Agosto, asociadas a las vacaciones estivales. En menor medida se observa el efecto de la Semana Santa. Más adelante haremos un análisis detallado de la estacionalidad.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-Pernoctaciones" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-Pernoctaciones-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Pernoctaciones</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Parece que conforme disminuye el número pernoctaciones, también disminuye la amplitud estacional. Al inicio del siglo la diferencia entre los meses con más y con menos pernoctaciones superaba los 22 millones de pernoctaciones, mientras que a finales de la segunda década esta diferencia llegaba a los 27 millones de pernoctaciones. Parece, por tanto, que estamos ante un <strong>esquema multiplicativo</strong>. Para confirmar este aspecto, se ha realizado un gráfico de puntos entre el numero anual de pernoctaciones y la desviación típica intra-anual (<a href="#fig-Esquema">Figura&nbsp;2</a>).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>CasosAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sum)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>DesviacionAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sd)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> CasosAnual, <span class="at">y =</span> DesviacionAnual), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Pernoctaciones anuales&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Desviación típica intra-anual&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Figura 2: Análisis del tipo de esquema&quot;</span>) </span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-3-1.png" width="80%" style="display: block; margin: auto;" /></p>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Pernoctaciones anuales"</span>) <span class="sc">+</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Desviación típica intra-anual"</span>) <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-Esquema" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-Esquema-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Análisis del tipo de esquema</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Efectivamente, los años con mayor número de pernoctaciones se corresponden con una mayor variabilidad intra-anual, por lo que confirmamos el esquema multiplicativo de la serie.</p>
-<p><br />
-<br />
+<p><br>
+<br>
 </p>
+</section>
+<section id="análisis-de-las-componentes" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Análisis de las componentes</h1>
+<p><br>
+</p>
+<section id="tendencia" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="tendencia"><span class="header-section-number">3.1</span> Tendencia</h2>
+<p>Hemos obtenido la serie anual pernoctaciones, que presentamos en la <a href="#fig-Tendencia">Figura&nbsp;3</a>. Se confirma la tendencia decreciente de la primera década, aunque con un comportamiento muy irregular. En el año 2000 el número de pernoctaciones alcanzaba los 234 millones al año, mientras que en 2009 toco fondo con 200 millones. En los años siguientes se produce una recuperación de las pernoctaciones (a pesar de la crisis económica), superando rápidamente los niveles de principios de siglo y alcanzado a finales de la segunda década los 300 millones de pernoctaciones, a pesar de que en los dos últimos años disponibles las pernoctaciones han vuelto a caer.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">FUN =</span> sum),</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-Tendencia" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-Tendencia-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Pernoctaciones</figcaption><p></p>
+</figure>
 </div>
-<div id="análisis-de-las-componentes" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Análisis de las componentes</h1>
-<p><br />
-</p>
-<div id="tendencia" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Tendencia</h2>
-<p>Hemos obtenido la serie anual pernoctaciones, que presentamos en la figura 3. Se confirma la tendencia decreciente de la primera década. En el año 2000 el número de pernoctaciones alcanzaba las 90 millones al año, mientras que en 2009 toco fondo con menos de 60 millones. En los años siguientes se produce una recuperación de las pernoctaciones (a pesar de la crisis económica), sin llegarse a recuperar los niveles de principios de siglo. En los dos últimos años disponibles las pernoctaciones han vuelto a caer.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">FUN =</span> sum),</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Noches (millones)&quot;</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 3. Pernoctaciones&quot;</span>) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><br />
-</p>
 </div>
-<div id="estacionalidad" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Estacionalidad</h2>
+</div>
+<p><br>
+</p>
+</section>
+<section id="estacionalidad" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="estacionalidad"><span class="header-section-number">3.2</span> Estacionalidad</h2>
 <p>Veamos ahora como varían las pernoctaciones de los turistas extranjeros en España según el mes del año.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggmonthplot</span>(Pernoctaciones, </span>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggmonthplot</span>(Pernoctaciones, </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">polar=</span><span class="cn">TRUE</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">&quot;Figura 4. Gráfico estacional: pernoctaciones&quot;</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-5-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Cada subserie en la figura 4 vuelve a mostrar la evolución de la tendencia durante el periodo de análisis. Respecto de la estacionalidad, se aprecia que el principal determinante son las vacaciones estivales puesto que el número de pernoctaciones aumenta progresivamente desde mayo a agosto para luego caer bruscamente en septiembre. También cabría esperar un efecto <em>días del mes</em> y observar más pernoctaciones en los meses de 31 días que en los de 30, pero el efecto de la vacaciones estivales es tan dominante que anula cualquier otro efecto.</p>
-<p>La mayor irregularidad observada en abril puede deberse a si la Semana Santa ha caído en abril o en marzo.</p>
-<p><br />
-<br />
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">ylab =</span> <span class="st">""</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-Estacionalidad" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-Estacionalidad-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;4: Gráfico estacional: pernoctaciones</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Cada subserie en la <a href="#fig-Estacionalidad">Figura&nbsp;4</a> vuelve a mostrar la evolución de la tendencia durante el periodo de análisis. Respecto de la estacionalidad, se aprecia que el principal determinante son las vacaciones estivales puesto que el número de pernoctaciones aumenta progresivamente desde enero a agosto para luego caer bruscamente de septiembre a diciembre. También cabría esperar un efecto <em>días del mes</em> y observar más pernoctaciones en los meses de 31 días que en los de 30, pero el efecto de la vacaciones estivales es tan dominante que anula cualquier otro efecto.</p>
+<p><br>
+<br>
 </p>
-</div>
-</div>
-<div id="descomposición" class="section level1" number="4">
-<h1 number="4"><span class="header-section-number">4</span> Descomposición</h1>
+</section>
+</section>
+<section id="descomposición" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Descomposición</h1>
 <p>Vamos a obtener cada una de las componentes de la serie usando el método de medias móviles <code>decompose</code>. Se ha optado por este método dado que la serie muestra un esquema multiplicativo.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones, <span class="at">type =</span> <span class="st">&quot;mult&quot;</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesDesMul,</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 5. Descomposición multiplicativa por medias móviles&quot;</span>)</span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-6-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>La <strong>tendencia</strong> obtenida tras la descomposición no hace sino confirmar lo ya observado, una tendencia decreciente en la primera década, y creciente desde entonces hasta los dos últimos años.</p>
-<p>También se aprecian muy claramente varios valores atípicos en el <strong>residuo</strong> destacando uno en 2005 y varios en los últimos años.</p>
-<p>Respecto de la <strong>componente estacional</strong>, se confirma el análisis preliminar: mayor número de pernoctaciones a finales de primavera y verano, especialmente en agosto, y un menor número en invierno, especialmente en diciembre –un mes en que la gente no realiza tantos viajes al extranjero. En concreto, en agosto se detecta un 91% más de pernoctaciones respecto de la media anual y en julio un 77% más. Por contra, en noviembre y diciembre se observa un descenso del 33%. Cabría preguntarse las causas del repunte en marzo, aunque puede deberse a ser un mes de 31 días, comparado con febrero, en el que ocasionalmente cae la Semana Santa.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(PernoctacionesDesMul<span class="sc">$</span>figure, <span class="dv">2</span>)</span></code></pre></div>
-<pre><code> [1] 0.73 0.72 0.79 0.73 0.86 1.08 1.77 1.91 1.15 0.92 0.68 0.67</code></pre>
-<p>A fin de aislar de la componente estacional el efecto <em>días del mes</em> del efecto de las vacaciones estivales, se ha aplicado la descomposición a la serie <em>pernoctaciones por día</em> resultante de dividir la serie original por el número de días del mes (que obtenemos con la función <code>monthdays</code>). En esta nueva serie todo el efecto estacional se deberá a las vacaciones de verano.</p>
-<p>La figura 6 muestra que la componente estacional estimada para las pernoctaciones por día es solo algo más suave que la componente obtenida a partir la serie original. También se aprecia que el efecto del tamaño del mes es muy acusado en febrero. Para este mes el efecto estacional es el resultado de dos fuerzas en la misma dirección, no ser un periodo vacacional y el tamaño del mes (28 días), que decrementan la componente estacional. Sobre la serie original ambas fuerzas tienen lugar y el resultado es una componente estacional para febrero menor que la de marzo. En la serie de pernoctaciones por día el efecto número de días del mes ha sido eliminado, solo queda el efecto <em>vacacional</em> que es similar para febrero y marzo y por eso la componente de febrero es similar a la de marzo.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDiaDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones<span class="sc">/</span><span class="fu">monthdays</span>(Pernoctaciones), <span class="at">type =</span> <span class="st">&quot;mult&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> PernoctacionesDesMul<span class="sc">$</span>figure, <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> PernoctacionesDiaDesMul<span class="sc">$</span>figure, <span class="at">colour =</span> <span class="st">&quot;red&quot;</span>)) <span class="sc">+</span> </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Figura 6. Componente estacional de pernoctaciones&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Efecto estacional&quot;</span>) <span class="sc">+</span></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, </span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Ene&quot;</span>, <span class="st">&quot;Feb&quot;</span>, <span class="st">&quot;Mar&quot;</span>, <span class="st">&quot;Abr&quot;</span>, <span class="st">&quot;May&quot;</span>, <span class="st">&quot;Jun&quot;</span>, </span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">&quot;Jul&quot;</span>, <span class="st">&quot;Ago&quot;</span>, <span class="st">&quot;Sep&quot;</span>, <span class="st">&quot;Oct&quot;</span>, <span class="st">&quot;Nov&quot;</span>, <span class="st">&quot;Dic&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">&quot;Componente estacional&quot;</span>, </span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Pernoctaciones&quot;</span>, <span class="st">&quot;Pernoctaciones por día&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-8-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><br />
-<br />
-</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones, </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="at">type =</span> <span class="st">"mult"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesDesMul,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-Descomposicion" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-Descomposicion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;5: Descomposición multiplicativa por medias móviles</figcaption><p></p>
+</figure>
 </div>
-<div id="identificación-de-meses-atípicos" class="section level1" number="5">
-<h1 number="5"><span class="header-section-number">5</span> Identificación de meses atípicos</h1>
+</div>
+</div>
+<p>La <strong>tendencia</strong> obtenida tras la descomposición no hace sino confirmar lo ya observado, una tendencia decreciente en la primera década, y creciente desde entonces hasta los dos últimos años.</p>
+<p>También se aprecian muy claramente varios valores atípicos en el <strong>residuo</strong> destacando uno en 2005.</p>
+<p>Respecto de la <strong>componente estacional</strong>, se confirma el análisis preliminar: mayor número de pernoctaciones a finales de primavera y verano, especialmente en agosto, y un menor número en invierno, especialmente en diciembre –un mes en que la gente no realiza tantos viajes al extranjero. En concreto, en agosto se detecta un 72% más de pernoctaciones respecto de la media anual y en julio un 64% más. Por contra, de noviembre a febrero se observa un descenso superior al 40%.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(PernoctacionesDesMul<span class="sc">$</span>figure, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.58 0.60 0.73 0.81 1.08 1.28 1.64 1.72 1.35 1.06 0.60 0.54</code></pre>
+</div>
+</div>
+<p>A fin de aislar de la componente estacional el efecto <em>días del mes</em> del efecto de las vacaciones estivales, se ha aplicado la descomposición a la serie <em>pernoctaciones por día</em> resultante de dividir la serie original por el número de días del mes (que obtenemos con la función <code>monthdays</code>). En esta nueva serie todo el efecto estacional se deberá a las vacaciones de verano.</p>
+<p>La <a href="#fig-ComponenteEstacional">Figura&nbsp;6</a> muestra que la componente estacional estimada para las pernoctaciones por día es solo algo más suave que la componente obtenida a partir la serie original. También se aprecia que el efecto del tamaño del mes es muy acusado en febrero. Para este mes el efecto estacional es el resultado de dos fuerzas en la misma dirección, no ser un periodo vacacional y el tamaño del mes (28 días), que decrementan la componente estacional. Sobre la serie original ambas fuerzas tienen lugar y el resultado es una componente estacional para febrero similar a la de enero y mucho menor que la de marzo. En la serie de pernoctaciones por día el efecto número de días del mes ha sido eliminado, solo queda el efecto <em>vacacional</em> que sitúa a febrero entre los meses de enero y marzo.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDiaDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones<span class="sc">/</span><span class="fu">monthdays</span>(Pernoctaciones), </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">type =</span> <span class="st">"mult"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> PernoctacionesDesMul<span class="sc">$</span>figure, <span class="at">colour =</span> <span class="st">"black"</span>)) <span class="sc">+</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> PernoctacionesDiaDesMul<span class="sc">$</span>figure, <span class="at">colour =</span> <span class="st">"red"</span>)) <span class="sc">+</span> </span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span>, <span class="at">colour =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Efecto estacional"</span>) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Ene"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Abr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>, </span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Jul"</span>, <span class="st">"Ago"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dic"</span>)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Componente estacional"</span>, </span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Pernoctaciones"</span>, <span class="st">"Pernoctaciones por día"</span>)) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-ComponenteEstacional" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-ComponenteEstacional-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;6: Componente estacional de pernoctaciones</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p><br>
+<br>
+</p>
+</section>
+<section id="identificación-de-meses-atípicos" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Identificación de meses atípicos</h1>
 <p>En la descomposición, el vector de residuos contiene las componentes del error y la intervención. Vamos a realizar un análisis gráfico informal del residuo que nos permite ir identificando posibles intervenciones.</p>
 <p>Como la descomposición es multiplicativa, el error es en tanto por uno y tiene media 1. Para analizar las propiedades del residuo, vamos a calcularlo como error aditivo. Para ello vamos a restar a la serie original la serie estimada, obtenida como el producto de la tendencia por la estacionalidad, es decir, <span class="math inline">\(R_t = y_t - (T_t * S_t)\)</span>.</p>
-<p>La figura 7 muestra el error y los intervalos de confianza (IC) al 95% (líneas en verde) y al 99.7% (líneas en rojo). Se observa un valor claramente extremo que cruza el IC(99.7%) por la parte inferior de la gráfica. Es agosto de 2001, mes en el que las pernoctaciones fueron muy inferiores a lo esperado. También se observan otros valores atípicos en los que el error supera las 2.5 desviaciones típicas: agosto y octubre de 2000 y mayo de 2018.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> Pernoctaciones <span class="sc">-</span> <span class="fu">trendcycle</span>(PernoctacionesDesMul) <span class="sc">*</span> <span class="fu">seasonal</span>(PernoctacionesDesMul)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>sderror <span class="ot">&lt;-</span> <span class="fu">sd</span>(error, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(error,</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Error&quot;</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 7. Error + Intervención&quot;</span>,</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">&quot;black&quot;</span>) <span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>)<span class="sc">*</span>sderror, </span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">&quot;red&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;green&quot;</span>, <span class="st">&quot;red&quot;</span>),</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">1980</span>, <span class="dv">2018</span>, <span class="dv">4</span>)) </span></code></pre></div>
-<p><img src="03-08-Ejemplo2_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><br />
-<br />
-<br />
-<br />
-</p>
+<p>La <a href="#fig-Error">Figura&nbsp;7</a> muestra el error y los intervalos de confianza (IC) al 95% (líneas en verde) y al 99.7% (líneas en rojo). Se observan tres valores extremos que cruzan el IC(99.7%), dos por la parte inferior de la gráfica (julio y agosto de 2018) y uno por la parte superior (mayo de 2018). También se observan otros valores atípicos en los que el error supera las 2.5 desviaciones típicas: abril y agosto 2017.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> Pernoctaciones <span class="sc">-</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">trendcycle</span>(PernoctacionesDesMul) <span class="sc">*</span> <span class="fu">seasonal</span>(PernoctacionesDesMul)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>sderror <span class="ot">&lt;-</span> <span class="fu">sd</span>(error, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(error,</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Error"</span>,</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="sc">-</span><span class="dv">3</span>)<span class="sc">*</span>sderror, </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"green"</span>, <span class="st">"red"</span>),</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">1980</span>, <span class="dv">2020</span>, <span class="dv">4</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-Error" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-08-Ejemplo2_files/figure-html/fig-Error-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7: Error + Intervención</figcaption><p></p>
+</figure>
 </div>
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUGVybm9jdGFjaW9uZXMgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGRlIHR1cmlzdGFzIGV4dHJhbmplcm9zIgpzdWJ0aXRsZTogIkRlc2NyaXB0aXZhIgphdXRob3I6ICJJdsOhbiBBcnJpYmFzIChEZXB0by4gQW7DoWxpc2lzIEVjb27Ds21pY28uIFVuaXZlcnNpdGF0IGRlIFZhbMOobmNpYSkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIHRoZW1lOiBjZXJ1bGVhbgogICAgaGlnaGxpZ2h0OiBweWdtZW50cyAKICAgIGZpZ19jYXB0aW9uOiBmYWxzZQogICAgZGZfcHJpbnQ6IGthYmxlCiAgICB0b2M6IHRydWUKICAgIHRvY19kZXB0aDogMgogICAgbnVtYmVyX3NlY3Rpb25zOiB0cnVlCiAgICBzZWxmX2NvbnRhaW5lZDogdHJ1ZQogICAgY29kZV9kb3dubG9hZDogdHJ1ZQotLS0KCmBgYHtyIGNodW5rX3NldHVwLCBlY2hvID0gRkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldCh3YXJuaW5nID0gRkFMU0UsIAogICAgICAgICAgICAgICAgICAgICAgbWVzc2FnZSA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIGNvbW1lbnQgPSAiIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5hbGlnbiA9ICJjZW50ZXIiLCAKICAgICAgICAgICAgICAgICAgICAgIGZpZy5zaG93ID0gImhvbGQiLAogICAgICAgICAgICAgICAgICAgICAgZmlnLmhlaWdodCA9IDQsCiAgICAgICAgICAgICAgICAgICAgICBmaWcud2lkdGggPSA4LAogICAgICAgICAgICAgICAgICAgICAgb3V0LndpZHRoID0gIjgwJSIpIApgYGAKCmBgYHtyIG9wdGlvbnNfc2V0dXAsIGVjaG8gPSBGQUxTRX0Kb3B0aW9ucyhzY2lwZW4gPSA5OTkpICMtIHBhcmEgcXVpdGFyIGxhIG5vdGFjaW9uIGNpZW50aWZpY2EKYGBgCgpgYGB7ciBsaWJyZXJpYXMsIGVjaG8gPSBGQUxTRX0KbGlicmFyeShmb3JlY2FzdCkKbGlicmFyeShnZ3Bsb3QyKTsgdGhlbWVfc2V0KHRoZW1lX2J3KCkpCmxpYnJhcnkoZ3JpZEV4dHJhKQpsaWJyYXJ5KGdyaWQpCmBgYAoKXApcCgojIEludHJvZHVjY2nDs24KClZhbW9zIGEgY29uc2lkZXJhciBsYSBzZXJpZSB0ZW1wb3JhbCBjb3JyZXNwb25kaWVudGUgYWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBxdWUgbG9zIHR1cmlzdGFzIGV4dHJhbmplcm9zIHJlYWxpemFuIGVuIEVzcGHDsWEgZW4gYWxvamFtaWVudG9zIHR1csOtc3RpY29zIGF1dG9yaXphZG9zIChxdWUgbGxhbWFyZW1vcyBQZXJub2N0YWNpb25lcyBlbiBhZGVsYW50ZSkuIEVzdGEgc2VyaWUgZXN0w6EgZGlzcG9uaWJsZSBlbiBFdXJvc3RhdCBkZXNkZSBlbmVybyBkZSAyMDAwIGhhc3RhIGRpY2llbWJyZSBkZSAyMDE5LCB1biB0b3RhbCBkZSAyMCBhw7FvcyB5IDI0MCBvYnNlcnZhY2lvbmVzLgoKTGEgc2VyaWUgeSBzdSBmZWNoYWRvIGVzdMOhbiBlbiBlbCBmaWNoZXJvICJQZXJub2N0YWNpb25lcy5jc3YiLgoKCmBgYHtyfQpQZXJub2N0YWNpb25lcyA8LSByZWFkLmNzdjIoIi4vc2VyaWVzL1Blcm5vY3RhY2lvbmVzLmNzdiIsIGhlYWRlciA9IFRSVUUpClBlcm5vY3RhY2lvbmVzIDwtIHRzKFBlcm5vY3RhY2lvbmVzWywyXSwgc3RhcnQgPSAyMDAwLCBmcmVxID0gMTIpCmBgYAoKXApcCgojIEFuw6FsaXNpcyBwcmVsaW1pbmFyIGdyw6FmaWNvCgpMYSBncsOhZmljYSBkZSBsYSBzZXJpZSB0ZW1wb3JhbCAoZmlndXJhIDEpIG11ZXN0cmEgdW5hIF9fdGVuZGVuY2lhX18gZGVjcmVjaWVudGUgZW4gZWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBlbiBsYSBwcmltZXJhIGTDqWNhZGEgZGVsIHByZXNlbnRlIHNpZ2xvLiBDb24gZWwgY2FtYmlvIGRlIGTDqWNhZGEgc2UgcHJvZHVjZSB1biBjYW1iaW8gZW4gbGEgdGVuZGVuY2lhLCBhdW5xdWUgZW4gbG9zIGRvcyDDumx0aW1vcyBhw7FvcyBzZSBoYSBwcm9kdWNpZG8gdW5hIGNhw61kYSBlbiBlbCBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzLiAKCkxhcyBsw61uZWFzIHZlcnRpY2FsZXMgZGUgbGEgZmlndXJhIDEgbWFyY2FuIGxvcyBtZXNlcyBkZSBlbmVybyBkZSBjYWRhIGHDsW8geSBwZXJtaXRlbiBpZGVudGlmaWNhciBtZWpvciBsYSBwb3NpYmxlIF9fY29tcG9uZW50ZSBlc3RhY2lvbmFsX18uIExhcyBwZXJub2N0YWNpb25lcyBhdW1lbnRhbiBub3RhYmxlbWVudGUgZW4gdmVyYW5vLCBlc3BlY2lhbG1lbnRlIGVuIEp1bGlvIHkgQWdvc3RvLCBhc29jaWFkYXMgYSBsYXMgdmFjYWNpb25lcyBlc3RpdmFsZXMuIEVuIG1lbm9yIG1lZGlkYSBzZSBvYnNlcnZhIGVsIGVmZWN0byBkZSBsYSBTZW1hbmEgU2FudGEuIE3DoXMgYWRlbGFudGUgaGFyZW1vcyB1biBhbsOhbGlzaXMgZGV0YWxsYWRvIGRlIGxhIGVzdGFjaW9uYWxpZGFkLgoKYGBge3J9CmF1dG9wbG90KFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDEuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgCmBgYAoKUGFyZWNlIHF1ZSBjb25mb3JtZSBkaXNtaW51eWUgZWwgbsO6bWVybyBwZXJub2N0YWNpb25lcywgdGFtYmnDqW4gZGlzbWludXllIGxhIGFtcGxpdHVkIGVzdGFjaW9uYWwuIEFsIGluaWNpbyBkZWwgc2lnbG8gbGEgZGlmZXJlbmNpYSBlbnRyZSBsb3MgbWVzZXMgY29uIG3DoXMgeSBjb24gbWVub3MgcGVybm9jdGFjaW9uZXMgc3VwZXJhYmEgbG9zIDggbWlsbG9uZXMgZGUgcGVybm9jdGFjaW9uZXMsIG1pZW50cmFzIHF1ZSBhIGZpbmFsZXMgZGUgbGEgcHJpbWVyYSBkw6ljYWRhIGVzdGEgZGlmZXJlbmNpYSBubyBsbGVnYWJhIGEgbG9zIDcgbWlsbG9uZXMgZGUgcGVybm9jdGFjaW9uZXMuIFBhcmVjZSwgcG9yIHRhbnRvLCBxdWUgZXN0YW1vcyBhbnRlIHVuIF9fZXNxdWVtYSBtdWx0aXBsaWNhdGl2b19fLiBQYXJhIGNvbmZpcm1hciBlc3RlIGFzcGVjdG8sIHNlIGhhIHJlYWxpemFkbyB1biBncsOhZmljbyBkZSBwdW50b3MgZW50cmUgZWwgbnVtZXJvIGFudWFsIGRlIHBlcm5vY3RhY2lvbmVzIHkgbGEgZGVzdmlhY2nDs24gdMOtcGljYSBpbnRyYS1hbnVhbCAoZmlndXJhIDIpLgoKYGBge3J9CkNhc29zQW51YWwgPSBhZ2dyZWdhdGUoUGVybm9jdGFjaW9uZXMsIEZVTiA9IHN1bSkKRGVzdmlhY2lvbkFudWFsID0gYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLCBGVU4gPSBzZCkKCmdncGxvdCgpICsKICBnZW9tX3BvaW50KGFlcyh4ID0gQ2Fzb3NBbnVhbCwgeSA9IERlc3ZpYWNpb25BbnVhbCksIHNpemUgPSAyKSArCiAgeGxhYigiUGVybm9jdGFjaW9uZXMgYW51YWxlcyIpICsgCiAgeWxhYigiRGVzdmlhY2nDs24gdMOtcGljYSBpbnRyYS1hbnVhbCIpICsgCiAgZ2d0aXRsZSgiRmlndXJhIDI6IEFuw6FsaXNpcyBkZWwgdGlwbyBkZSBlc3F1ZW1hIikgCmBgYAoKRWZlY3RpdmFtZW50ZSwgbG9zIGHDsW9zIGNvbiBtYXlvciBuw7ptZXJvIGRlIHBlcm5vY3RhY2lvbmVzIHNlIGNvcnJlc3BvbmRlbiBjb24gdW5hIG1heW9yIHZhcmlhYmlsaWRhZCBpbnRyYS1hbnVhbCwgcG9yIGxvIHF1ZSBjb25maXJtYW1vcyBlbCBlc3F1ZW1hIG11bHRpcGxpY2F0aXZvIGRlIGxhIHNlcmllLgoKXApcCgojIEFuw6FsaXNpcyBkZSBsYXMgY29tcG9uZW50ZXMKClwKCiMjIFRlbmRlbmNpYQoKSGVtb3Mgb2J0ZW5pZG8gbGEgc2VyaWUgYW51YWwgcGVybm9jdGFjaW9uZXMsIHF1ZSBwcmVzZW50YW1vcyBlbiBsYSBmaWd1cmEgMy4gU2UgY29uZmlybWEgbGEgdGVuZGVuY2lhIGRlY3JlY2llbnRlIGRlIGxhIHByaW1lcmEgZMOpY2FkYS4gRW4gZWwgYcOxbyAyMDAwIGVsIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgYWxjYW56YWJhIGxhcyA5MCBtaWxsb25lcyBhbCBhw7FvLCBtaWVudHJhcyBxdWUgZW4gMjAwOSB0b2NvIGZvbmRvIGNvbiBtZW5vcyBkZSA2MCBtaWxsb25lcy4gRW4gbG9zIGHDsW9zIHNpZ3VpZW50ZXMgc2UgcHJvZHVjZSB1bmEgcmVjdXBlcmFjacOzbiBkZSBsYXMgcGVybm9jdGFjaW9uZXMgKGEgcGVzYXIgZGUgbGEgY3Jpc2lzIGVjb27Ds21pY2EpLCBzaW4gbGxlZ2Fyc2UgYSByZWN1cGVyYXIgbG9zIG5pdmVsZXMgZGUgcHJpbmNpcGlvcyBkZSBzaWdsby4gRW4gbG9zIGRvcyDDumx0aW1vcyBhw7FvcyBkaXNwb25pYmxlcyBsYXMgcGVybm9jdGFjaW9uZXMgaGFuIHZ1ZWx0byBhIGNhZXIuCgpgYGB7cn0KYXV0b3Bsb3QoYWdncmVnYXRlKFBlcm5vY3RhY2lvbmVzLzEwMDAwMDAsIEZVTiA9IHN1bSksCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgeWxhYiA9ICJOb2NoZXMgKG1pbGxvbmVzKSIsCiAgICAgICAgIG1haW4gPSAiRmlndXJhIDMuIFBlcm5vY3RhY2lvbmVzIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IHNlcSgyMDAwLCAyMDIwLCAyKSkgCmBgYAoKXAoKIyMgRXN0YWNpb25hbGlkYWQKClZlYW1vcyBhaG9yYSBjb21vIHZhcsOtYW4gbGFzIHBlcm5vY3RhY2lvbmVzIGRlIGxvcyB0dXJpc3RhcyBleHRyYW5qZXJvcyBlbiBFc3Bhw7FhIHNlZ8O6biBlbCBtZXMgZGVsIGHDsW8uIAoKYGBge3J9CmdnbW9udGhwbG90KFBlcm5vY3RhY2lvbmVzLCAKICAgICAgICAgICAgIHBvbGFyPVRSVUUsCiAgICAgICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgICAgICB5bGFiID0gIiIsCiAgICAgICAgICAgICBtYWluID0gIkZpZ3VyYSA0LiBHcsOhZmljbyBlc3RhY2lvbmFsOiBwZXJub2N0YWNpb25lcyIpICsKICBndWlkZXMoY29sb3VyPUZBTFNFKQpgYGAKCkNhZGEgc3Vic2VyaWUgZW4gbGEgZmlndXJhIDQgdnVlbHZlIGEgbW9zdHJhciBsYSBldm9sdWNpw7NuIGRlIGxhIHRlbmRlbmNpYSBkdXJhbnRlIGVsIHBlcmlvZG8gZGUgYW7DoWxpc2lzLiBSZXNwZWN0byBkZSBsYSBlc3RhY2lvbmFsaWRhZCwgc2UgYXByZWNpYSBxdWUgZWwgcHJpbmNpcGFsIGRldGVybWluYW50ZSBzb24gbGFzIHZhY2FjaW9uZXMgZXN0aXZhbGVzIHB1ZXN0byBxdWUgZWwgbsO6bWVybyBkZSBwZXJub2N0YWNpb25lcyBhdW1lbnRhIHByb2dyZXNpdmFtZW50ZSBkZXNkZSBtYXlvIGEgYWdvc3RvIHBhcmEgbHVlZ28gY2FlciBicnVzY2FtZW50ZSBlbiBzZXB0aWVtYnJlLiBUYW1iacOpbiBjYWJyw61hIGVzcGVyYXIgdW4gZWZlY3RvIF9kw61hcyBkZWwgbWVzXyB5IG9ic2VydmFyIG3DoXMgcGVybm9jdGFjaW9uZXMgZW4gbG9zIG1lc2VzIGRlIDMxIGTDrWFzIHF1ZSBlbiBsb3MgZGUgMzAsIHBlcm8gZWwgZWZlY3RvIGRlIGxhIHZhY2FjaW9uZXMgZXN0aXZhbGVzIGVzIHRhbiBkb21pbmFudGUgcXVlIGFudWxhIGN1YWxxdWllciBvdHJvIGVmZWN0by4KCkxhIG1heW9yIGlycmVndWxhcmlkYWQgb2JzZXJ2YWRhIGVuIGFicmlsIHB1ZWRlIGRlYmVyc2UgYSBzaSBsYSBTZW1hbmEgU2FudGEgaGEgY2HDrWRvIGVuIGFicmlsIG8gZW4gbWFyem8uIAoKXApcCgojIERlc2NvbXBvc2ljacOzbgoKVmFtb3MgYSBvYnRlbmVyIGNhZGEgdW5hIGRlIGxhcyBjb21wb25lbnRlcyBkZSBsYSBzZXJpZSB1c2FuZG8gZWwgbcOpdG9kbyBkZSBtZWRpYXMgbcOzdmlsZXMgYGRlY29tcG9zZWAuIFNlIGhhIG9wdGFkbyBwb3IgZXN0ZSBtw6l0b2RvIGRhZG8gcXVlIGxhIHNlcmllIG11ZXN0cmEgdW4gZXNxdWVtYSBtdWx0aXBsaWNhdGl2by4KCmBgYHtyLCBmaWcuaGVpZ2h0PTd9ClBlcm5vY3RhY2lvbmVzRGVzTXVsIDwtIGRlY29tcG9zZShQZXJub2N0YWNpb25lcywgdHlwZSA9ICJtdWx0IikKYXV0b3Bsb3QoUGVybm9jdGFjaW9uZXNEZXNNdWwsCiAgICAgICAgIHhsYWIgPSAiIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgNS4gRGVzY29tcG9zaWNpw7NuIG11bHRpcGxpY2F0aXZhIHBvciBtZWRpYXMgbcOzdmlsZXMiKQpgYGAKCkxhIF9fdGVuZGVuY2lhX18gb2J0ZW5pZGEgdHJhcyBsYSBkZXNjb21wb3NpY2nDs24gbm8gaGFjZSBzaW5vIGNvbmZpcm1hciBsbyB5YSBvYnNlcnZhZG8sIHVuYSB0ZW5kZW5jaWEgZGVjcmVjaWVudGUgZW4gbGEgcHJpbWVyYSBkw6ljYWRhLCB5IGNyZWNpZW50ZSBkZXNkZSBlbnRvbmNlcyBoYXN0YSBsb3MgZG9zIMO6bHRpbW9zIGHDsW9zLgoKVGFtYmnDqW4gc2UgYXByZWNpYW4gbXV5IGNsYXJhbWVudGUgdmFyaW9zIHZhbG9yZXMgYXTDrXBpY29zIGVuIGVsIF9fcmVzaWR1b19fIGRlc3RhY2FuZG8gdW5vIGVuIDIwMDUgeSB2YXJpb3MgZW4gbG9zIMO6bHRpbW9zIGHDsW9zLgoKUmVzcGVjdG8gZGUgbGEgX19jb21wb25lbnRlIGVzdGFjaW9uYWxfXywgc2UgY29uZmlybWEgZWwgYW7DoWxpc2lzIHByZWxpbWluYXI6IG1heW9yIG7Dum1lcm8gZGUgcGVybm9jdGFjaW9uZXMgYSBmaW5hbGVzIGRlIHByaW1hdmVyYSB5IHZlcmFubywgZXNwZWNpYWxtZW50ZSBlbiBhZ29zdG8sIHkgdW4gbWVub3IgbsO6bWVybyBlbiBpbnZpZXJubywgZXNwZWNpYWxtZW50ZSBlbiBkaWNpZW1icmUgLS11biBtZXMgZW4gcXVlIGxhIGdlbnRlIG5vIHJlYWxpemEgdGFudG9zIHZpYWplcyBhbCBleHRyYW5qZXJvLiBFbiBjb25jcmV0bywgZW4gYWdvc3RvIHNlIGRldGVjdGEgdW4gOTElIG3DoXMgZGUgcGVybm9jdGFjaW9uZXMgcmVzcGVjdG8gZGUgbGEgbWVkaWEgYW51YWwgeSBlbiBqdWxpbyB1biA3NyUgbcOhcy4gUG9yIGNvbnRyYSwgZW4gbm92aWVtYnJlIHkgZGljaWVtYnJlIHNlIG9ic2VydmEgdW4gZGVzY2Vuc28gZGVsIDMzJS4gQ2FicsOtYSBwcmVndW50YXJzZSBsYXMgY2F1c2FzIGRlbCByZXB1bnRlIGVuIG1hcnpvLCBhdW5xdWUgcHVlZGUgZGViZXJzZSBhIHNlciB1biBtZXMgZGUgMzEgZMOtYXMsIGNvbXBhcmFkbyBjb24gZmVicmVybywgZW4gZWwgcXVlIG9jYXNpb25hbG1lbnRlIGNhZSBsYSBTZW1hbmEgU2FudGEuCgpgYGB7cn0Kcm91bmQoUGVybm9jdGFjaW9uZXNEZXNNdWwkZmlndXJlLCAyKQpgYGAKCkEgZmluIGRlIGFpc2xhciBkZSBsYSBjb21wb25lbnRlIGVzdGFjaW9uYWwgZWwgZWZlY3RvIF9kw61hcyBkZWwgbWVzXyBkZWwgZWZlY3RvIGRlIGxhcyB2YWNhY2lvbmVzIGVzdGl2YWxlcywgc2UgaGEgYXBsaWNhZG8gbGEgZGVzY29tcG9zaWNpw7NuIGEgbGEgc2VyaWUgX3Blcm5vY3RhY2lvbmVzIHBvciBkw61hXyByZXN1bHRhbnRlIGRlIGRpdmlkaXIgbGEgc2VyaWUgb3JpZ2luYWwgcG9yIGVsIG7Dum1lcm8gZGUgZMOtYXMgZGVsIG1lcyAocXVlIG9idGVuZW1vcyBjb24gbGEgZnVuY2nDs24gYG1vbnRoZGF5c2ApLiBFbiBlc3RhIG51ZXZhIHNlcmllIHRvZG8gZWwgZWZlY3RvIGVzdGFjaW9uYWwgc2UgZGViZXLDoSBhIGxhcyB2YWNhY2lvbmVzIGRlIHZlcmFuby4KCkxhIGZpZ3VyYSA2IG11ZXN0cmEgcXVlIGxhIGNvbXBvbmVudGUgZXN0YWNpb25hbCBlc3RpbWFkYSBwYXJhIGxhcyBwZXJub2N0YWNpb25lcyBwb3IgZMOtYSBlcyBzb2xvIGFsZ28gbcOhcyBzdWF2ZSBxdWUgbGEgY29tcG9uZW50ZSBvYnRlbmlkYSBhIHBhcnRpciBsYSBzZXJpZSBvcmlnaW5hbC4gVGFtYmnDqW4gc2UgYXByZWNpYSBxdWUgZWwgZWZlY3RvIGRlbCB0YW1hw7FvIGRlbCBtZXMgZXMgbXV5IGFjdXNhZG8gZW4gZmVicmVyby4gUGFyYSBlc3RlIG1lcyBlbCBlZmVjdG8gZXN0YWNpb25hbCBlcyBlbCByZXN1bHRhZG8gZGUgZG9zIGZ1ZXJ6YXMgZW4gbGEgbWlzbWEgZGlyZWNjacOzbiwgbm8gc2VyIHVuIHBlcmlvZG8gdmFjYWNpb25hbCB5IGVsIHRhbWHDsW8gZGVsIG1lcyAoMjggZMOtYXMpLCBxdWUgZGVjcmVtZW50YW4gbGEgY29tcG9uZW50ZSBlc3RhY2lvbmFsLiBTb2JyZSBsYSBzZXJpZSBvcmlnaW5hbCBhbWJhcyBmdWVyemFzIHRpZW5lbiBsdWdhciB5IGVsIHJlc3VsdGFkbyBlcyB1bmEgY29tcG9uZW50ZSBlc3RhY2lvbmFsIHBhcmEgZmVicmVybyBtZW5vciBxdWUgbGEgZGUgbWFyem8uIEVuIGxhIHNlcmllIGRlIHBlcm5vY3RhY2lvbmVzIHBvciBkw61hIGVsIGVmZWN0byBuw7ptZXJvIGRlIGTDrWFzIGRlbCBtZXMgaGEgc2lkbyBlbGltaW5hZG8sIHNvbG8gcXVlZGEgZWwgZWZlY3RvIF92YWNhY2lvbmFsXyBxdWUgZXMgc2ltaWxhciBwYXJhIGZlYnJlcm8geSBtYXJ6byB5IHBvciBlc28gbGEgY29tcG9uZW50ZSBkZSBmZWJyZXJvIGVzIHNpbWlsYXIgYSBsYSBkZSBtYXJ6by4KCgpgYGB7cn0KUGVybm9jdGFjaW9uZXNEaWFEZXNNdWwgPC0gZGVjb21wb3NlKFBlcm5vY3RhY2lvbmVzL21vbnRoZGF5cyhQZXJub2N0YWNpb25lcyksIHR5cGUgPSAibXVsdCIpCgpnZ3Bsb3QoKSArCiAgZ2VvbV9saW5lKGFlcyh4ID0gMToxMiwgeSA9IFBlcm5vY3RhY2lvbmVzRGVzTXVsJGZpZ3VyZSwgY29sb3VyID0gImJsYWNrIikpICsgCiAgZ2VvbV9saW5lKGFlcyh4ID0gMToxMiwgeSA9IFBlcm5vY3RhY2lvbmVzRGlhRGVzTXVsJGZpZ3VyZSwgY29sb3VyID0gInJlZCIpKSArIAogIGdlb21faGxpbmUoeWludGVyY2VwdCA9IDEsIGNvbG91ciA9ICJibHVlIiwgbHR5ID0gMikgKwogIGdndGl0bGUoIkZpZ3VyYSA2LiBDb21wb25lbnRlIGVzdGFjaW9uYWwgZGUgcGVybm9jdGFjaW9uZXMiKSArCiAgeGxhYigiIikgKwogIHlsYWIoIkVmZWN0byBlc3RhY2lvbmFsIikgKwogIHNjYWxlX3hfY29udGludW91cyhicmVha3M9IDE6MTIsIAogICAgICAgICAgICAgICAgICAgICBsYWJlbHMgPSBjKCJFbmUiLCAiRmViIiwgIk1hciIsICJBYnIiLCAiTWF5IiwgIkp1biIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJKdWwiLCAiQWdvIiwgIlNlcCIsICJPY3QiLCAiTm92IiwgIkRpYyIpKSArCiAgc2NhbGVfY29sb3JfZGlzY3JldGUobmFtZSA9ICJDb21wb25lbnRlIGVzdGFjaW9uYWwiLCAKICAgICAgICAgICAgICAgICAgICAgICBsYWJlbHMgPSBjKCJQZXJub2N0YWNpb25lcyIsICJQZXJub2N0YWNpb25lcyBwb3IgZMOtYSIpKSArCiAgdGhlbWUobGVnZW5kLnBvc2l0aW9uPWMoMC4wMiwwLjk4KSwgbGVnZW5kLmp1c3RpZmljYXRpb249YygwLDEpKQpgYGAKClwKXAoKIyBJZGVudGlmaWNhY2nDs24gZGUgbWVzZXMgYXTDrXBpY29zCgpFbiBsYSBkZXNjb21wb3NpY2nDs24sIGVsIHZlY3RvciBkZSByZXNpZHVvcyBjb250aWVuZSBsYXMgY29tcG9uZW50ZXMgZGVsIGVycm9yIHkgbGEgaW50ZXJ2ZW5jacOzbi4gVmFtb3MgYSByZWFsaXphciB1biBhbsOhbGlzaXMgZ3LDoWZpY28gaW5mb3JtYWwgZGVsIHJlc2lkdW8gcXVlIG5vcyBwZXJtaXRlIGlyIGlkZW50aWZpY2FuZG8gcG9zaWJsZXMgaW50ZXJ2ZW5jaW9uZXMuCgpDb21vIGxhIGRlc2NvbXBvc2ljacOzbiBlcyBtdWx0aXBsaWNhdGl2YSwgZWwgZXJyb3IgZXMgZW4gdGFudG8gcG9yIHVubyB5IHRpZW5lIG1lZGlhIDEuIFBhcmEgYW5hbGl6YXIgbGFzIHByb3BpZWRhZGVzIGRlbCByZXNpZHVvLCB2YW1vcyBhIGNhbGN1bGFybG8gY29tbyBlcnJvciBhZGl0aXZvLiBQYXJhIGVsbG8gdmFtb3MgYSByZXN0YXIgYSBsYSBzZXJpZSBvcmlnaW5hbCBsYSBzZXJpZSBlc3RpbWFkYSwgb2J0ZW5pZGEgY29tbyBlbCBwcm9kdWN0byBkZSBsYSB0ZW5kZW5jaWEgcG9yIGxhIGVzdGFjaW9uYWxpZGFkLCBlcyBkZWNpciwgJFJfdCA9IHlfdCAtIChUX3QgKiBTX3QpJC4KCkxhIGZpZ3VyYSA3IG11ZXN0cmEgZWwgZXJyb3IgeSBsb3MgaW50ZXJ2YWxvcyBkZSBjb25maWFuemEgKElDKSBhbCA5NSUgKGzDrW5lYXMgZW4gdmVyZGUpIHkgYWwgOTkuNyUgKGzDrW5lYXMgZW4gcm9qbykuIFNlIG9ic2VydmEgdW4gdmFsb3IgY2xhcmFtZW50ZSBleHRyZW1vIHF1ZSBjcnV6YSBlbCBJQyg5OS43JSkgcG9yIGxhIHBhcnRlIGluZmVyaW9yIGRlIGxhIGdyw6FmaWNhLiBFcyBhZ29zdG8gZGUgMjAwMSwgbWVzIGVuIGVsIHF1ZSBsYXMgcGVybm9jdGFjaW9uZXMgZnVlcm9uIG11eSBpbmZlcmlvcmVzIGEgbG8gZXNwZXJhZG8uIFRhbWJpw6luIHNlIG9ic2VydmFuIG90cm9zIHZhbG9yZXMgYXTDrXBpY29zIGVuIGxvcyBxdWUgZWwgZXJyb3Igc3VwZXJhIGxhcyAyLjUgZGVzdmlhY2lvbmVzIHTDrXBpY2FzOiBhZ29zdG8geSBvY3R1YnJlIGRlIDIwMDAgeSBtYXlvIGRlIDIwMTguIAoKYGBge3J9CmVycm9yIDwtIFBlcm5vY3RhY2lvbmVzIC0gdHJlbmRjeWNsZShQZXJub2N0YWNpb25lc0Rlc011bCkgKiBzZWFzb25hbChQZXJub2N0YWNpb25lc0Rlc011bCkKCnNkZXJyb3IgPC0gc2QoZXJyb3IsIG5hLnJtID0gVFJVRSkKCmF1dG9wbG90KGVycm9yLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiRXJyb3IiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSA3LiBFcnJvciArIEludGVydmVuY2nDs24iLAogICAgICAgICBjb2xvdXIgPSAiYmxhY2siKSArCiAgZ2VvbV9obGluZSh5aW50ZXJjZXB0ID0gYygzLCAyLCAtMiwgLTMpKnNkZXJyb3IsIAogICAgICAgICAgICAgY29sb3VyID0gYygicmVkIiwgImdyZWVuIiwgImdyZWVuIiwgInJlZCIpLAogICAgICAgICAgICAgbHR5ID0gMikgKyAKICBzY2FsZV94X2NvbnRpbnVvdXMoYnJlYWtzPSBzZXEoMTk4MCwgMjAxOCwgNCkpIApgYGAKClwKXApcClwKCg==</div>
-<footer class="footer">
-  
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+</div>
+</div>
+<p><br>
 <br>
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
-  
+<br>
+<br>
+</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
 </footer>
 
 
 
-
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
-  });
-});
-</script>
-
-<!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("03-08-Ejemplo2.Rmd");
-});
-</script>
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-</body>
-</html>
+</body></html>

@@ -1,63 +1,26 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.1.189">
 
-<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)">
 
-
-<meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)" />
-
-
-<title>Métodos de medias móviles</title>
-
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link href="site_libs/bootstrap-3.3.5/css/cerulean.min.css" rel="stylesheet" />
-<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
-<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<style>h1 {font-size: 34px;}
-       h1.title {font-size: 38px;}
-       h2 {font-size: 30px;}
-       h3 {font-size: 24px;}
-       h4 {font-size: 18px;}
-       h5 {font-size: 16px;}
-       h6 {font-size: 12px;}
-       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
-       pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
-<script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-
-<style type="text/css">
-  code{white-space: pre-wrap;}
-  span.smallcaps{font-variant: small-caps;}
-  span.underline{text-decoration: underline;}
-  div.column{display: inline-block; vertical-align: top; width: 50%;}
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-  ul.task-list{list-style: none;}
-    </style>
-
-
-<style type="text/css">
-  code {
-    white-space: pre;
-  }
-  .sourceCode {
-    overflow: visible;
-  }
-</style>
-<style type="text/css" data-origin="pandoc">
+<title>Predicción con Datos Temporales - Métodos de medias móviles</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -96,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -109,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -121,480 +84,308 @@ code span.st { color: #4070a0; } /* String */
 code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-
 </style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    for (var j = 0; j < rules.length; j++) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
   }
-})();
-</script>
+}</script>
 
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<style type="text/css">
-#rmd-source-code {
-  display: none;
-}
-</style>
-
-
-<link rel="stylesheet" href="styles.css" type="text/css" />
-
-
-
-<style type = "text/css">
-.main-container {
-  max-width: 940px;
-  margin-left: auto;
-  margin-right: auto;
-}
-img {
-  max-width:100%;
-}
-.tabbed-pane {
-  padding-top: 12px;
-}
-.html-widget {
-  margin-bottom: 20px;
-}
-button.code-folding-btn:focus {
-  outline: none;
-}
-summary {
-  display: list-item;
-}
-pre code {
-  padding: 0;
-}
-</style>
-
-
-<style type="text/css">
-.dropdown-submenu {
-  position: relative;
-}
-.dropdown-submenu>.dropdown-menu {
-  top: 0;
-  left: 100%;
-  margin-top: -6px;
-  margin-left: -1px;
-  border-radius: 0 6px 6px 6px;
-}
-.dropdown-submenu:hover>.dropdown-menu {
-  display: block;
-}
-.dropdown-submenu>a:after {
-  display: block;
-  content: " ";
-  float: right;
-  width: 0;
-  height: 0;
-  border-color: transparent;
-  border-style: solid;
-  border-width: 5px 0 5px 5px;
-  border-left-color: #cccccc;
-  margin-top: 5px;
-  margin-right: -10px;
-}
-.dropdown-submenu:hover>a:after {
-  border-left-color: #adb5bd;
-}
-.dropdown-submenu.pull-left {
-  float: none;
-}
-.dropdown-submenu.pull-left>.dropdown-menu {
-  left: -100%;
-  margin-left: 10px;
-  border-radius: 6px 0 6px 6px;
-}
-</style>
-
-<script type="text/javascript">
-// manage active state of menu based on current page
-$(document).ready(function () {
-  // active menu anchor
-  href = window.location.pathname
-  href = href.substr(href.lastIndexOf('/') + 1)
-  if (href === "")
-    href = "index.html";
-  var menuAnchor = $('a[href="' + href + '"]');
-
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
-
-  // Navbar adjustments
-  var navHeight = $(".navbar").first().height() + 15;
-  var style = document.createElement('style');
-  var pt = "padding-top: " + navHeight + "px; ";
-  var mt = "margin-top: -" + navHeight + "px; ";
-  var css = "";
-  // offset scroll position for anchor links (for fixed navbar)
-  for (var i = 1; i <= 6; i++) {
-    css += ".section h" + i + "{ " + pt + mt + "}\n";
-  }
-  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
-  document.head.appendChild(style);
-});
-</script>
-
-<!-- tabsets -->
-
-<style type="text/css">
-.tabset-dropdown > .nav-tabs {
-  display: inline-table;
-  max-height: 500px;
-  min-height: 44px;
-  overflow-y: auto;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
-  font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
-}
-
-.tabset-dropdown > .nav-tabs > li.active {
-  display: block;
-}
-
-.tabset-dropdown > .nav-tabs > li > a,
-.tabset-dropdown > .nav-tabs > li > a:focus,
-.tabset-dropdown > .nav-tabs > li > a:hover {
-  border: none;
-  display: inline-block;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
-  display: block;
-  float: none;
-}
-
-.tabset-dropdown > .nav-tabs > li {
-  display: none;
-}
-</style>
-
-<!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
-
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
-
+<link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body class="nav-fixed">
 
-
-<div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
-
-
-<div class="navbar navbar-inverse  navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="index.html">Predicción con Datos Temporales</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-        <li>
-  <a href="index.html">
-    <span class="fa fa-home"></span>
-     
-  </a>
-</li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="01-Guia-curso.html">
-    <span class="fa fa-graduation-cap"></span>
-     
-    Guía del curso
-  </a>
-</li>
-<li>
-  <a href="02-Logistica.html">
-    <span class="fa fa-laptop"></span>
-     
-    Logística
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
-     
-    Diapos
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">Teoría</li>
-    <li>
-      <a href="03-01-Tema1.html">Tema 1: Introducción</a>
-    </li>
-    <li>
-      <a href="03-02-Tema2.html">Tema 2: Definición</a>
-    </li>
-    <li>
-      <a href="03-03-Tema3.html">Tema 3: Métodos sencillos</a>
-    </li>
-    <li>
-      <a href="03-04-Tema4.html">Tema 4: Media móvil</a>
-    </li>
-    <li>
-      <a href="03-05-Tema5.html">Tema 5: Alisado</a>
-    </li>
-    <li>
-      <a href="03-06-Tema6.html">Tema 6: ARIMA</a>
-    </li>
-    <li>
-      <a href="03-07-Tema7.html">Tema 7: SARIMA</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Ejemplo de aplicación</li>
-    <li>
-      <a href="03-08-Ejemplo2.html">Ejemplo Tema 2</a>
-    </li>
-    <li>
-      <a href="03-09-Ejemplo3.html">Ejemplo Tema 3</a>
-    </li>
-    <li>
-      <a href="03-10-Ejemplo4.html">Ejemplo Tema 4</a>
-    </li>
-    <li>
-      <a href="03-11-Ejemplo5.html">Ejemplo Tema 5</a>
-    </li>
-    <li>
-      <a href="03-12-Ejemplo6.html">Ejemplo Tema 6</a>
-    </li>
-    <li>
-      <a href="03-13-Ejemplo7.html">Ejemplo Tema 7</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Otro ejemplo</li>
-    <li>
-      <a href="03-14-Ejemplo-Pasajeros.html">Ejemplo de Pasajeros</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="04-Recursos-R.html">
-    <span class="fa fa-code"></span>
-     
-    Recursos de R
-  </a>
-</li>
-<li>
-  <a href="05-Evaluacion_Continua.html">
-    <span class="fa fa-edit"></span>
-     
-    Evaluacion Continua
-  </a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-download"></span>
-     
-    Más
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li class="dropdown-header">R</li>
-    <li>
-      <a href="https://cran.r-project.org">Dónde está R</a>
-    </li>
-    <li>
-      <a href="https://rstudio.com">Donde está RStudio</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Markdown</li>
-    <li>
-      <a href="https://bookdown.org/yihui/rmarkdown/">Markdown</a>
-    </li>
-    <li>
-      <a href="https://rmarkdown.rstudio.com/lesson-1.html">R Markdown</a>
-    </li>
-    <li>
-      <a href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">R Markdown (pdf)</a>
-    </li>
-    <li class="divider"></li>
-    <li class="dropdown-header">Otros</li>
-    <li>
-      <a href="https://www.r-bloggers.com">Blog sobre R</a>
-    </li>
-    <li>
-      <a href="https://bookdown.org">Libros online que debes conocer</a>
-    </li>
-  </ul>
-</li>
-      </ul>
-    </div><!--/.nav-collapse -->
-  </div><!--/.container -->
-</div><!--/.navbar -->
-
-<div id="header">
-
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Predicción con Datos Temporales</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html">Inicio</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html">About</a>
+  </li>  
 </ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./01-Guia-curso.html">Guía del curso</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./02-Logistica.html">Logística</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Diapos</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
+        <li class="dropdown-header">Teoría</li>
+        <li>
+    <a class="dropdown-item" href="./03-01-Tema1.html">
+ <span class="dropdown-text">Tema 1: Introducción</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-02-Tema2.html">
+ <span class="dropdown-text">Tema 2: Definición</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-03-Tema3.html">
+ <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-04-Tema4.html">
+ <span class="dropdown-text">Tema 4: Media móvil</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-05-Tema5.html">
+ <span class="dropdown-text">Tema 5: Alisado</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-06-Tema6.html">
+ <span class="dropdown-text">Tema 6: ARIMA</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-07-Tema7.html">
+ <span class="dropdown-text">Tema 7: SARIMA</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Ejemplo de aplicación</li>
+        <li>
+    <a class="dropdown-item" href="./03-08-Ejemplo2.html">
+ <span class="dropdown-text">Ejemplo Tema 2</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-09-Ejemplo3.html">
+ <span class="dropdown-text">Ejemplo Tema 3</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-10-Ejemplo4.html">
+ <span class="dropdown-text">Ejemplo Tema 4</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-11-Ejemplo5.html">
+ <span class="dropdown-text">Ejemplo Tema 5</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-12-Ejemplo6.html">
+ <span class="dropdown-text">Ejemplo Tema 6</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-13-Ejemplo7.html">
+ <span class="dropdown-text">Ejemplo Tema 7</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Otro ejemplo</li>
+        <li>
+    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html">
+ <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">Píldoras</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
+        <li>
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
+ <span class="dropdown-text">Bootstrapping para IC</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
+ <span class="dropdown-text">Múltiples componentes estacionales</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
+ <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
+ <span class="dropdown-text">Series acotadas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
+ <span class="dropdown-text">Valores perdidos y outliers</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./05-Recursos-R.html">Recursos de la asignatura</a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./06-Evaluacion_Continua.html">Evaluacion Continua</a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
+        <li class="dropdown-header">R</li>
+        <li>
+    <a class="dropdown-item" href="https://cran.r-project.org">
+ <span class="dropdown-text">Dónde está R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rstudio.com">
+ <span class="dropdown-text">Donde está RStudio</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Markdown</li>
+        <li>
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
+ <span class="dropdown-text">Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
+ <span class="dropdown-text">R Markdown</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
+ <span class="dropdown-text">R Markdown (pdf)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
+ <span class="dropdown-text">Quatro</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li class="dropdown-header">Otros</li>
+        <li>
+    <a class="dropdown-item" href="https://www.r-bloggers.com">
+ <span class="dropdown-text">Blog sobre R</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="https://bookdown.org">
+ <span class="dropdown-text">Libros online que debes conocer</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
+  <li><a href="#media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" id="toc-media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" class="nav-link" data-scroll-target="#media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad"><span class="toc-section-number">2</span>  Media móvil simple (para series sin tendencia ni estacionalidad)</a>
+  <ul class="collapse">
+  <li><a href="#definición" id="toc-definición" class="nav-link" data-scroll-target="#definición"><span class="toc-section-number">2.1</span>  Definición</a></li>
+  <li><a href="#ejemplo-de-aplicación-con-demanda-eléctrica" id="toc-ejemplo-de-aplicación-con-demanda-eléctrica" class="nav-link" data-scroll-target="#ejemplo-de-aplicación-con-demanda-eléctrica"><span class="toc-section-number">2.2</span>  Ejemplo de aplicación con Demanda Eléctrica</a>
+  <ul class="collapse">
+  <li><a href="#identificación-del-mejor-modelo" id="toc-identificación-del-mejor-modelo" class="nav-link" data-scroll-target="#identificación-del-mejor-modelo">Identificación del mejor modelo</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Métodos de medias móviles</h1>
+<p class="subtitle lead">Previsión con Datos Temporales (GBIA)</p>
 </div>
 
 
 
-<h1 class="title toc-ignore">Métodos de medias móviles</h1>
-<h3 class="subtitle">Previsión con Datos Temporales (GBIA)</h3>
-<h4 class="author">Iván Arribas (Depto. Análisis Económico. Universitat de València)</h4>
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Iván Arribas (Depto. Análisis Económico. Universitat de València) </p>
+          </div>
+  </div>
+    
+    
+  </div>
+  
+
+</header>
+
+<div class="cell">
 
 </div>
+<div class="cell" data-layout-align="center">
 
+</div>
+<div class="cell" data-layout-align="center">
 
-<p><br />
-<br />
+</div>
+<p><br>
+<br>
 </p>
-<div id="introducción" class="section level1" number="1">
-<h1 number="1"><span class="header-section-number">1</span> Introducción</h1>
-<p>Recuerda que ya utilizamos la media móvil en el contexto de la descomposición. Se trataba de una media móvil centrada y se utilizaba para estimar la tendencia de una serie. Vamos ahora a ver con algo más de detalle el concepto de media móvil y como se puede usar para obtener predicciones.</p>
-<p>El método de las medias móviles con fines predictivos aparece en los años 20, su uso se generalizó en los años 50 y sigue siendo un método utilizado en determinados campos, donde el fin último es capturar la tendencia a largo plazo de una serie.</p>
-<p>Por ejemplo, si pinchas <a href="https://momo.isciii.es/public/momo/dashboard/momo_dashboard.html#nacional">aqui</a> puedes ver el registro del número de muertes diarias (MoMo) que mantiene el <em>Ministerio de Ciencia e Innovación</em>. La línea negra es el número real de muertes y la línea azul es (más o menos) la media móvil de orden 365. La media móvil captura la tendencia en el número de muertes a largo plazo, es decir, cabe esperar que ambas lineas aparezcan siempre cercanas. Si se observa que ambas líneas se separan, debemos pensar que una causa no identificada está produciendo un exceso (o defecto) de muertes sobre su valor esperado.</p>
-<p>En bolsa es muy habitual ver gráficos donde junto a la evolución del índice bursátil se muestra una media móvil de orden alto y otra de orden bajo. Cuando ambas líneas se cruzan, los analistas consideran que es buen momento para comprar (la media móvil de corto plazo pasa encima de la de largo plazo) o vender (la media móvil de corto plazo pasa por debajo de la de largo plazo).</p>
-<p><img src="imagenes/bolsa_medias_moviles.png" /></p>
-<p><br />
+<section id="introducción" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
+<p>Recuerda que ya utilizamos la media móvil en el contexto de la descomposición (Tema 2). Se trataba de una media móvil centrada y se utilizaba para estimar la tendencia de una serie. Vamos ahora a ver con algo más de detalle el concepto de media móvil y como se puede usar para obtener predicciones.</p>
+<p>El método de las medias móviles con fines predictivos aparece en los años 20 del siglo pasado (¡hace 100 años!), su uso se generalizó en los años 50 y sigue siendo un método utilizado en determinados campos, donde el fin último es capturar la tendencia a largo plazo de una serie.</p>
+<p>Por ejemplo, si pinchas <a href="https://momo.isciii.es/panel_momo/">aqui</a> puedes ver el registro del número de muertes diarias (MoMo) que mantiene el <em>Ministerio de Ciencia e Innovación</em>. La línea negra es el número real de muertes y la línea azul es (más o menos) la media móvil de orden 365. La media móvil captura la tendencia en el número de muertes a largo plazo, es decir, cabe esperar que ambas lineas aparezcan siempre cercanas. Si se observa que ambas líneas se separan, debemos pensar que una causa está produciendo un exceso (o defecto) de muertes sobre su valor esperado. Verás que sobre la línea azul (muertes esperadas) en invierno se sobrepone una línea morada que indica el exceso de muertes atribuible a la temperatura (exceso de frío); de la misma forma, en verano se sobrepone una línea roja que indica el exceso de muertes atribuible un exceso de calor.</p>
+<p>En bolsa es muy habitual ver gráficos donde junto a la evolución del índice bursátil se muestra una media móvil de orden alto y otra de orden bajo. Cuando ambas líneas se cruzan, los analistas consideran que es buen momento para comprar (la media móvil de corto plazo pasa encima de la de largo plazo) o vender (la media móvil de corto plazo pasa por debajo de la de largo plazo). Véase la <a href="#fig-bolsamediamovil">Figura&nbsp;1</a>.</p>
+<div id="fig-bolsamediamovil" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="./imagenes/bolsa_medias_moviles.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Evolución del IBEX-35 y dos medias móviles</figcaption><p></p>
+</figure>
+</div>
+<p><br>
 </p>
-<p>Si te das cuenta, en ambos ejemplos <strong>la media móvil se ha utilizado como señal de alarma</strong> –en el primer caso de que algo está generando más o menos muertes de las esperadas y en el segundo caso de que es buen momento para comprar o vender–, pero no para realizar predicciones. En la actualidad, <strong>es poco frecuente el uso de la media móvil con fines exclusivamente predictivos</strong>.</p>
+<p>Si te das cuenta, en ambos ejemplos <strong>la media móvil se ha utilizado como señal de alarma</strong> –en el primer caso de la presencia de un factor que está generando más o menos muertes de las esperadas, y en el segundo caso de que es buen momento para comprar o vender–, pero no para realizar predicciones. En la actualidad, <strong>es poco frecuente el uso de la media móvil con fines exclusivamente predictivos</strong>.</p>
 <p>Sin embargo, por su sencillez de cálculo y su utilidad para identificar que el entorno de predicción está cambiando, vamos a dedicarles algo de tiempo a las medias móviles.</p>
-<p>Antes de empezar, un par de aspectos adicionales a tener en cuenta. Desde un punto de vista teórico, <strong>las medias móviles no pueden capturar la estacionalidad</strong> de una serie así que solo se aplican a series que por su naturaleza no tengan esta componente; desde un punto de vista práctico, <code>R</code> no dispone de una función que permita de forma cómoda obtener una media móvil, las predicciones intra-muestrales, las extra muestrales y el error. Algo como hemos visto en temas previos y veremos en los posteriores. Solventaremos este aspectos creando nuestra propia función.</p>
-<p><br />
-<br />
+<p>Hay otra razón pedagógica para ver las medias móviles. Siendo un método muy sencillo, <strong>requiere que el investigador determine el valor de un parámetro</strong> (el orden de la media móvil). Así, este método establece un puente entre los métodos sencillos vistos en el tema previo –donde no había que fijar el valor de ningún parámetro– y los métodos que veremos en los restantes temas del curso (Temas 5 a 7), donde se verán modelos que requieren la identificación de múltiples parámetros.</p>
+<p>Antes de empezar, algunos aspectos adicionales a tener en cuenta. Desde un punto de vista teórico, <strong>las medias móviles no pueden capturar la estacionalidad</strong> de una serie así que solo se aplican a series que por su naturaleza no tengan esta componente. Además, aunque la metodología de media móvil permite predecir series con tendencia, su uso en este contexto es realmente escaso, poco intuitivo y da resultados muy pobres.</p>
+<p>Por último, desde un punto de vista práctico, <code>R</code> no dispone de una función que permita de forma cómoda obtener una media móvil, sus predicciones intra-muestrales, las extra-muestrales y el error. Solventaremos esta carencia creando nuestra propia función.</p>
+<p><br>
+<br>
 </p>
-</div>
-<div id="media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" class="section level1" number="2">
-<h1 number="2"><span class="header-section-number">2</span> Media móvil simple para series sin tendencia (ni estacionalidad)</h1>
-<p><br />
+</section>
+<section id="media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Media móvil simple (para series sin tendencia ni estacionalidad)</h1>
+<p><br>
 </p>
-<div id="definición" class="section level2" number="2.1">
-<h2 number="2.1"><span class="header-section-number">2.1</span> Definición</h2>
-<p>El método de la media móvil simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante. En este caso, <strong>la predicción para un periodo es la media de las <span class="math inline">\(r\)</span> observaciones previas</strong>. El valor <span class="math inline">\(r\)</span>, denominado orden de la media móvil, es un parámetro que debe ser fijado por el investigador.</p>
-<p>Definimos primero la media móvil <em>hacia atrás</em> (<em>backward</em>) de orden <span class="math inline">\(r\)</span> para el periodo <span class="math inline">\(t\)</span> como <span class="math display">\[mm_t = \frac{1}{r}\sum_{i=0}^{r-1} y_{t-i} = \frac{y_t + y_{t-1} + \ldots + y_{t-r+1}}{r}\]</span> Observa que la media móvil hacia atrás se define de forma diferente a la media móvil <em>centrada</em> que vimos en la descomposición por medias móviles.</p>
+<section id="definición" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="definición"><span class="header-section-number">2.1</span> Definición</h2>
+<p>El método de la media móvil simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante. En este caso, <strong>la predicción para un periodo es la media de las</strong> <span class="math inline">\(r\)</span> observaciones previas. El valor <span class="math inline">\(r\)</span>, denominado orden de la media móvil, es un parámetro que debe fijar el investigador.</p>
+<p>Definimos primero la media móvil <em>hacia atrás</em> (<em>backward</em>) de orden <span class="math inline">\(r\)</span> para el periodo <span class="math inline">\(t\)</span> como la media de las <span class="math inline">\(r\)</span> últimas observaciones <span class="math display">\[mm_t = \frac{1}{r}\sum_{i=0}^{r-1} y_{t-i} = \frac{y_t + y_{t-1} + \ldots + y_{t-r+1}}{r}\]</span> Observa que la media móvil hacia atrás se define de forma diferente a la media móvil <em>centrada</em> que vimos en la descomposición por medias móviles.</p>
 <p>A partir de <span class="math inline">\(mm_t\)</span> se define la ecuación de la <strong>predicción intra-muestral</strong> como <span class="math display">\[\widehat{y}_{t+1} = mm_t.\]</span> Podemos entender que <span class="math inline">\(mm_t\)</span> es una estimación del nivel de la serie en el periodo <span class="math inline">\(t\)</span> y como la serie es estacionaria (no cambia de nivel), este valor se usa como predicción para el periodo siguiente.</p>
 <p>Es decir, la media móvil simple de orden <span class="math inline">\(r\)</span> usa para predecir el promedio los últimos <span class="math inline">\(r\)</span> datos. Es un punto medio entre el método ingenuo I, que para predecir usaba solo el ultimo dato, y la media simple, que promediaba todos los datos.</p>
 <p>La primera <strong>predicción extra-muestral</strong> es <span class="math inline">\(\widehat{y}_{T+1} = mm_T\)</span> y las restantes <span class="math inline">\(\widehat{y}_{T+h} = \widehat{y}_{T+1}.\)</span></p>
@@ -602,473 +393,382 @@ div.tocify {
 <ul>
 <li>Para poder aplicar la media móvil de orden <span class="math inline">\(r\)</span> se necesitan al menos <span class="math inline">\(r\)</span> datos.</li>
 <li>Para los <span class="math inline">\(r-1\)</span> periodos iniciales no es posible calcular la media móvil y, por tanto, para los <span class="math inline">\(r\)</span> periodos iniciales no es posible obtener una predicción intra-muestral.</li>
-<li>El valor de <span class="math inline">\(r\)</span> debe fijarlo el investigador. Cuanto mayor es su valor, más <em>suave</em> es la linea de predicciones obtenida y menos efecto tiene el valor de una observación individual sobre la predicción (véase la gráfica previa del Ibex35). En el caso límite <span class="math inline">\(r=1\)</span> se tiene el <em>método ingenuo I</em> y para <span class="math inline">\(r=T\)</span> el <em>método de la media</em>.</li>
+<li>El valor de <span class="math inline">\(r\)</span> debe fijarlo el investigador. Cuanto mayor es su valor, más <em>suave</em> es la linea de predicciones obtenida y menos efecto tiene el valor de una observación individual sobre la predicción (véase la <a href="#fig-bolsamediamovil">Figura&nbsp;1</a> del Ibex35). En el caso límite <span class="math inline">\(r=1\)</span> se tiene el <em>método ingenuo I</em> y para <span class="math inline">\(r=T\)</span> el <em>método de la media</em>.</li>
 </ul>
-<p>Veamos un sencillo ejemplo numérico.</p>
-<p>La siguiente tabla muestra la aplicación del método de las medias móviles para los 10 últimos datos de la serie Libros. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la media móvil de orden 5 y la siguiente columna, <em>Yhat</em>, la predicción de Libros, es decir la columna <em>mm</em> retrasada un periodo. La columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intra-muestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie.</p>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="right">Fecha</th>
-<th align="right">Libros</th>
-<th align="right">mm</th>
-<th align="right">Yhat</th>
-<th align="right">Res</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">2009</td>
-<td align="right">74521</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">2010</td>
-<td align="right">76206</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">2011</td>
-<td align="right">74244</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">2012</td>
-<td align="right">69668</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">2013</td>
-<td align="right">56435</td>
-<td align="right">70214.8</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">2014</td>
-<td align="right">56030</td>
-<td align="right">66516.6</td>
-<td align="right">70214.8</td>
-<td align="right">-14184.8</td>
-</tr>
-<tr class="odd">
-<td align="right">2015</td>
-<td align="right">61008</td>
-<td align="right">63477.0</td>
-<td align="right">66516.6</td>
-<td align="right">-5508.6</td>
-</tr>
-<tr class="even">
-<td align="right">2016</td>
-<td align="right">59567</td>
-<td align="right">60541.6</td>
-<td align="right">63477.0</td>
-<td align="right">-3910.0</td>
-</tr>
-<tr class="odd">
-<td align="right">2017</td>
-<td align="right">60185</td>
-<td align="right">58645.0</td>
-<td align="right">60541.6</td>
-<td align="right">-356.6</td>
-</tr>
-<tr class="even">
-<td align="right">2018</td>
-<td align="right">62180</td>
-<td align="right">59794.0</td>
-<td align="right">58645.0</td>
-<td align="right">3535.0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Tu mismo puedes comprobar que <span class="math display">\[mm_{2013} = \frac{74521 + 76206 + 74244 + 69668 + 56435}{5} = 70214.8\]</span> y la primera predicción extra-muestral seria la media de las 5 últimas observaciones <span class="math inline">\(\widehat{Libros}_{2019} = mm_{2018} = 59794\)</span></p>
-<p><br />
-</p>
-</div>
-<div id="ejemplo-de-aplicación-con-libros" class="section level2" number="2.2">
-<h2 number="2.2"><span class="header-section-number">2.2</span> Ejemplo de aplicación con Libros</h2>
-<p>Vamos a usar el método de medias móviles para predecir la serie Libros. <code>R</code> proporciona varias funciones que permiten calcular la media móvil simple: <code>filter</code> del paquete <code>stats</code>, <code>ts_ma</code> de <code>TSstudio</code>, <code>sma</code> de <code>smooth</code>, <code>ma</code> de <code>forecast</code> o <code>movavg</code> de <code>pracma</code>. Sin embargo, ninguna de estas funciones es tan completa como las vistas en el tema previo y permiten obtener la media móvil, la estimación, la predicción y el error con una sola función.</p>
-<p>Para resolver este inconveniente vamos a programar nuestra propia función <code>mm</code></p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>mm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">h =</span> <span class="dv">5</span>) {</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>orden <span class="ot">=</span> r</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  TT <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  inicio <span class="ot">&lt;-</span> <span class="fu">start</span>(x)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  frecuencia <span class="ot">&lt;-</span><span class="fu">frequency</span>(x)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), <span class="at">side =</span> <span class="dv">1</span>)</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>mm[<span class="sc">-</span>TT]), <span class="at">start =</span> inicio, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rep</span>(z<span class="sc">$</span>mm[TT], h), <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">&quot;forecast&quot;</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>  z</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>La función <code>mm</code> precisa de tres argumentos, una serie temporal, el orden de la media móvil <span class="math inline">\(r\)</span> y el horizonte de previsión <span class="math inline">\(h\)</span>. Los dos últimos argumentos están fijados a 3 y 5 como opciones por defecto. El núcleo de la función es <code>filter</code> (librería <code>stats</code>), que calcula la media móvil simple –realmente la función calcula una media ponderada hacia atrás (argumento <code>side = 1</code>). La función <code>filter</code> tiene como primer argumento la serie y el segundo argumento son los pesos de la media móvil, es decir <span class="math inline">\(1/r\)</span> repetido <span class="math inline">\(r\)</span> veces o <code>rep(1/r, r)</code>. El tercer argumento indica si la media es centrada <code>side = 2</code> (como la usada en el método de descomposición visto en el tema 2) o hacia atrás <code>side = 1</code>.</p>
-<p>La función <code>mm</code> devuelve un objeto que contiene la serie original (<code>x</code>), el orden de la media móvil (<code>orden</code>), la media móvil (<code>mm</code>), la serie ajustada o predicción intra-muestral a un periodo vista (<code>fitted</code>), la predicción (<code>mean</code>) y el error de estimación (<code>residuals</code>).</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>mmLibros <span class="ot">&lt;-</span> <span class="fu">mm</span>(libros, <span class="at">r =</span> <span class="dv">5</span>, <span class="at">h =</span> <span class="dv">5</span>)</span></code></pre></div>
-<p>La figura 1 muestra la serie Libros (negro), las previsiones intra-muestrales (rojo) y las previsiones extra-muestrales (azul), que son constantes.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mmLibros,</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Títulos&quot;</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 1. Libros y predicción con media móvil de orden 5&quot;</span>) <span class="sc">+</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mmLibros<span class="sc">$</span>fitted) <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="03-04-Tema4_files/figure-html/unnamed-chunk-4-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Podemos ahora obtener los diferentes indicadores de bondad de ajuste del modelo (error de predicción intra-muestral) con la función <code>accuracy</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(mmLibros)</span></code></pre></div>
-<pre><code>                   ME     RMSE     MAE      MPE     MAPE     MASE      ACF1
-Training set 1950.676 9154.809 7391.99 2.267172 11.47894 1.597785 0.6836209</code></pre>
-<p>El MAPE de 11.5% evidencia que las predicciones no son muy adecuadas, resultado lógico si tenemos en cuenta que estamos aplicando a una serie con tendencia un método de ajuste y predicción para series sin tendencia.</p>
-<p>Podríamos probar con otros valores para el orden de la media móvil e identificar el que genera el menor error extra-muestral para el horizonte de previsión deseado.</p>
-<p><br />
-<br />
-</p>
-</div>
-</div>
-<div id="dobles-medias-móviles-para-series-con-tendencia-pero-sin-estacionalidad" class="section level1" number="3">
-<h1 number="3"><span class="header-section-number">3</span> Dobles medias móviles para series con tendencia (pero sin estacionalidad)</h1>
-<p><br />
-</p>
-<div id="definición-1" class="section level2" number="3.1">
-<h2 number="3.1"><span class="header-section-number">3.1</span> Definición</h2>
-<p>El método de dobles medias móviles es adecuado para una serie no estacionaria y sin estacionalidad y supone que la tendencia es localmente lineal. En este caso, para obtener una predicción en el periodo <span class="math inline">\(t+1\)</span> con datos hasta el periodo <span class="math inline">\(t\)</span> necesitamos dos componentes:</p>
-<ul>
-<li>La estimación del nivel de la serie en el periodo <span class="math inline">\(t\)</span>, que denominaremos <span class="math inline">\(l_t\)</span></li>
-<li>La estimación de la pendiente de la serie en el periodo <span class="math inline">\(t\)</span>, que denominaremos <span class="math inline">\(b_t\)</span></li>
-</ul>
-<p>A partir de estas componentes, obtenidas en el periodo <span class="math inline">\(t\)</span> se tendría que la predicción en el periodo <span class="math inline">\(t+1\)</span> es: <span class="math display">\[\widehat{y}_{t+1} = l_t+b_t.\]</span></p>
-<p>Veamos como podemos obtener el nivel <span class="math inline">\(l_t\)</span> y la pendiente <span class="math inline">\(b_t\)</span> usando una doble media móvil.</p>
-<ul>
-<li>El primer paso es obtener la media móvil simple de orden <span class="math inline">\(r\)</span> tal y como vimos en el epígrafe previo</li>
-</ul>
-<p><span class="math display">\[mm_t =  \frac{y_t + y_{t-1} + \ldots + y_{t-r+1}}{r}.\]</span></p>
-<ul>
-<li>El segundo paso consiste en calcular un media móvil simple de la media móvil obtenida en el paso 1, es decir, una doble media móvil, también de orden <span class="math inline">\(r\)</span>, y que denominaremos <span class="math inline">\(dmm_t\)</span></li>
-</ul>
-<p><span class="math display">\[dmm_t  = \frac{mm_t + mm_{t-1} + \ldots + mm_{t-r+1}}{r}.\]</span></p>
-<p>Se puede demostrar que <span class="math inline">\(mm_t\)</span> es una estimación del nivel de la serie en el periodo <span class="math inline">\(t - \frac{r-1}{2}\)</span> y que <span class="math inline">\(dmm_t\)</span> es una estimación del nivel en el periodo <span class="math inline">\(t - (r - 1)\)</span>. Teniendo en cuenta estos resultados, podemos estimar el valor del nivel de la serie en el periodo <span class="math inline">\(t\)</span> como <span class="math display">\[l_t = 2mm_t - dmm_t.\]</span></p>
-<p>Por otra parte, la pendiente en el periodo <span class="math inline">\(t\)</span> se puede obtener como <span class="math display">\[b_t = \frac{2}{r-1}(mm_t - dmm_t).\]</span></p>
-<p>A partir estas dos componentes, la ecuación de la <strong>predicción intra-muestral</strong> es <span class="math display">\[\widehat{y}_{t+1} = l_t + b_t\]</span> y la ecuación de <strong>predicción extra-muestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T.\]</span></p>
-<p>Veamos otro sencillo ejemplo numérico construido a partir del método de las dobles medias móviles para los 10 últimos datos de la serie Libros y con un orden <span class="math inline">\(r=3\)</span>. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la primera media móvil de orden 3 y la siguiente columna, <em>dmm</em>, la segunda media móvil. A partir de ellas se calculan las dos siguientes columnas <em>l</em> y <em>b</em>, el nivel y la pendiente respectivamente. La columna <em>Yhat</em> es la predicción de Libros y la columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intra-muestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie. En general, en una doble media móvil de orden <span class="math inline">\(r\)</span> se pierden <span class="math inline">\(2r - 1\)</span> datos al inicio de la serie.</p>
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="right">Fecha</th>
-<th align="right">Libros</th>
-<th align="right">mm</th>
-<th align="right">dmm</th>
-<th align="right">l</th>
-<th align="right">b</th>
-<th align="right">Yhat</th>
-<th align="right">Res</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="right">2009</td>
-<td align="right">74521</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">2010</td>
-<td align="right">76206</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">2011</td>
-<td align="right">74244</td>
-<td align="right">74990.33</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">2012</td>
-<td align="right">69668</td>
-<td align="right">73372.67</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="odd">
-<td align="right">2013</td>
-<td align="right">56435</td>
-<td align="right">66782.33</td>
-<td align="right">71715.11</td>
-<td align="right">61849.56</td>
-<td align="right">-4932.78</td>
-<td align="right">NA</td>
-<td align="right">NA</td>
-</tr>
-<tr class="even">
-<td align="right">2014</td>
-<td align="right">56030</td>
-<td align="right">60711.00</td>
-<td align="right">66955.33</td>
-<td align="right">54466.67</td>
-<td align="right">-6244.33</td>
-<td align="right">56916.78</td>
-<td align="right">-886.78</td>
-</tr>
-<tr class="odd">
-<td align="right">2015</td>
-<td align="right">61008</td>
-<td align="right">57824.33</td>
-<td align="right">61772.56</td>
-<td align="right">53876.11</td>
-<td align="right">-3948.22</td>
-<td align="right">48222.33</td>
-<td align="right">12785.67</td>
-</tr>
-<tr class="even">
-<td align="right">2016</td>
-<td align="right">59567</td>
-<td align="right">58868.33</td>
-<td align="right">59134.56</td>
-<td align="right">58602.11</td>
-<td align="right">-266.22</td>
-<td align="right">49927.89</td>
-<td align="right">9639.11</td>
-</tr>
-<tr class="odd">
-<td align="right">2017</td>
-<td align="right">60185</td>
-<td align="right">60253.33</td>
-<td align="right">58982.00</td>
-<td align="right">61524.67</td>
-<td align="right">1271.33</td>
-<td align="right">58335.89</td>
-<td align="right">1849.11</td>
-</tr>
-<tr class="even">
-<td align="right">2018</td>
-<td align="right">62180</td>
-<td align="right">60644.00</td>
-<td align="right">59921.89</td>
-<td align="right">61366.11</td>
-<td align="right">722.11</td>
-<td align="right">62796.00</td>
-<td align="right">-616.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Tu mismo puedes comprobar que <span class="math display">\[
-\begin{aligned}
-   mm_{2011} &amp; = \frac{74521 + 76206 + 74244}{3} = 74990.33 \\
-   dmm_{2013} &amp; = \frac{74990.33 + 73372.67 + 66782.33}{3} = 71715.11\\
-   l_{2013} &amp; = 2\cdot mm_{2013} - dmm_{2013} =  2 \cdot 66782.33 - 71715.11 = 61849.56 \\
-   b_{2013} &amp; = \frac{2}{3-1}(mm_{2013} - dmm_{2013}) =  66782.33 - 71715.11 = -4932.78 \\
-   \hat y_{2014} &amp; = l_{2013} + b_{2013} = 61849.56  -4932.78 = 56916.78
-\end{aligned}
-\]</span></p>
-<p>La primera predicción extra-muestral seria la suma del nivel y la pendiente de la última observación</p>
-<p><span class="math display">\[\widehat{Libros}_{2019} = l_{2018} + b_{2018} = 62088.22\]</span></p>
-<p>y la segunda predicción extra-muestral seria el nivel más dos veces la pendiente de la última observación:</p>
-<p><span class="math display">\[\widehat{Libros}_{2020} = l_{2018} + 2\cdot b_{2018} = 62810.33.\]</span></p>
-<p><br />
-</p>
-</div>
-<div id="ejemplo-de-aplicación-con-libros-1" class="section level2" number="3.2">
-<h2 number="3.2"><span class="header-section-number">3.2</span> Ejemplo de aplicación con Libros</h2>
-<p>Veamos un ejemplo de aplicación de las dobles medias móviles con la serie Libros.</p>
-<p>El método de las dobles medias móviles no está implementado en <code>R</code>, al menos hasta donde llega mi conocimiento. Para resolver este inconveniente vamos a programar nuestra propia función <code>dmm</code>. No tendrás ninguna dificultad en ver como funciona la función y como va creando cada uno de los elementos necesarios –primera y segunda media móvil, nivel y pendiente– para obtener finalmente la serie ajustada, las predicciones y el error.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dmm <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">h =</span> <span class="dv">5</span>) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>orden <span class="ot">=</span> r</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  TT <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  inicio <span class="ot">&lt;-</span> <span class="fu">start</span>(x)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  frecuencia <span class="ot">&lt;-</span><span class="fu">frequency</span>(x)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm1 <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), <span class="at">side =</span> <span class="dv">1</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm2 <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(z<span class="sc">$</span>mm1, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), <span class="at">side =</span> <span class="dv">1</span>)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>l <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> z<span class="sc">$</span>mm1 <span class="sc">-</span> z<span class="sc">$</span>mm2</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>b <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (z<span class="sc">$</span>mm1 <span class="sc">-</span> z<span class="sc">$</span>mm2) <span class="sc">/</span> (r <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>l[<span class="sc">-</span>TT] <span class="sc">+</span> z<span class="sc">$</span>b[<span class="sc">-</span>TT]), <span class="at">start =</span> inicio, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(z<span class="sc">$</span>l[TT] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span>h) <span class="sc">*</span> z<span class="sc">$</span>b[TT], <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">&quot;forecast&quot;</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  z</span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<div id="identificación-del-mejor-modelo" class="section level3 unnumbered">
-<h3 class="unnumbered">Identificación del mejor modelo</h3>
-<p>Podemos aplicar el método de la doble media móvil para diferentes órdenes <span class="math inline">\(r\)</span> y comprobar para cual de ellos se obtiene el menor valor del criterio de bondad de ajuste deseado. Realizaremos este ejercicio considerando como indicador de bondad de ajuste el MAPE pero en dos escenarios: previsiones intra-muestrales a un periodo vista y origen de predicción móvil.</p>
-<p><strong>Selección usando previsiones intra-muestrales a un periodo vista</strong></p>
-<p>La siguiente rutina calcula el MAPE para el método de la doble media móvil con órdenes desde 2, 3 y 4. (¿Ves por qué en una doble media móvil el orden debe ser de 2 o superior?)</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(dmmLibros2 <span class="ot">&lt;-</span> <span class="fu">dmm</span>(libros, <span class="at">r =</span> <span class="dv">2</span>))[<span class="dv">5</span>]</span></code></pre></div>
-<pre><code>[1] 9.840628</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(dmmLibros3 <span class="ot">&lt;-</span> <span class="fu">dmm</span>(libros, <span class="at">r =</span> <span class="dv">3</span>))[<span class="dv">5</span>]</span></code></pre></div>
-<pre><code>[1] 9.736123</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(dmmLibros4 <span class="ot">&lt;-</span> <span class="fu">dmm</span>(libros, <span class="at">r =</span> <span class="dv">4</span>))[<span class="dv">5</span>]</span></code></pre></div>
-<pre><code>[1] 11.23708</code></pre>
-<p>Podemos concluir que el orden óptimo es 3, donde se alcanza el menor MAPE. (Para órdenes de la media móvil mayores que 4 el MAPE sigue aumentando.)</p>
-<p><strong>Selección usando origen de predicción móvil</strong></p>
-<p>Dado que nuestro interés está en la calidad de las previsiones, vamos a obtener el MAPE para el método de la doble media móvil usando origen de predicción móvil. Asumiremos un horizonte de predicción de hasta tres años y 15 como el mínimo número de datos para hacer las estimaciones. Consideremos órdenes desde 2 hasta 4.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">15</span>              <span class="co">#Minimo numero de datos para estimar</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">3</span>               <span class="co">#Horizonte de las prediciciones</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(libros) <span class="co">#Longitud serie</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h      <span class="co">#Total de estimaciones</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">4</span>){</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  tmpMape <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(libros, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    dmmLibros <span class="ot">&lt;-</span> <span class="fu">dmm</span>(train.set, <span class="at">r =</span> r, <span class="at">h =</span> h)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    tmpMape[i <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> dmmLibros<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  tmpMape <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(tmpMape)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">Para un orden de&quot;</span>, r, <span class="st">&quot;los errores son&quot;</span>, <span class="fu">formatC</span>(tmpMape, <span class="at">format =</span> <span class="st">&quot;f&quot;</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
-<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<pre><code>
-Para un orden de 2 los errores son 13.39 20.90 24.76
-Para un orden de 3 los errores son 13.41 19.37 26.72
-Para un orden de 4 los errores son 14.90 20.58 28.39</code></pre>
-<p>Observa que para un horizonte temporal de previsión de uno o dos años, el orden <span class="math inline">\(r = 3\)</span> podría ser el más adecuado. Pero para un horizonte de tres años, el orden óptimo es 2. Observa también que los errores extra-muestrales son mayores que los errores intra-muestrales obtenidos previamente.</p>
-<p>La figura 2 muestra la serie Libros, la previsiones intra-muestrales y las previsiones extra-muestrales para el orden 3. Observa como en los dos cambios de tendencia, la serie ajustada (línea roja) va con un poco de retraso. A la doble media móvil le cuesta identificar e incorporar los cambios de tendencia.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dmmLibros3,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">&quot;&quot;</span>,</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">&quot;Títulos&quot;</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">&quot;Figura 2. Libros y predicción con doble media móvil de orden 3&quot;</span>) <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(dmmLibros3<span class="sc">$</span>fitted) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">&quot;none&quot;</span>)</span></code></pre></div>
-<p><img src="03-04-Tema4_files/figure-html/unnamed-chunk-10-1.png" width="80%" style="display: block; margin: auto;" /></p>
-<p><br />
-<br />
-<br />
-<br />
-</p>
-</div>
-</div>
-</div>
+<p>Veamos un sencillo ejemplo numérico. La <a href="#tbl-ejemplomediamovil">Tabla&nbsp;1</a> muestra la aplicación del método de las medias móviles para los 10 últimos datos de la serie Libros. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la media móvil de orden 5 y la siguiente columna, <em>Yhat</em>, la predicción de Libros, es decir la columna <em>mm</em> desfasada un periodo. La columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intra-muestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie.</p>
+<div class="cell" data-layout-align="center">
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTcOpdG9kb3MgZGUgbWVkaWFzIG3Ds3ZpbGVzIgpzdWJ0aXRsZTogIlByZXZpc2nDs24gY29uIERhdG9zIFRlbXBvcmFsZXMgKEdCSUEpIgphdXRob3I6ICJJdsOhbiBBcnJpYmFzIChEZXB0by4gQW7DoWxpc2lzIEVjb27Ds21pY28uIFVuaXZlcnNpdGF0IGRlIFZhbMOobmNpYSkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHllcwogICAgZGZfcHJpbnQ6IGthYmxlCiAgICBmaWdfY2FwdGlvbjogbm8KICAgIGhpZ2hsaWdodDogcHlnbWVudHMKICAgIG51bWJlcl9zZWN0aW9uczogeWVzCiAgICBzZWxmX2NvbnRhaW5lZDogeWVzCiAgICB0aGVtZTogY2VydWxlYW4KICAgIHRvYzogeWVzCiAgICB0b2NfZGVwdGg6IDIKICAgIHRvY19mbG9hdDoKICAgICAgY29sbGFwc2VkOiB5ZXMKLS0tCgpgYGB7ciBjaHVua19zZXR1cCwgZWNobyA9IEZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQod2FybmluZyA9IEZBTFNFLCAKICAgICAgICAgICAgICAgICAgICAgIG1lc3NhZ2UgPSBGQUxTRSwgCiAgICAgICAgICAgICAgICAgICAgICBjb21tZW50ID0gIiIsCiAgICAgICAgICAgICAgICAgICAgICBmaWcuYWxpZ24gPSAiY2VudGVyIiwgCiAgICAgICAgICAgICAgICAgICAgICBmaWcuc2hvdyA9ICJob2xkIiwKICAgICAgICAgICAgICAgICAgICAgIGZpZy5oZWlnaHQgPSA0LAogICAgICAgICAgICAgICAgICAgICAgZmlnLndpZHRoID0gOCwKICAgICAgICAgICAgICAgICAgICAgIG91dC53aWR0aCA9ICI4MCUiKSAKYGBgCgpgYGB7ciBvcHRpb25zX3NldHVwLCBlY2hvID0gRkFMU0V9Cm9wdGlvbnMoc2NpcGVuID0gOTk5KSAjLSBwYXJhIHF1aXRhciBsYSBub3RhY2lvbiBjaWVudGlmaWNhCmBgYAoKYGBge3IgbGlicmVyaWFzLCBlY2hvID0gRkFMU0V9CmxpYnJhcnkoZm9yZWNhc3QpCmxpYnJhcnkoZ2dwbG90Mik7IHRoZW1lX3NldCh0aGVtZV9idygpKQpsaWJyYXJ5KGdyaWRFeHRyYSkKbGlicmFyeShncmlkKQpgYGAKClwKXAoKIyBJbnRyb2R1Y2Npw7NuCgpSZWN1ZXJkYSBxdWUgeWEgdXRpbGl6YW1vcyBsYSBtZWRpYSBtw7N2aWwgZW4gZWwgY29udGV4dG8gZGUgbGEgZGVzY29tcG9zaWNpw7NuLiBTZSB0cmF0YWJhIGRlIHVuYSBtZWRpYSBtw7N2aWwgY2VudHJhZGEgeSBzZSB1dGlsaXphYmEgcGFyYSBlc3RpbWFyIGxhIHRlbmRlbmNpYSBkZSB1bmEgc2VyaWUuIFZhbW9zIGFob3JhIGEgdmVyIGNvbiBhbGdvIG3DoXMgZGUgZGV0YWxsZSBlbCBjb25jZXB0byBkZSBtZWRpYSBtw7N2aWwgeSBjb21vIHNlIHB1ZWRlIHVzYXIgcGFyYSBvYnRlbmVyIHByZWRpY2Npb25lcy4KCkVsIG3DqXRvZG8gZGUgbGFzIG1lZGlhcyBtw7N2aWxlcyBjb24gZmluZXMgcHJlZGljdGl2b3MgYXBhcmVjZSBlbiBsb3MgYcOxb3MgMjAsIHN1IHVzbyBzZSBnZW5lcmFsaXrDsyBlbiBsb3MgYcOxb3MgNTAgeSBzaWd1ZSBzaWVuZG8gdW4gbcOpdG9kbyB1dGlsaXphZG8gZW4gZGV0ZXJtaW5hZG9zIGNhbXBvcywgZG9uZGUgZWwgZmluIMO6bHRpbW8gZXMgY2FwdHVyYXIgbGEgdGVuZGVuY2lhIGEgbGFyZ28gcGxhem8gZGUgdW5hIHNlcmllLgoKUG9yIGVqZW1wbG8sIHNpIHBpbmNoYXMgW2FxdWldKGh0dHBzOi8vbW9tby5pc2NpaWkuZXMvcHVibGljL21vbW8vZGFzaGJvYXJkL21vbW9fZGFzaGJvYXJkLmh0bWwjbmFjaW9uYWwpIHB1ZWRlcyB2ZXIgZWwgcmVnaXN0cm8gZGVsIG7Dum1lcm8gZGUgbXVlcnRlcyBkaWFyaWFzIChNb01vKSBxdWUgbWFudGllbmUgZWwgX01pbmlzdGVyaW8gZGUgQ2llbmNpYSBlIElubm92YWNpw7NuXy4gTGEgbMOtbmVhIG5lZ3JhIGVzIGVsIG7Dum1lcm8gcmVhbCBkZSBtdWVydGVzIHkgbGEgbMOtbmVhIGF6dWwgZXMgKG3DoXMgbyBtZW5vcykgbGEgbWVkaWEgbcOzdmlsIGRlIG9yZGVuIDM2NS4gTGEgbWVkaWEgbcOzdmlsIGNhcHR1cmEgbGEgdGVuZGVuY2lhIGVuIGVsIG7Dum1lcm8gZGUgbXVlcnRlcyBhIGxhcmdvIHBsYXpvLCBlcyBkZWNpciwgY2FiZSBlc3BlcmFyIHF1ZSBhbWJhcyBsaW5lYXMgYXBhcmV6Y2FuIHNpZW1wcmUgY2VyY2FuYXMuIFNpIHNlIG9ic2VydmEgcXVlIGFtYmFzIGzDrW5lYXMgc2Ugc2VwYXJhbiwgZGViZW1vcyBwZW5zYXIgcXVlIHVuYSBjYXVzYSBubyBpZGVudGlmaWNhZGEgZXN0w6EgcHJvZHVjaWVuZG8gdW4gZXhjZXNvIChvIGRlZmVjdG8pIGRlIG11ZXJ0ZXMgc29icmUgc3UgdmFsb3IgZXNwZXJhZG8uCgpFbiBib2xzYSBlcyBtdXkgaGFiaXR1YWwgdmVyIGdyw6FmaWNvcyBkb25kZSBqdW50byBhIGxhIGV2b2x1Y2nDs24gZGVsIMOtbmRpY2UgYnVyc8OhdGlsIHNlIG11ZXN0cmEgdW5hIG1lZGlhIG3Ds3ZpbCBkZSBvcmRlbiBhbHRvIHkgb3RyYSBkZSBvcmRlbiBiYWpvLiBDdWFuZG8gYW1iYXMgbMOtbmVhcyBzZSBjcnV6YW4sIGxvcyBhbmFsaXN0YXMgY29uc2lkZXJhbiBxdWUgZXMgYnVlbiBtb21lbnRvIHBhcmEgY29tcHJhciAobGEgbWVkaWEgbcOzdmlsIGRlIGNvcnRvIHBsYXpvIHBhc2EgZW5jaW1hIGRlIGxhIGRlIGxhcmdvIHBsYXpvKSBvIHZlbmRlciAobGEgbWVkaWEgbcOzdmlsIGRlIGNvcnRvIHBsYXpvIHBhc2EgcG9yIGRlYmFqbyBkZSBsYSBkZSBsYXJnbyBwbGF6bykuCgohW10oLi9pbWFnZW5lcy9ib2xzYV9tZWRpYXNfbW92aWxlcy5wbmcpCgpcCgpTaSB0ZSBkYXMgY3VlbnRhLCBlbiBhbWJvcyBlamVtcGxvcyAqKmxhIG1lZGlhIG3Ds3ZpbCBzZSBoYSB1dGlsaXphZG8gY29tbyBzZcOxYWwgZGUgYWxhcm1hKiogLS1lbiBlbCBwcmltZXIgY2FzbyBkZSBxdWUgYWxnbyBlc3TDoSBnZW5lcmFuZG8gbcOhcyBvIG1lbm9zIG11ZXJ0ZXMgZGUgbGFzIGVzcGVyYWRhcyB5IGVuIGVsIHNlZ3VuZG8gY2FzbyBkZSBxdWUgZXMgYnVlbiBtb21lbnRvIHBhcmEgY29tcHJhciBvIHZlbmRlci0tLCBwZXJvIG5vIHBhcmEgcmVhbGl6YXIgcHJlZGljY2lvbmVzLiBFbiBsYSBhY3R1YWxpZGFkLCAqKmVzIHBvY28gZnJlY3VlbnRlIGVsIHVzbyBkZSBsYSBtZWRpYSBtw7N2aWwgY29uIGZpbmVzIGV4Y2x1c2l2YW1lbnRlIHByZWRpY3Rpdm9zKiouIAoKU2luIGVtYmFyZ28sIHBvciBzdSBzZW5jaWxsZXogZGUgY8OhbGN1bG8geSBzdSB1dGlsaWRhZCBwYXJhIGlkZW50aWZpY2FyIHF1ZSBlbCBlbnRvcm5vIGRlIHByZWRpY2Npw7NuIGVzdMOhIGNhbWJpYW5kbywgdmFtb3MgYSBkZWRpY2FybGVzIGFsZ28gZGUgdGllbXBvIGEgbGFzIG1lZGlhcyBtw7N2aWxlcy4KCkFudGVzIGRlIGVtcGV6YXIsIHVuIHBhciBkZSBhc3BlY3RvcyBhZGljaW9uYWxlcyBhIHRlbmVyIGVuIGN1ZW50YS4gRGVzZGUgdW4gcHVudG8gZGUgdmlzdGEgdGXDs3JpY28sICoqbGFzIG1lZGlhcyBtw7N2aWxlcyBubyBwdWVkZW4gY2FwdHVyYXIgbGEgZXN0YWNpb25hbGlkYWQqKiBkZSB1bmEgc2VyaWUgYXPDrSBxdWUgc29sbyBzZSBhcGxpY2FuIGEgc2VyaWVzIHF1ZSBwb3Igc3UgbmF0dXJhbGV6YSBubyB0ZW5nYW4gZXN0YSBjb21wb25lbnRlOyBkZXNkZSB1biBwdW50byBkZSB2aXN0YSBwcsOhY3RpY28sIGBSYCBubyBkaXNwb25lIGRlIHVuYSBmdW5jacOzbiBxdWUgcGVybWl0YSBkZSBmb3JtYSBjw7Ntb2RhIG9idGVuZXIgdW5hIG1lZGlhIG3Ds3ZpbCwgbGFzIHByZWRpY2Npb25lcyBpbnRyYS1tdWVzdHJhbGVzLCBsYXMgZXh0cmEgbXVlc3RyYWxlcyB5IGVsIGVycm9yLiBBbGdvIGNvbW8gaGVtb3MgdmlzdG8gZW4gdGVtYXMgcHJldmlvcyB5IHZlcmVtb3MgZW4gbG9zIHBvc3RlcmlvcmVzLiBTb2x2ZW50YXJlbW9zIGVzdGUgYXNwZWN0b3MgY3JlYW5kbyBudWVzdHJhIHByb3BpYSBmdW5jacOzbi4gCgpcClwKCiMgTWVkaWEgbcOzdmlsIHNpbXBsZSBwYXJhIHNlcmllcyBzaW4gdGVuZGVuY2lhIChuaSBlc3RhY2lvbmFsaWRhZCkKClwKCiMjIERlZmluaWNpw7NuCgpFbCBtw6l0b2RvIGRlIGxhIG1lZGlhIG3Ds3ZpbCBzaW1wbGUgZXMgYWRlY3VhZG8gcGFyYSB1bmEgc2VyaWUgZXN0YWNpb25hcmlhIHkgc2luIGVzdGFjaW9uYWxpZGFkLiBFcyBkZWNpciwgdW5hIHNlcmllIHF1ZSBzZSBtdWV2ZSBhbHJlZGVkb3IgZGUgdW4gbml2ZWwgY29uc3RhbnRlLiBFbiBlc3RlIGNhc28sICoqbGEgcHJlZGljY2nDs24gcGFyYSB1biBwZXJpb2RvIGVzIGxhIG1lZGlhIGRlIGxhcyAkciQgb2JzZXJ2YWNpb25lcyBwcmV2aWFzKiouIEVsIHZhbG9yICRyJCwgZGVub21pbmFkbyBvcmRlbiBkZSBsYSBtZWRpYSBtw7N2aWwsIGVzIHVuIHBhcsOhbWV0cm8gcXVlIGRlYmUgc2VyIGZpamFkbyBwb3IgZWwgaW52ZXN0aWdhZG9yLgoKRGVmaW5pbW9zIHByaW1lcm8gbGEgbWVkaWEgbcOzdmlsIF9oYWNpYSBhdHLDoXNfIChfYmFja3dhcmRfKSBkZSBvcmRlbiAkciQgcGFyYSBlbCBwZXJpb2RvICR0JCBjb21vCiQkbW1fdCA9IFxmcmFjezF9e3J9XHN1bV97aT0wfV57ci0xfSB5X3t0LWl9ID0gXGZyYWN7eV90ICsgeV97dC0xfSArIFxsZG90cyArIHlfe3QtcisxfX17cn0kJApPYnNlcnZhIHF1ZSBsYSBtZWRpYSBtw7N2aWwgaGFjaWEgYXRyw6FzIHNlIGRlZmluZSBkZSBmb3JtYSBkaWZlcmVudGUgYSBsYSBtZWRpYSBtw7N2aWwgX2NlbnRyYWRhXyBxdWUgdmltb3MgZW4gbGEgZGVzY29tcG9zaWNpw7NuIHBvciBtZWRpYXMgbcOzdmlsZXMuCgpBIHBhcnRpciBkZSAkbW1fdCQgc2UgZGVmaW5lIGxhIGVjdWFjacOzbiBkZSBsYSBfX3ByZWRpY2Npw7NuIGludHJhLW11ZXN0cmFsX18gY29tbyAKJCRcd2lkZWhhdHt5fV97dCsxfSA9IG1tX3QuJCQKUG9kZW1vcyBlbnRlbmRlciBxdWUgJG1tX3QkIGVzIHVuYSBlc3RpbWFjacOzbiBkZWwgbml2ZWwgZGUgbGEgc2VyaWUgZW4gZWwgcGVyaW9kbyAkdCQgeSBjb21vIGxhIHNlcmllIGVzIGVzdGFjaW9uYXJpYSAobm8gY2FtYmlhIGRlIG5pdmVsKSwgZXN0ZSB2YWxvciBzZSB1c2EgY29tbyBwcmVkaWNjacOzbiBwYXJhIGVsIHBlcmlvZG8gc2lndWllbnRlLgoKRXMgZGVjaXIsIGxhIG1lZGlhIG3Ds3ZpbCBzaW1wbGUgZGUgb3JkZW4gJHIkIHVzYSBwYXJhIHByZWRlY2lyIGVsIHByb21lZGlvIGxvcyDDumx0aW1vcyAkciQgZGF0b3MuIEVzIHVuIHB1bnRvIG1lZGlvIGVudHJlIGVsIG3DqXRvZG8gaW5nZW51byBJLCBxdWUgcGFyYSBwcmVkZWNpciB1c2FiYSBzb2xvIGVsIHVsdGltbyBkYXRvLCB5IGxhIG1lZGlhIHNpbXBsZSwgcXVlIHByb21lZGlhYmEgdG9kb3MgbG9zIGRhdG9zLgoKTGEgcHJpbWVyYSBfX3ByZWRpY2Npw7NuIGV4dHJhLW11ZXN0cmFsX18gZXMgJFx3aWRlaGF0e3l9X3tUKzF9ID0gbW1fVCQgeSBsYXMgcmVzdGFudGVzICRcd2lkZWhhdHt5fV97VCtofSA9IFx3aWRlaGF0e3l9X3tUKzF9LiQKCk9ic2VydmEgcXVlOgoKKiBQYXJhIHBvZGVyIGFwbGljYXIgbGEgbWVkaWEgbcOzdmlsIGRlIG9yZGVuICRyJCBzZSBuZWNlc2l0YW4gYWwgbWVub3MgJHIkIGRhdG9zLgoqIFBhcmEgbG9zICRyLTEkIHBlcmlvZG9zIGluaWNpYWxlcyBubyBlcyBwb3NpYmxlIGNhbGN1bGFyIGxhIG1lZGlhIG3Ds3ZpbCB5LCBwb3IgdGFudG8sIHBhcmEgbG9zICRyJCBwZXJpb2RvcyBpbmljaWFsZXMgbm8gZXMgcG9zaWJsZSBvYnRlbmVyIHVuYSBwcmVkaWNjacOzbiBpbnRyYS1tdWVzdHJhbC4KKiBFbCB2YWxvciBkZSAkciQgZGViZSBmaWphcmxvIGVsIGludmVzdGlnYWRvci4gQ3VhbnRvIG1heW9yIGVzIHN1IHZhbG9yLCBtw6FzIF9zdWF2ZV8gZXMgbGEgbGluZWEgZGUgcHJlZGljY2lvbmVzIG9idGVuaWRhIHkgbWVub3MgZWZlY3RvIHRpZW5lIGVsIHZhbG9yIGRlIHVuYSBvYnNlcnZhY2nDs24gaW5kaXZpZHVhbCBzb2JyZSBsYSBwcmVkaWNjacOzbiAodsOpYXNlIGxhIGdyw6FmaWNhIHByZXZpYSBkZWwgSWJleDM1KS4gRW4gZWwgY2FzbyBsw61taXRlICRyPTEkIHNlIHRpZW5lIGVsIF9tw6l0b2RvIGluZ2VudW8gSV8geSBwYXJhICRyPVQkIGVsIF9tw6l0b2RvIGRlIGxhIG1lZGlhXy4KClZlYW1vcyB1biBzZW5jaWxsbyBlamVtcGxvIG51bcOpcmljby4gCgpMYSBzaWd1aWVudGUgdGFibGEgbXVlc3RyYSBsYSBhcGxpY2FjacOzbiBkZWwgbcOpdG9kbyBkZSBsYXMgbWVkaWFzIG3Ds3ZpbGVzIHBhcmEgbG9zIDEwIMO6bHRpbW9zIGRhdG9zIGRlIGxhIHNlcmllIExpYnJvcy4gTGEgcHJpbWVyYSBjb2x1bW5hIGluZGljYSBlbCBhw7FvIHkgbGEgc2VndW5kYSBlbCB2YWxvciBkZSBsYSBzZXJpZSBfTGlicm9zXy4gTGEgdGVyY2VyYSBjb2x1bW5hLCBfbW1fLCBlcyBsYSBtZWRpYSBtw7N2aWwgZGUgb3JkZW4gNSB5IGxhIHNpZ3VpZW50ZSBjb2x1bW5hLCBfWWhhdF8sIGxhIHByZWRpY2Npw7NuIGRlIExpYnJvcywgZXMgZGVjaXIgbGEgY29sdW1uYSBfbW1fIHJldHJhc2FkYSB1biBwZXJpb2RvLiBMYSBjb2x1bW5hIF9SZXNfIChlcnJvciBkZSBwcmVkaWNjacOzbikgc2UgY2FsY3VsYSByZXN0YW5kbyBhIGxhIHNlcmllIG9yaWdpbmFsIChjb2x1bW5hIF9MaWJyb3NfKSBsYSBwcmVkaWNjacOzbiBpbnRyYS1tdWVzdHJhbCAoY29sdW1uYSBfWWhhdF8pLiBPYnNlcnZhIHF1ZSBlbiBlbCBwcm9jZXNvIHNlIGhhbiBwZXJkaWRvIDUgZGF0b3MgcGFyYSBsYSBwcmVkaWNjacOzbiB5IGVsIHJlc2lkdW8gYWwgaW5pY2lvIGRlIGxhIHNlcmllLgoKYGBge3IsIGVjaG8gPSBGQUxTRX0KbW0gPC0gZnVuY3Rpb24oeCwgciA9IDMsIGggPSA1KSB7CiAgeiA8LSBOVUxMCiAgeiR4IDwtIHgKICB6JG9yZGVuID0gcgogIAogIFRUIDwtIGxlbmd0aCh4KQogIGluaWNpbyA8LSBzdGFydCh4KQogIGZyZWN1ZW5jaWEgPC1mcmVxdWVuY3koeCkKICAKICB6JG1tIDwtIHN0YXRzOjpmaWx0ZXIoeCwgcmVwKDEvciwgciksIHNpZGUgPSAxKQogIHokZml0dGVkIDwtIHRzKGMoTkEsIHokbW1bLVRUXSksIHN0YXJ0ID0gaW5pY2lvLCBmcmVxID0gZnJlY3VlbmNpYSkKICB6JG1lYW4gPC0gdHMocmVwKHokbW1bVFRdLCBoKSwgc3RhcnQgPSB0aW1lKHgpW1RUXSArIDEvZnJlY3VlbmNpYSwgZnJlcSA9IGZyZWN1ZW5jaWEpCiAgeiRyZXNpZHVhbHMgPC0geCAtIHokZml0dGVkCiAgCiAgY2xhc3MoeikgPC0gImZvcmVjYXN0IgogIHoKfQoKbGlicm9zIDwtIHJlYWQuY3N2MigiLi9zZXJpZXMvbGlicm9zLmNzdiIsIGhlYWRlciA9IFRSVUUpCmxpYnJvcyA8LSB0cyhsaWJyb3NbLCAyXSwgc3RhcnQgPSAxOTkzLCBmcmVxdWVuY3kgID0gMSkKbGlicm9zYiA8LSBzdWJzZXQobGlicm9zLCBzdGFydCA9IGxlbmd0aChsaWJyb3MpIC0gOSwgZW5kID0gbGVuZ3RoKGxpYnJvcykpCgptbUxpYnJvcyA8LSBtbShsaWJyb3NiLCByID0gNSkKCmRhdG9zIDwtIGRhdGEuZnJhbWUoCiAgRmVjaGEgPSB0aW1lKGxpYnJvc2IpLAogIExpYnJvcyA9IGFzLm51bWVyaWMobGlicm9zYiksCiAgbW0gPSByb3VuZChhcy5udW1lcmljKG1tTGlicm9zJG1tKSwgMiksCiAgWWhhdCA9IHJvdW5kKGFzLm51bWVyaWMobW1MaWJyb3MkZml0dGVkKSwgMiksCiAgUmVzID0gcm91bmQoYXMubnVtZXJpYyhtbUxpYnJvcyRyZXNpZHVhbHMpLCAyKQopCgpkYXRvcwpgYGAKClR1IG1pc21vIHB1ZWRlcyBjb21wcm9iYXIgcXVlIAokJG1tX3syMDEzfSA9IFxmcmFje2ByIHBhc3RlKGxpYnJvc2JbMTo1XSwgY29sbGFwc2UgPSAiICsgIilgfXs1fSA9IGByIGRhdG9zJG1tWzVdYCQkCnkgbGEgcHJpbWVyYSBwcmVkaWNjacOzbiBleHRyYS1tdWVzdHJhbCBzZXJpYSBsYSBtZWRpYSBkZSBsYXMgNSDDumx0aW1hcyBvYnNlcnZhY2lvbmVzICRcd2lkZWhhdHtMaWJyb3N9X3syMDE5fSA9IG1tX3syMDE4fSA9IGByIHRhaWwobW1MaWJyb3MkbWVhbiwgMSlgJAoKXAoKCiMjIEVqZW1wbG8gZGUgYXBsaWNhY2nDs24gY29uIExpYnJvcyAKClZhbW9zIGEgdXNhciBlbCBtw6l0b2RvIGRlIG1lZGlhcyBtw7N2aWxlcyBwYXJhIHByZWRlY2lyIGxhIHNlcmllIExpYnJvcy4gYFJgIHByb3BvcmNpb25hIHZhcmlhcyBmdW5jaW9uZXMgcXVlIHBlcm1pdGVuIGNhbGN1bGFyIGxhIG1lZGlhIG3Ds3ZpbCBzaW1wbGU6IGBmaWx0ZXJgIGRlbCBwYXF1ZXRlIGBzdGF0c2AsICBgdHNfbWFgIGRlIGBUU3N0dWRpb2AsIGBzbWFgIGRlIGBzbW9vdGhgLCBgbWFgIGRlIGBmb3JlY2FzdGAgbyBgbW92YXZnYCBkZSBgcHJhY21hYC4gU2luIGVtYmFyZ28sIG5pbmd1bmEgZGUgZXN0YXMgZnVuY2lvbmVzIGVzIHRhbiBjb21wbGV0YSBjb21vIGxhcyB2aXN0YXMgZW4gZWwgdGVtYSBwcmV2aW8geSBwZXJtaXRlbiBvYnRlbmVyIGxhIG1lZGlhIG3Ds3ZpbCwgbGEgZXN0aW1hY2nDs24sIGxhIHByZWRpY2Npw7NuIHkgZWwgZXJyb3IgY29uIHVuYSBzb2xhIGZ1bmNpw7NuLgoKUGFyYSByZXNvbHZlciBlc3RlIGluY29udmVuaWVudGUgdmFtb3MgYSBwcm9ncmFtYXIgbnVlc3RyYSBwcm9waWEgZnVuY2nDs24gYG1tYCAKCmBgYHtyLCBldmFsID0gRkFMU0V9Cm1tIDwtIGZ1bmN0aW9uKHgsIHIgPSAzLCBoID0gNSkgewogIHogPC0gTlVMTAogIHokeCA8LSB4CiAgeiRvcmRlbiA9IHIKICAKICBUVCA8LSBsZW5ndGgoeCkKICBpbmljaW8gPC0gc3RhcnQoeCkKICBmcmVjdWVuY2lhIDwtZnJlcXVlbmN5KHgpCiAgCiAgeiRtbSA8LSBzdGF0czo6ZmlsdGVyKHgsIHJlcCgxL3IsIHIpLCBzaWRlID0gMSkKICB6JGZpdHRlZCA8LSB0cyhjKE5BLCB6JG1tWy1UVF0pLCBzdGFydCA9IGluaWNpbywgZnJlcSA9IGZyZWN1ZW5jaWEpCiAgeiRtZWFuIDwtIHRzKHJlcCh6JG1tW1RUXSwgaCksIHN0YXJ0ID0gdGltZSh4KVtUVF0gKyAxL2ZyZWN1ZW5jaWEsIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokcmVzaWR1YWxzIDwtIHggLSB6JGZpdHRlZAogIAogIGNsYXNzKHopIDwtICJmb3JlY2FzdCIKICB6Cn0KYGBgCgpMYSBmdW5jacOzbiBgbW1gIHByZWNpc2EgZGUgdHJlcyBhcmd1bWVudG9zLCB1bmEgc2VyaWUgdGVtcG9yYWwsIGVsIG9yZGVuIGRlIGxhIG1lZGlhIG3Ds3ZpbCAkciQgeSBlbCBob3Jpem9udGUgZGUgcHJldmlzacOzbiAkaCQuIExvcyBkb3Mgw7psdGltb3MgYXJndW1lbnRvcyBlc3TDoW4gZmlqYWRvcyBhIDMgeSA1IGNvbW8gb3BjaW9uZXMgcG9yIGRlZmVjdG8uIEVsIG7DumNsZW8gZGUgbGEgZnVuY2nDs24gZXMgYGZpbHRlcmAgKGxpYnJlcsOtYSBgc3RhdHNgKSwgcXVlIGNhbGN1bGEgbGEgbWVkaWEgbcOzdmlsIHNpbXBsZSAtLXJlYWxtZW50ZSBsYSBmdW5jacOzbiBjYWxjdWxhIHVuYSBtZWRpYSBwb25kZXJhZGEgaGFjaWEgYXRyw6FzIChhcmd1bWVudG8gYHNpZGUgPSAxYCkuIExhIGZ1bmNpw7NuIGBmaWx0ZXJgIHRpZW5lIGNvbW8gcHJpbWVyIGFyZ3VtZW50byBsYSBzZXJpZSB5IGVsIHNlZ3VuZG8gYXJndW1lbnRvIHNvbiBsb3MgcGVzb3MgZGUgbGEgbWVkaWEgbcOzdmlsLCBlcyBkZWNpciAkMS9yJCByZXBldGlkbyAkciQgdmVjZXMgbyBgcmVwKDEvciwgcilgLiBFbCB0ZXJjZXIgYXJndW1lbnRvIGluZGljYSBzaSBsYSBtZWRpYSBlcyBjZW50cmFkYSBgc2lkZSA9IDJgIChjb21vIGxhIHVzYWRhIGVuIGVsIG3DqXRvZG8gZGUgZGVzY29tcG9zaWNpw7NuIHZpc3RvIGVuIGVsIHRlbWEgMikgbyBoYWNpYSBhdHLDoXMgYHNpZGUgPSAxYC4gCgpMYSBmdW5jacOzbiBgbW1gIGRldnVlbHZlIHVuIG9iamV0byBxdWUgY29udGllbmUgbGEgc2VyaWUgb3JpZ2luYWwgKGB4YCksIGVsIG9yZGVuIGRlIGxhIG1lZGlhIG3Ds3ZpbCAoYG9yZGVuYCksIGxhIG1lZGlhIG3Ds3ZpbCAoYG1tYCksIGxhIHNlcmllIGFqdXN0YWRhIG8gcHJlZGljY2nDs24gaW50cmEtbXVlc3RyYWwgYSB1biBwZXJpb2RvIHZpc3RhIChgZml0dGVkYCksIGxhIHByZWRpY2Npw7NuIChgbWVhbmApIHkgZWwgZXJyb3IgZGUgZXN0aW1hY2nDs24gKGByZXNpZHVhbHNgKS4KCmBgYHtyfQptbUxpYnJvcyA8LSBtbShsaWJyb3MsIHIgPSA1LCBoID0gNSkKYGBgCgpMYSBmaWd1cmEgMSBtdWVzdHJhIGxhIHNlcmllIExpYnJvcyAobmVncm8pLCBsYXMgcHJldmlzaW9uZXMgaW50cmEtbXVlc3RyYWxlcyAocm9qbykgeSBsYXMgcHJldmlzaW9uZXMgZXh0cmEtbXVlc3RyYWxlcyAoYXp1bCksIHF1ZSBzb24gY29uc3RhbnRlcy4gCiAKYGBge3J9CmF1dG9wbG90KG1tTGlicm9zLAogICAgICAgICB4bGFiID0gIiIsCiAgICAgICAgIHlsYWIgPSAiVMOtdHVsb3MiLAogICAgICAgICBtYWluID0gIkZpZ3VyYSAxLiBMaWJyb3MgeSBwcmVkaWNjacOzbiBjb24gbWVkaWEgbcOzdmlsIGRlIG9yZGVuIDUiKSArCiAgYXV0b2xheWVyKG1tTGlicm9zJGZpdHRlZCkgKyAKICB0aGVtZShsZWdlbmQucG9zaXRpb249Im5vbmUiKQpgYGAKClBvZGVtb3MgYWhvcmEgb2J0ZW5lciBsb3MgZGlmZXJlbnRlcyBpbmRpY2Fkb3JlcyBkZSBib25kYWQgZGUgYWp1c3RlIGRlbCBtb2RlbG8gKGVycm9yIGRlIHByZWRpY2Npw7NuIGludHJhLW11ZXN0cmFsKSBjb24gbGEgZnVuY2nDs24gYGFjY3VyYWN5YC4KCmBgYHtyfQphY2N1cmFjeShtbUxpYnJvcykKYGBgCgpFbCBNQVBFIGRlIDExLjUlIGV2aWRlbmNpYSBxdWUgbGFzIHByZWRpY2Npb25lcyBubyBzb24gbXV5IGFkZWN1YWRhcywgcmVzdWx0YWRvIGzDs2dpY28gc2kgdGVuZW1vcyBlbiBjdWVudGEgcXVlIGVzdGFtb3MgYXBsaWNhbmRvIGEgdW5hIHNlcmllIGNvbiB0ZW5kZW5jaWEgdW4gbcOpdG9kbyBkZSBhanVzdGUgeSBwcmVkaWNjacOzbiBwYXJhIHNlcmllcyBzaW4gdGVuZGVuY2lhLgoKUG9kcsOtYW1vcyBwcm9iYXIgY29uIG90cm9zIHZhbG9yZXMgcGFyYSBlbCBvcmRlbiBkZSBsYSBtZWRpYSBtw7N2aWwgZSBpZGVudGlmaWNhciBlbCBxdWUgZ2VuZXJhIGVsIG1lbm9yIGVycm9yIGV4dHJhLW11ZXN0cmFsIHBhcmEgZWwgaG9yaXpvbnRlIGRlIHByZXZpc2nDs24gZGVzZWFkby4KClwKXAoKIyBEb2JsZXMgbWVkaWFzIG3Ds3ZpbGVzIHBhcmEgc2VyaWVzIGNvbiB0ZW5kZW5jaWEgKHBlcm8gc2luIGVzdGFjaW9uYWxpZGFkKQoKXAoKIyMgRGVmaW5pY2nDs24KCkVsIG3DqXRvZG8gZGUgZG9ibGVzIG1lZGlhcyBtw7N2aWxlcyBlcyBhZGVjdWFkbyBwYXJhIHVuYSBzZXJpZSBubyBlc3RhY2lvbmFyaWEgeSBzaW4gZXN0YWNpb25hbGlkYWQgeSBzdXBvbmUgcXVlIGxhIHRlbmRlbmNpYSBlcyBsb2NhbG1lbnRlIGxpbmVhbC4gRW4gZXN0ZSBjYXNvLCBwYXJhIG9idGVuZXIgdW5hIHByZWRpY2Npw7NuIGVuIGVsIHBlcmlvZG8gJHQrMSQgY29uIGRhdG9zIGhhc3RhIGVsIHBlcmlvZG8gJHQkIG5lY2VzaXRhbW9zIGRvcyBjb21wb25lbnRlczoKCiogTGEgZXN0aW1hY2nDs24gZGVsIG5pdmVsIGRlIGxhIHNlcmllIGVuIGVsIHBlcmlvZG8gJHQkLCBxdWUgZGVub21pbmFyZW1vcyAkbF90JAoqIExhIGVzdGltYWNpw7NuIGRlIGxhIHBlbmRpZW50ZSBkZSBsYSBzZXJpZSBlbiBlbCBwZXJpb2RvICR0JCwgcXVlIGRlbm9taW5hcmVtb3MgJGJfdCQKCkEgcGFydGlyIGRlIGVzdGFzIGNvbXBvbmVudGVzLCBvYnRlbmlkYXMgZW4gZWwgcGVyaW9kbyAkdCQgc2UgdGVuZHLDrWEgcXVlIGxhIHByZWRpY2Npw7NuIGVuIGVsIHBlcmlvZG8gJHQrMSQgZXM6CiQkXHdpZGVoYXR7eX1fe3QrMX0gPSBsX3QrYl90LiQkCgpWZWFtb3MgY29tbyBwb2RlbW9zIG9idGVuZXIgZWwgbml2ZWwgJGxfdCQgeSBsYSBwZW5kaWVudGUgJGJfdCQgdXNhbmRvIHVuYSBkb2JsZSBtZWRpYSBtw7N2aWwuCgoqIEVsIHByaW1lciBwYXNvIGVzIG9idGVuZXIgbGEgbWVkaWEgbcOzdmlsIHNpbXBsZSBkZSBvcmRlbiAkciQgdGFsIHkgY29tbyB2aW1vcyBlbiBlbCBlcMOtZ3JhZmUgcHJldmlvCgokJG1tX3QgPSAgXGZyYWN7eV90ICsgeV97dC0xfSArIFxsZG90cyArIHlfe3QtcisxfX17cn0uJCQKCiogRWwgc2VndW5kbyBwYXNvIGNvbnNpc3RlIGVuIGNhbGN1bGFyIHVuIG1lZGlhIG3Ds3ZpbCBzaW1wbGUgZGUgbGEgbWVkaWEgbcOzdmlsIG9idGVuaWRhIGVuIGVsIHBhc28gMSwgZXMgZGVjaXIsIHVuYSBkb2JsZSBtZWRpYSBtw7N2aWwsIHRhbWJpw6luIGRlIG9yZGVuICRyJCwgeSBxdWUgZGVub21pbmFyZW1vcyAkZG1tX3QkCgokJGRtbV90ICA9IFxmcmFje21tX3QgKyBtbV97dC0xfSArIFxsZG90cyArIG1tX3t0LXIrMX19e3J9LiQkCgpTZSBwdWVkZSBkZW1vc3RyYXIgcXVlICRtbV90JCBlcyB1bmEgZXN0aW1hY2nDs24gZGVsIG5pdmVsIGRlIGxhIHNlcmllIGVuIGVsIHBlcmlvZG8gJHQgLSBcZnJhY3tyLTF9ezJ9JCB5IHF1ZSAkZG1tX3QkIGVzIHVuYSBlc3RpbWFjacOzbiBkZWwgbml2ZWwgZW4gZWwgcGVyaW9kbyAkdCAtIChyIC0gMSkkLiBUZW5pZW5kbyBlbiBjdWVudGEgZXN0b3MgcmVzdWx0YWRvcywgcG9kZW1vcyBlc3RpbWFyIGVsIHZhbG9yIGRlbCBuaXZlbCBkZSBsYSBzZXJpZSBlbiBlbCBwZXJpb2RvICR0JCBjb21vCiQkbF90ID0gMm1tX3QgLSBkbW1fdC4kJAoKUG9yIG90cmEgcGFydGUsIGxhIHBlbmRpZW50ZSBlbiBlbCBwZXJpb2RvICR0JCBzZSBwdWVkZSBvYnRlbmVyIGNvbW8KJCRiX3QgPSBcZnJhY3syfXtyLTF9KG1tX3QgLSBkbW1fdCkuJCQKCkEgcGFydGlyIGVzdGFzIGRvcyBjb21wb25lbnRlcywgbGEgZWN1YWNpw7NuIGRlIGxhIF9fcHJlZGljY2nDs24gaW50cmEtbXVlc3RyYWxfXyBlcyAKJCRcd2lkZWhhdHt5fV97dCsxfSA9IGxfdCArIGJfdCQkCnkgbGEgZWN1YWNpw7NuIGRlIF9fcHJlZGljY2nDs24gZXh0cmEtbXVlc3RyYWxfXyBlcyAKJCRcd2lkZWhhdHt5fV97VCtofT1sX1QgKyBoIGJfVC4kJCAKClZlYW1vcyBvdHJvIHNlbmNpbGxvIGVqZW1wbG8gbnVtw6lyaWNvIGNvbnN0cnVpZG8gYSBwYXJ0aXIgZGVsIG3DqXRvZG8gZGUgbGFzIGRvYmxlcyBtZWRpYXMgbcOzdmlsZXMgcGFyYSBsb3MgMTAgw7psdGltb3MgZGF0b3MgZGUgbGEgc2VyaWUgTGlicm9zIHkgY29uIHVuIG9yZGVuICRyPTMkLiBMYSBwcmltZXJhIGNvbHVtbmEgaW5kaWNhIGVsIGHDsW8geSBsYSBzZWd1bmRhIGVsIHZhbG9yIGRlIGxhIHNlcmllIF9MaWJyb3NfLiBMYSB0ZXJjZXJhIGNvbHVtbmEsIF9tbV8sIGVzIGxhIHByaW1lcmEgbWVkaWEgbcOzdmlsIGRlIG9yZGVuIDMgeSBsYSBzaWd1aWVudGUgY29sdW1uYSwgX2RtbV8sIGxhIHNlZ3VuZGEgbWVkaWEgbcOzdmlsLiBBIHBhcnRpciBkZSBlbGxhcyBzZSBjYWxjdWxhbiBsYXMgZG9zIHNpZ3VpZW50ZXMgY29sdW1uYXMgX2xfIHkgX2JfLCBlbCBuaXZlbCB5IGxhIHBlbmRpZW50ZSByZXNwZWN0aXZhbWVudGUuIExhIGNvbHVtbmEgX1loYXRfIGVzIGxhIHByZWRpY2Npw7NuIGRlIExpYnJvcyB5IGxhIGNvbHVtbmEgX1Jlc18gKGVycm9yIGRlIHByZWRpY2Npw7NuKSBzZSBjYWxjdWxhIHJlc3RhbmRvIGEgbGEgc2VyaWUgb3JpZ2luYWwgKGNvbHVtbmEgX0xpYnJvc18pIGxhIHByZWRpY2Npw7NuIGludHJhLW11ZXN0cmFsIChjb2x1bW5hIF9ZaGF0XykuIE9ic2VydmEgcXVlIGVuIGVsIHByb2Nlc28gc2UgaGFuIHBlcmRpZG8gNSBkYXRvcyBwYXJhIGxhIHByZWRpY2Npw7NuIHkgZWwgcmVzaWR1byBhbCBpbmljaW8gZGUgbGEgc2VyaWUuIEVuIGdlbmVyYWwsIGVuIHVuYSBkb2JsZSBtZWRpYSBtw7N2aWwgZGUgb3JkZW4gJHIkIHNlIHBpZXJkZW4gJDJyIC0gMSQgZGF0b3MgYWwgaW5pY2lvIGRlIGxhIHNlcmllLgoKYGBge3IsIGVjaG8gPSBGQUxTRX0KZG1tIDwtIGZ1bmN0aW9uKHgsIHIgPSAzLCBoID0gNSkgewogIHogPC0gTlVMTAogIHokeCA8LSB4CiAgeiRvcmRlbiA9IHIKICAKICBUVCA8LSBsZW5ndGgoeCkKICBpbmljaW8gPC0gc3RhcnQoeCkKICBmcmVjdWVuY2lhIDwtZnJlcXVlbmN5KHgpCiAgCiAgeiRtbTEgPC0gc3RhdHM6OmZpbHRlcih4LCByZXAoMS9yLCByKSwgc2lkZSA9IDEpCiAgeiRtbTIgPC0gc3RhdHM6OmZpbHRlcih6JG1tMSwgcmVwKDEvciwgciksIHNpZGUgPSAxKQogIAogIHokbCA8LSAyICogeiRtbTEgLSB6JG1tMgogIHokYiA8LSAyICogKHokbW0xIC0geiRtbTIpIC8gKHIgLSAxKQogIAogIHokZml0dGVkIDwtIHRzKGMoTkEsIHokbFstVFRdICsgeiRiWy1UVF0pLCBzdGFydCA9IGluaWNpbywgZnJlcSA9IGZyZWN1ZW5jaWEpCiAgeiRtZWFuIDwtIHRzKHokbFtUVF0gKyAoMTpoKSAqIHokYltUVF0sIHN0YXJ0ID0gdGltZSh4KVtUVF0gKyAxL2ZyZWN1ZW5jaWEsIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokcmVzaWR1YWxzIDwtIHggLSB6JGZpdHRlZAogIGNsYXNzKHopIDwtICJmb3JlY2FzdCIKICB6Cn0KCmRtbUxpYnJvcyA8LSBkbW0obGlicm9zYikKCmRhdG9zIDwtIGRhdGEuZnJhbWUoCiAgRmVjaGEgPSB0aW1lKGxpYnJvc2IpLAogIExpYnJvcyA9IGFzLm51bWVyaWMobGlicm9zYiksCiAgbW0gPSByb3VuZChhcy5udW1lcmljKGRtbUxpYnJvcyRtbTEpLCAyKSwKICBkbW0gPSByb3VuZChhcy5udW1lcmljKGRtbUxpYnJvcyRtbTIpLCAyKSwKICBsID0gcm91bmQoYXMubnVtZXJpYyhkbW1MaWJyb3MkbCksIDIpLAogIGIgPSByb3VuZChhcy5udW1lcmljKGRtbUxpYnJvcyRiKSwgMiksCiAgWWhhdCA9IHJvdW5kKHJvdW5kKGFzLm51bWVyaWMoZG1tTGlicm9zJGZpdHRlZCksIDIpLCAyKSwKICBSZXMgPSByb3VuZChyb3VuZChhcy5udW1lcmljKGRtbUxpYnJvcyRyZXNpZHVhbHMpLCAyKSwgMikKKQoKCmRhdG9zCmBgYAoKVHUgbWlzbW8gcHVlZGVzIGNvbXByb2JhciBxdWUgCiQkClxiZWdpbnthbGlnbmVkfQogICBtbV97MjAxMX0gJiA9IFxmcmFje2ByIHBhc3RlKGxpYnJvc2JbMTozXSwgY29sbGFwc2UgPSAiICsgIilgfXszfSA9IGByIGRhdG9zJG1tWzNdYCBcXAogICBkbW1fezIwMTN9ICYgPSBcZnJhY3tgciBwYXN0ZShkYXRvcyRtbVszOjVdLCBjb2xsYXBzZSA9ICIgKyAiKWB9ezN9ID0gYHIgZGF0b3MkZG1tWzVdYFxcCiAgIGxfezIwMTN9ICYgPSAyXGNkb3QgbW1fezIwMTN9IC0gZG1tX3syMDEzfSA9ICAyIFxjZG90IGByIGRhdG9zJG1tWzVdYCAtIGByIGRhdG9zJGRtbVs1XWAgPSBgciBkYXRvcyRsWzVdYCBcXAogICBiX3syMDEzfSAmID0gXGZyYWN7Mn17My0xfShtbV97MjAxM30gLSBkbW1fezIwMTN9KSA9ICBgciBkYXRvcyRtbVs1XWAgLSBgciBkYXRvcyRkbW1bNV1gID0gYHIgZGF0b3MkYls1XWAgXFwKICAgXGhhdCB5X3syMDE0fSAmID0gbF97MjAxM30gKyBiX3syMDEzfSA9IGByIGRhdG9zJGxbNV1gICBgciBkYXRvcyRiWzVdYCA9IGByIGRhdG9zJFloYXRbNl1gClxlbmR7YWxpZ25lZH0KJCQKCkxhIHByaW1lcmEgcHJlZGljY2nDs24gZXh0cmEtbXVlc3RyYWwgc2VyaWEgbGEgc3VtYSBkZWwgbml2ZWwgeSBsYSBwZW5kaWVudGUgZGUgbGEgw7psdGltYSBvYnNlcnZhY2nDs24KCiQkXHdpZGVoYXR7TGlicm9zfV97MjAxOX0gPSBsX3syMDE4fSArIGJfezIwMTh9ID0gYHIgZGF0b3MkbFsxMF0gKyBkYXRvcyRiWzEwXWAkJAoKeSBsYSBzZWd1bmRhIHByZWRpY2Npw7NuIGV4dHJhLW11ZXN0cmFsIHNlcmlhIGVsIG5pdmVsIG3DoXMgZG9zIHZlY2VzIGxhIHBlbmRpZW50ZSBkZSBsYSDDumx0aW1hIG9ic2VydmFjacOzbjoKCiQkXHdpZGVoYXR7TGlicm9zfV97MjAyMH0gPSBsX3syMDE4fSArIDJcY2RvdCBiX3syMDE4fSA9IGByIGRhdG9zJGxbMTBdICsgMipkYXRvcyRiWzEwXWAuJCQKClwKCiMjIEVqZW1wbG8gZGUgYXBsaWNhY2nDs24gY29uIExpYnJvcwoKVmVhbW9zIHVuIGVqZW1wbG8gZGUgYXBsaWNhY2nDs24gZGUgbGFzIGRvYmxlcyBtZWRpYXMgbcOzdmlsZXMgY29uIGxhIHNlcmllIExpYnJvcy4KCkVsIG3DqXRvZG8gZGUgbGFzIGRvYmxlcyBtZWRpYXMgbcOzdmlsZXMgbm8gZXN0w6EgaW1wbGVtZW50YWRvIGVuIGBSYCwgYWwgbWVub3MgaGFzdGEgZG9uZGUgbGxlZ2EgbWkgY29ub2NpbWllbnRvLiBQYXJhIHJlc29sdmVyIGVzdGUgaW5jb252ZW5pZW50ZSB2YW1vcyBhIHByb2dyYW1hciBudWVzdHJhIHByb3BpYSBmdW5jacOzbiBgZG1tYC4gTm8gdGVuZHLDoXMgbmluZ3VuYSBkaWZpY3VsdGFkIGVuIHZlciBjb21vIGZ1bmNpb25hIGxhIGZ1bmNpw7NuIHkgY29tbyB2YSBjcmVhbmRvIGNhZGEgdW5vIGRlIGxvcyBlbGVtZW50b3MgbmVjZXNhcmlvcyAtLXByaW1lcmEgeSBzZWd1bmRhIG1lZGlhIG3Ds3ZpbCwgbml2ZWwgeSBwZW5kaWVudGUtLSBwYXJhIG9idGVuZXIgZmluYWxtZW50ZSBsYSBzZXJpZSBhanVzdGFkYSwgbGFzIHByZWRpY2Npb25lcyB5IGVsIGVycm9yLgoKYGBge3IsIGV2YWwgPSBGQUxTRX0KZG1tIDwtIGZ1bmN0aW9uKHgsIHIgPSAzLCBoID0gNSkgewogIHogPC0gTlVMTAogIHokeCA8LSB4CiAgeiRvcmRlbiA9IHIKICAKICBUVCA8LSBsZW5ndGgoeCkKICBpbmljaW8gPC0gc3RhcnQoeCkKICBmcmVjdWVuY2lhIDwtZnJlcXVlbmN5KHgpCiAgCiAgeiRtbTEgPC0gc3RhdHM6OmZpbHRlcih4LCByZXAoMS9yLCByKSwgc2lkZSA9IDEpCiAgeiRtbTIgPC0gc3RhdHM6OmZpbHRlcih6JG1tMSwgcmVwKDEvciwgciksIHNpZGUgPSAxKQogIAogIHokbCA8LSAyICogeiRtbTEgLSB6JG1tMgogIHokYiA8LSAyICogKHokbW0xIC0geiRtbTIpIC8gKHIgLSAxKQogIAogIHokZml0dGVkIDwtIHRzKGMoTkEsIHokbFstVFRdICsgeiRiWy1UVF0pLCBzdGFydCA9IGluaWNpbywgZnJlcSA9IGZyZWN1ZW5jaWEpCiAgeiRtZWFuIDwtIHRzKHokbFtUVF0gKyAoMTpoKSAqIHokYltUVF0sIHN0YXJ0ID0gdGltZSh4KVtUVF0gKyAxL2ZyZWN1ZW5jaWEsIGZyZXEgPSBmcmVjdWVuY2lhKQogIHokcmVzaWR1YWxzIDwtIHggLSB6JGZpdHRlZAogIGNsYXNzKHopIDwtICJmb3JlY2FzdCIKICB6Cn0KYGBgCgojIyMgSWRlbnRpZmljYWNpw7NuIGRlbCBtZWpvciBtb2RlbG8gey19CgpQb2RlbW9zIGFwbGljYXIgZWwgbcOpdG9kbyBkZSBsYSBkb2JsZSBtZWRpYSBtw7N2aWwgcGFyYSBkaWZlcmVudGVzIMOzcmRlbmVzICRyJCB5IGNvbXByb2JhciBwYXJhIGN1YWwgZGUgZWxsb3Mgc2Ugb2J0aWVuZSBlbCBtZW5vciB2YWxvciBkZWwgY3JpdGVyaW8gZGUgYm9uZGFkIGRlIGFqdXN0ZSBkZXNlYWRvLiBSZWFsaXphcmVtb3MgZXN0ZSBlamVyY2ljaW8gY29uc2lkZXJhbmRvIGNvbW8gaW5kaWNhZG9yIGRlIGJvbmRhZCBkZSBhanVzdGUgZWwgTUFQRSBwZXJvIGVuIGRvcyBlc2NlbmFyaW9zOiBwcmV2aXNpb25lcyBpbnRyYS1tdWVzdHJhbGVzIGEgdW4gcGVyaW9kbyB2aXN0YSB5IG9yaWdlbiBkZSBwcmVkaWNjacOzbiBtw7N2aWwuCgpfX1NlbGVjY2nDs24gdXNhbmRvIHByZXZpc2lvbmVzIGludHJhLW11ZXN0cmFsZXMgYSB1biBwZXJpb2RvIHZpc3RhX18KCkxhIHNpZ3VpZW50ZSBydXRpbmEgY2FsY3VsYSBlbCBNQVBFIHBhcmEgZWwgbcOpdG9kbyBkZSBsYSBkb2JsZSBtZWRpYSBtw7N2aWwgY29uIMOzcmRlbmVzIGRlc2RlIDIsIDMgeSA0LiAowr9WZXMgcG9yIHF1w6kgZW4gdW5hIGRvYmxlIG1lZGlhIG3Ds3ZpbCBlbCBvcmRlbiBkZWJlIHNlciBkZSAyICBvIHN1cGVyaW9yPykKCmBgYHtyfQphY2N1cmFjeShkbW1MaWJyb3MyIDwtIGRtbShsaWJyb3MsIHIgPSAyKSlbNV0KYWNjdXJhY3koZG1tTGlicm9zMyA8LSBkbW0obGlicm9zLCByID0gMykpWzVdCmFjY3VyYWN5KGRtbUxpYnJvczQgPC0gZG1tKGxpYnJvcywgciA9IDQpKVs1XQpgYGAKClBvZGVtb3MgY29uY2x1aXIgcXVlIGVsIG9yZGVuIMOzcHRpbW8gZXMgMywgZG9uZGUgc2UgYWxjYW56YSBlbCBtZW5vciBNQVBFLiAoUGFyYSDDs3JkZW5lcyBkZSBsYSBtZWRpYSBtw7N2aWwgbWF5b3JlcyBxdWUgNCBlbCBNQVBFIHNpZ3VlIGF1bWVudGFuZG8uKQoKX19TZWxlY2Npw7NuIHVzYW5kbyBvcmlnZW4gZGUgcHJlZGljY2nDs24gbcOzdmlsX18KCkRhZG8gcXVlIG51ZXN0cm8gaW50ZXLDqXMgZXN0w6EgZW4gbGEgY2FsaWRhZCBkZSBsYXMgcHJldmlzaW9uZXMsIHZhbW9zIGEgb2J0ZW5lciBlbCBNQVBFIHBhcmEgZWwgbcOpdG9kbyBkZSBsYSBkb2JsZSBtZWRpYSBtw7N2aWwgdXNhbmRvIG9yaWdlbiBkZSBwcmVkaWNjacOzbiBtw7N2aWwuIEFzdW1pcmVtb3MgdW4gaG9yaXpvbnRlIGRlIHByZWRpY2Npw7NuIGRlIGhhc3RhIHRyZXMgYcOxb3MgeSAxNSBjb21vIGVsIG3DrW5pbW8gbsO6bWVybyBkZSBkYXRvcyBwYXJhIGhhY2VyIGxhcyBlc3RpbWFjaW9uZXMuIENvbnNpZGVyZW1vcyDDs3JkZW5lcyBkZXNkZSAyIGhhc3RhIDQuCgpgYGB7cn0KayA8LSAxNSAgICAgICAgICAgICAgI01pbmltbyBudW1lcm8gZGUgZGF0b3MgcGFyYSBlc3RpbWFyCmggPC0gMyAgICAgICAgICAgICAgICNIb3Jpem9udGUgZGUgbGFzIHByZWRpY2ljaW9uZXMKVFQgPC0gbGVuZ3RoKGxpYnJvcykgI0xvbmdpdHVkIHNlcmllCnMgPC0gVFQgLSBrIC0gaCAgICAgICNUb3RhbCBkZSBlc3RpbWFjaW9uZXMKCmZvcihyIGluIDI6NCl7CiAgCiAgdG1wTWFwZSA8LSBtYXRyaXgoTkEsIHMgKyAxLCBoKQogIGZvciAoaSBpbiAwOnMpIHsKICAgIAogICAgdHJhaW4uc2V0IDwtIHN1YnNldChsaWJyb3MsIHN0YXJ0ID0gaSArIDEsIGVuZCA9IGkgKyBrKQogICAgdGVzdC5zZXQgPC0gIHN1YnNldChsaWJyb3MsIHN0YXJ0ID0gaSArIGsgKyAxLCBlbmQgPSBpICsgayArIGgpCiAgICAKICAgIGRtbUxpYnJvcyA8LSBkbW0odHJhaW4uc2V0LCByID0gciwgaCA9IGgpCiAgICB0bXBNYXBlW2kgKyAxLCBdIDwtIDEwMCphYnModGVzdC5zZXQgLSBkbW1MaWJyb3MkbWVhbikvdGVzdC5zZXQKICB9CiAgdG1wTWFwZSA8LSBjb2xNZWFucyh0bXBNYXBlKQogIAogIGNhdCgiXG5QYXJhIHVuIG9yZGVuIGRlIiwgciwgImxvcyBlcnJvcmVzIHNvbiIsIGZvcm1hdEModG1wTWFwZSwgZm9ybWF0ID0gImYiLCBkaWdpdHMgPSAyKSkgCiAgCn0KYGBgCgpPYnNlcnZhIHF1ZSBwYXJhIHVuIGhvcml6b250ZSB0ZW1wb3JhbCBkZSBwcmV2aXNpw7NuIGRlIHVubyBvIGRvcyBhw7FvcywgZWwgb3JkZW4gJHIgPSAzJCBwb2Ryw61hIHNlciBlbCBtw6FzIGFkZWN1YWRvLiBQZXJvIHBhcmEgdW4gaG9yaXpvbnRlIGRlIHRyZXMgYcOxb3MsIGVsIG9yZGVuIMOzcHRpbW8gZXMgMi4gT2JzZXJ2YSB0YW1iacOpbiBxdWUgbG9zIGVycm9yZXMgZXh0cmEtbXVlc3RyYWxlcyBzb24gbWF5b3JlcyBxdWUgbG9zIGVycm9yZXMgaW50cmEtbXVlc3RyYWxlcyBvYnRlbmlkb3MgcHJldmlhbWVudGUuCgpMYSBmaWd1cmEgMiBtdWVzdHJhIGxhIHNlcmllIExpYnJvcywgbGEgcHJldmlzaW9uZXMgaW50cmEtbXVlc3RyYWxlcyB5IGxhcyBwcmV2aXNpb25lcyBleHRyYS1tdWVzdHJhbGVzIHBhcmEgZWwgb3JkZW4gMy4gT2JzZXJ2YSBjb21vIGVuIGxvcyBkb3MgY2FtYmlvcyBkZSB0ZW5kZW5jaWEsIGxhIHNlcmllIGFqdXN0YWRhIChsw61uZWEgcm9qYSkgdmEgY29uIHVuIHBvY28gZGUgcmV0cmFzby4gQSBsYSBkb2JsZSBtZWRpYSBtw7N2aWwgbGUgY3Vlc3RhIGlkZW50aWZpY2FyIGUgaW5jb3Jwb3JhciBsb3MgY2FtYmlvcyBkZSB0ZW5kZW5jaWEuCgpgYGB7cn0KYXV0b3Bsb3QoZG1tTGlicm9zMywKICAgICAgICAgeGxhYiA9ICIiLAogICAgICAgICB5bGFiID0gIlTDrXR1bG9zIiwKICAgICAgICAgbWFpbiA9ICJGaWd1cmEgMi4gTGlicm9zIHkgcHJlZGljY2nDs24gY29uIGRvYmxlIG1lZGlhIG3Ds3ZpbCBkZSBvcmRlbiAzIikgKwogIGF1dG9sYXllcihkbW1MaWJyb3MzJGZpdHRlZCkgKwogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbj0ibm9uZSIpCmBgYAoKXApcClwKXA==</div>
-<footer class="footer">
-  
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="tbl-ejemplomediamovil" class="anchored">
+<table class="table table-sm table-striped">
+<caption>Tabla&nbsp;1: Ejemplo de descomposición por medias móviles</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Fecha</th>
+<th style="text-align: right;">Libros</th>
+<th style="text-align: right;">mm</th>
+<th style="text-align: right;">Yhat</th>
+<th style="text-align: right;">Res</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">76206</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">74244</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">69668</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">56435</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">56030</td>
+<td style="text-align: right;">66516.6</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">NA</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">61008</td>
+<td style="text-align: right;">63477.0</td>
+<td style="text-align: right;">66516.6</td>
+<td style="text-align: right;">-5508.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">59567</td>
+<td style="text-align: right;">60541.6</td>
+<td style="text-align: right;">63477.0</td>
+<td style="text-align: right;">-3910.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">60185</td>
+<td style="text-align: right;">58645.0</td>
+<td style="text-align: right;">60541.6</td>
+<td style="text-align: right;">-356.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">62180</td>
+<td style="text-align: right;">59794.0</td>
+<td style="text-align: right;">58645.0</td>
+<td style="text-align: right;">3535.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">64154</td>
+<td style="text-align: right;">61418.8</td>
+<td style="text-align: right;">59794.0</td>
+<td style="text-align: right;">4360.0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<p>Tu mismo puedes comprobar que <span class="math display">\[mm_{2014} = \frac{76206 + 74244 + 69668 + 56435 + 56030}{5} = 66516.6\]</span> y la primera predicción extra-muestral seria la media de las 5 últimas observaciones <span class="math display">\[\widehat{Libros}_{2020} = mm_{2019} =  61418.8.\]</span></p>
+<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+¿Por que no es la media móvil un método sencillo?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Date cuenta de que es la primera vez que en un método hay que elegir el valor de un parámetro.</p>
+<p>¿Cómo elegirlo? No hay ninguna base teórica que permita saber el valor más adecuado para el orden de la media móvil, hay que fijarlo según criterios empíricos.</p>
+<p>Esto distingue los métodos sencillos vistos en el tema previo del método de la media móvil.</p>
+</div>
+</div>
+<p><br>
+</p>
+</section>
+<section id="ejemplo-de-aplicación-con-demanda-eléctrica" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="ejemplo-de-aplicación-con-demanda-eléctrica"><span class="header-section-number">2.2</span> Ejemplo de aplicación con Demanda Eléctrica</h2>
+<p>Vamos a usar el método de medias móviles para predecir la serie Demanda de electricidad semanal. La <a href="#fig-consumoelectrico">Figura&nbsp;2</a> muestra una serie estacionaria alrededor de un valor medio.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Creamos la serie de consumo semanal</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(electricidad, <span class="at">FUN =</span> sum) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidad,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"GWh"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylim=</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">6000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-consumoelectrico" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-04-Tema4_files/figure-html/fig-consumoelectrico-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Consumo semanal de electricidad (2021)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>R</code> proporciona varias funciones que permiten calcular la media móvil simple: <code>filter</code> del paquete <code>stats</code>, <code>ts_ma</code> de <code>TSstudio</code>, <code>sma</code> de <code>smooth</code>, <code>ma</code> de <code>forecast</code> o <code>movavg</code> de <code>pracma</code>. Sin embargo, ninguna de estas funciones es tan completa como las vistas en el tema previo y permiten obtener la media móvil, la estimación, la predicción y el error con una sola función.</p>
+<p>Para resolver este inconveniente vamos a programar nuestra propia función <code>mmf</code></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>mmf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">h =</span> <span class="dv">5</span>) {</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>x <span class="ot">&lt;-</span> x</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>orden <span class="ot">=</span> r</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  TT <span class="ot">&lt;-</span> <span class="fu">length</span>(x)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  inicio <span class="ot">&lt;-</span> <span class="fu">start</span>(x)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  frecuencia <span class="ot">&lt;-</span><span class="fu">frequency</span>(x)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), <span class="at">side =</span> <span class="dv">1</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>mm[<span class="sc">-</span>TT]), <span class="at">start =</span> inicio, <span class="at">freq =</span> frecuencia)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rep</span>(z<span class="sc">$</span>mm[TT], h), <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, <span class="at">freq =</span> frecuencia)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">"forecast"</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  z</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La función <code>mmf</code> precisa de tres argumentos, una serie temporal, el orden de la media móvil <span class="math inline">\(r\)</span> y el horizonte de previsión <span class="math inline">\(h\)</span>. Los dos últimos argumentos están fijados a 3 y 5 como opciones por defecto. El cálculo de la media móvil se hace mediante la función <code>filter</code> (librería <code>stats</code>), que calcula la media móvil simple. Realmente la función <code>filter</code> calcula una media ponderada, tiene como primer argumento la serie y el segundo argumento son los pesos de la media móvil, es decir <span class="math inline">\(1/r\)</span> repetido <span class="math inline">\(r\)</span> veces o <code>rep(1/r, r)</code>. El tercer argumento indica si la media es centrada <code>side = 2</code> (como la usada en el método de descomposición visto en el tema 2) o hacia atrás <code>side = 1</code>.</p>
+<p>La función <code>mmf</code> devuelve un objeto que contiene la serie original (<code>x</code>), el orden de la media móvil (<code>orden</code>), la media móvil (<code>mm</code>), la serie ajustada o predicción intra-muestral a un periodo vista (<code>fitted</code>), la predicción (<code>mean</code>) y el error de estimación (<code>residuals</code>).</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mmelectricidad <span class="ot">&lt;-</span> <span class="fu">mmf</span>(electricidad, <span class="at">r =</span> <span class="dv">5</span>, <span class="at">h =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>La <a href="#fig-electricidadmediamovil">Figura&nbsp;3</a> muestra la serie Demanda eléctrica (negro), las previsiones intra-muestrales (rojo) y las previsiones extra-muestrales (azul), que son constantes.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mmelectricidad,</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"GWh"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mmelectricidad<span class="sc">$</span>fitted) <span class="sc">+</span> </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-electricidadmediamovil" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03-04-Tema4_files/figure-html/fig-electricidadmediamovil-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Consumo eléctrico y predicción con media móvil de orden 5</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Podemos ahora obtener los diferentes indicadores de bondad de ajuste del modelo (error de predicción intra-muestral) con la función <code>accuracy</code>.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(mmelectricidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                    ME    RMSE      MAE        MPE     MAPE     MASE      ACF1
+Training set -25.32394 244.639 179.1574 -0.6787638 3.702664 1.093756 0.4808701</code></pre>
+</div>
+</div>
+<p>El MAPE de 3.7% (o 245 GWh de RMSE) evidencia que las predicciones son bastante adecuadas.</p>
+<section id="identificación-del-mejor-modelo" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="identificación-del-mejor-modelo">Identificación del mejor modelo</h3>
+<p>Podemos aplicar el método de la media móvil para diferentes órdenes <span class="math inline">\(r\)</span> y comprobar para cual de ellos se obtiene el menor valor del criterio de bondad de ajuste deseado. Realizaremos este ejercicio considerando como indicador de bondad de ajuste el MAPE pero en dos escenarios: previsiones intra-muestrales a un periodo vista y origen de predicción móvil.</p>
+<p><strong>Selección usando previsiones intra-muestrales a un periodo vista</strong></p>
+<p>La siguiente rutina calcula el MAPE para el método de la media móvil con órdenes desde 1 a 4.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para un orden de"</span>, r, <span class="st">"los errores son"</span>, </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">accuracy</span>(<span class="fu">mmf</span>(electricidad, <span class="at">r =</span> r))[<span class="dv">5</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Para un orden de 1 los errores son 3.325258
+Para un orden de 2 los errores son 3.398294
+Para un orden de 3 los errores son 3.400958
+Para un orden de 4 los errores son 3.558249</code></pre>
+</div>
+</div>
+<p>Podemos concluir que el orden óptimo es 1, donde se alcanza el menor MAPE, es decir el método Ingenuo I. Sin embargo, para órdenes superiores de la media móvil, el error se mantiene igual de reducido.</p>
+<p><strong>Selección usando origen de predicción móvil</strong></p>
+<p>Dado que nuestro interés está en la calidad de las previsiones, vamos a obtener el MAPE para el método de la media móvil usando origen de predicción móvil. Asumiremos un horizonte de predicción de hasta cuatro semanas y 20 como el mínimo número de datos necesarios para hacer las estimaciones. Consideremos órdenes desde 1 hasta 4.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">20</span>              <span class="co">#Minimo numero de datos para estimar</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">4</span>               <span class="co">#Horizonte de las prediciciones</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(electricidad) <span class="co">#Longitud serie</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h      <span class="co">#Total de estimaciones</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>){</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  tmpMape <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    mmElectricidad <span class="ot">&lt;-</span> <span class="fu">mmf</span>(train.set, <span class="at">r =</span> r, <span class="at">h =</span> h)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    tmpMape[i <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> mmElectricidad<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  tmpMape <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(tmpMape)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para un orden de"</span>, r, <span class="st">"los errores son"</span>, <span class="fu">formatC</span>(tmpMape, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Para un orden de 1 los errores son 2.80 3.80 4.21 5.91
+Para un orden de 2 los errores son 3.04 3.54 4.56 6.07
+Para un orden de 3 los errores son 3.09 3.86 4.84 6.14
+Para un orden de 4 los errores son 3.35 4.29 5.05 6.28</code></pre>
+</div>
+</div>
+<p>Podemos aceptar que con independencia del horizonte temporal de previsión, el orden <span class="math inline">\(r = 1\)</span> (Ingenuo I) podría ser el más adecuado. Sólo para una previsión a dos semanas vista el orden 2 parece ser superior. En todo caso, en este ejemplo la calidad de las previsiones es relativamente independiente del orden de la media móvil.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Importancia del criterio de calidad elegido
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Prueba a repetir los ejercicios de identificación del mejor modelo esta vez usando como criterio el RMSE. ¿Qué concluyes? ¿Coinciden tus conclusiones con las obtenidas usando el MAPE?</p>
+</div>
+</div>
+<p><br>
 <br>
-This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.  <div class="text-muted">Website created by Iv&aacute;n Arribas. &copy;  2020. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es"> ivan.arribas@uv.es</a>.</div>
-  
+<br>
+<br>
+</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
 </footer>
 
 
 
-
-</div>
-</div>
-
-</div>
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
-
-
-</script>
-
-<!-- tabsets -->
-
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open');
-  });
-});
-</script>
-
-<!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("03-04-Tema4.Rmd");
-});
-</script>
-
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
-</body>
-</html>
+</body></html>
