@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.0.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,15 +12,10 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
-  vertical-align: middle;
-}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -59,7 +54,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
+code span.bu { } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -72,7 +67,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.im { } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -143,11 +138,9 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+      <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
-    </a>
-  </div>
+  </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -320,46 +313,46 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
-  <li><a href="#criterios-de-calidad" id="toc-criterios-de-calidad" class="nav-link" data-scroll-target="#criterios-de-calidad"><span class="toc-section-number">2</span>  Criterios de calidad</a>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#criterios-de-calidad" id="toc-criterios-de-calidad" class="nav-link" data-scroll-target="#criterios-de-calidad"> <span class="header-section-number">2</span> Criterios de calidad</a>
   <ul class="collapse">
-  <li><a href="#notación-y-definiciones" id="toc-notación-y-definiciones" class="nav-link" data-scroll-target="#notación-y-definiciones"><span class="toc-section-number">2.1</span>  Notación y definiciones</a></li>
-  <li><a href="#medidas-de-precisión-de-la-predicción" id="toc-medidas-de-precisión-de-la-predicción" class="nav-link" data-scroll-target="#medidas-de-precisión-de-la-predicción"><span class="toc-section-number">2.2</span>  Medidas de precisión de la predicción</a></li>
+  <li><a href="#notación-y-definiciones" id="toc-notación-y-definiciones" class="nav-link" data-scroll-target="#notación-y-definiciones"> <span class="header-section-number">2.1</span> Notación y definiciones</a></li>
+  <li><a href="#medidas-de-precisión-de-la-predicción" id="toc-medidas-de-precisión-de-la-predicción" class="nav-link" data-scroll-target="#medidas-de-precisión-de-la-predicción"> <span class="header-section-number">2.2</span> Medidas de precisión de la predicción</a></li>
   </ul></li>
-  <li><a href="#métodos-sencillos-de-predicción" id="toc-métodos-sencillos-de-predicción" class="nav-link" data-scroll-target="#métodos-sencillos-de-predicción"><span class="toc-section-number">3</span>  Métodos sencillos de predicción</a>
+  <li><a href="#métodos-sencillos-de-predicción" id="toc-métodos-sencillos-de-predicción" class="nav-link" data-scroll-target="#métodos-sencillos-de-predicción"> <span class="header-section-number">3</span> Métodos sencillos de predicción</a>
   <ul class="collapse">
-  <li><a href="#métodos-sencillos-de-predicción-1" id="toc-métodos-sencillos-de-predicción-1" class="nav-link" data-scroll-target="#métodos-sencillos-de-predicción-1"><span class="toc-section-number">3.1</span>  Métodos sencillos de predicción</a>
+  <li><a href="#métodos-sencillos-de-predicción-1" id="toc-métodos-sencillos-de-predicción-1" class="nav-link" data-scroll-target="#métodos-sencillos-de-predicción-1"> <span class="header-section-number">3.1</span> Métodos sencillos de predicción</a>
   <ul class="collapse">
   <li><a href="#series-sin-tendencia-y-sin-estacionalidad" id="toc-series-sin-tendencia-y-sin-estacionalidad" class="nav-link" data-scroll-target="#series-sin-tendencia-y-sin-estacionalidad">Series <em>sin</em> tendencia y <em>sin</em> estacionalidad</a></li>
   <li><a href="#series-con-tendencia-y-sin-estacionalidad" id="toc-series-con-tendencia-y-sin-estacionalidad" class="nav-link" data-scroll-target="#series-con-tendencia-y-sin-estacionalidad">Series <em>con</em> tendencia y <em>sin</em> estacionalidad</a></li>
   <li><a href="#series-sin-tendencia-y-con-estacionalidad" id="toc-series-sin-tendencia-y-con-estacionalidad" class="nav-link" data-scroll-target="#series-sin-tendencia-y-con-estacionalidad">Series <em>sin</em> tendencia y <em>con</em> estacionalidad</a></li>
   </ul></li>
-  <li><a href="#ejemplo-de-aplicación" id="toc-ejemplo-de-aplicación" class="nav-link" data-scroll-target="#ejemplo-de-aplicación"><span class="toc-section-number">3.2</span>  Ejemplo de aplicación</a>
+  <li><a href="#ejemplo-de-aplicación" id="toc-ejemplo-de-aplicación" class="nav-link" data-scroll-target="#ejemplo-de-aplicación"> <span class="header-section-number">3.2</span> Ejemplo de aplicación</a>
   <ul class="collapse">
   <li><a href="#serie-libros" id="toc-serie-libros" class="nav-link" data-scroll-target="#serie-libros">Serie Libros</a></li>
   <li><a href="#serie-nacimientos" id="toc-serie-nacimientos" class="nav-link" data-scroll-target="#serie-nacimientos">Serie Nacimientos</a></li>
   <li><a href="#serie-demanda-eléctrica" id="toc-serie-demanda-eléctrica" class="nav-link" data-scroll-target="#serie-demanda-eléctrica">Serie Demanda eléctrica</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#evaluación-de-las-predicciones" id="toc-evaluación-de-las-predicciones" class="nav-link" data-scroll-target="#evaluación-de-las-predicciones"><span class="toc-section-number">4</span>  Evaluación de las predicciones</a>
+  <li><a href="#evaluación-de-las-predicciones" id="toc-evaluación-de-las-predicciones" class="nav-link" data-scroll-target="#evaluación-de-las-predicciones"> <span class="header-section-number">4</span> Evaluación de las predicciones</a>
   <ul class="collapse">
-  <li><a href="#validación-por-la-metodología-de-training-settest-set-para-series-temporales" id="toc-validación-por-la-metodología-de-training-settest-set-para-series-temporales" class="nav-link" data-scroll-target="#validación-por-la-metodología-de-training-settest-set-para-series-temporales"><span class="toc-section-number">4.1</span>  Validación por la metodología de <em>Training set/Test set</em> para Series Temporales</a>
+  <li><a href="#validación-por-la-metodología-de-training-settest-set-para-series-temporales" id="toc-validación-por-la-metodología-de-training-settest-set-para-series-temporales" class="nav-link" data-scroll-target="#validación-por-la-metodología-de-training-settest-set-para-series-temporales"> <span class="header-section-number">4.1</span> Validación por la metodología de <em>Training set/Test set</em> para Series Temporales</a>
   <ul class="collapse">
   <li><a href="#serie-libros-1" id="toc-serie-libros-1" class="nav-link" data-scroll-target="#serie-libros-1">Serie Libros</a></li>
   <li><a href="#serie-nacimientos-1" id="toc-serie-nacimientos-1" class="nav-link" data-scroll-target="#serie-nacimientos-1">Serie Nacimientos</a></li>
   <li><a href="#serie-demanda-eléctrica-1" id="toc-serie-demanda-eléctrica-1" class="nav-link" data-scroll-target="#serie-demanda-eléctrica-1">Serie Demanda eléctrica</a></li>
   </ul></li>
-  <li><a href="#validación-cruzada-para-series-temporales" id="toc-validación-cruzada-para-series-temporales" class="nav-link" data-scroll-target="#validación-cruzada-para-series-temporales"><span class="toc-section-number">4.2</span>  Validación cruzada para Series Temporales</a>
+  <li><a href="#validación-cruzada-para-series-temporales" id="toc-validación-cruzada-para-series-temporales" class="nav-link" data-scroll-target="#validación-cruzada-para-series-temporales"> <span class="header-section-number">4.2</span> Validación cruzada para Series Temporales</a>
   <ul class="collapse">
   <li><a href="#ejemplo-de-aplicación-con-nacimientos" id="toc-ejemplo-de-aplicación-con-nacimientos" class="nav-link" data-scroll-target="#ejemplo-de-aplicación-con-nacimientos">Ejemplo de aplicación con Nacimientos</a></li>
   <li><a href="#ejemplo-de-aplicación-con-demanda-eléctrica" id="toc-ejemplo-de-aplicación-con-demanda-eléctrica" class="nav-link" data-scroll-target="#ejemplo-de-aplicación-con-demanda-eléctrica">Ejemplo de aplicación con Demanda eléctrica</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"><span class="toc-section-number">5</span>  Resumen de los comandos utilizados</a></li>
+  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"> <span class="header-section-number">5</span> Resumen de los comandos utilizados</a></li>
   </ul>
 </nav>
     </div>
@@ -629,7 +622,7 @@ Cálculo del intervalo de confianza de las predicciones
 <div id="fig-librossencillos" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-librossencillos-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;1: Libros y predicción por métodos sencillos</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 1: Libros y predicción por métodos sencillos</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -722,7 +715,7 @@ Interpretación de ACF1
 <div id="fig-nacimientossencillo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-nacimientossencillo-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;2: Nacimientos y predicción por el método Ingenuo con estacionalidad</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 2: Nacimientos y predicción por el método Ingenuo con estacionalidad</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -754,7 +747,7 @@ Training set -2.117489 42.99794 27.93245 -0.4964111 4.000218    1 0.7096965</cod
 <div id="fig-electricidadsencillo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-electricidadsencillo-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;3: Demanda eléctrica y predicción por el método Ingenuo con estacionalidad</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 3: Demanda eléctrica y predicción por el método Ingenuo con estacionalidad</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -810,7 +803,7 @@ Test set     -15817.32 15867.44 15817.32 -26.44 26.44 3.23 -0.21       6.4</code
 <div id="fig-librostraintest" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-librostraintest-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;4: Libros, predicción intra- y extra-muestral</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 4: Libros, predicción intra- y extra-muestral</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -852,7 +845,7 @@ Test set     -2926.75 3221.74 2926.75 -9.57 9.57 2.11 0.69      1.89</code></pre
 <div id="fig-nacimientostraintest" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-nacimientostraintest-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;5: Nacimientos, predicción intra- y extra-muestral</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 5: Nacimientos, predicción intra- y extra-muestral</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -906,7 +899,7 @@ Test set     59.30 86.23 73.54  7.82 10.14 2.93 0.48      1.55</code></pre>
 <div id="fig-rollingwindows" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./imagenes/RollingWindows.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;6: Descripción del proceso de origen de predicción móvil</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 6: Descripción del proceso de origen de predicción móvil</figcaption><p></p>
 </figure>
 </div>
 <p>Este procedimiento se denomina <strong>origen de predicción móvil</strong> (<em>rolling forecast origin</em>) o <em>rolling windows</em>.</p>
@@ -1107,8 +1100,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      let href = ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
