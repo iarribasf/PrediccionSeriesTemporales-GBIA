@@ -439,21 +439,32 @@ div.csl-indent {
 <li>La estimación de la pendiente de la serie en el periodo <span class="math inline">\(t\)</span>: <span class="math inline">\(b_t\)</span></li>
 <li>La estimación de la estacionalidad en el mes correspondiente al periodo <span class="math inline">\(t+1\)</span> con datos hasta <span class="math inline">\(t\)</span>: <span class="math inline">\(s_{t + 1 - m}\)</span> (recuerda, <span class="math inline">\(m\)</span> es el orden estacional</li>
 </ul>
-<p>A partir de estas componentes, obtenidas en el periodo <span class="math inline">\(t\)</span> y para un esquema aditivo, se tendría que la predicción en el periodo <span class="math inline">\(t+1\)</span> es: <span class="math display">\[\widehat{y}_{t+1} = l_t+b_t+s_{t+1-m}.\]</span> En general, las componentes pueden <strong>existir o no</strong> y se pueden combinar entre ellas <strong>aditiva o multiplicativamente</strong>. Veamos algunos casos:</p>
+<p>A partir de estas componentes, obtenidas en el periodo <span class="math inline">\(t\)</span> y para un esquema aditivo, se tendría que la predicción en el periodo <span class="math inline">\(t+1\)</span> es:</p>
+<p><span class="math display">\[\widehat{y}_{t+1} = l_t+b_t+s_{t+1-m}.\]</span></p>
+<p>En general, las componentes pueden <strong>existir o no</strong> y se pueden combinar entre ellas <strong>aditiva o multiplicativamente</strong>. Veamos algunos casos:</p>
 <ul>
-<li>Existen todas y son multiplicativas: <span class="math display">\[\widehat{y}_{t+1}=l_t \cdot b_t \cdot s_{t + 1 - m}\]</span></li>
-<li>Existen todas, nivel y pendiente aditivas, y estacionalidad multiplicativa: <span class="math display">\[\widehat{y}_{t+1}=(l_t+b_t)s_{t + 1 - m}\]</span></li>
-<li>No hay pendiente y la estacionalidad es aditiva: <span class="math display">\[\widehat{y}_{t+1}=l_t+s_{t + 1 - m}\]</span></li>
+<li>Existen todas y son multiplicativas:</li>
 </ul>
-¿Como obtenemos los valores de <span class="math inline">\(l_t\)</span>, <span class="math inline">\(b_t\)</span> y <span class="math inline">\(s_{t + 1 - m}\)</span>? Mediante <strong>expresiones recursivas</strong>, donde cada componente se calcula a partir de los valores hasta <span class="math inline">\(t\)</span> de la serie y de las componentes: $$
+<p><span class="math display">\[\widehat{y}_{t+1}=l_t \cdot b_t \cdot s_{t + 1 - m}\]</span></p>
+<ul>
+<li>Existen todas, nivel y pendiente aditivas, y estacionalidad multiplicativa:</li>
+</ul>
+<p><span class="math display">\[\widehat{y}_{t+1}=(l_t+b_t)s_{t + 1 - m}\]</span></p>
+<ul>
+<li>No hay pendiente y la estacionalidad es aditiva:</li>
+</ul>
+<p><span class="math display">\[\widehat{y}_{t+1}=l_t+s_{t + 1 - m}\]</span></p>
+<p>¿Como obtenemos los valores de <span class="math inline">\(l_t\)</span>, <span class="math inline">\(b_t\)</span> y <span class="math inline">\(s_{t + 1 - m}\)</span>? Mediante <strong>expresiones recursivas</strong>, donde cada componente se calcula a partir de los valores hasta <span class="math inline">\(t\)</span> de la serie y de las componentes:</p>
 <span class="math display">\[\begin{aligned}
 l_t&amp; = f_l(y_t,y_{t-1}\ldots, l_{t-1},l_{t-2}\ldots,b_{t-1},b_{t-2}\ldots,s_{t-1},s_{t-2}\ldots) \\
 b_t&amp; = f_b(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t-1},b_{t-2}\ldots,s_{t-1},s_{t-2}\ldots) \\
 s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1},s_{t-2}\ldots)
 \end{aligned}\]</span>
-<p>$$ Por ejemplo, el <em>método ingenuo I</em> se puede interpretar dentro de este contexto como un método de alisado donde <span class="math inline">\(l_t = y_t\)</span> y no hay ni pendiente ni estacionalidad. Por tanto, <span class="math inline">\(\widehat{y}_{t+1} = l_{t} = y_{t}\)</span>.</p>
+<p>Por ejemplo, el <em>método ingenuo I</em> se puede interpretar dentro de este contexto como un método de alisado donde <span class="math inline">\(l_t = y_t\)</span> y no hay ni pendiente ni estacionalidad. Por tanto, <span class="math inline">\(\widehat{y}_{t+1} = l_{t} = y_{t}\)</span>.</p>
 <p>De la misma forma, el <em>método ingenuo II</em> se puede interpretar como un método de alisado donde <span class="math inline">\(l_t = y_t\)</span>, <span class="math inline">\(b_t = y_t - y_{t-1}\)</span> y no hay estacionalidad. Entonces, <span class="math inline">\(\widehat{y}_{t+1}=l_t + b_t = y_t + (y_t - y_{t-1})\)</span>.</p>
-<p>En las expresiones previas hemos supuesto que se quería obtener una predicción a un periodo vista (<span class="math inline">\(\widehat{y}_{t+1}\)</span>). Si el objetivo es estimar una previsión <span class="math inline">\(h\)</span> periodos hacia delante desde el periodo <span class="math inline">\(t\)</span>, <span class="math inline">\(\widehat{y}_{t+h}\)</span>, hay que modificar la ecuación de predicción adecuadamente. Por ejemplo, para el caso aditivo se tendría que <span class="math display">\[\widehat{y}_{t+h} = l_t+hb_t+s_{t+h-m(k+1)}\]</span> donde <span class="math inline">\(k = \lfloor (h-1)/m\rfloor\)</span>.</p>
+<p>En las expresiones previas hemos supuesto que se quería obtener una predicción a un periodo vista (<span class="math inline">\(\widehat{y}_{t+1}\)</span>). Si el objetivo es estimar una previsión <span class="math inline">\(h\)</span> periodos hacia delante desde el periodo <span class="math inline">\(t\)</span>, <span class="math inline">\(\widehat{y}_{t+h}\)</span>, hay que modificar la ecuación de predicción adecuadamente. Por ejemplo, para el caso aditivo se tendría que</p>
+<p><span class="math display">\[\widehat{y}_{t+h} = l_t+hb_t+s_{t+h-m(k+1)}\]</span></p>
+<p>donde <span class="math inline">\(k = \lfloor (h-1)/m\rfloor\)</span>.</p>
 <p>El concepto de componentes aquí visto no coincide con el definido en el Tema 1. Sin embargo, podemos asimilar la tendencia de una serie como la suma (o multiplicación) del nivel y la pendiente <span class="math inline">\(T_{t+1} = l_t + b_t\)</span> (o <span class="math inline">\(T_{t+1} = l_t \cdot b_t\)</span>) y de esta forma ambas definiciones de componentes de una serie se hacen compatibles.</p>
 <p><br>
 <br>
@@ -554,7 +565,12 @@ s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1
 <section id="definición" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="definición"><span class="header-section-number">4.1</span> Definición</h2>
 <p>El alisado exponencial simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante.</p>
-<p>La ecuación de la <strong>predicción intramuestral</strong> es <span class="math display">\[\widehat{y}_{t+1} = \alpha y_t + \alpha (1-\alpha) y_{t-1} + \alpha (1-\alpha)^2 y_{t-2} + \alpha (1-\alpha)^3 y_{t-3} + \ldots =  \alpha y_t + (1-\alpha)\widehat{y}_{t},\]</span> donde <span class="math inline">\(0 \leq \alpha \leq 1\)</span> es el parámetro de suavizado. La primera <strong>predicción extramuestral</strong> queda <span class="math display">\[\widehat{y}_{T+1}=\alpha y_T + (1-\alpha)\widehat{y}_{T}\]</span> y para las restantes <span class="math display">\[\widehat{y}_{T+h} = \widehat{y}_{T+1}.\]</span><br>
+<p>La ecuación de la <strong>predicción intramuestral</strong> es</p>
+<p><span class="math display">\[\widehat{y}_{t+1} = \alpha y_t + \alpha (1-\alpha) y_{t-1} + \alpha (1-\alpha)^2 y_{t-2} + \alpha (1-\alpha)^3 y_{t-3} + \ldots =  \alpha y_t + (1-\alpha)\widehat{y}_{t},\]</span></p>
+<p>donde <span class="math inline">\(0 \leq \alpha \leq 1\)</span> es el parámetro de suavizado. La primera <strong>predicción extramuestral</strong> queda</p>
+<p><span class="math display">\[\widehat{y}_{T+1}=\alpha y_T + (1-\alpha)\widehat{y}_{T}\]</span></p>
+<p>y para las restantes</p>
+<p><span class="math display">\[\widehat{y}_{T+h} = \widehat{y}_{T+1}.\]</span><br>
 </p>
 </section>
 <section id="formulas-interactivas-de-sus-componentes" class="level2" data-number="4.2">
@@ -685,15 +701,18 @@ Frequency = 1
 <section id="formulas-interactivas-de-sus-componentes-1" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="formulas-interactivas-de-sus-componentes-1"><span class="header-section-number">5.1</span> Formulas interactivas de sus componentes</h2>
 <p>Las <strong>ecuaciones recursivas</strong> son</p>
-<p>$$</p>
 <span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha y_t + (1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)b_{t-1}
 \end{aligned}\]</span>
-<p>$$</p>
-<p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1} = l_t + b_t,\]</span> de forma que la ecuación de <strong>predicción extramuestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T.\]</span></p>
+<p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es</p>
+<p><span class="math display">\[\widehat{y}_{t+1} = l_t + b_t,\]</span></p>
+<p>de forma que la ecuación de <strong>predicción extramuestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T.\]</span></p>
 <p>Dos estimaciones razonables del nivel de la serie en el periodo <span class="math inline">\(t\)</span> son el valor observado para la serie en ese periodo <span class="math inline">\(y_t\)</span>, y una estimación del nivel del periodo <span class="math inline">\(t\)</span> realizada desde el periodo <span class="math inline">\(t-1\)</span>: <span class="math inline">\(l_{t-1} + b_{t-1}\)</span>. Por otro lado, dos estimaciones razonables de la pendiente de la serie en el periodo <span class="math inline">\(t\)</span> son el cambio de nivel de <span class="math inline">\(t-1\)</span> a <span class="math inline">\(t\)</span> (el último observado) <span class="math inline">\(l_t-l_{t-1}\)</span>, y el valor de la pendiente en el periodo previo, <span class="math inline">\(b_{t-1}\)</span>. En ambos casos, nivel y pendiente, la estimación final es una media ponderada, parametrizada por <span class="math inline">\(0 \leq \alpha, \: \beta \leq 1\)</span>.</p>
-<p>Observa que el <em>método ingenuo II</em> es un caso concreto de Alisado de Holt. Si hacemos <span class="math inline">\(\alpha=\beta = 1,\)</span> queda <span class="math inline">\(l_t=y_t\)</span> y <span class="math inline">\(b_t=y_t-y_{t-1}\)</span>, por tanto <span class="math display">\[\widehat{y}_{t+1}=l_t + b_t = y_t + (y_t - y_{t-1}).\]</span> y <span class="math display">\[\widehat{y}_{T+h}=l_T + h \cdot b_T = y_T + h(y_T - y_{T-1}).\]</span></p>
+<p>Observa que el <em>método ingenuo II</em> es un caso concreto de Alisado de Holt. Si hacemos <span class="math inline">\(\alpha=\beta = 1,\)</span> queda <span class="math inline">\(l_t=y_t\)</span> y <span class="math inline">\(b_t=y_t-y_{t-1}\)</span>, por tanto</p>
+<p><span class="math display">\[\widehat{y}_{t+1}=l_t + b_t = y_t + (y_t - y_{t-1}).\]</span></p>
+<p>y</p>
+<p><span class="math display">\[\widehat{y}_{T+h}=l_T + h \cdot b_T = y_T + h(y_T - y_{T-1}).\]</span></p>
 <p><br>
 </p>
 </section>
@@ -818,12 +837,10 @@ Frequency = 1
 <section id="formulas-interactivas-de-sus-componentes-2" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="formulas-interactivas-de-sus-componentes-2"><span class="header-section-number">6.1</span> Formulas interactivas de sus componentes</h2>
 <p>Las <strong>ecuaciones recursivas</strong> son</p>
-<p>$$</p>
 <span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha y_t + (1-\alpha)(l_{t-1}+\phi b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)\phi b_{t-1}
 \end{aligned}\]</span>
-<p>$$</p>
 <p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1} = l_t + \phi b_t,\]</span> de forma que la ecuación de <strong>predicción extramuestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + (\phi + \phi^2 + \ldots + \phi^h) b_T.\]</span></p>
 <p>Como observas, se ha añadido un nuevo parámetro <span class="math inline">\(\phi\)</span>, que acompaña siempre a la pendiente <span class="math inline">\(b_t\)</span>. Si <span class="math inline">\(\phi = 1\)</span>, se tiene el alisado de Holt y si <span class="math inline">\(\phi = 0\)</span>, se tiene el alisado simple. Para valores entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span> en el corto plazo las predicciones tienen pendiente y en el largo plazo se hacen constantes e iguales a <span class="math inline">\(l_T + \phi b_T/(1 - \phi)\)</span>.</p>
 <p>Por razones prácticas el rango de búsqueda de <span class="math inline">\(\phi\)</span> queda en el intervalo <span class="math inline">\([0.8, 0.98]\)</span>. Si el valor óptimo de <span class="math inline">\(\phi\)</span> fuera su valor máximo de <span class="math inline">\(0.98\)</span> o muy cercano a este valor, cabría plantearse si no sería más adecuado un modelo sin amortiguamiento.</p>
@@ -929,26 +946,25 @@ Parámetros estimados
 </p>
 <section id="alisado-de-holt-winters-aditivo-a-a-a" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="alisado-de-holt-winters-aditivo-a-a-a"><span class="header-section-number">7.1</span> Alisado de Holt-Winters aditivo (A, A, A)</h2>
-<p>Las <strong>ecuaciones recursivas</strong> de actualización son: <span class="math display">\[
-\begin{aligned}
+<p>Las <strong>ecuaciones recursivas</strong> de actualización son:</p>
+<span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha (y_t - s_{t-m} ) + (1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)b_{t-1} \\
 s_t &amp; =\gamma (y_t - l_{t-1} - b_{t-1}) + (1 - \gamma)s_{t-m}
-\end{aligned}
-\]</span> con <span class="math inline">\(0 \leq \alpha, \beta, \gamma \leq 1\)</span>.</p>
+\end{aligned}\]</span>
+<p>con <span class="math inline">\(0 \leq \alpha, \beta, \gamma \leq 1\)</span>.</p>
 <p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1}  = l_t + b_t + s_{t+1-m},\]</span> de forma que la ecuación de <strong>predicción extramuestral es</strong>: <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T + s_{T+h - m(k+1)},\]</span> con <span class="math inline">\(k = \lfloor(h-1)/m\rfloor\)</span>.</p>
 <p><br>
 </p>
 </section>
 <section id="alisado-de-holt-winters-multiplicativo-m-a-m" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="alisado-de-holt-winters-multiplicativo-m-a-m"><span class="header-section-number">7.2</span> Alisado de Holt-Winters multiplicativo (M, A, M)</h2>
-Las <strong>ecuaciones recursivas</strong> de actualización son: $$
+<p>Las <strong>ecuaciones recursivas</strong> de actualización son:</p>
 <span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha \frac{y_t}{s_{t-m}} + (1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)b_{t-1} \\
 s_t &amp; =\gamma \frac{y_t}{l_{t-1} + b_{t-1}} + (1 - \gamma)s_{t-m}
 \end{aligned}\]</span>
-<p>$$</p>
 <p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1}  = (l_t + b_t)s_{t+1-m},\]</span> de forma que la ecuación de <strong>predicción extramuestral es</strong>: <span class="math display">\[\widehat{y}_{T+h}=(l_T + h b_T)s_{T+h - m(k+1)}.\]</span></p>
 <p><br>
 </p>
