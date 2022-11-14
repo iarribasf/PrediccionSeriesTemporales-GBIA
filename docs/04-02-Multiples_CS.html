@@ -250,8 +250,8 @@ div.csl-indent {
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -352,22 +352,23 @@ div.csl-indent {
 <h1 data-number="1"><span class="header-section-number">1</span> Antecedentes</h1>
 <p>Durante el curso hemos estudiado series con estructura estacional simple como diaria o mensual. Sin embargo, las series con fechado de alta frecuencia pueden mostrar una estructura estacional mucho más compleja. Por ejemplo, para la serie de consumo eléctrico por hora tenemos tres estacionalidades: la que hay dentro del día, la que tiene lugar en una semana, y la estacionalidad anual.</p>
 <p>Con la capacidad actual de recogida de información y almacenamiento, las series con fechado de alta frecuencia y con estacionalidad múltiple son cada vez más habituales, pero los métodos que hemos visto no son adecuados para su ajuste y predicción.</p>
-<p>No siempre es necesario considerar todas las <em>estacionalidades</em> de una serie. Por ejemplo la serie de temperaturas por hora previsiblemente no tendrá estacionalidad semanal; y para una serie con fechado horario para la que se dispone información durante 90 días se puede ignorar la estacionalidad anual.</p>
+<p>No siempre es necesario considerar todas las <em>estacionalidades</em> de una serie. Por ejemplo la serie de temperaturas por hora previsiblemente no tendrá estacionalidad semanal; y para una serie con fechado horario para la que se dispone información durante 90 días se debe ignorar la estacionalidad anual.</p>
 <p>Vamos a aplicar a la serie de consumo de electricidad en España algunos de los modelos que posibilitan estimar y predecir series con múltiple estacionalidad, pero sin entrar en el detalle de los modelos matemáticos subyacentes.</p>
 </section>
 <section id="aplicación" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Aplicación</h1>
-<p>La <a href="#fig-Electricidad">Figura&nbsp;1</a> muestra el consumo eléctrico en España en GWh para las cuatro semanas de febrero de 2021. Hay una fuerte componente estacional diaria de orden <span class="math inline">\(24\)</span> con dos picos de consumo, uno hacia las dos y otro hacia las nueve de la tarde; y dos valles, uno hacia las cinco de la madrugada (muy acusado) y otro hacia las seis de la tarde. Además, hay otra componente estacional semanal de orden <span class="math inline">\(24 \times 7 = 168\)</span>, donde el consumo es alto de lunes a viernes, algo mas reducido el sábado y aún menor el domingo.</p>
+<p>La <a href="#fig-Electricidad">Figura&nbsp;1</a> muestra el consumo eléctrico en España en GW para las cuatro semanas de febrero de 2021. Observa que para fechar la serie con doble estacionalidad se usa la función <code>msts</code> (<em>Multi-Seasonal Time Series</em>) en lugar de <code>ts</code>.</p>
+<p>Hay una fuerte componente estacional diaria de orden <span class="math inline">\(24\)</span> con dos picos de consumo, uno hacia las dos y otro hacia las nueve de la tarde; y dos valles, uno hacia las cinco de la madrugada (muy acusado) y otro hacia las seis de la tarde. Además, hay otra componente estacional semanal de orden <span class="math inline">\(24 \times 7 = 168\)</span>, donde el consumo es alto de lunes a viernes, algo mas reducido el sábado y aún menor el domingo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"./series/Consumo por hora.csv"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">msts</span>(electricidad[, <span class="dv">2</span>], </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">msts</span>(electricidad[, <span class="dv">2</span>]<span class="sc">/</span><span class="dv">1000</span> , </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">seasonal.periods =</span> <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">24</span><span class="sc">*</span><span class="dv">7</span>), </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">start =</span> <span class="dv">1</span>)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidad) <span class="sc">+</span> </span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GW"</span>) <span class="sc">+</span> </span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Semanas"</span>) <span class="sc">+</span> </span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">4</span>, <span class="at">by =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -395,59 +396,38 @@ div.csl-indent {
 </div>
 </div>
 <p>En la <a href="#fig-ElectricidadDes">Figura&nbsp;2</a> aparecen los mismos paneles que has visto en el tema 2 –datos originales, tendencia y residuo–, más los dos paneles correspondientes a las dos componentes estacionales, de orden 24 y 168.</p>
-<p>Para poder interpretar adecuadamente cada serie hay que fijarse en la escala de los ejes verticales. La tendencia apenas cambia en el periodo de análisis. Las dos componentes estacionales oscilan sobre un rango de valores mayor. Dentro de cada día el consumo de electricidad oscila aproximadamente 12 GWh entre las horas pico y las valle: en los picos se consumen unos 5 GWh más que la media diaria, y en los valles unos 7 GWh menos que la media diaria. Por otro lado, el rango de variación semanal en el consumo también es de aproximadamente 12 GWh: de lunes a viernes se consumen unos 3 GWh más que la media semanal y los domingo unos 9 GWh menos.</p>
+<p>Para poder interpretar adecuadamente cada serie hay que fijarse en la escala de los ejes verticales. La tendencia apenas cambia en el periodo de análisis. Las dos componentes estacionales oscilan sobre un rango de valores mayor. Dentro de cada día el consumo de electricidad oscila aproximadamente 20 GW entre las horas pico y las valle: en los picos se consumen unos 7.5 GW más que la media diaria, y en los valles unos 12.5 GW menos que la media diaria. Por otro lado, el rango de variación semanal en el consumo también es de aproximadamente 20 GWh: de lunes a viernes se consumen como máximo unos 5 GW más que la media semanal y los domingo unos 15 GWh menos.</p>
 <p>Aunque por defecto <code>mstl</code> permite que la componente estacional varíe en el tiempo, vamos a mostrar un detalle de la componente estacional diaria, semana y su composición para la primera semana de la serie (véase <a href="#fig-ElectricidadCS">Figura&nbsp;3</a>).</p>
-<div id="fig-ElectricidadCS" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-ElectricidadCS" class="cell quarto-layout-panel">
 <figure class="figure">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>compEstDiaria <span class="ot">&lt;-</span> descomposicion[<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>,<span class="dv">3</span>]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>compEstSemanal <span class="ot">&lt;-</span> descomposicion[<span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>,<span class="dv">4</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>compEstCompleta <span class="ot">&lt;-</span> descomposicion[<span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>,<span class="dv">3</span>] <span class="sc">+</span> descomposicion[<span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>,<span class="dv">4</span>]</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>, <span class="at">y =</span> compEstDiaria)) <span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>, <span class="at">y =</span> compEstDiaria)) <span class="sc">+</span> </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"24 horas del día"</span>) <span class="sc">+</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2</span>,<span class="dv">24</span>,<span class="dv">2</span>))</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>, <span class="at">y =</span> compEstSemanal)) <span class="sc">+</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>, <span class="at">y =</span> compEstSemanal)) <span class="sc">+</span> </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"24 horas del día x 7 días de la semana"</span>) <span class="sc">+</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">24</span>,<span class="dv">168</span>,<span class="dv">24</span>))</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>, <span class="at">y =</span> compEstCompleta)) <span class="sc">+</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">168</span>, <span class="at">y =</span> compEstCompleta)) <span class="sc">+</span> </span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"24 horas del día x 7 días de la semana"</span>) <span class="sc">+</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span></span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">24</span>,<span class="dv">168</span>,<span class="dv">24</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-ElectricidadCS-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-02-Multiples_CS_files/figure-html/fig-ElectricidadCS-1.png" class="img-fluid figure-img" data-ref-parent="fig-ElectricidadCS" style="width:80.0%"></p>
+<p><img src="04-02-Multiples_CS_files/figure-html/fig-ElectricidadCS-1.png" class="img-fluid figure-img" data-ref-parent="fig-ElectricidadCS"></p>
 <p></p><figcaption class="figure-caption">(a) Componente estacional diaria</figcaption><p></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-ElectricidadCS-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-02-Multiples_CS_files/figure-html/fig-ElectricidadCS-2.png" class="img-fluid figure-img" data-ref-parent="fig-ElectricidadCS" style="width:80.0%"></p>
+<p><img src="04-02-Multiples_CS_files/figure-html/fig-ElectricidadCS-2.png" class="img-fluid figure-img" data-ref-parent="fig-ElectricidadCS"></p>
 <p></p><figcaption class="figure-caption">(b) Componente estacional semanal</figcaption><p></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-ElectricidadCS-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-02-Multiples_CS_files/figure-html/fig-ElectricidadCS-3.png" class="img-fluid figure-img" data-ref-parent="fig-ElectricidadCS" style="width:80.0%"></p>
+<p><img src="04-02-Multiples_CS_files/figure-html/fig-ElectricidadCS-3.png" class="img-fluid figure-img" data-ref-parent="fig-ElectricidadCS"></p>
 <p></p><figcaption class="figure-caption">(c) Componente estacional diaria + semanal</figcaption><p></p>
 </figure>
+</div>
 </div>
 </div>
 <p></p><figcaption class="figure-caption">Figura 3: Componentes estacionales para Consumo eléctrico</figcaption><p></p>
@@ -456,16 +436,16 @@ div.csl-indent {
 </section>
 <section id="predicción-a-partir-de-la-descomposición-y-alisado-exponencial" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="predicción-a-partir-de-la-descomposición-y-alisado-exponencial"><span class="header-section-number">2.2</span> Predicción a partir de la descomposición y alisado exponencial</h2>
-<p>Existen varios métodos para poder estimar series con estacionalidad múltiple. Uno de los más sencillos consiste en descomponer de la serie. Después, predecir las componentes estacionales por simple repetición y predecir la componente de la tendencia usando alisado exponencial. En último lugar, se combinan la predicción de la tendencia con las predicciones de las estacionalidades para obtener una predicción de la serie.</p>
-<p>La función <code>stlf</code> hace todas estas operaciones de forma automática. Por defecto la tendencia se predice usando alisado exponencial (“ets”), pero con el argumento <code>method</code> se pueden especificar otros modelos alternativos, “arima”, “naive” o “rwdrift”.</p>
+<p>Existen varios métodos para poder estimar series con estacionalidad múltiple. Uno de los más sencillos consiste en descomponer de la serie. Después, predecir las componentes estacionales por simple repetición y predecir la componente de la tendencia usando Alisado Exponencial. En último lugar, se combinan la predicción de la tendencia con las predicciones de las estacionalidades para obtener una predicción de la serie.</p>
+<p>La función <code>stlf</code> hace todas estas operaciones de forma automática. Por defecto la tendencia se predice usando Alisado Exponencial (“ets”), pero con el argumento <code>method</code> se pueden especificar otros modelos alternativos, “arima”, “naive” o “rwdrift”.</p>
 <p>En la figura se muestra el resultado de aplicar <code>stlf</code> a la serie de Demanda eléctrica. La línea negra representa la serie de Demanda y la línea azul la predicción para las dos semanas siguientes (dos primeras semanas de marzo de 2021). El título por defecto de la figura indica que la tendencia de la serie se ha ajustado usando la función <code>ets</code> y presenta una pendiente aditiva amortiguada y error multiplicativo.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pdatos_stfl <span class="ot">&lt;-</span> <span class="fu">stlf</span>(electricidad)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(pdatos_stfl, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span> </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Semanas"</span>) <span class="sc">+</span> </span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pdatos_stfl <span class="ot">&lt;-</span> <span class="fu">stlf</span>(electricidad)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(pdatos_stfl, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GW"</span>) <span class="sc">+</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Semanas"</span>) <span class="sc">+</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">10</span>, <span class="at">by =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-ElectricidadPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -477,28 +457,28 @@ div.csl-indent {
 </div>
 </section>
 <section id="predicción-a-partir-de-asilado-exponencial-y-series-de-furier" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="predicción-a-partir-de-asilado-exponencial-y-series-de-furier"><span class="header-section-number">2.3</span> Predicción a partir de asilado exponencial y series de Furier</h2>
+<h2 data-number="2.3" class="anchored" data-anchor-id="predicción-a-partir-de-asilado-exponencial-y-series-de-furier"><span class="header-section-number">2.3</span> Predicción a partir de Asilado Exponencial y series de Furier</h2>
 <p>Uno de los inconvenientes del método visto es que estima todos los elementos de cada componente estacional (<span class="math inline">\(24 + 168\)</span> elementos en nuestro ejemplo) como si fueran independientes, sin tener en cuenta que, por lo general, evolucionan siguiendo una suave curva. Véase en el ejemplo de Demanda eléctrica la curva que sigue la estacionalidad diaria, donde la componente de una hora determinada está muy relacionada con la componente de la hora precedente y posterior.</p>
 <p>Algunos métodos alternativos de predicción usan la dependencia observada entre los elementos de una componente estacional para ajustarlos a una curva paramétrica, por ejemplo funciones trigonométricas o series de Fourier.</p>
 <p>Entre los que usan funciones trigonométricas está el implementado en <span class="citation" data-cites="Livera11">Livera, Hyndman, and Snyder (<a href="#ref-Livera11" role="doc-biblioref">2011</a>)</span>. El método de estimación que emplean los autores es complejo, requiere tiempo de computación y no siempre el ajuste obtenido es el más adecuado, así que los resultados pueden ser en ocasiones malos.</p>
 <p>Veamos un ejemplo de la implementación del método de <span class="citation" data-cites="Livera11">Livera, Hyndman, and Snyder (<a href="#ref-Livera11" role="doc-biblioref">2011</a>)</span> con la función <code>tbats</code>. La <a href="#fig-ElectricidadPre2">Figura&nbsp;5</a> muestra la predicción para dos semanas.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>datos_tbats <span class="ot">&lt;-</span> <span class="fu">tbats</span>(electricidad)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>pdatos_tbats <span class="ot">&lt;-</span> <span class="fu">forecast</span>(datos_tbats, </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">h =</span> <span class="dv">14</span> <span class="sc">*</span> <span class="dv">24</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">level =</span> <span class="dv">95</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(pdatos_tbats, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span> </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Semanas"</span>) <span class="sc">+</span> </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">6</span>, <span class="at">by =</span> <span class="dv">1</span>))</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>datos_tbats <span class="ot">&lt;-</span> <span class="fu">tbats</span>(electricidad)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>pdatos_tbats <span class="ot">&lt;-</span> <span class="fu">forecast</span>(datos_tbats, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">h =</span> <span class="dv">14</span> <span class="sc">*</span> <span class="dv">24</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">level =</span> <span class="dv">95</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(pdatos_tbats, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GW"</span>) <span class="sc">+</span> </span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Semanas"</span>) <span class="sc">+</span> </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">6</span>, <span class="at">by =</span> <span class="dv">1</span>))</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 35.60638 secs</code></pre>
+<pre><code>Time difference of 54.01286 secs</code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-ElectricidadPre2" class="quarto-figure quarto-figure-center anchored">
@@ -632,7 +612,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

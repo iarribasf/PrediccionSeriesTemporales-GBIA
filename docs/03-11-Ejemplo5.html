@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
@@ -352,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introducción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
-<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.</p>
+<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por la temperatura. El esquema es multiplicativo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
@@ -427,8 +427,7 @@ Training set 3.260448 11.79475 8.892639 1.105104 3.695004 0.9500814 0.2705811</c
 </div>
 </div>
 <p>Si se estima el modelo sin imponer ninguna restricción, <code>ets</code> identifica como modelo óptimo ETS(A,N,N) donde el parámetro <span class="math inline">\(\alpha\)</span> es igual a 1. Es decir, el mejor modelo de alisado corresponde al método ingenuo I con error aditivo: <span class="math inline">\(y_{t+1} = y_t + \varepsilon_{t+1}\)</span>, visto ya en el ejemplo del tema 3. El error porcentual cometido (3.7%) es similar al estimado para el método ingenuo I (3.9%). La diferencia se debe a que <span class="math inline">\(\alpha\)</span> no es exactamente 1.</p>
-<p>Para la serie anual, aunque hemos ampliado el menú de métodos, no hemos encontrado ningún método mejor que el más sencillo: predecir repitiendo la última observación.</p>
-<p>En cualquier caso, las previsiones para los próximos cinco años serían</p>
+<p>Las previsiones para los próximos cinco años serían</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(PernoctacionesAnualEts, </span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">h =</span> <span class="dv">5</span>, </span>
@@ -442,6 +441,7 @@ Training set 3.260448 11.79475 8.892639 1.105104 3.695004 0.9500814 0.2705811</c
 2024       299.0923 244.6087 353.5759</code></pre>
 </div>
 </div>
+<p>Para la serie anual, aunque se amplíe el menú de métodos, no se encuentra ninguno mejor que el más sencillo: predecir repitiendo la última observación.</p>
 <p><br>
 <br>
 </p>
@@ -608,13 +608,13 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 </div>
 </div>
 </div>
-<p>Se observan cuatro meses en los que el residuo supera las tres desviaciones típicas: abril de 2005, 2011 y 2017, y mayo de 2013. Además, en abril de 2002 el residuo está cercano a las tres desviaciones típicas. Una posible causa de algunas intervenciones en Abril es que la Semana Santa recayera en marzo (años 2002 y 2005).</p>
+<p>Se observan cuatro meses en los que el residuo supera las tres desviaciones típicas: abril de 2005, 2011 y 2017, y mayo de 2013. Además, en abril de 2002 el residuo está cercano a las tres desviaciones típicas. La causa de los errores negativos elevados en abril de 2002 y 2005 es que la Semana Santa cayó en marzo, de forma que el turismo de Semana Santa se trasladó ese mes y en abril hubo menos pernoctaciones de las esperadas.</p>
 <p><br>
 </p>
 </section>
 <section id="validación" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="validación"><span class="header-section-number">3.4</span> Validación</h2>
-<p>Ya hemos visto que el modelo comete un error próximo al 2.6%. Este valor es la estimación del <em>error en la previsión intra-muestral y a un periodo vista</em>. A fin de poder estimar mejor la capacidad predictiva del modelo vamos a estimar <em>el error de previsión extra-muestral según el horizonte temporal</em>.</p>
+<p>Ya hemos visto que el modelo comete un error próximo al 2.6%. Este valor es la estimación del <em>error en la previsión intramuestral y a un periodo vista</em>. A fin de poder estimar mejor la capacidad predictiva del modelo vamos a estimar <em>el error de previsión extramuestral según el horizonte temporal</em>.</p>
 <p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=120\)</span>, y que el horizonte temporal es un año, <span class="math inline">\(h = 12\)</span> meses.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                 </span>
@@ -654,7 +654,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 </div>
 </div>
 </div>
-<p>La <a href="#fig-PernoctacionesETSOPM">Figura&nbsp;7</a> muestra el error de previsión extra-muestral según el horizonte de previsión. Se observa como para horizontes de predicción de uno a nueve meses el error de predicción aumenta según aumenta el horizonte de predicción, pasando del 3% para predicciones a un mes vista hasta el 5.4% para predicciones a nueve meses vista.</p>
+<p>La <a href="#fig-PernoctacionesETSOPM">Figura&nbsp;7</a> muestra el error de previsión extramuestral según el horizonte de previsión. Se observa como para horizontes de predicción de uno a nueve meses el error de predicción aumenta según aumenta el horizonte de predicción, pasando del 3% para predicciones a un mes vista hasta el 5.4% para predicciones a nueve meses vista.</p>
 <p>Sin embargo, para previsiones a más largo plazo el error de predicción decrece, hasta situarse en el 4.9% en las previsiones a un año vista.</p>
 <p><br>
 <br>
@@ -663,20 +663,22 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 </section>
 <section id="modelos-alternativos" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Modelos alternativos</h1>
-<p>¿Podemos reducir el error extra-muestral de previsión si cambiamos las opciones por defecto de <code>ets</code> o la serie a analizar? Por ejemplo, ¿mejoramos si aplicamos el método de alisado sobre el logaritmo de la serie o usamos el criterio de minimizar el error de las previsiones a dos meses vista, o trabajamos con las pernoctaciones por día?</p>
-<p>La <a href="#fig-PernoctacionesOtros">Figura&nbsp;8</a> muestra el error de previsión extra-muestral según el horizonte de previsión para los siguientes modelos (todos sin pendiente):</p>
+<p>¿Podemos reducir el error extramuestral de previsión si cambiamos las opciones por defecto de <code>ets</code> o la serie a analizar? Por ejemplo, ¿mejoramos si aplicamos el método de alisado sobre el logaritmo de la serie o usamos el criterio de minimizar el error de las previsiones a dos meses vista, o trabajamos con las pernoctaciones por día?</p>
+<p>La <a href="#tbl-modelos">Tabla&nbsp;1</a> muestra seis modelos alternativos para estimar y predecir la serie, donde el Modelo 1 sería el estudiado en el epígrafe previo.</p>
+<div id="tbl-modelos" class="anchored">
 <table class="table">
+<caption>Tabla 1: Especificación de los modelos usados para estimar y predecir la serie Pernoctaciones</caption>
 <colgroup>
 <col style="width: 24%">
 <col style="width: 24%">
 <col style="width: 24%">
-<col style="width: 27%">
+<col style="width: 26%">
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;"><strong>Id</strong></th>
-<th style="text-align: left;"><strong>Transformación</strong></th>
 <th style="text-align: left;"><strong>Modelo</strong></th>
+<th style="text-align: left;"><strong>Transformación</strong></th>
+<th style="text-align: left;"><strong>Especificación</strong></th>
 <th style="text-align: left;"><strong>Método estimación</strong></th>
 </tr>
 </thead>
@@ -719,6 +721,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 </tr>
 </tbody>
 </table>
+</div>
 <p>En concreto los comandos utilizados han sido:</p>
 <ul>
 <li>Modelo 1: <code>ets(x, model = "MNM")</code></li>
@@ -728,14 +731,13 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <li>Modelo 5: <code>ets(x/monthdays(x), model = "MNM")</code></li>
 <li>Modelo 6: <code>ets(x/monthdays(x), model = "MNM", opt.crit = "amse", nmse = 2)</code></li>
 </ul>
-<p><br>
-</p>
+<p>La <a href="#fig-PernoctacionesOtros">Figura&nbsp;8</a> muestra el error de previsión extramuestral según el horizonte de previsión para los seis modelos.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-PernoctacionesOtros" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesOtros-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 8: Errores de previsión extra-muestral. Varios modelos</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 8: Errores de previsión extramuestral. Varios modelos</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -745,7 +747,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <li>Globalmente los modelos que ofrecen mejores previsiones son los modelos 2 y 6, que minimizan el error en previsiones a 2 periodos, en primer modelo usando Pernoctaciones y en segundo usando Pernoctaciones por día.</li>
 <li>A medio plazo el modelo 3 resulta tan competente como los modelos 2 y 6.</li>
 </ul>
-<p>Es decir, tanto la estrategia de predecir la serie de Pernoctaciones medias por día, (en lugar de la serie original) como la de usar como criterio para estimar los parámetros del modelo la minimización del error de previsión a dos periodos vista mejoran la calidad de las previsiones extra-muestrales.</p>
+<p>Es decir, tanto la estrategia de predecir la serie de Pernoctaciones medias por día, (en lugar de la serie original) como la de usar como criterio para estimar los parámetros del modelo la minimización del error de previsión a dos periodos vista mejoran la calidad de las previsiones extramuestrales.</p>
 <p><br>
 <br>
 <br>
@@ -856,7 +858,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

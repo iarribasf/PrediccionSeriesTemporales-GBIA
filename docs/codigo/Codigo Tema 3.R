@@ -69,7 +69,8 @@ summary(mediaLibros)
 summary(naiveLibros) 
 summary(derivaLibros)
 
-autoplot(libros, series = "Libros",
+autoplot(libros, 
+         series = "Libros",
          xlab = "",
          ylab = "Títulos",
          main = "") +
@@ -77,8 +78,8 @@ autoplot(libros, series = "Libros",
   autolayer(naiveLibros, series="Ingenuo", PI = FALSE) +
   autolayer(derivaLibros, series="Deriva", PI = FALSE) +
   scale_colour_discrete(limits=c("Libros", "Media", "Ingenuo", "Deriva")) +
-  guides(colour = guide_legend(title = "Métodos")) + 
-  theme(legend.position=c(0.02,0.98), legend.justification=c(0,1))
+  labs(colour="Métodos") + 
+  theme(legend.position=c(0.1,0.8))
 
 accuracy(mediaLibros)
 accuracy(naiveLibros)
@@ -95,7 +96,8 @@ accuracy(snaive.nacimientos)
 autoplot(snaive.nacimientos,
          xlab = "",
          ylab = "Nacimientos",
-         main = "")
+         main = "",
+         PI = FALSE)
 
 # Demanda electrica
 snaive.electricidad <- snaive(electricidad, 
@@ -171,14 +173,14 @@ h <- 28
 TT <- length(electricidad)
 s <- TT - k - h           
 
-mapeRwf <- matrix(NA, s + 1, h)
+rmseRwf <- matrix(NA, s + 1, h)
 for (i in 0:s) {
   train.set <- subset(electricidad, start = i + 1, end = i + k)
   test.set <-  subset(electricidad, start = i + k + 1, end = i + k + h)
   
   fcast <- snaive(train.set, h = h)
-  mapeRwf[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  rmseRwf[i + 1,] <- (test.set - fcast$mean)^2
 }
 
-mapeRwf <- colMeans(mapeRwf)
-round(mapeRwf, 2)
+rmseRwf <- sqrt(colMeans(rmseRwf))
+round(rmseRwf, 2)

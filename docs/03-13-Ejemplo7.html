@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
@@ -311,7 +311,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#comparación-con-otros-modelos" id="toc-comparación-con-otros-modelos" class="nav-link" data-scroll-target="#comparación-con-otros-modelos"> <span class="header-section-number">7</span> Comparación con otros modelos</a>
   <ul class="collapse">
   <li><a href="#calidad-de-ajuste" id="toc-calidad-de-ajuste" class="nav-link" data-scroll-target="#calidad-de-ajuste"> <span class="header-section-number">7.1</span> Calidad de ajuste</a></li>
-  <li><a href="#predicciones-extra-muestrales" id="toc-predicciones-extra-muestrales" class="nav-link" data-scroll-target="#predicciones-extra-muestrales"> <span class="header-section-number">7.2</span> Predicciones extra-muestrales</a></li>
+  <li><a href="#predicciones-extramuestrales" id="toc-predicciones-extramuestrales" class="nav-link" data-scroll-target="#predicciones-extramuestrales"> <span class="header-section-number">7.2</span> Predicciones extramuestrales</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -357,7 +357,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introducción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
-<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.</p>
+<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por la temperatura. El esquema es multiplicativo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
@@ -391,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="diferenciación-y-logaritmo" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="diferenciación-y-logaritmo"><span class="header-section-number">2.1</span> Diferenciación y logaritmo</h2>
 <p>El esquema multiplicativo de la serie aconseja el uso de la transformación logarítmica. Además, vamos a ver que para que la serie sea estacionaria es necesario diferenciarla tanto regular como estacionalmente, así que el uso de logaritmo vuelve a ser aconsejable si queremos ganar en interpretabilidad.</p>
-<p>La <a href="#fig-PernoctacionesFAC">Figura&nbsp;2</a> muestra la FAC para la serie Pernoctaciones (log) y algunas de sus transformaciones. En los paneles a) y b) las autocorrelaciones estacionales decrecen muy lentamente, indicando que la serie analizada no es ergódica (ni estacionaria estacionalmente). El panel c) muestra que las autocorrelaciones en la parte regular decrecen lentamente, indicando que la serie analizada no es estacionaria. Solo la doble diferenciación regular y estacional de la serie muestra un rápido descenso en los coeficiente de autocorrelación (panel d), indicando que la serie así transformada es estacionaria en media y ergódica.</p>
+<p>La <a href="#fig-PernoctacionesFAC">Figura&nbsp;2</a> muestra la FAC para la serie Pernoctaciones (log) y algunas de sus transformaciones. En los paneles a) y b) las autocorrelaciones estacionales decrecen muy lentamente, indicando que la serie analizada no es ergódica. El panel c) muestra que las autocorrelaciones en la parte regular decrecen lentamente, indicando que la serie analizada no es estacionaria. Solo la doble diferenciación regular y estacional de la serie muestra un rápido descenso en los coeficiente de autocorrelación (panel d), indicando que la serie así transformada es estacionaria en media y ergódica.</p>
 <div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(Pernoctaciones), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctaciones)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
@@ -481,7 +481,7 @@ sigma^2 = 0.0008503:  log likelihood = 483.35
 AIC=-950.7   AICc=-950.04   BIC=-923.3</code></pre>
 </div>
 </div>
-<p>La función <code>auto.arima</code> identifica un proceso <span class="math inline">\(ARIMA_{12}(0,1,1)(2,1,2)\)</span>, donde el coeficiente para <code>ar2</code> no parecen ser significativo (el coeficiente no supera los dos errores estándar).</p>
+<p>La función <code>auto.arima</code> identifica un proceso <span class="math inline">\(ARIMA_{12}(0,1,1)(2,1,2)\)</span>, donde el coeficiente para <code>sar2</code> no parece ser significativo (el coeficiente no supera los dos errores estándar).</p>
 <p>La identificación alcanzada por <code>seas</code> es un proceso <span class="math inline">\(ARIMA_{12}(0,1,1)(0,1,1)\)</span> (modelo de las aerolíneas) de la transformación logarítmica, con intervención en Semana Santa y días laborables. Además, se identifica un cambio de nivel desde marzo de 2005.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">seas</span>(Pernoctaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -526,10 +526,8 @@ Warnings:
 <p>Por claridad, cada festivo se ha definido de forma independiente para después crear una variable con todos los festivos de Semana Santa (<em>SemanaSanta</em>).</p>
 <p>El rango para todos los cálculos va desde 2000 hasta 2022 que incluye el rango de la serie Pernoctaciones más tres años de predicción.</p></li>
 <li><p>A continuación, con <code>timeSequence</code> se crea una serie diaria desde el 1 de enero de 2000 hasta el 31 de diciembre de 2022.</p></li>
-<li><p>Las dos siguientes líneas de código eliminan de la serie diaria los festivos de Semana Santa, para después dar a esta nueva serie abreviada el formato año-mes eliminando el día. De esta forma, la serie abreviada tendrá el mismo identificador para todos los días del mismo mes.</p></li>
-</ul>
-<p>El argumento <code>wday = 0:6</code> de la función <code>isBizday</code> indica que se deben preservar todos los días de la semana. Cuando se usa este argumento hay que tener en cuenta que el domingo es el día 0 y el sábado el día 6. Así <code>wday = 1:5</code> dejaría todos laborables de la semana y <code>wday = c(0, 6)</code> solo los fines de semana.</p>
-<ul>
+<li><p>Las dos siguientes líneas de código eliminan de la serie diaria los festivos de Semana Santa, para después dar a esta nueva serie abreviada el formato año-mes eliminando el día. De esta forma, la serie abreviada tendrá el mismo identificador para todos los días del mismo mes.</p>
+<p>El argumento <code>wday = 0:6</code> de la función <code>isBizday</code> indica que se deben preservar todos los días de la semana. Cuando se usa este argumento hay que tener en cuenta que el domingo es el día 0 y el sábado el día 6. Así <code>wday = 1:5</code> dejaría todos laborables de la semana y <code>wday = c(0, 6)</code> solo los fines de semana.</p></li>
 <li><p>Después, se crea una tabla que, por la naturaleza de la serie abreviada, tendrá para cada año-mes el numero de días del mes, excepto para marzo y abril que tendrán el número de días del mes que no caen en Semana Santa.</p></li>
 <li><p>Fechamos la tabla, que es nuestra serie de días del mes sin Semana Santa.</p>
 <p>Mostramos los resultados de este proceso para ayudar a entenderlo. Observa que para todos los meses de año excepto marzo y abril, lo que tenemos es simplemente el número de días del mes. Para marzo y abril tenemos el número de días del mes excepto los festivos de Semana Santa. Por ejemplo, en 2002 la Semana Santa cayó entre marzo y abril, de forma que los días no festivos en marzo fueron 24 y en abril 25.</p></li>
@@ -767,10 +765,10 @@ Training set -10132.57 606418 443952.6 -0.04 2.19 0.49    0</code></pre>
 <ul>
 <li><p>La tasa de variación anual de las pernoctaciones de un año es la misma que la del año pasado. Es decir, las pernoctaciones evolucionan a tasa constante.</p></li>
 <li><p>Si en periodos previos se ha producido un shock, hay que tenerlo en cuenta en las predicciones.</p></li>
-<li><p>Cada día del mes la tasa de variación anual de las pernoctaciones aumenta 2.8 puntos porcentuales.</p></li>
-<li><p>En el mes en que cae la Semana Santa la tasa variación anual de las pernoctaciones aumenta 5.6 puntos porcentuales.</p></li>
-<li><p>En marzo de 2005 la tasa variación anual de las pernoctaciones fue significativamente menor de la esperado (6.2 p.p.).</p></li>
-<li><p>En abril de 2006 y mayo de 2013 la tasa variación anual de las pernoctaciones fue significativamente mayor de la esperado (3.7 p.p. y 5 p.p., respectivamente).</p></li>
+<li><p>Cada día del mes adicional las pernoctaciones aumentan un 2.8%. De otra forma, cada día del mes la tasa de variación anual de las pernoctaciones aumenta 2.8 puntos porcentuales.</p></li>
+<li><p>En el mes en que cae la Semana Santa las pernoctaciones aumentan un 5.6% (la tasa variación anual de las pernoctaciones aumenta 5.6 puntos porcentuales).</p></li>
+<li><p>En marzo de 2005 las pernoctaciones fueron significativamente menores de la esperado (6.2%).</p></li>
+<li><p>En abril de 2006 y mayo de 2013 las pernoctaciones fueron significativamente mayor de la esperado (3.7% y 5%, respectivamente).</p></li>
 </ul>
 <p><br>
 <br>
@@ -816,7 +814,7 @@ Training set -10132.57 606418 443952.6 -0.04 2.19 0.49    0</code></pre>
 </div>
 <div id="tbl-calidad" class="anchored">
 <table class="table">
-<caption>Tabla 1: Criterios de calidad para previsiones intra-muestrales a un periodo vista. Varios modelos</caption>
+<caption>Tabla 1: Criterios de calidad para previsiones intramuestrales a un periodo vista. Varios modelos</caption>
 <colgroup>
 <col style="width: 26%">
 <col style="width: 24%">
@@ -873,8 +871,8 @@ Training set -10132.57 606418 443952.6 -0.04 2.19 0.49    0</code></pre>
 </div>
 <p>Podemos extraer varias conclusiones: i) la transformación logarítmica no mejora necesariamente el ajuste de los datos; ii) el proceso ARIMA con transformación logarítmica es la mejor aproximación; y iii) el método de alisado muestra una calidad de ajuste comparable a la de los procesos ARIMA. La ligera mejora en el ajuste de los modelos ARIMA respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención.</p>
 </section>
-<section id="predicciones-extra-muestrales" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="predicciones-extra-muestrales"><span class="header-section-number">7.2</span> Predicciones extra-muestrales</h2>
+<section id="predicciones-extramuestrales" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="predicciones-extramuestrales"><span class="header-section-number">7.2</span> Predicciones extramuestrales</h2>
 <p>Vamos a determinar si también la aplicación de modelos ARIMA mejora la calidad de las predicciones extra-muestrales lo suficiente como para justificar su uso –frente a los métodos de alisado, mucho más sencillos. Para ello, aplicaremos la metodología de origen de predicción móvil para estimar la capacidad predictiva del modelo ARIMA y compararla con el modelo de Alisado y el ingenuo con estacionalidad.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                   </span>
@@ -1082,7 +1080,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

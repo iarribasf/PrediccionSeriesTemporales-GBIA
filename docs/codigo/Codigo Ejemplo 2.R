@@ -50,7 +50,7 @@ ggplot() +
 # Componentes
 #----------------------------------------------------------
 # Tendencia
-autoplot(aggregate(Pernoctaciones/1000000, FUN = sum),
+autoplot(CasosAnual/1000000,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
@@ -94,7 +94,7 @@ ggplot() +
                                 "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) +
   scale_color_discrete(name = "Componente estacional", 
                        labels = c("Pernoctaciones", "Pernoctaciones por día")) +
-  theme(legend.position=c(0.02,0.98), legend.justification=c(0,1))
+  theme(legend.position=c(0.2,0.8))
 #----------------------------------------------------------
 #
 #

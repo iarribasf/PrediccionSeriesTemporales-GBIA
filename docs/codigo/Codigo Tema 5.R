@@ -111,7 +111,8 @@ librosEtsD <- ets(libros,
 summary(librosEtsD)
 
 librosfD <- forecast(librosEtsD,
-                     h = 15)
+                     h = 15,
+                     level = 95)
 librosfD
 
 autoplot(librosfD,

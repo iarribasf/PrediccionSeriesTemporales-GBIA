@@ -8,7 +8,7 @@
 
 <meta name="author" content="Iván Arribas (Depto. Análisis Económico. Universitat de València)">
 
-<title>Predicción con Datos Temporales - Métodos de medias móviles</title>
+<title>Predicción con Datos Temporales - Método de medias móviles</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,11 +295,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
-  <li><a href="#media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" id="toc-media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" class="nav-link" data-scroll-target="#media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad"> <span class="header-section-number">2</span> Media móvil simple (para series sin tendencia ni estacionalidad)</a>
+  <li><a href="#media-móvil-simple" id="toc-media-móvil-simple" class="nav-link" data-scroll-target="#media-móvil-simple"> <span class="header-section-number">2</span> Media móvil simple</a>
   <ul class="collapse">
   <li><a href="#definición" id="toc-definición" class="nav-link" data-scroll-target="#definición"> <span class="header-section-number">2.1</span> Definición</a></li>
   <li><a href="#ejemplo-de-aplicación-con-demanda-eléctrica" id="toc-ejemplo-de-aplicación-con-demanda-eléctrica" class="nav-link" data-scroll-target="#ejemplo-de-aplicación-con-demanda-eléctrica"> <span class="header-section-number">2.2</span> Ejemplo de aplicación con Demanda Eléctrica</a>
@@ -315,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Métodos de medias móviles</h1>
+<h1 class="title">Método de medias móviles</h1>
 <p class="subtitle lead">Previsión con Datos Temporales (GBIA)</p>
 </div>
 
@@ -352,8 +352,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Recuerda que ya utilizamos la media móvil en el contexto de la descomposición (Tema 2). Se trataba de una media móvil centrada y se utilizaba para estimar la tendencia de una serie. Vamos ahora a ver con algo más de detalle el concepto de media móvil y como se puede usar para obtener predicciones.</p>
 <p>El método de las medias móviles con fines predictivos aparece en los años 20 del siglo pasado (¡hace 100 años!), su uso se generalizó en los años 50 y sigue siendo un método utilizado en determinados campos, donde el fin último es capturar la tendencia a largo plazo de una serie.</p>
-<p>Por ejemplo, si pinchas <a href="https://momo.isciii.es/panel_momo/">aqui</a> puedes ver el registro del número de muertes diarias (MoMo) que mantiene el <em>Ministerio de Ciencia e Innovación</em>. La línea negra es el número real de muertes y la línea azul es (más o menos) la media móvil de orden 365. La media móvil captura la tendencia en el número de muertes a largo plazo, es decir, cabe esperar que ambas lineas aparezcan siempre cercanas. Si se observa que ambas líneas se separan, debemos pensar que una causa está produciendo un exceso (o defecto) de muertes sobre su valor esperado. Verás que sobre la línea azul (muertes esperadas) en invierno se sobrepone una línea morada que indica el exceso de muertes atribuible a la temperatura (exceso de frío); de la misma forma, en verano se sobrepone una línea roja que indica el exceso de muertes atribuible un exceso de calor.</p>
-<p>En bolsa es muy habitual ver gráficos donde junto a la evolución del índice bursátil se muestra una media móvil de orden alto y otra de orden bajo. Cuando ambas líneas se cruzan, los analistas consideran que es buen momento para comprar (la media móvil de corto plazo pasa encima de la de largo plazo) o vender (la media móvil de corto plazo pasa por debajo de la de largo plazo). Véase la <a href="#fig-bolsamediamovil">Figura&nbsp;1</a>.</p>
+<p>Por ejemplo, si pinchas <a href="https://momo.isciii.es/panel_momo/">aqui</a> puedes ver el registro del número de muertes diarias (MoMo) que mantiene el <em>Ministerio de Ciencia e Innovación</em>. La línea negra es el número real de muertes y la línea azul es (más o menos) la media móvil de orden 365. La media móvil captura la tendencia en el número de muertes a largo plazo, es decir, cabe esperar que ambas lineas aparezcan siempre cercanas. Si se observa que ambas líneas se separan, debemos pensar que algo está causando un exceso (o defecto) de muertes sobre su valor esperado. Verás que sobre la línea azul (muertes esperadas) en invierno se sobrepone una línea morada que indica el exceso de muertes atribuible a la temperatura (exceso de frío); de la misma forma, en verano se sobrepone una línea roja que indica el exceso de muertes atribuible un exceso de calor.</p>
+<p>En bolsa es muy habitual ver gráficos donde junto a la evolución del índice bursátil IBEX-35 se muestra una media móvil de orden alto y otra de orden bajo. Cuando ambas líneas se cruzan, los analistas consideran que es buen momento para comprar (la media móvil de corto plazo pasa encima de la de largo plazo) o vender (la media móvil de corto plazo pasa por debajo de la de largo plazo). Véase la <a href="#fig-bolsamediamovil">Figura&nbsp;1</a>.</p>
 <div id="fig-bolsamediamovil" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./imagenes/bolsa_medias_moviles.png" class="img-fluid figure-img"></p>
@@ -366,29 +366,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Sin embargo, por su sencillez de cálculo y su utilidad para identificar que el entorno de predicción está cambiando, vamos a dedicarles algo de tiempo a las medias móviles.</p>
 <p>Hay otra razón pedagógica para ver las medias móviles. Siendo un método muy sencillo, <strong>requiere que el investigador determine el valor de un parámetro</strong> (el orden de la media móvil). Así, este método establece un puente entre los métodos sencillos vistos en el tema previo –donde no había que fijar el valor de ningún parámetro– y los métodos que veremos en los restantes temas del curso (Temas 5 a 7), donde se verán modelos que requieren la identificación de múltiples parámetros.</p>
 <p>Antes de empezar, algunos aspectos adicionales a tener en cuenta. Desde un punto de vista teórico, <strong>las medias móviles no pueden capturar la estacionalidad</strong> de una serie así que solo se aplican a series que por su naturaleza no tengan esta componente. Además, aunque la metodología de media móvil permite predecir series con tendencia, su uso en este contexto es realmente escaso, poco intuitivo y da resultados muy pobres.</p>
-<p>Por último, desde un punto de vista práctico, <code>R</code> no dispone de una función que permita de forma cómoda obtener una media móvil, sus predicciones intra-muestrales, las extra-muestrales y el error. Solventaremos esta carencia creando nuestra propia función.</p>
+<p>Por último, desde un punto de vista práctico, <code>R</code> no dispone de una función que permita de forma cómoda obtener una media móvil, sus predicciones intramuestrales, las extramuestrales y el error. Solventaremos esta carencia creando nuestra propia función.</p>
 <p><br>
 <br>
 </p>
 </section>
-<section id="media-móvil-simple-para-series-sin-tendencia-ni-estacionalidad" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Media móvil simple (para series sin tendencia ni estacionalidad)</h1>
+<section id="media-móvil-simple" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Media móvil simple</h1>
 <p><br>
 </p>
 <section id="definición" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="definición"><span class="header-section-number">2.1</span> Definición</h2>
-<p>El método de la media móvil simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante. En este caso, <strong>la predicción para un periodo es la media de las</strong> <span class="math inline">\(r\)</span> observaciones previas. El valor <span class="math inline">\(r\)</span>, denominado orden de la media móvil, es un parámetro que debe fijar el investigador.</p>
+<p>El método de la media móvil simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante. En este caso, <strong>la predicción para un periodo es la media de las <span class="math inline">\(r\)</span> observaciones previas</strong>. El valor <span class="math inline">\(r\)</span>, denominado orden de la media móvil, es un parámetro que debe fijar el investigador.</p>
 <p>Definimos primero la media móvil <em>hacia atrás</em> (<em>backward</em>) de orden <span class="math inline">\(r\)</span> para el periodo <span class="math inline">\(t\)</span> como la media de las <span class="math inline">\(r\)</span> últimas observaciones <span class="math display">\[mm_t = \frac{1}{r}\sum_{i=0}^{r-1} y_{t-i} = \frac{y_t + y_{t-1} + \ldots + y_{t-r+1}}{r}\]</span> Observa que la media móvil hacia atrás se define de forma diferente a la media móvil <em>centrada</em> que vimos en la descomposición por medias móviles.</p>
-<p>A partir de <span class="math inline">\(mm_t\)</span> se define la ecuación de la <strong>predicción intra-muestral</strong> como <span class="math display">\[\widehat{y}_{t+1} = mm_t.\]</span> Podemos entender que <span class="math inline">\(mm_t\)</span> es una estimación del nivel de la serie en el periodo <span class="math inline">\(t\)</span> y como la serie es estacionaria (no cambia de nivel), este valor se usa como predicción para el periodo siguiente.</p>
-<p>Es decir, la media móvil simple de orden <span class="math inline">\(r\)</span> usa para predecir el promedio los últimos <span class="math inline">\(r\)</span> datos. Es un punto medio entre el método ingenuo I, que para predecir usaba solo el ultimo dato, y la media simple, que promediaba todos los datos.</p>
-<p>La primera <strong>predicción extra-muestral</strong> es <span class="math inline">\(\widehat{y}_{T+1} = mm_T\)</span> y las restantes <span class="math inline">\(\widehat{y}_{T+h} = \widehat{y}_{T+1}.\)</span></p>
+<p>A partir de <span class="math inline">\(mm_t\)</span> se define la ecuación de la <strong>predicción intramuestral</strong> como <span class="math display">\[\widehat{y}_{t+1} = mm_t.\]</span> Podemos entender que <span class="math inline">\(mm_t\)</span> es una estimación del nivel de la serie en el periodo <span class="math inline">\(t\)</span> y como la serie es estacionaria (no cambia de nivel), este valor se usa como predicción para el periodo siguiente.</p>
+<p>Es decir, la media móvil simple de orden <span class="math inline">\(r\)</span> usa para predecir el promedio los últimos <span class="math inline">\(r\)</span> datos. Es un punto medio entre el método Ingenuo I, que para predecir usaba solo el ultimo dato, y la media simple, que promediaba todos los datos.</p>
+<p>La primera <strong>predicción extramuestral</strong> es <span class="math inline">\(\widehat{y}_{T+1} = mm_T\)</span> y las restantes <span class="math inline">\(\widehat{y}_{T+h} = \widehat{y}_{T+1}.\)</span></p>
 <p>Observa que:</p>
 <ul>
 <li>Para poder aplicar la media móvil de orden <span class="math inline">\(r\)</span> se necesitan al menos <span class="math inline">\(r\)</span> datos.</li>
-<li>Para los <span class="math inline">\(r-1\)</span> periodos iniciales no es posible calcular la media móvil y, por tanto, para los <span class="math inline">\(r\)</span> periodos iniciales no es posible obtener una predicción intra-muestral.</li>
-<li>El valor de <span class="math inline">\(r\)</span> debe fijarlo el investigador. Cuanto mayor es su valor, más <em>suave</em> es la linea de predicciones obtenida y menos efecto tiene el valor de una observación individual sobre la predicción (véase la <a href="#fig-bolsamediamovil">Figura&nbsp;1</a> del Ibex35). En el caso límite <span class="math inline">\(r=1\)</span> se tiene el <em>método ingenuo I</em> y para <span class="math inline">\(r=T\)</span> el <em>método de la media</em>.</li>
+<li>Para los <span class="math inline">\(r-1\)</span> periodos iniciales no es posible calcular la media móvil y, por tanto, para los <span class="math inline">\(r\)</span> periodos iniciales no es posible obtener una predicción intramuestral.</li>
+<li>El valor de <span class="math inline">\(r\)</span> debe fijarlo el investigador. Cuanto mayor es su valor, más <em>suave</em> es la linea de predicciones obtenida y menos efecto tiene el valor de una observación individual sobre la predicción (véase la <a href="#fig-bolsamediamovil">Figura&nbsp;1</a>). En el caso límite <span class="math inline">\(r=1\)</span> se tiene el <em>método ingenuo I</em> y para <span class="math inline">\(r=T\)</span> el <em>método de la media</em>.</li>
 </ul>
-<p>Veamos un sencillo ejemplo numérico. La <a href="#tbl-ejemplomediamovil">Tabla&nbsp;1</a> muestra la aplicación del método de las medias móviles para los 10 últimos datos de la serie Libros. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la media móvil de orden 5 y la siguiente columna, <em>Yhat</em>, la predicción de Libros, es decir la columna <em>mm</em> desfasada un periodo. La columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intra-muestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie.</p>
+<p>Veamos un sencillo ejemplo numérico. La <a href="#tbl-ejemplomediamovil">Tabla&nbsp;1</a> muestra la aplicación del método de las medias móviles para los 10 últimos datos de la serie Libros. La primera columna indica el año y la segunda el valor de la serie <em>Libros</em>. La tercera columna, <em>mm</em>, es la media móvil de orden 5 y la siguiente columna, <em>Yhat</em>, la predicción de Libros, es decir la columna <em>mm</em> desfasada un periodo. La columna <em>Res</em> (error de predicción) se calcula restando a la serie original (columna <em>Libros</em>) la predicción intramuestral (columna <em>Yhat</em>). Observa que en el proceso se han perdido 5 datos para la predicción y el residuo al inicio de la serie.</p>
 <div class="cell" data-layout-align="center">
 
 </div>
@@ -482,7 +482,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Tu mismo puedes comprobar que <span class="math display">\[mm_{2014} = \frac{76206 + 74244 + 69668 + 56435 + 56030}{5} = 66516.6\]</span> y la primera predicción extra-muestral seria la media de las 5 últimas observaciones <span class="math display">\[\widehat{Libros}_{2020} = mm_{2019} =  61418.8.\]</span></p>
+<p>Tu mismo puedes comprobar que</p>
+<p><span class="math display">\[mm_{2014} = \frac{76206 + 74244 + 69668 + 56435 + 56030}{5} = 66516.6\]</span></p>
+<p>y la primera predicción extramuestral sería la media de las 5 últimas observaciones</p>
+<p><span class="math display">\[\widehat{Libros}_{2020} = mm_{2019} =  61418.8.\]</span></p>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -495,7 +498,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="callout-body-container callout-body">
 <p>Date cuenta de que es la primera vez que en un método hay que elegir el valor de un parámetro.</p>
 <p>¿Cómo elegirlo? No hay ninguna base teórica que permita saber el valor más adecuado para el orden de la media móvil, hay que fijarlo según criterios empíricos.</p>
-<p>Esto distingue los métodos sencillos vistos en el tema previo del método de la media móvil.</p>
 </div>
 </div>
 <p><br>
@@ -503,14 +505,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="ejemplo-de-aplicación-con-demanda-eléctrica" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="ejemplo-de-aplicación-con-demanda-eléctrica"><span class="header-section-number">2.2</span> Ejemplo de aplicación con Demanda Eléctrica</h2>
-<p>Vamos a usar el método de medias móviles para predecir la serie Demanda de electricidad semanal. La <a href="#fig-consumoelectrico">Figura&nbsp;2</a> muestra una serie estacionaria alrededor de un valor medio.</p>
+<p>Vamos a usar el método de medias móviles para predecir la serie Demanda de electricidad semanal. La <a href="#fig-consumoelectrico">Figura&nbsp;2</a> muestra que es una serie estacionaria alrededor de un valor medio.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Creamos la serie de consumo semanal</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(electricidad, <span class="at">FUN =</span> sum) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Creamos la serie de consumo semanal</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(electricidad, <span class="at">FUN =</span> sum) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidad,</span>
@@ -539,21 +543,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  inicio <span class="ot">&lt;-</span> <span class="fu">start</span>(x)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  frecuencia <span class="ot">&lt;-</span><span class="fu">frequency</span>(x)</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), <span class="at">side =</span> <span class="dv">1</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>mm[<span class="sc">-</span>TT]), <span class="at">start =</span> inicio, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rep</span>(z<span class="sc">$</span>mm[TT], h), <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">"forecast"</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  z</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">side =</span> <span class="dv">1</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>mm[<span class="sc">-</span>TT]), </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">start =</span> inicio, </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">freq =</span> frecuencia)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rep</span>(z<span class="sc">$</span>mm[TT], h), </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">freq =</span> frecuencia)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">"forecast"</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  z</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>La función <code>mmf</code> precisa de tres argumentos, una serie temporal, el orden de la media móvil <span class="math inline">\(r\)</span> y el horizonte de previsión <span class="math inline">\(h\)</span>. Los dos últimos argumentos están fijados a 3 y 5 como opciones por defecto. El cálculo de la media móvil se hace mediante la función <code>filter</code> (librería <code>stats</code>), que calcula la media móvil simple. Realmente la función <code>filter</code> calcula una media ponderada, tiene como primer argumento la serie y el segundo argumento son los pesos de la media móvil, es decir <span class="math inline">\(1/r\)</span> repetido <span class="math inline">\(r\)</span> veces o <code>rep(1/r, r)</code>. El tercer argumento indica si la media es centrada <code>side = 2</code> (como la usada en el método de descomposición visto en el tema 2) o hacia atrás <code>side = 1</code>.</p>
-<p>La función <code>mmf</code> devuelve un objeto que contiene la serie original (<code>x</code>), el orden de la media móvil (<code>orden</code>), la media móvil (<code>mm</code>), la serie ajustada o predicción intra-muestral a un periodo vista (<code>fitted</code>), la predicción (<code>mean</code>) y el error de estimación (<code>residuals</code>).</p>
+<p>La función <code>mmf</code> devuelve un objeto que contiene la serie original (<code>x</code>), el orden de la media móvil (<code>orden</code>), la media móvil (<code>mm</code>), la serie ajustada o predicción intramuestral a un periodo vista (<code>fitted</code>), la predicción (<code>mean</code>) y el error de estimación (<code>residuals</code>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mmelectricidad <span class="ot">&lt;-</span> <span class="fu">mmf</span>(electricidad, <span class="at">r =</span> <span class="dv">5</span>, <span class="at">h =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>La <a href="#fig-electricidadmediamovil">Figura&nbsp;3</a> muestra la serie Demanda eléctrica (negro), las previsiones intra-muestrales (rojo) y las previsiones extra-muestrales (azul), que son constantes.</p>
+<p>La <a href="#fig-electricidadmediamovil">Figura&nbsp;3</a> muestra la serie Demanda eléctrica (negro), las previsiones intramuestrales (rojo) y las previsiones extramuestrales (azul), que son constantes.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(mmelectricidad,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -570,7 +582,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Podemos ahora obtener los diferentes indicadores de bondad de ajuste del modelo (error de predicción intra-muestral) con la función <code>accuracy</code>.</p>
+<p>Podemos ahora obtener los diferentes indicadores de bondad de ajuste del modelo (error de predicción intramuestral) con la función <code>accuracy</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(mmelectricidad)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -581,47 +593,54 @@ Training set -25.32394 244.639 179.1574 -0.6787638 3.702664 1.093756 0.4808701</
 <p>El MAPE de 3.7% (o 245 GWh de RMSE) evidencia que las predicciones son bastante adecuadas.</p>
 <section id="identificación-del-mejor-modelo" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="identificación-del-mejor-modelo">Identificación del mejor modelo</h3>
-<p>Podemos aplicar el método de la media móvil para diferentes órdenes <span class="math inline">\(r\)</span> y comprobar para cual de ellos se obtiene el menor valor del criterio de bondad de ajuste deseado. Realizaremos este ejercicio considerando como indicador de bondad de ajuste el MAPE pero en dos escenarios: previsiones intra-muestrales a un periodo vista y origen de predicción móvil.</p>
-<p><strong>Selección usando previsiones intra-muestrales a un periodo vista</strong></p>
+<p>Podemos aplicar el método de la media móvil para diferentes órdenes <span class="math inline">\(r\)</span> y comprobar para cual de ellos se obtiene el menor valor del criterio de bondad de ajuste deseado. Realizaremos este ejercicio considerando como indicador de bondad de ajuste el MAPE pero en dos escenarios: previsiones intramuestrales a un periodo vista y origen de predicción móvil.</p>
+<p><strong>Selección usando previsiones intramuestrales a un periodo vista</strong></p>
 <p>La siguiente rutina calcula el MAPE para el método de la media móvil con órdenes desde 1 a 4.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>) {</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para un orden de"</span>, r, <span class="st">"los errores son"</span>, </span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">accuracy</span>(<span class="fu">mmf</span>(electricidad, <span class="at">r =</span> r))[<span class="dv">5</span>])</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  error <span class="ot">&lt;-</span> <span class="fu">accuracy</span>(<span class="fu">mmf</span>(electricidad, <span class="at">r =</span> r))[<span class="dv">5</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para un orden de"</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      r, </span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>      <span class="st">"el error es"</span>, </span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>      <span class="fu">formatC</span>(error, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>),</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>      <span class="st">" %"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Para un orden de 1 los errores son 3.325258
-Para un orden de 2 los errores son 3.398294
-Para un orden de 3 los errores son 3.400958
-Para un orden de 4 los errores son 3.558249</code></pre>
+Para un orden de 1 el error es 3.33  %
+Para un orden de 2 el error es 3.40  %
+Para un orden de 3 el error es 3.40  %
+Para un orden de 4 el error es 3.56  %</code></pre>
 </div>
 </div>
 <p>Podemos concluir que el orden óptimo es 1, donde se alcanza el menor MAPE, es decir el método Ingenuo I. Sin embargo, para órdenes superiores de la media móvil, el error se mantiene igual de reducido.</p>
 <p><strong>Selección usando origen de predicción móvil</strong></p>
-<p>Dado que nuestro interés está en la calidad de las previsiones, vamos a obtener el MAPE para el método de la media móvil usando origen de predicción móvil. Asumiremos un horizonte de predicción de hasta cuatro semanas y 20 como el mínimo número de datos necesarios para hacer las estimaciones. Consideremos órdenes desde 1 hasta 4.</p>
+<p>Dado que nuestro interés está en la calidad de las previsiones, vamos a obtener el MAPE para el método de la media móvil usando origen de predicción móvil. Asumiremos un horizonte de predicción de hasta cuatro semanas y 20 como el mínimo número de semanas necesarias para hacer las estimaciones. Consideremos órdenes desde 1 hasta 4.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">20</span>              <span class="co">#Minimo numero de datos para estimar</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">4</span>               <span class="co">#Horizonte de las prediciciones</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(electricidad) <span class="co">#Longitud serie</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h      <span class="co">#Total de estimaciones</span></span>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">20</span>              </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">4</span>               </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(electricidad) </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h      </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>){</span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  tmpMape <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  mapemm <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
 <span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    mmElectricidad <span class="ot">&lt;-</span> <span class="fu">mmf</span>(train.set, <span class="at">r =</span> r, <span class="at">h =</span> h)</span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    tmpMape[i <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> mmElectricidad<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    mapemm[i <span class="sc">+</span> <span class="dv">1</span>, ] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> mmElectricidad<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
 <span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  tmpMape <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(tmpMape)</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>  mapemm <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapemm)</span>
 <span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para un orden de"</span>, r, <span class="st">"los errores son"</span>, <span class="fu">formatC</span>(tmpMape, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Para un orden de"</span>, </span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>      r, </span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>      <span class="st">"los errores son"</span>, </span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">formatC</span>(mapemm, <span class="at">format =</span> <span class="st">"f"</span>, <span class="at">digits =</span> <span class="dv">2</span>)) </span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Para un orden de 1 los errores son 2.80 3.80 4.21 5.91
@@ -756,7 +775,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

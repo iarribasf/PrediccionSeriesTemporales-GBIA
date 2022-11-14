@@ -250,8 +250,8 @@ div.csl-indent {
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -314,7 +314,7 @@ div.csl-indent {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#series-temporales" id="toc-series-temporales" class="nav-link active" data-scroll-target="#series-temporales"> <span class="header-section-number">1</span> Series Temporales</a>
@@ -444,11 +444,20 @@ div.csl-indent {
 <h3 class="unnumbered anchored" data-anchor-id="títulos-publicados-en-españa">Títulos publicados en España</h3>
 <p>Libros es una <em>serie anual</em> de 1993 a 2019 (fuente <a href="https://www.ine.es">Instituto Nacional de Estadística</a>). Los datos están disponibles en el fichero <code>libros.csv</code>. La primera columna tiene el año de la serie y la segunda contiene el número de títulos publicados. En la primera fila aparece el nombre de cada columna.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/libros.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">ts</span>(libros[, <span class="dv">2</span>], </span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">start =</span> <span class="dv">1993</span>, </span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">frequency  =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/libros.csv"</span>, </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>libros <span class="ot">&lt;-</span> <span class="fu">ts</span>(libros[, <span class="dv">2</span>], </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">start =</span> <span class="dv">1993</span>, </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">frequency  =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Usamos para leer los datos <code>read.csv2</code>, indicando que la primera línea tiene el nombre de las variables. Esta función asume que el separador decimal es la coma “,” y que el separador entre variables es el punto y coma “;”. Si el separador decimal es el punto “.” y el separador de variables es la coma “,”, debes usar <code>read.csv</code>. En cualquiera de estas funciones puedes modificar el separador decimal por medio del argumento <code>dec</code>; también puedes usar el argumento <code>sep</code> para indicar el carácter usado como separador de variables.</p>
+<p>La función <code>ts</code>, de la librería <code>stats</code>, convierte un objeto (vector o matriz) a la clase <em>serie temporal</em>. En este caso seleccionamos solo la segunda columna, la que contiene el número de títulos publicados.</p>
+<ul>
+<li>Con <code>start</code> indicamos el fechado del primer dato.</li>
+<li>Con <code>frequency</code> indicamos la frecuencia, que en este caso es un dato por año.</li>
+</ul>
+<p>Usa <code>help(ts)</code> para obtener más información y <code>str(libros)</code> para ver qué contiene un objeto <em>serie temporal</em>.</p>
 <div class="callout-caution callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -466,13 +475,6 @@ Nombre del fichero y nombre de la serie
 </div>
 </div>
 </div>
-<p>Usamos para leer los datos <code>read.csv2</code>, indicando que la primera línea tiene el nombre de las variables. Esta función asume que el separador decimal es la coma “,” y que el separador entre variables es el punto y coma “;”. Si el separador decimal es el punto “.” y el separador de variables es la coma “,”, debes usar <code>read.csv</code>. En cualquiera de estas funciones puedes modificar el separador decimal por medio del argumento <code>dec</code>; también puedes usar el argumento <code>sep</code> para indicar el carácter usado como separador de variables.</p>
-<p>La función <code>ts</code>, de la librería <code>stats</code>, convierte un objeto (vector o matriz) a la clase <em>serie temporal</em>. En este caso seleccionamos solo la segunda columna, la que contiene el número de títulos publicados.</p>
-<ul>
-<li>Con <code>start</code> indicamos el fechado del primer dato.</li>
-<li>Con <code>frequency</code> indicamos la frecuencia, que en este caso es un dato por año.</li>
-</ul>
-<p>Usa <code>help(ts)</code> para obtener más información y <code>str(libros)</code> para ver qué contiene un objeto <em>serie temporal</em>.</p>
 <p>Podemos dibujar la serie Libros con la función <code>plot</code> o mejor con <code>autoplot</code>. Esta última está en el paquete <code>forecast</code>.</p>
 <p>En general, las funciones gráficas que vamos a usar pertenecen a la libraría <code>forecast</code>, pero en ocasiones las ampliaremos con funciones de la librería <code>ggplot2</code>. Te recomiendo cargar estas dos librerías desde el inicio. En casi todos los casos existe una versión de la función gráfica usada en la librería <code>stats</code>.</p>
 <div class="cell" data-layout-align="center">
@@ -496,12 +498,14 @@ Nombre del fichero y nombre de la serie
 </section>
 <section id="nacimientos-en-españa" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="nacimientos-en-españa">Nacimientos en España</h3>
-<p>Nacimientos es una <em>serie mensual</em> de enero de 1975 a diciembre de 2020 (fuente: <a href="https://www.ine.es">Instituto Nacional de Estadística</a>). Los datos están disponibles en el fichero <code>nacimientos.csv</code>. La primera columna tiene la fecha y la segunda la serie propiamente. En la primera fila aparece el nombre de cada columna. De nuevo seleccionamos solo la columna con los datos de nacimientos.</p>
+<p>Nacimientos es una <em>serie mensual</em> de enero de 1975 a diciembre de 2019 (fuente: <a href="https://www.ine.es">Instituto Nacional de Estadística</a>). Los datos están disponibles en el fichero <code>nacimientos.csv</code>. La primera columna tiene la fecha y la segunda la serie propiamente. En la primera fila aparece el nombre de cada columna. De nuevo seleccionamos solo la columna con los datos de nacimientos.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/nacimientos.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">ts</span>(nacimientos[, <span class="dv">2</span>],</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1975</span>, <span class="dv">1</span>),</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">frequency =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/nacimientos.csv"</span>, </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>nacimientos <span class="ot">&lt;-</span> <span class="fu">ts</span>(nacimientos[, <span class="dv">2</span>],</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1975</span>, <span class="dv">1</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">frequency =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -539,12 +543,14 @@ Nombre del fichero y nombre de la serie
 </section>
 <section id="demanda-eléctrica" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="demanda-eléctrica">Demanda eléctrica</h3>
-<p>Electricidad es una <em>serie diaria</em> desde el 1 enero de 2021 hasta el 31 diciembre de 2021 (fuente: <a href="https://demanda.ree.es/visiona/peninsula/demandaqh/total">Red Electrica de España</a>). Los datos están disponibles en el fichero <code>Consumo electrico.csv</code>. La primera columna tiene la fecha y la segunda, la seleccionada para el fechado, la serie propiamente. En la primera fila aparece el nombre de cada columna.</p>
+<p>Demanda eléctrica es una <em>serie diaria</em> desde el 1 enero de 2021 hasta el 31 diciembre de 2021 (fuente: <a href="https://demanda.ree.es/visiona/peninsula/demandaqh/total">Red Electrica de España</a>). Los datos están disponibles en el fichero <code>Consumo electrico.csv</code>. La primera columna tiene la fecha y la segunda, la seleccionada para el fechado, la serie propiamente. En la primera fila aparece el nombre de cada columna.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>En este caso:</p>
 <ul>
@@ -647,7 +653,7 @@ Fechado de la serie
 </div>
 </div>
 <ul>
-<li><code>cycle</code>, crea un vector con el periodo estacional de cada dato de la serie. Para una serie mensual sus valores van de 1 a 12, para una serie diaria sus valores irían 1 a 7.</li>
+<li><code>cycle</code>, crea un vector con la posición en el ciclo de cada observación. Para una serie mensual sus valores van de 1 a 12, para una serie diaria sus valores irían 1 a 7.</li>
 </ul>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">cycle</span>(nacimientos), <span class="at">n =</span> <span class="dv">48</span>) <span class="co">#Mostramos sólo los 4 primeros años</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -711,7 +717,7 @@ Frequency = 7
 <div id="fig-tipostendencia-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-02-Tema2_files/figure-html/fig-tipostendencia-2.png" class="img-fluid figure-img" data-ref-parent="fig-tipostendencia"></p>
-<p></p><figcaption class="figure-caption">(b) Creciente</figcaption><p></p>
+<p></p><figcaption class="figure-caption">(b) Creciente (lineal)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -719,7 +725,7 @@ Frequency = 7
 <div id="fig-tipostendencia-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-02-Tema2_files/figure-html/fig-tipostendencia-3.png" class="img-fluid figure-img" data-ref-parent="fig-tipostendencia"></p>
-<p></p><figcaption class="figure-caption">(c) Creciente</figcaption><p></p>
+<p></p><figcaption class="figure-caption">(c) Creciente (exponencial)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -727,7 +733,7 @@ Frequency = 7
 <div id="fig-tipostendencia-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-02-Tema2_files/figure-html/fig-tipostendencia-4.png" class="img-fluid figure-img" data-ref-parent="fig-tipostendencia"></p>
-<p></p><figcaption class="figure-caption">(d) Creciente</figcaption><p></p>
+<p></p><figcaption class="figure-caption">(d) Creciente (logarítmica)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -737,7 +743,7 @@ Frequency = 7
 <div id="fig-tipostendencia-5" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-02-Tema2_files/figure-html/fig-tipostendencia-5.png" class="img-fluid figure-img" data-ref-parent="fig-tipostendencia"></p>
-<p></p><figcaption class="figure-caption">(e) Decreciente</figcaption><p></p>
+<p></p><figcaption class="figure-caption">(e) Decreciente (lineal)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -745,7 +751,7 @@ Frequency = 7
 <div id="fig-tipostendencia-6" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-02-Tema2_files/figure-html/fig-tipostendencia-6.png" class="img-fluid figure-img" data-ref-parent="fig-tipostendencia"></p>
-<p></p><figcaption class="figure-caption">(f) Dereciente</figcaption><p></p>
+<p></p><figcaption class="figure-caption">(f) Dereciente (exponencial)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -753,7 +759,7 @@ Frequency = 7
 <div id="fig-tipostendencia-7" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-02-Tema2_files/figure-html/fig-tipostendencia-7.png" class="img-fluid figure-img" data-ref-parent="fig-tipostendencia"></p>
-<p></p><figcaption class="figure-caption">(g) Decreciente</figcaption><p></p>
+<p></p><figcaption class="figure-caption">(g) Decreciente (logarítmica)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -779,7 +785,7 @@ Frequency = 7
 </div>
 <p><br>
 </p>
-<p>La serie de <strong>Nacimientos</strong> es lo suficientemente larga como para observarse un ciclo completo, que queda identificado por dos cambios de tendencia consecutivos de signo opuesto:</p>
+<p>La serie de <strong>Nacimientos</strong> es lo suficientemente larga como para observarse un ciclo completo, que queda identificado por dos cambios de tendencia consecutivos de signo opuesto (véase <a href="#fig-ciclosnacimientos">Figura&nbsp;7</a>):</p>
 <ul>
 <li>A finales de la década de los 90 la tendencia decreciente en los nacimientos pasa a creciente por la llegada de inmigrantes con una mayor tasa de natalidad.</li>
 <li>A finales de la primera década del 2000 la tendencia creciente pasa a decreciente porque la Gran Recesión provoca el regreso a sus países de origen de muchos de estos inmigrantes.</li>
@@ -859,11 +865,11 @@ Series con más de una componente estacional
 </section>
 <section id="intervención-i_t" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="intervención-i_t"><span class="header-section-number">2.4</span> Intervención, <span class="math inline">\(I_t\)</span></h2>
-<p><strong>Definición</strong>: Es un factor sistemático no periódico o irregular, que vendría determinado por fenómenos ocasionales que provocan observaciones anómalas y valores atípicos en la serie temporal.</p>
+<p><strong>Definición</strong>: Es un factor sistemático no periódico, o irregular, que vendría determinado por fenómenos ocasionales que provocan observaciones anómalas y valores atípicos en la serie temporal.</p>
 <p>Por su relación con fechas concretas, podemos distinguir dos tipos:</p>
 <ul>
 <li><em>Efectos calendario</em>: festivos en series diarias; Semana Santa, días laborales y febrero bisiesto en series mensuales.</li>
-<li><em>Otros efectos no sujetos a calendario</em>: catástrofes, huelgas, etc.</li>
+<li><em>Otros efectos no sujetos a calendario</em>: catástrofes, huelgas, caída del sistema eléctrico o de los servidores de una red social, etc.</li>
 </ul>
 <p>En la serie mensual Nacimientos, los meses de febrero bisiestos (puntos rojos) presentan un número de nacimientos mayor que los meses de febrero no bisiestos. Para algunos años este hecho es mas claro (véase <a href="#fig-intervencionnacimientos">Figura&nbsp;11</a> ).</p>
 <div class="cell" data-layout-align="center">
@@ -895,11 +901,11 @@ Series con más de una componente estacional
 </dd>
 <dt><em>Cambio transitorio (Transitory Change, TC)</em></dt>
 <dd>
-<p>En un periodo un <em>shock</em> genera un valor anómalo en la serie y el efecto del <em>shock</em> va desapareciendo poco a poco. Por ejemplo, un brote infeccioso aumenta el número de muertes en una población, pero al tomarse medidas sanitarias las muertes vuelven poco a poco al nivel previo al brote. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel central.</p>
+<p>En un periodo un <em>shock</em> genera un valor anómalo en la serie y el efecto del <em>shock</em> va desapareciendo poco a poco. Por ejemplo, las redes sociales ponen de moda un producto que temporalmente aumenta sus ventas, pero conforme pasa el tiempo los consumidores se olvidan del producto y sus ventas vuelven poco a poco a su nivel natural. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel central.</p>
 </dd>
 <dt><em>Cambio permanente (Level Shift, LS)</em></dt>
 <dd>
-<p>En un periodo la serie cambia de nivel y permanece de forma permanente en este nuevo nivel. Por ejemplo, enfrente de una tienda abre la competencia, de forma que sus ventas descienden bruscamente de forma permanente. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel izquierdo.</p>
+<p>En un periodo la serie cambia de nivel y permanece de forma permanente en este nuevo nivel. Por ejemplo, enfrente de un supermercado abre la competencia, de forma que sus ventas descienden bruscamente de forma permanente. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel izquierdo.</p>
 </dd>
 </dl>
 <div class="cell" data-layout-align="center">
@@ -926,7 +932,7 @@ Series con más de una componente estacional
 <h2 data-number="2.6" class="anchored" data-anchor-id="esquema-aditivo-y-multiplicativo"><span class="header-section-number">2.6</span> Esquema aditivo y multiplicativo</h2>
 <p>Una serie temporal siempre tiene tendencia y residuo. La presencia de estacionalidad, ciclo e intervención depende de la naturaleza de la serie. Por ejemplo, una serie anual no tendrá nunca estacionalidad y en una serie corta no se podrá observar el ciclo.</p>
 <p><strong>Las componentes de una serie temporal se pueden combinar de múltiples formas.</strong></p>
-<p>En el <strong>esquema aditivo</strong> cada componente suma su efecto sobre las demás, <span class="math inline">\(y_t = T_t + S_t + C_t + I_t + R_t\)</span>. La demanda diaria de electricidad es un ejemplo de este tipo de esquema (<a href="#fig-esquemaaditivo">Figura&nbsp;14</a>). El gráfico superior muestra la serie en el tiempo e identificamos el esquema aditivo porque la amplitud estacional (para cada semana la diferencia entre el día de más consumo y el de menos consumo) se mantiene constante en el tiempo. En el gráfico inferior cada punto corresponde a una semana donde la coordenada X es el consumo de esa semana y la coordenada Y la desviación típica del consumo para los días de esa semana. Este segundo gráfico revela el esquema aditivo de la serie porque no se observa un patrón creciente en los puntos: más consumo no implica una mayor desviación típica.</p>
+<p>En el <strong>esquema aditivo</strong> cada componente suma su efecto sobre las demás, <span class="math inline">\(y_t = T_t + S_t + C_t + I_t + R_t\)</span>. La demanda diaria de electricidad es un ejemplo de este tipo de esquema (<a href="#fig-esquemaaditivo">Figura&nbsp;14</a>). El gráfico superior muestra la serie en el tiempo e identificamos el esquema aditivo porque la amplitud estacional (para cada semana la diferencia entre el día de más consumo y el de menos consumo) se mantiene constante en el tiempo. En el gráfico inferior cada punto corresponde a una semana, la coordenada X es el consumo de esa semana y la coordenada Y la desviación típica del consumo para los días de esa semana. Este segundo gráfico revela el esquema aditivo de la serie porque no se observa un patrón creciente en los puntos: más consumo no implica una mayor desviación típica.</p>
 <div id="fig-esquemaaditivo" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -952,7 +958,7 @@ Series con más de una componente estacional
 <p></p><figcaption class="figure-caption">Figura 14: Ejemplo de esquema aditivo</figcaption><p></p>
 </figure>
 </div>
-<p>En el <strong>esquema multiplicativo</strong> cada componente supone un incremento porcentual respecto de las demás, <span class="math inline">\(y_t = T_t \cdot S_t \cdot C_t \cdot I_t \cdot R_t\)</span>. La serie Nacimientos es un ejemplo de esquema multiplicativo: en el gráfico superior de la <a href="#fig-esquemamultiplicativo">Figura&nbsp;15</a>, que muestra la serie, se observa que según decrece el número de nacimientos, también decrece la amplitud estacional. Además, en el gráfico inferior se observa un patrón creciente en los puntos, revelando el esquema multiplicativo de la serie.</p>
+<p>En el <strong>esquema multiplicativo</strong> cada componente supone un incremento porcentual respecto de las demás, <span class="math inline">\(y_t = T_t \cdot S_t \cdot C_t \cdot I_t \cdot R_t\)</span>. La serie Nacimientos es un ejemplo de esquema multiplicativo: en el gráfico superior de la <a href="#fig-esquemamultiplicativo">Figura&nbsp;15</a>, que muestra la serie, se observa que según decrece el número de nacimientos, también decrece la amplitud estacional. Además, en el gráfico inferior cada punto corresponde a un año, en el eje X los nacimientos anuales y en el eje Y la desviación típica de los nacimientos mensuales. En este gráfico se observa un patrón creciente en los puntos, revelando el esquema multiplicativo de la serie.</p>
 <div id="fig-esquemamultiplicativo" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1105,7 +1111,7 @@ Atención
 </div>
 </div>
 <p>Las gráficas ayudan a describir y entender un poco mejor la componente estacional. Sin embargo, si deseamos estimar dicha componente, debemos proceder de otra forma.</p>
-<p>La siguiente sintaxis usa la función <code>tapply</code> para estimar numéricamente la componente estacional. Básicamente, calcula para cada mes (argumento <code>cycle(nacimientosb)</code>) la media (<code>FUN = mean</code>) del cociente <code>nacimientosb / mean(nacimientosb)</code>.</p>
+<p>La siguiente sintaxis usa la función <code>tapply</code> para estimar numéricamente la componente estacional bajo un esquema multiplicativo. Básicamente, calcula para cada mes (argumento <code>cycle(nacimientosb)</code>) la media (<code>FUN = mean</code>) del cociente <code>nacimientosb / mean(nacimientosb)</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>componenteEstacional <span class="ot">&lt;-</span> <span class="fu">tapply</span>(nacimientosb<span class="sc">/</span><span class="fu">mean</span>(nacimientosb), </span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">cycle</span>(nacimientosb), </span>
@@ -1504,10 +1510,12 @@ Media movil centrada y no centrada
 <h3 class="unnumbered anchored" data-anchor-id="ejemplo-de-esquema-aditivo">Ejemplo de esquema aditivo</h3>
 <p>Vamos a descomponer la serie Demanda eléctrica asumiendo un esquema aditivo (<code>type = "addi</code>).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>eleDesAdi <span class="ot">&lt;-</span> <span class="fu">decompose</span>(electricidad, <span class="at">type =</span> <span class="st">"addi"</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(eleDesAdi,</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>eleDesAdi <span class="ot">&lt;-</span> <span class="fu">decompose</span>(electricidad, </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">"addi"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(eleDesAdi,</span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-desadielec" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1528,13 +1536,15 @@ Media movil centrada y no centrada
 </div>
 <p>A continuación, tienes un ejemplo del manejo de las componentes extraídas para hacer una gráfica.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidad, <span class="at">series=</span><span class="st">"Demanda eléctrica"</span>,</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"MWh"</span>,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">trendcycle</span>(eleDesAdi), <span class="at">series=</span><span class="st">"Tendencia"</span>) <span class="sc">+</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"Demanda eléctrica"</span><span class="ot">=</span><span class="st">"black"</span>,<span class="st">"Tendencia"</span><span class="ot">=</span><span class="st">"red"</span>),</span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">"Demanda eléctrica"</span>,<span class="st">"Tendencia"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidad, </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">series=</span><span class="st">"Demanda eléctrica"</span>,</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"MWh"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(<span class="fu">trendcycle</span>(eleDesAdi), </span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">series=</span><span class="st">"Tendencia"</span>) <span class="sc">+</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"Demanda eléctrica"</span><span class="ot">=</span><span class="st">"black"</span>,<span class="st">"Tendencia"</span><span class="ot">=</span><span class="st">"red"</span>),</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">breaks=</span><span class="fu">c</span>(<span class="st">"Demanda eléctrica"</span>,<span class="st">"Tendencia"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-desadielec2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1563,9 +1573,10 @@ Media movil centrada y no centrada
 <span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">colour =</span> <span class="st">"blue"</span>, <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Componente estacional"</span>) <span class="sc">+</span></span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"GWh"</span>) <span class="sc">+</span></span>
 <span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>, </span>
-<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lunes"</span>, <span class="st">"Martes"</span>, <span class="st">"Miércoles"</span>, <span class="st">"Jueves"</span>, <span class="st">"Viernes"</span>, <span class="st">"Sábado"</span>, <span class="st">"Domingo"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Lunes"</span>, <span class="st">"Martes"</span>, <span class="st">"Miércoles"</span>, <span class="st">"Jueves"</span>, </span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Viernes"</span>, <span class="st">"Sábado"</span>, <span class="st">"Domingo"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-desadielec3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1580,10 +1591,12 @@ Media movil centrada y no centrada
 <h3 class="unnumbered anchored" data-anchor-id="ejemplo-de-esquema-multiplicativo">Ejemplo de Esquema Multiplicativo</h3>
 <p>Veamos ahora la descomposición de Nacimientos bajo un esquema multiplicativo (<code>type = "mult"</code>).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>nacDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(nacimientos, <span class="at">type =</span> <span class="st">"mult"</span>)</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(nacDesMul,</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>nacDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(nacimientos, </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">type =</span> <span class="st">"mult"</span>)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(nacDesMul,</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-desmulnaci" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1684,24 +1697,23 @@ Frequency = 7
 <p>Para Demanda eléctrica hemos obtenido tres estimaciones de la componente estacional: la primera obtenida con <code>tapply</code>, la segunda obtenida con <code>decompose</code> y la tercera con <code>stl</code>. Se puede observar que las tres estimaciones son muy similares, pero no coincidentes, y aunque los métodos de descomposición son preferibles a <code>tapply</code>, ninguna estimación es <em>a priori</em> mejor que otra.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tapply</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.numeric</span>(componenteEstacional), <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  12.58  30.28  30.32  32.09  21.34 -42.59 -84.43</code></pre>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.numeric</span>(componenteEstacional), <span class="dv">2</span>)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># decompose</span></span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleDesAdi)[<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)], <span class="dv">2</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="co"># stl</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleStl)[<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># decompose</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleDesAdi)[<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  12.18  29.88  30.24  32.41  24.91 -43.50 -86.11</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stl</span></span>
-<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleStl)[<span class="fu">c</span>(<span class="dv">4</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  16.31  30.75  31.92  31.54  24.60 -45.26 -89.86</code></pre>
+<pre><code>           [,1]  [,2]  [,3]  [,4]  [,5]   [,6]   [,7]
+tapply    12.58 30.28 30.32 32.09 21.34 -42.59 -84.43
+decompose 12.18 29.88 30.24 32.41 24.91 -43.50 -86.11
+stl       16.31 30.75 31.92 31.54 24.60 -45.26 -89.86</code></pre>
 </div>
 </div>
 <p><br>
 </p>
-<p>Si en lugar de <code>periodic</code>, fijamos el parámetro <code>s.window</code> a, por ejemplo, 11 (siempre un valor impar), estaremos permitiendo que la estacionalidad cambien en el tiempo. La <a href="#fig-stladielec2">Figura&nbsp;25</a> muestra la componente estacional estimada previamente (bajo el supuesto de componente estacional constante) y la que se obtiene con el argumento <code>s.window = 11</code>. Para el periodo mostrado se observa que la amplitud estacional en la componente no constante ha variando con el tiempo. Cuanto mayor es el valor (impar) de <code>s.window</code> más constante en el tiempo es la componente estacional.</p>
+<p>Si en lugar de <code>periodic</code>, fijamos el parámetro <code>s.window</code> a, por ejemplo, 11 (siempre un valor impar), estaremos permitiendo que la estacionalidad cambien en el tiempo. La <a href="#fig-stladielec2">Figura&nbsp;25</a> muestra la componente estacional estimada previamente (bajo el supuesto de componente estacional constante) y la que se obtiene con el argumento <code>s.window = 11</code>. Para el periodo mostrado se observa que la componente estacional ha variando con el tiempo. Cuanto mayor es el valor (impar) de <code>s.window</code> más constante en el tiempo es la componente estacional.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-stladielec2" class="quarto-figure quarto-figure-center anchored">
@@ -1927,7 +1939,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

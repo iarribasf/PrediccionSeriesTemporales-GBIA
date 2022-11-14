@@ -47,9 +47,17 @@ mmf <- function(x, r = 3, h = 5) {
   inicio <- start(x)
   frecuencia <-frequency(x)
   
-  z$mm <- stats::filter(x, rep(1/r, r), side = 1)
-  z$fitted <- ts(c(NA, z$mm[-TT]), start = inicio, freq = frecuencia)
-  z$mean <- ts(rep(z$mm[TT], h), start = time(x)[TT] + 1/frecuencia, freq = frecuencia)
+  z$mm <- stats::filter(x, rep(1/r, r), 
+                        side = 1)
+  
+  z$fitted <- ts(c(NA, z$mm[-TT]), 
+                 start = inicio, 
+                 freq = frecuencia)
+  
+  z$mean <- ts(rep(z$mm[TT], h), 
+               start = time(x)[TT] + 1/frecuencia, 
+               freq = frecuencia)
+  
   z$residuals <- x - z$fitted
   
   class(z) <- "forecast"
@@ -78,31 +86,36 @@ accuracy(mmelectricidad)
 #----------------------------------------------------------
 # Selección usando previsiones intra-muestrales a un periodo vista
 for(r in 1:4) {
+  error <- accuracy(mmf(electricidad, r = r))[5]
   cat("\nPara un orden de", 
       r, 
-      "los errores son", 
-      accuracy(mmf(electricidad, r = r))[5])
+      "el error es", 
+      formatC(error, format = "f", digits = 2),
+      " %")
 }
 
 # Selección usando origen de predicción móvil
-k <- 20              #Minimo numero de datos para estimar
-h <- 4               #Horizonte de las prediciciones
-TT <- length(electricidad) #Longitud serie
-s <- TT - k - h      #Total de estimaciones
+k <- 20              
+h <- 4               
+TT <- length(electricidad) 
+s <- TT - k - h      
 
 for(r in 1:4){
   
-  tmpMape <- matrix(NA, s + 1, h)
+  mapemm <- matrix(NA, s + 1, h)
   for (i in 0:s) {
     
     train.set <- subset(electricidad, start = i + 1, end = i + k)
     test.set <-  subset(electricidad, start = i + k + 1, end = i + k + h)
     
     mmElectricidad <- mmf(train.set, r = r, h = h)
-    tmpMape[i + 1, ] <- 100*abs(test.set - mmElectricidad$mean)/test.set
+    mapemm[i + 1, ] <- 100*abs(test.set - mmElectricidad$mean)/test.set
   }
-  tmpMape <- colMeans(tmpMape)
+  mapemm <- colMeans(mapemm)
   
-  cat("\nPara un orden de", r, "los errores son", formatC(tmpMape, format = "f", digits = 2)) 
+  cat("\nPara un orden de", 
+      r, 
+      "los errores son", 
+      formatC(mapemm, format = "f", digits = 2)) 
   
 }

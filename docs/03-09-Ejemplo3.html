@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,14 +295,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
   <li><a href="#predicción-por-métodos-simples-para-la-serie-anual" id="toc-predicción-por-métodos-simples-para-la-serie-anual" class="nav-link" data-scroll-target="#predicción-por-métodos-simples-para-la-serie-anual"> <span class="header-section-number">2</span> Predicción por métodos simples para la serie anual</a>
   <ul class="collapse">
   <li><a href="#identificación-del-método-sencillo-con-mejor-ajuste" id="toc-identificación-del-método-sencillo-con-mejor-ajuste" class="nav-link" data-scroll-target="#identificación-del-método-sencillo-con-mejor-ajuste"> <span class="header-section-number">2.1</span> Identificación del método sencillo con mejor ajuste</a></li>
-  <li><a href="#identificación-del-método-sencillo-con-mejor-predicción-extra-muestral" id="toc-identificación-del-método-sencillo-con-mejor-predicción-extra-muestral" class="nav-link" data-scroll-target="#identificación-del-método-sencillo-con-mejor-predicción-extra-muestral"> <span class="header-section-number">2.2</span> Identificación del método sencillo con mejor predicción extra-muestral</a></li>
+  <li><a href="#identificación-del-método-sencillo-con-mejor-predicción-extramuestral" id="toc-identificación-del-método-sencillo-con-mejor-predicción-extramuestral" class="nav-link" data-scroll-target="#identificación-del-método-sencillo-con-mejor-predicción-extramuestral"> <span class="header-section-number">2.2</span> Identificación del método sencillo con mejor predicción extramuestral</a></li>
   <li><a href="#predicciones" id="toc-predicciones" class="nav-link" data-scroll-target="#predicciones"> <span class="header-section-number">2.3</span> Predicciones</a></li>
   </ul></li>
   <li><a href="#predicción-por-el-método-ingenuo-con-estacionalidad" id="toc-predicción-por-el-método-ingenuo-con-estacionalidad" class="nav-link" data-scroll-target="#predicción-por-el-método-ingenuo-con-estacionalidad"> <span class="header-section-number">3</span> Predicción por el método ingenuo con estacionalidad</a>
@@ -318,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Pernoctaciones en alojamientos turísticos de turistas extranjeros</h1>
-<p class="subtitle lead">Método ingenuo</p>
+<p class="subtitle lead">Métodos sencillos</p>
 </div>
 
 
@@ -353,7 +353,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introducción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
-<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.</p>
+<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por la temperatura. El esquema es multiplicativo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
@@ -404,7 +404,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <section id="identificación-del-método-sencillo-con-mejor-ajuste" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="identificación-del-método-sencillo-con-mejor-ajuste"><span class="header-section-number">2.1</span> Identificación del método sencillo con mejor ajuste</h2>
-<p>Para series sin estacionalidad tenemos tres aproximaciones por métodos sencillos: media simple, método ingenuo I y método de la deriva. Veamos en primer lugar cual de ellos ajusta mejor a los datos, es decir, cual ofrece las mejores predicciones intra-muestrales a un periodo vista.</p>
+<p>Para series sin estacionalidad tenemos tres aproximaciones por métodos sencillos: media simple, método ingenuo I y método de la deriva. Veamos en primer lugar cual de ellos ajusta mejor a los datos, es decir, cual ofrece las mejores predicciones intramuestrales a un periodo vista.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mediaPernoctaciones <span class="ot">&lt;-</span> <span class="fu">meanf</span>(PernoctacionesAnual, <span class="at">h =</span> <span class="dv">5</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>naivePernoctaciones <span class="ot">&lt;-</span> <span class="fu">naive</span>(PernoctacionesAnual, <span class="at">h =</span> <span class="dv">5</span>)</span>
@@ -418,8 +418,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(naivePernoctaciones, <span class="at">series=</span><span class="st">"Ingenuo"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(derivaPernoctaciones, <span class="at">series=</span><span class="st">"Deriva"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">"Pernoctaciones"</span>, <span class="st">"Media"</span>, <span class="st">"Ingenuo"</span>, <span class="st">"Deriva"</span>)) <span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Métodos"</span>)) <span class="sc">+</span> </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour=</span><span class="st">"Métodos"</span>) <span class="sc">+</span> </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.15</span>,<span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-SencillosPernoctacionesAnual" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -429,7 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>La <a href="#fig-SencillosPernoctacionesAnual">Figura&nbsp;3</a> muestra lo inadecuado del método de la media, y no deja claro entre los métodos Ingenuo y de la Deriva cuál es más adecuado. El primero ofrece una previsión constante –acorde con el comportamiento de la serie en los dos últimos años– y el segundo previsiones crecientes –acordes con la tendencia general de la última década. Veamos la capacidad de ajuste de cada método</p>
+<p>La <a href="#fig-SencillosPernoctacionesAnual">Figura&nbsp;3</a> muestra lo inadecuado del método de la media, y no deja claro entre los métodos Ingenuo y de la Deriva cuál es más adecuado. El primero ofrece una previsión constante –acorde con el comportamiento de la serie en los dos últimos años– y el segundo previsiones crecientes –acordes con la tendencia general de la serie. Veamos la capacidad de ajuste de cada método</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">accuracy</span>(mediaPernoctaciones),</span>
@@ -450,9 +450,9 @@ Deriva    0.00 11.60  9.28 -0.26  3.92 0.99 0.26</code></pre>
 <p><br>
 </p>
 </section>
-<section id="identificación-del-método-sencillo-con-mejor-predicción-extra-muestral" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="identificación-del-método-sencillo-con-mejor-predicción-extra-muestral"><span class="header-section-number">2.2</span> Identificación del método sencillo con mejor predicción extra-muestral</h2>
-<p>Ya hemos visto que para los dos mejores métodos el error es próximo al 3.9%. Este valor es la estimación del <em>error en la previsión intra-muestral y a un periodo vista</em>. A fin de poder estimar mejor la capacidad predictiva de los dos métodos vamos a aplicar el método de <strong>origen de predicción móvil</strong> para obtener los errores extra-muestrales según el horizonte de previsión.</p>
+<section id="identificación-del-método-sencillo-con-mejor-predicción-extramuestral" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="identificación-del-método-sencillo-con-mejor-predicción-extramuestral"><span class="header-section-number">2.2</span> Identificación del método sencillo con mejor predicción extramuestral</h2>
+<p>Ya hemos visto que para los dos mejores métodos el error es próximo al 3.9%. Este valor es la estimación del <em>error en la previsión intramuestral y a un periodo vista</em>. A fin de poder estimar mejor la capacidad predictiva de los dos métodos vamos a aplicar el método de <strong>origen de predicción móvil</strong> para obtener los errores extramuestrales según el horizonte de previsión.</p>
 <p>Asumiremos que necesitamos 10 años para obtener un buena estimación. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde 1 a 5 años.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span>                  </span>
@@ -488,7 +488,7 @@ Deriva    0.00 11.60  9.28 -0.26  3.92 0.99 0.26</code></pre>
 </div>
 </div>
 <p>La conclusión es clara, con independencia del horizonte temporal, el método de la Deriva es el que ofrece las mejores predicciones.</p>
-<p>Para el método de la Deriva, el error de previsión extra-muestral a un periodo (4.2%) es algo mayor que el error de ajuste (3.9%). Por otro lado, no parece aconsejable utilizar este método para predicciones más allá de dos años vista porque el error porcentual crece rápidamente.</p>
+<p>Para el método de la Deriva, el error de previsión extramuestral a un periodo (4.2%) es algo mayor que el error de ajuste (3.9%). Por otro lado, no parece aconsejable utilizar este método para predicciones más allá de dos años vista porque el error porcentual crece rápidamente.</p>
 <p><br>
 </p>
 </section>
@@ -549,7 +549,7 @@ Training set 285945.5 1243441 909723.1 1.12597 4.601114    1 0.7869536</code></p
 <p><br>
 <br>
 </p>
-<p>La <a href="#fig-SencillosPernoctaciones">Figura&nbsp;4</a> muestra los valores de predicción para los próximos tres años. Observa que las predicciones para 2020 se mantienen constantes y son iguales a las pernoctaciones de 2019.</p>
+<p>La <a href="#fig-SencillosPernoctaciones">Figura&nbsp;4</a> muestra los valores de predicción para los próximos tres años. Observa que las predicciones para 2020, y años siguientes, se mantienen constantes y son iguales a las pernoctaciones de 2019.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PernoctacionesPre,</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -569,7 +569,7 @@ Training set 285945.5 1243441 909723.1 1.12597 4.601114    1 0.7869536</code></p
 </p>
 <section id="validación" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="validación"><span class="header-section-number">3.1</span> Validación</h2>
-<p>Vamos de nuevo a aplicar el método de <strong>origen de predicción móvil</strong> para obtener los errores extra-muestrales según el horizonte de previsión.</p>
+<p>Vamos de nuevo a aplicar el método de <strong>origen de predicción móvil</strong> para obtener los errores extramuestrales según el horizonte de previsión.</p>
 <p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=120\)</span>, y que el horizonte temporal es un año, <span class="math inline">\(h = 12\)</span> meses.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                 </span>
@@ -607,7 +607,7 @@ Training set 285945.5 1243441 909723.1 1.12597 4.601114    1 0.7869536</code></p
 </div>
 </div>
 </div>
-<p>La <a href="#fig-Errores">Figura&nbsp;5</a> muestra el error de previsión extra-muestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve en una estrecha franja de 0.5 puntos porcentuales, entre el 5.1% y el 4.6%. La serie Pernoctaciones es tan sencilla que la mejor predicción a corto plazo es repetir la última observación del mismo mes.</p>
+<p>La <a href="#fig-Errores">Figura&nbsp;5</a> muestra el error de previsión extramuestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve en una estrecha franja de 0.5 puntos porcentuales, entre el 5.1% y el 4.6%. La serie Pernoctaciones es tan sencilla que la mejor predicción a corto plazo es repetir la última observación del mismo mes.</p>
 <p><br>
 <br>
 <br>
@@ -622,7 +622,7 @@ Training set 285945.5 1243441 909723.1 1.12597 4.601114    1 0.7869536</code></p
 <div id="quarto-appendix" class="default"><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>La Covid-19 ha supuesto un <em>shock</em> de una magnitud inesperada en todos los aspectos de la sociedad a nivel mundial y, en concreto, para el turismo nacional e internacional. Es por ello que todas las predicciones que aparecen en este ejemplo de aplicación y los siguientes sobre-estimarán enormemente las cifras de Pernoctaciones reales. Cualquier método de predicción asume que las condiciones del entorno en que se aplica no van a cambiar en el futuro.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1" role="doc-endnote"><p>La Covid-19 ha supuesto un <em>shock</em> de una magnitud inesperada en todos los aspectos de la sociedad a nivel mundial y, en concreto, para el turismo nacional e internacional. Es por ello que todas las predicciones que aparecen en este ejemplo de aplicación y los siguientes sobreestimarán enormemente las cifras de Pernoctaciones reales. Cualquier método de predicción asume que las condiciones del entorno en que se aplica no van a cambiar en el futuro.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -725,7 +725,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

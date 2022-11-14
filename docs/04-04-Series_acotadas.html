@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -331,19 +331,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </p>
 <section id="series-acotadas" class="level1 unnumbered">
 <h1 class="unnumbered">Series Acotadas</h1>
-<p>En ocasiones, por la naturaleza de la serie, es necesario que las predicciones sean positivos o incluso que permanezcan dentro de cierto intervalo <span class="math inline">\([a,\; b]\)</span>.</p>
+<p>En ocasiones, por la naturaleza de la serie, es necesario que las predicciones sean positivas o que permanezcan dentro de cierto intervalo <span class="math inline">\([a,\; b]\)</span>.</p>
 <ul>
 <li>Todas las series que hemos visto en este curso deben ser positivas: nacimientos, libros publicados, consumo eléctrico, pasajeros, aforo…</li>
 <li>Si la serie fuera un porcentaje, podría ser necesario que permaneciera acotada entre 0% y 100%.</li>
 </ul>
 <section id="predicciones-positivas" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="predicciones-positivas">Predicciones positivas</h2>
-<p>Ya hemos comentado en el curso que para imponer que las predicciones sean positivas basta trabajar con la transformación logarítmica. Por ejemplo, si consideramos la serie anual de nacimientos con y sin transformación logarítmica tenemos:</p>
+<p>Para imponer que las predicciones sean positivas basta trabajar con la transformación logarítmica. Por ejemplo, consideremos la serie anual de nacimientos. Vamos ha realizar predicciones a muy largo plazo (30 años) usando Alisado de Holt con y sin transformación logarítmica.</p>
 <div class="cell" data-layout-align="center">
 
 </div>
-<div id="fig-NacimientosHolt" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
+<p>En el panel superior de la <a href="#fig-NacimientosHolt">Figura&nbsp;1</a>, donde se ha usado la transformación logarítmica, no solo la predicción, sino también el intervalo es siempre positivo. Por el contrario, en el panel inferior de la <a href="#fig-NacimientosHolt">Figura&nbsp;1</a>, donde no se ha usado la transformación logarítmica, las predicciones a partir de 2042 ya son negativas y el extremo inferior del intervalo de confianza es negativo desde el año 2028.</p>
+<div>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>ConLog <span class="ot">&lt;-</span> <span class="fu">forecast</span>(<span class="fu">ets</span>(nacimientos, <span class="at">model =</span> <span class="st">"AAN"</span>, <span class="at">damped =</span> <span class="cn">FALSE</span>, <span class="at">lambda =</span> <span class="dv">0</span>),</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">h =</span> <span class="dv">30</span>,</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="dv">95</span>)</span>
@@ -352,33 +352,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">h =</span> <span class="dv">30</span>,</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">level =</span> <span class="dv">95</span>)</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(ConLog, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">""</span>)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(SinLog, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(ConLog, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Bebés (miles)"</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(SinLog, <span class="at">main =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">"Bebés (miles)"</span>) <span class="sc">+</span> </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept=</span><span class="dv">0</span>, <span class="at">size =</span> .<span class="dv">3</span>, <span class="at">linetype =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-NacimientosHolt" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-NacimientosHolt-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-04-Series_acotadas_files/figure-html/fig-NacimientosHolt-1.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosHolt" style="width:80.0%"></p>
+<p><img src="04-04-Series_acotadas_files/figure-html/fig-NacimientosHolt-1.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosHolt"></p>
 <p></p><figcaption class="figure-caption">(a) Con transformación logarítmica</figcaption><p></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-NacimientosHolt-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-04-Series_acotadas_files/figure-html/fig-NacimientosHolt-2.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosHolt" style="width:80.0%"></p>
+<p><img src="04-04-Series_acotadas_files/figure-html/fig-NacimientosHolt-2.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosHolt"></p>
 <p></p><figcaption class="figure-caption">(b) Sin transformación logarítmica</figcaption><p></p>
 </figure>
+</div>
 </div>
 </div>
 <p></p><figcaption class="figure-caption">Figura 1: Ajuste y predicción de Nacimientos con Holt</figcaption><p></p>
 </figure>
 </div>
-<p>En el panel superior de la <a href="#fig-NacimientosHolt">Figura&nbsp;1</a>, donde se ha usado la transformación logarítmica, no solo la predicción, sino también el intervalo es siempre positivo. Por el contrario, en el panel inferior de la <a href="#fig-NacimientosHolt">Figura&nbsp;1</a>, donde no se ha usado la transformación logarítmica, las predicciones a partir de 2042 ya son negativas y el extremo inferior del intervalo de confianza es negativo desde el año 2028.</p>
+</div>
 </section>
 <section id="predicciones-dentro-de-un-intervalo" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="predicciones-dentro-de-un-intervalo">Predicciones dentro de un intervalo</h2>
-<p>Supongamos que el valor de la serie es un porcentaje y que debe estar comprendido entre <span class="math inline">\(a = 0\%\)</span> y <span class="math inline">\(b = 100\%\)</span>, como por ejemplo la serie anual consistente en el porcentaje de nacidos de mujeres con nacionalidad española. La transformación que garantiza que las predicciones se mantendrán dentro del intervalo es</p>
-<p><span class="math display">\[z_t = \log\Big(\frac{y_t - a}{b - y_t}\Big),\]</span> donde <span class="math inline">\(y_t\)</span> es la serie original y <span class="math inline">\(z_t\)</span> la serie transformada. Una vez tenemos las predicciones de la serie <span class="math inline">\(z_t\)</span>, tenemos que deshacer la transformación con</p>
+<p>Supongamos que el valor de la serie es un porcentaje y que debe estar comprendido entre <span class="math inline">\(a = 0\)</span> y <span class="math inline">\(b = 100\)</span>, como por ejemplo la serie anual consistente en el porcentaje de bebés nacidos de mujeres con nacionalidad española. La transformación que garantiza que las predicciones se mantendrán dentro del intervalo <span class="math inline">\([a,\;b]\)</span> es</p>
+<p><span class="math display">\[z_t = \log\Big(\frac{y_t - a}{b - y_t}\Big),\]</span></p>
+<p>donde <span class="math inline">\(y_t\)</span> es la serie original y <span class="math inline">\(z_t\)</span> la serie transformada. Una vez tenemos las predicciones de la serie <span class="math inline">\(z_t\)</span>, tenemos que deshacer la transformación con</p>
 <p><span class="math display">\[y_t = \frac{a +b\, e^{z_t}}{1 + e^{z_t}}.\]</span></p>
 <p>En este caso no hay un argumento <em>lambda</em> que nos facilite el trabajo y hay que escribir más código.</p>
 <div class="cell" data-layout-align="center">
@@ -522,7 +531,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

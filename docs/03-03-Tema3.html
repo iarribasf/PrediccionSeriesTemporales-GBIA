@@ -250,8 +250,8 @@ div.csl-indent {
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -314,7 +314,7 @@ div.csl-indent {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
@@ -400,6 +400,7 @@ div.csl-indent {
 <ul>
 <li>A causa del elevado número de series que tienen que ser analizadas.</li>
 <li>Debido a la rapidez con que las predicciones se han de dar.</li>
+<li>El sistema gestor de los datos no permite estimar modelos muy complejos.</li>
 </ul>
 <p>Actualmente existen muchos métodos sencillos de predicción, entre los que cabe destacar dos:</p>
 <ul>
@@ -485,10 +486,10 @@ div.csl-indent {
 <li>Cuanto más cercano a 0, mejor es el método usado respecto del método ingenuo</li>
 <li>Su complementario a 1 se puede interpretar como la tasa de mejora</li>
 </ul>
-<p>ACF1 permite saber si la fórmula usada para estimar el intervalo de confianza de las predicciones es válida. Lo veremos con más detalle en el tema de modelos ARIMA. Por ahora basta saber que:</p>
+<p>ACF1 permite saber si la fórmula usada para estimar el intervalo de confianza de las predicciones es válida:</p>
 <ul>
-<li>Un valor muy cercano a 0 indica que la fórmula es válida.</li>
-<li>Valore mínimamente alejados de 0 indican que la fórmula no es válida.</li>
+<li>Un valor muy cercano a 0 (menor que 0.1) indica que la fórmula es válida.</li>
+<li>Valores mínimamente alejados de 0 indican que la fórmula no es válida.</li>
 </ul>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -506,8 +507,8 @@ Cálculo del intervalo de confianza de las predicciones
 <p>Las <em>medias</em> se pueden sustituir por <em>medianas</em>. Esto es especialmente útil cuando para algunas observaciones hay errores atípicamente altos.</p>
 <p><br>
 </p>
-<p>Si para realizar la predicción del periodo <span class="math inline">\(t\)</span> se usa una metodología que utiliza datos incluido dicho periodo, se hablará de <strong>predicción y error intra-muestral</strong>. En caso contrario, si la predicción del periodo <span class="math inline">\(t\)</span> usa una metodología que solo necesita de datos hasta el periodo <span class="math inline">\(t-1\)</span>, se hablará de <strong>predicción y error extra-muestral</strong>.</p>
-<p>Los indicadores de calidad que se basan en predicciones intra-muestrales a un periodo vista presentan dos problemas. Primero, evalúan el error de predicción a un periodo vista, cuando en muchas situaciones reales las predicciones se realizan sobre un horizonte temporal más amplio. Segundo, son errores intra-muestrales, resultantes de predecir los mismos datos que ha usado el método para calcular la predicción y, por tanto, sobrestiman la capacidad predictiva del modelo.</p>
+<p>Si para realizar la predicción del periodo <span class="math inline">\(t\)</span> se usa una metodología que utiliza datos incluido dicho periodo, se hablará de <strong>predicción intramuestral y error intramuestral</strong> (o de ajuste). En caso contrario, si la predicción del periodo <span class="math inline">\(t\)</span> usa una metodología que solo necesita de datos hasta el periodo <span class="math inline">\(t-1\)</span>, se hablará de <strong>predicción y error extramuestral</strong>.</p>
+<p>Los indicadores de calidad que se basan en predicciones intramuestrales a un periodo vista presentan dos problemas. Primero, evalúan el error de predicción a un periodo vista, cuando en muchas situaciones reales las predicciones se realizan sobre un horizonte temporal más amplio. Segundo, son errores intramuestrales, resultantes de predecir los mismos datos que ha usado el método para calcular la predicción y, por tanto, sobrestiman la capacidad predictiva del modelo.</p>
 <p>Veremos en el epígrafe 4 de este tema métodos de evaluación de la calidad de las predicciones que superan estas limitaciones.</p>
 <p><br>
 <br>
@@ -608,16 +609,17 @@ Cálculo del intervalo de confianza de las predicciones
 </div>
 <p>En la <a href="#fig-librossencillos">Figura&nbsp;1</a> muestra el resultado gráfico de la aplicación de estos métodos. Se ha fijado un horizonte de previsión de cinco años (<code>h = 5</code>). El argumento <code>PI = FALSE</code> hace que no se impriman los intervalos de confianza de las predicciones.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(libros, <span class="at">series =</span> <span class="st">"Libros"</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">ylab =</span> <span class="st">"Títulos"</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mediaLibros, <span class="at">series=</span><span class="st">"Media"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(naiveLibros, <span class="at">series=</span><span class="st">"Ingenuo"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(derivaLibros, <span class="at">series=</span><span class="st">"Deriva"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">"Libros"</span>, <span class="st">"Media"</span>, <span class="st">"Ingenuo"</span>, <span class="st">"Deriva"</span>)) <span class="sc">+</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Métodos"</span>)) <span class="sc">+</span> </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(libros, </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">series =</span> <span class="st">"Libros"</span>,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Títulos"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(mediaLibros, <span class="at">series=</span><span class="st">"Media"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(naiveLibros, <span class="at">series=</span><span class="st">"Ingenuo"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(derivaLibros, <span class="at">series=</span><span class="st">"Deriva"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_discrete</span>(<span class="at">limits=</span><span class="fu">c</span>(<span class="st">"Libros"</span>, <span class="st">"Media"</span>, <span class="st">"Ingenuo"</span>, <span class="st">"Deriva"</span>)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour=</span><span class="st">"Métodos"</span>) <span class="sc">+</span> </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-librossencillos" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -627,7 +629,7 @@ Cálculo del intervalo de confianza de las predicciones
 </div>
 </div>
 </div>
-<p>Con la función <code>accuracy</code> se puede obtener el error de predicción intra-muestral a un periodo vista de cada método:</p>
+<p>Con la función <code>accuracy</code> se puede obtener el error de predicción intramuestral a un periodo vista de cada método:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(mediaLibros)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(naiveLibros)</span>
@@ -710,7 +712,8 @@ Interpretación de ACF1
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(snaive.nacimientos,</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Nacimientos"</span>,</span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">PI =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-nacimientossencillo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -760,17 +763,17 @@ Training set -2.117489 42.99794 27.93245 -0.4964111 4.000218    1 0.7096965</cod
 </section>
 <section id="evaluación-de-las-predicciones" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Evaluación de las predicciones</h1>
-<p>Las medidas que hemos usado hasta ahora para valorar la calidad de las predicciones son realmente medidas de bondad de ajuste, es decir, medidas de la calidad de <strong>previsiones intra-muestrales a un periodo vista</strong>. Valoran en que medida los datos se ajustan a un patrón o modelo, pero no evalúan la calidad de la previsiones ante nuevos datos.</p>
-<p>En este epígrafe vamos a ver dos metodologías que podemos usar para valorar la calidad de las <strong>previsiones extra-muestrales</strong>, que es realmente lo que nos interesa. Estas dos metodologías están relacionadas con los métodos de <em>Training set/Test set</em> y <em>Cross-validation</em> que has visto ya en el grado, pero adaptadas a datos temporales.</p>
+<p>Las medidas que hemos usado hasta ahora para valorar la calidad de las predicciones son realmente medidas de bondad de ajuste, es decir, medidas de la calidad de <strong>previsiones intramuestrales a un periodo vista</strong>. Valoran en que medida los datos se ajustan a un patrón o modelo, pero no evalúan la calidad de la previsiones ante nuevos datos.</p>
+<p>En este epígrafe vamos a ver dos metodologías que podemos usar para valorar la calidad de las <strong>previsiones extramuestrales</strong>, que es realmente lo que nos interesa. Estas dos metodologías están relacionadas con los métodos de <em>Training set/Test set</em> y <em>Cross-validation</em> que has visto ya en el grado, pero adaptadas a datos temporales.</p>
 <section id="validación-por-la-metodología-de-training-settest-set-para-series-temporales" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="validación-por-la-metodología-de-training-settest-set-para-series-temporales"><span class="header-section-number">4.1</span> Validación por la metodología de <em>Training set/Test set</em> para Series Temporales</h2>
-<p>Vamos a mejorar la estimación de la calidad de las predicciones obteniendo las medidas de error para <strong>previsiones extra-muestrales a varios periodos vista</strong> usando la filosofía del método <em>training set/test set</em>. Dividimos la serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span> en dos subseries. Los primeros datos <span class="math inline">\(\{y_t\}_{t=1}^{T_0}\)</span>, <span class="math inline">\(T_0 &lt; T\)</span>, se usarán para estimar el modelo; y los últimos datos <span class="math inline">\(\{y_t\}_{t={T_0+1}}^{T}\)</span> para validar el modelo.</p>
+<p>Vamos a estimar la calidad de las predicciones obteniendo medidas de error para <strong>previsiones extramuestrales a varios periodos vista</strong> usando la filosofía del método <em>training set/test set</em>. Dividimos la serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span> en dos subseries. Los primeros datos <span class="math inline">\(\{y_t\}_{t=1}^{T_0}\)</span>, <span class="math inline">\(T_0 &lt; T\)</span>, se usarán para estimar el modelo; y los últimos datos <span class="math inline">\(\{y_t\}_{t={T_0+1}}^{T}\)</span> para validar el modelo.</p>
 <p>Esta metodología, muy efectiva para datos de corte transversal, genera dos problemas cuando se aplica a series temporales: <em>i</em>) el error obtenido es una mezcla de errores de predicción a corto, medio y largo plazo; <em>ii</em>) los resultados dependen tremendamente del punto de corte temporal seleccionado.</p>
 <section id="serie-libros-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="serie-libros-1">Serie Libros</h3>
 <p>Vamos a reservar, por ejemplo, las últimas 7 observaciones de la serie Libros (años 2013 a 2019) y ajustar el modelo con las restantes. Después usaremos este modelo para calcular las predicciones a 7 periodos vista y compararlas con los valores reales de la serie.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las observaciones intra- y extra-muestrales</span></span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las observaciones intra- y extramuestrales</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>librosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">end =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">7</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>librosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">start =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">6</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -788,14 +791,14 @@ Training set      0.00  5863.85  4279.52  -0.05  6.53 0.87 -0.19        NA
 Test set     -15817.32 15867.44 15817.32 -26.44 26.44 3.23 -0.21       6.4</code></pre>
 </div>
 </div>
-<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intra-muestral</strong> de <strong>1993 a 2012</strong> es del 6.5%; mientras que el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extra-muestral</strong> de <strong>2014 a 2019</strong> es del 26.4%. Ademas, para el periodo extra-muestral el error medio (ME) es negativo y muy elevado, un indicativo de que las previsiones están segadas (sobrestiman la realidad). En resumen, la calidad del modelo se deteriora muy rápidamente en cuanto nos salimos de las condiciones óptimas.</p>
+<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intramuestral</strong> de <strong>1993 a 2012</strong> es del 6.5%; mientras que el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extramuestral</strong> de <strong>2014 a 2019</strong> es del 26.4%. Ademas, para el periodo extramuestral el error medio (ME) es negativo y muy elevado, un indicativo de que las previsiones están segadas (sobrestiman la realidad). En resumen, la calidad del modelo se deteriora muy rápidamente en cuanto nos salimos de las condiciones óptimas.</p>
 <p>Un gráfico puede ayudar a entender este proceso de validación. En la <a href="#fig-librostraintest">Figura&nbsp;4</a>:</p>
 <ul>
-<li>La línea de puntos vertical separa el periodo muestral (1993-2012) usado para estimar el modelo, del periodo extra-muestral (2013-2019) usado sólo para hacer las previsiones.</li>
+<li>La línea de puntos vertical separa el periodo muestral (1993-2012) usado para estimar el modelo, del periodo extramuestral (2013-2019) usado sólo para hacer las previsiones.</li>
 <li>La serie Libros aparece como una línea sólida en negro, desde 1993 hasta 2019.</li>
-<li>La previsión <em>intra</em>-muestral (a un periodo vista) de la serie Libros aparece como una línea azul.</li>
-<li>La línea en rojo es la previsión <em>extra</em>-muestral a largo plazo. Observa que todas las previsiones están por encima del valor real de la serie.</li>
-<li>Al lado de cada previsión (intra- y extra-muestral) se ha indicado el error estimado (MAPE).</li>
+<li>La previsión <em>intra</em>muestral (a un periodo vista) de la serie Libros aparece como una línea azul.</li>
+<li>La línea en rojo es la previsión <em>extra</em>muestral a largo plazo. Observa que todas las previsiones están por encima del valor real de la serie.</li>
+<li>Al lado de cada previsión (intra y extramuestral) se ha indicado el error estimado (MAPE).</li>
 </ul>
 <p>Claramente estos resultados dependen del punto de corte seleccionado.</p>
 <div class="cell" data-layout-align="center">
@@ -803,7 +806,7 @@ Test set     -15817.32 15867.44 15817.32 -26.44 26.44 3.23 -0.21       6.4</code
 <div id="fig-librostraintest" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-librostraintest-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 4: Libros, predicción intra- y extra-muestral</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 4: Libros, predicción intra- y extramuestral</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -824,7 +827,7 @@ Importamcia del punto de corte
 </section>
 <section id="serie-nacimientos-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="serie-nacimientos-1">Serie Nacimientos</h3>
-<p>Calculamos de nuevo los diferentes criterios de bondad de ajuste para valorar la calidad de las previsiones extra-muestrales a largo plazo. En este caso vamos a reservar los últimos 36 meses como periodo extra-muestral.</p>
+<p>Calculamos de nuevo los diferentes criterios de bondad de ajuste para valorar la calidad de las previsiones extramuestrales a largo plazo. En este caso vamos a reservar los últimos 36 meses como periodo extramuestral.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>nacimientosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacimientos, <span class="at">end =</span> <span class="fu">length</span>(nacimientos) <span class="sc">-</span> <span class="dv">36</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>nacimientosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(nacimientos, <span class="at">start =</span> <span class="fu">length</span>(nacimientos) <span class="sc">-</span> <span class="dv">35</span>)</span>
@@ -845,16 +848,16 @@ Test set     -2926.75 3221.74 2926.75 -9.57 9.57 2.11 0.69      1.89</code></pre
 <div id="fig-nacimientostraintest" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-03-Tema3_files/figure-html/fig-nacimientostraintest-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 5: Nacimientos, predicción intra- y extra-muestral</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 5: Nacimientos, predicción intra- y extramuestral</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Las previsiones extra-muestrales muestran una menor pendiente que los casos reales de nacimientos. Así, conforme se avanza en el horizonte temporal las previsiones se van alejando de la realidad y el error extra-muestral es del 9.6%, no tan reducido como el error de estimación intra-muestral (3.6%).</p>
+<p>Las previsiones extramuestrales muestran una menor pendiente que los casos reales de nacimientos. Así, conforme se avanza en el horizonte temporal las previsiones se van alejando de la realidad y el error extramuestral es del 9.6%, muy alejado del error de estimación intramuestral de 3.6%.</p>
 </section>
 <section id="serie-demanda-eléctrica-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="serie-demanda-eléctrica-1">Serie Demanda eléctrica</h3>
-<p>Para la serie de consumo eléctrico vamos a reservar las 8 últimas semanas (56 días) como periodo extra-muestral.</p>
+<p>Para la serie de consumo eléctrico vamos a reservar las 8 últimas semanas (56 días) como periodo extramuestral.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>electricidadIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">end =</span> <span class="fu">length</span>(electricidad) <span class="sc">-</span> <span class="dv">56</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>electricidadExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">start =</span> <span class="fu">length</span>(electricidad) <span class="sc">-</span> <span class="dv">55</span>)</span>
@@ -870,15 +873,14 @@ Training set -1.78 39.17 25.09 -0.41  3.57 1.00 0.68        NA
 Test set     59.30 86.23 73.54  7.82 10.14 2.93 0.48      1.55</code></pre>
 </div>
 </div>
-<p>El error intra-muestral obtenido es del 3.6%, que prácticamente se triplica al obtener el error de previsión extra-muestral (10.1%). El elevado valor positivo del error medio indica que las previsiones extra-muestrales subestiman el consumo real de electricidad.</p>
+<p>El error intramuestral obtenido es del 3.6%, que prácticamente se triplica al obtener el error de previsión extramuestral (10.1%). El elevado valor positivo del error medio indica que las previsiones extramuestrales subestiman el consumo real de electricidad.</p>
 <p><br>
 </p>
 </section>
 </section>
 <section id="validación-cruzada-para-series-temporales" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="validación-cruzada-para-series-temporales"><span class="header-section-number">4.2</span> Validación cruzada para Series Temporales</h2>
-<p>Hemos visto dos alternativas para evaluar la calidad de un método de predicción de series temporales, uno basado en predicciones intra-muestrales a un periodo vista y otro basado en predicciones extra-muestrales a largo plazo, ambas con sus inconvenientes.</p>
-<p>Veamos ahora una técnica, basada en el concepto de validación cruzada (<em>cross validation</em>) que permite obtener de forma individualizada los errores de previsión extra-muestral a un periodo vista, a dos periodos vista, etc.</p>
+<p>Veamos ahora una técnica, basada en el concepto de validación cruzada (<em>cross validation</em>) que permite obtener de forma individualizada los errores de previsión extramuestral a un periodo vista, a dos periodos vista, etc.</p>
 <p>Supongamos que para estimar el modelo se necesita un mínimo de <span class="math inline">\(k\)</span> observaciones y que se desea predecir hasta un horizonte temporal <span class="math inline">\(h\)</span>.</p>
 <ul>
 <li><p>Seleccionamos las observaciones <span class="math inline">\(1,2,...,k\)</span> para estimar el modelo y predecimos las observaciones desde <span class="math inline">\(k+1\)</span> hasta <span class="math inline">\(k+h\)</span>. Tenemos, por tanto, <span class="math inline">\(h\)</span> predicciones.</p></li>
@@ -929,34 +931,35 @@ Test set     59.30 86.23 73.54  7.82 10.14 2.93 0.48      1.55</code></pre>
 <pre><code>[1]  4.13  8.07 12.16 16.38 20.67</code></pre>
 </div>
 </div>
-<p>El error de previsión extra-muestral crece linealmente con el horizonte de previsión. Para el primer año el error de predicción se mantiene en un moderado 4.1%. Sin embargo, para el segundo año de predicción el MAPE salta al 8.1% y para los restantes años sigue creciendo rápidamente. Predecir usando la tendencia media solo es un buen método para predecir a un año vista.</p>
+<p>El error de previsión extramuestral crece linealmente con el horizonte de previsión. Para el primer año el error de predicción se mantiene en un moderado 4.1%. Sin embargo, para el segundo año de predicción el MAPE salta al 8.1% y para los restantes años sigue creciendo rápidamente. Predecir usando la tendencia media solo es un buen método para predecir a un año vista.</p>
 </section>
 <section id="ejemplo-de-aplicación-con-demanda-eléctrica" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="ejemplo-de-aplicación-con-demanda-eléctrica">Ejemplo de aplicación con Demanda eléctrica</h3>
-<p>Ahora aplicaremos la metodología origen de predicción móvil la serie de Demanda eléctrica. En este caso se asumirá que se precisan veinte semanas para hacer una buena estimación, <span class="math inline">\(k = 140\)</span>, y que el horizonte temporal es de 4 semanas, <span class="math inline">\(h = 28\)</span>. Como la serie tiene estacionalidad, usaremos el método ingenuo con estacionalidad para predecir. La siguiente rutina permite obtener el MAPE para previsiones con un horizonte temporal desde uno a 28 días.</p>
+<p>Ahora aplicaremos la metodología origen de predicción móvil la serie de Demanda eléctrica. En este caso se asumirá que se precisan veinte semanas para hacer una buena estimación, <span class="math inline">\(k = 140\)</span>, y que el horizonte temporal es de 4 semanas, <span class="math inline">\(h = 28\)</span>. Como la serie tiene estacionalidad, usaremos el método ingenuo con estacionalidad para predecir. La siguiente rutina permite obtener el RMSE para previsiones con un horizonte temporal desde uno a 28 días.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">140</span>                  <span class="co">#Minimo numero de datos para estimar</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">28</span>                   <span class="co">#Horizonte de las prediciciones</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(electricidad)<span class="co">#Longitud serie</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h           <span class="co">#Total de estimaciones</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>rmseRwf <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
 <span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
 <span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(electricidad, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
 <span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  mapeRwf[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>  rmseRwf[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> (test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">^</span><span class="dv">2</span></span>
 <span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>mapeRwf <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeRwf)</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(mapeRwf, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>rmseRwf <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">colMeans</span>(rmseRwf))</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(rmseRwf, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3.29 3.31 3.40 3.45 3.52 3.53 3.53 4.55 4.59 4.60 4.60 4.60 4.60 4.60 5.10
-[16] 5.12 5.12 5.13 5.14 5.18 5.28 6.29 6.35 6.41 6.48 6.54 6.61 6.72</code></pre>
+<pre><code> [1] 31.77 31.82 32.86 33.32 34.28 34.29 34.30 40.98 41.08 41.12 41.12 41.11
+[13] 41.12 41.12 43.74 43.78 43.78 43.79 43.86 44.12 45.38 55.30 55.68 56.31
+[25] 56.94 57.59 58.34 59.57</code></pre>
 </div>
 </div>
-<p>El error de previsión extra-muestral crece lentamente con el horizonte de previsión. Para predicciones a un día vista el error de predicción es del 3.3%, para 14 días vista sube hasta el 4.6% y a 28 días vista alcanza el 6.7%.</p>
+<p>El error de previsión extramuestral crece lentamente con el horizonte de previsión. Para predicciones a un día vista el error de predicción es de 32 GWh, para 14 días vista sube hasta 41 GWh y a 28 días vista alcanza los 60 GWh</p>
 <p><br>
 <br>
 </p>
@@ -967,9 +970,9 @@ Test set     59.30 86.23 73.54  7.82 10.14 2.93 0.48      1.55</code></pre>
 <h1 data-number="5"><span class="header-section-number">5</span> Resumen de los comandos utilizados</h1>
 <table class="table">
 <colgroup>
-<col style="width: 26%">
-<col style="width: 26%">
-<col style="width: 47%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 58%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -1007,12 +1010,12 @@ Test set     59.30 86.23 73.54  7.82 10.14 2.93 0.48      1.55</code></pre>
 <tr class="even">
 <td style="text-align: left;"><code>forecast</code></td>
 <td style="text-align: left;">forecast</td>
-<td style="text-align: left;">Predice valores extra-muestrales futuros de la serie</td>
+<td style="text-align: left;">Predice valores extramuestrales futuros de la serie</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>fitted</code></td>
 <td style="text-align: left;">stats</td>
-<td style="text-align: left;">Obtiene las predicciones a un periodo vista intra-muestrales</td>
+<td style="text-align: left;">Obtiene las predicciones a un periodo vista intramuestrales</td>
 </tr>
 </tbody>
 </table>
@@ -1131,7 +1134,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,10 +295,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#pasajeros-en-transporte-urbano" id="toc-pasajeros-en-transporte-urbano" class="nav-link active" data-scroll-target="#pasajeros-en-transporte-urbano"> <span class="header-section-number">1</span> Pasajeros en transporte urbano</a></li>
+  <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
+  <li><a href="#pasajeros-en-transporte-urbano" id="toc-pasajeros-en-transporte-urbano" class="nav-link" data-scroll-target="#pasajeros-en-transporte-urbano"> <span class="header-section-number">1</span> Pasajeros en transporte urbano</a></li>
   <li><a href="#descriptiva" id="toc-descriptiva" class="nav-link" data-scroll-target="#descriptiva"> <span class="header-section-number">2</span> Descriptiva</a>
   <ul class="collapse">
   <li><a href="#análisis-de-la-tendencia" id="toc-análisis-de-la-tendencia" class="nav-link" data-scroll-target="#análisis-de-la-tendencia"> <span class="header-section-number">2.1</span> Análisis de la tendencia</a></li>
@@ -312,7 +313,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión"> <span class="header-section-number">2.4</span> Conclusión</a></li>
   </ul></li>
   <li><a href="#un-predicción-rápida-y-sencilla" id="toc-un-predicción-rápida-y-sencilla" class="nav-link" data-scroll-target="#un-predicción-rápida-y-sencilla"> <span class="header-section-number">3</span> Un predicción rápida y sencilla</a></li>
-  <li><a href="#alisado-exponencial" id="toc-alisado-exponencial" class="nav-link" data-scroll-target="#alisado-exponencial"> <span class="header-section-number">4</span> Alisado exponencial</a>
+  <li><a href="#alisado-exponencial" id="toc-alisado-exponencial" class="nav-link" data-scroll-target="#alisado-exponencial"> <span class="header-section-number">4</span> Alisado Exponencial</a>
   <ul class="collapse">
   <li><a href="#análisis-de-la-serie-pasajeros" id="toc-análisis-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#análisis-de-la-serie-pasajeros"> <span class="header-section-number">4.1</span> Análisis de la serie Pasajeros</a>
   <ul class="collapse">
@@ -374,6 +375,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 
 </div>
+<section id="antecedentes" class="level1 unnumbered">
+<h1 class="unnumbered">Antecedentes</h1>
 <p>En este curso hemos aprendido a describir una serie temporal, estimar su proceso generador de datos y realizar predicciones, tanto puntuales como por intervalo. Para ello, hemos estudiado los principales aspectos teóricos relacionados con las series temporales, sus componentes, modelos de ajuste, predicción, criterios de calidad, etc. También hemos practicado la aplicación de estos conceptos a través de diferentes series temporales: Títulos publicados, Nacimientos, Aforo de vehículos, Consumo de alimentos per cápita, Exportaciones, Producción de chocolate y Pernoctaciones de turistas extranjeros, entre otras.</p>
 <p>El programa de estadística utilizado <code>R</code> ha servido con dos propósitos entremezclados durante el curso. En primer lugar, para ilustrar los aspectos teóricos que se iban presentando. En este caso, <code>R</code> tenía un uso más instrumental y en general se mostraba la salida obtenida sin enseñar el código. En segundo lugar, hemos aprendido a usar <code>R</code> para analizar y predecir una serie temporal real. Los ejemplos vistos en cada tema y el ejemplo transversal utilizado durante el curso de <em>Pernoctaciones en alojamientos turísticos de turistas extranjeros</em> son buenos exponentes de este uso de <code>R</code>.</p>
 <p>Ahora bien, ambos usos de <code>R</code> –ilustrar aspectos teóricos y analizar una serie– han quedado distribuidos a lo largo de los temas vistos. El ejemplo <strong>Pasajeros en transporte urbano</strong>, desarrollado aquí, tiene como objetivo disponer en un único documento y de forma organizada del análisis completo de una serie temporal. En este informe se mostrará siempre el código completo empleado para las salidas, se hará hincapié en la aplicación práctica de los conceptos teóricos, se insistirá en los diferentes enfoques que se pueden y deben emplear para analizar una serie temporal y se justificarán todas las decisiones adoptadas.</p>
@@ -387,6 +390,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(timeDate)</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
 <section id="pasajeros-en-transporte-urbano" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Pasajeros en transporte urbano</h1>
 <p>La serie que se va a analizar corresponde al número de pasajeros en transporte urbano en España. Es una serie mensual que puede ser consultada en el <a href="\http://www.ine.es">Instituto Nacional de Estadística</a> y para la que se dispone de datos desde enero de 1996 hasta diciembre de 2021.</p>
@@ -406,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="descriptiva" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Descriptiva</h1>
-<p>La <a href="#fig-Pasajeros">Figura&nbsp;1</a> muestra la evolución de la serie Pasajeros en transporte urbano desde 1996 hasta 2019. Destaca que la tendencia de la serie ha seguido el ciclo económico. Durante el periodo de crecimiento de finales del siglo pasado y principios de este, el número de pasajeros en transporte urbano creció de forma sostenida. Con la Gran Recesión (2008 - 2014) se observa un cambio en la tendencia y el número de pasajeros se reduce. No es hasta el final esta, en 2014, que la tendencia vuelve a cambiar y pasar a ser creciente de nuevo. Al final del periodo se observa el tremendo efecto que tuvo sobre la serie el confinamiento por la Covid-19 (marzo a junio de 2020) y el incremento del trabajo en casa, con una brusca caída y lenta recuperación.</p>
+<p>La <a href="#fig-Pasajeros">Figura&nbsp;1</a> muestra la evolución de la serie Pasajeros en transporte urbano desde 1996 hasta 2021 Destaca que la tendencia de la serie ha seguido el ciclo económico. Durante el periodo de crecimiento de finales del siglo pasado y principios de este, el número de pasajeros en transporte urbano creció de forma sostenida. Con la Gran Recesión (2008 - 2014) se observa un cambio en la tendencia y el número de pasajeros se reduce. No es hasta el final la crisis, en 2014, que la tendencia vuelve a cambiar y pasar a ser creciente de nuevo. Al final del periodo se observa el tremendo efecto que tuvo sobre la serie el confinamiento por la Covid-19 (marzo a junio de 2020) y el incremento del trabajo en casa, con una brusca caída y lenta recuperación.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pasajeros, <span class="at">colour =</span> <span class="st">"darkblue"</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -422,7 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>La serie presenta una acusada estacionalidad, causada principalmente por la distribución de las vacaciones a lo largo de un año y el número de días laborables de cada mes. Pensemos que el principal uso del transporte urbano es el traslado hasta y desde el lugar de trabajo, seguido del ocio (ir de compras, al cine, a restaurantes, etc.). Así, cada año el mes con menor número de pasajeros es agosto (los valles en la <a href="#fig-Pasajeros">Figura&nbsp;1</a>) por estar la mayoría de la gente de vacaciones, fuera de sus ciudades de residencia habituales, y no usar tan intensamente el transporte urbano.</p>
+<p>La serie presenta una acusada estacionalidad, causada principalmente por la distribución de las vacaciones a lo largo de un año y el número de días laborables de cada mes. Pensemos que el principal uso del transporte urbano es el traslado hasta y desde el lugar de trabajo o estudio, seguido del ocio (ir de compras, al cine, a restaurantes, etc.). Así, cada año el mes con menor número de pasajeros es agosto (los valles en la <a href="#fig-Pasajeros">Figura&nbsp;1</a>) por estar la mayoría de la gente de vacaciones, fuera de sus ciudades de residencia habituales, y no usar tan intensamente el transporte urbano.</p>
 <p>El esquema parece ser aditivo porque no se aprecia que la amplitud estacional se amplíe conforme el número de pasajeros aumenta.</p>
 <p>En los siguientes epígrafes se hará una descriptiva de la tendencia y la estacionalidad más detallada.</p>
 <div class="callout-important callout callout-style-default callout-captioned">
@@ -435,11 +439,10 @@ Serie recortada
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Como el propósito de este ejemplo es didáctico, vamos a simplificar el análisis y <em>cortar</em> la serie Pasajeros hasta diciembre de 2019, antes del Covid-19. A lo largo de los siguientes epígrafes usaremos la serie recortada.</p>
+<p>Como el propósito de este ejemplo es didáctico, vamos a simplificar el análisis y <em>cortar</em> la serie Pasajeros hasta diciembre de 2019, antes de la Covid-19. A lo largo de los siguientes epígrafes usaremos la serie recortada.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Pasajeros <span class="ot">&lt;-</span> <span class="fu">window</span>(Pasajeros, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Dejaremos para un epígrafe final el análisis de la serie completa con técnicas ARIMA.</p>
 </div>
 </div>
 <p><br>
@@ -448,12 +451,13 @@ Serie recortada
 <h2 data-number="2.1" class="anchored" data-anchor-id="análisis-de-la-tendencia"><span class="header-section-number">2.1</span> Análisis de la tendencia</h2>
 <p>Si anualizamos la serie podemos, por un lado, identificar mejor en que años se producen los cambios en la tendencia y, por otro lado, poner cifras al volumen de pasajeros en transporte urbano.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>  PasajerosAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pasajeros, <span class="at">FUN =</span> sum)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PasajerosAnual, <span class="at">colour =</span> <span class="st">"darkblue"</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Millones de pasajeros"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">1996</span>, <span class="dv">2020</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>PasajerosAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pasajeros, <span class="at">FUN =</span> sum)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PasajerosAnual, <span class="at">colour =</span> <span class="st">"darkblue"</span>,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Millones de pasajeros"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">1996</span>, <span class="dv">2020</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-PasajerosTendencia" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -463,9 +467,9 @@ Serie recortada
 </div>
 </div>
 </div>
-<p>La <a href="#fig-PasajerosTendencia">Figura&nbsp;2</a> muestra el volumen anual de pasajeros en transporte urbano. El crecimiento continuado, posiblemente iniciado antes de 1996 y que permitió superar los 3000 millones de pasajeros en 2007, se ve interrumpido con el inicio de la pasada crisis económica. La caída en el número de pasajeros se interrumpe en 2014, año que marca la salida de la crisis económica y el inicio de la recuperación en el serie. En 2019 se superaron los 3100 millones de pasajeros.</p>
+<p>La <a href="#fig-PasajerosTendencia">Figura&nbsp;2</a> muestra el volumen anual de pasajeros en transporte urbano. El crecimiento continuado, posiblemente iniciado antes de 1996 y que permitió superar los 3000 millones de pasajeros en 2007, se ve interrumpido con el inicio de la pasada crisis económica. La caída en el número de pasajeros se interrumpe en 2014, año que marca la salida de la Gran recesión y el inicio de la recuperación en el serie. En 2019 se superaron los 3100 millones de pasajeros.</p>
 <p>El incremento en el uso del transporte urbano observado antes y después de la crisis puede tener distintas causas: un uso más intensivo del transporte urbano en detrimento de otros medios de transporte, una reorganización de los servicios de transporte urbano que haya mejorado la conectividad dentro de los municipios, o un aumento en el número de líneas de autobús, tranvía o metro en determinadas ciudades.</p>
-<p>No está clara la causa del repunte aislado observado el año 2011, en plena crisis, pero puede deberse a una ligera recuperación en la economía que tuvo lugar a finales de 2010 y principios de 2011.</p>
+<p>La causa del repunte aislado observado el año 2011, en plena crisis, fue una ligera recuperación de la economía que tuvo lugar a finales de 2010 y principios de 2011.</p>
 <p><br>
 </p>
 </section>
@@ -478,7 +482,7 @@ Serie recortada
 <h3 class="unnumbered anchored" data-anchor-id="días-laborables-de-cada-mes">Días laborables de cada mes</h3>
 <p>La librería <code>timeData</code> proporciona una serie de funciones que permiten definir un calendario de festividades, identificar los fines de semana y, a partir de aquí, crear la serie de días laborables (véase código más abajo).</p>
 <ul>
-<li><p>Con <code>timeCalendar</code> se definen las <em>consideradas</em> festividades nacionales: Año nuevo (1 de enero), Reyes (6 de enero), Viernes Santo (fecha variable), Día del Trabajo (1 de mayo), Día de la Asunción (15 de agosto), Día de la Hispanidad (12 de octubre), Día de Todos los Santos (1 de noviembre), la Constitución (6 de diciembre) la Inmaculada Concepción (8 de diciembre) y Navidad (25 de diciembre).</p>
+<li><p>Con <code>timeCalendar</code> se definen las festividades nacionales que vamos a considerar: Año nuevo (1 de enero), Reyes (6 de enero), Viernes Santo (fecha variable), Día del Trabajo (1 de mayo), Día de la Asunción (15 de agosto), Día de la Hispanidad (12 de octubre), Día de Todos los Santos (1 de noviembre), la Constitución (6 de diciembre) la Inmaculada Concepción (8 de diciembre) y Navidad (25 de diciembre).</p>
 <p>Por claridad, cada festivo se ha definido de forma independiente para después crear una variable con todas las festividades (<em>FestivosNacionales</em>).</p>
 <p>El rango para todos los cálculos va desde 1996 hasta 2024, que incluye el rango de la serie Pasajeros más cinco años de predicción.</p>
 <p>La función utilizada <code>Easter</code> de la librería <code>timeDate</code> difiere de la función <code>easter</code> de <code>forecast</code>.</p></li>
@@ -526,7 +530,7 @@ Serie recortada
 </div>
 <p>Es conveniente indicar que la identificación de las festividades nacionales dista de ser perfecta por varios motivos:</p>
 <ul>
-<li>algunos festivos nacionales, si caen en domingo, se pasan a lunes (por ejemplo Reyes y la Inmaculada de 2019), aspecto que no se ha tenido en cuenta.</li>
+<li>algunos festivos nacionales si caen en domingo, se pasan a lunes (por ejemplo Reyes y la Inmaculada de 2019), aspecto que no se ha tenido en cuenta.</li>
 <li>algunos festivos nacionales pueden ser sustituidos por otros días por las Comunidades Autónomas, por ejemplo Reyes o Jueves Santo.</li>
 </ul>
 <p><br>
@@ -573,16 +577,16 @@ Serie recortada
 </figure>
 </div>
 </div>
-<p>Las <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> a) y b) muestran para cada mes la serie de pasajeros (total o por día laborable) y el valor medio (línea azul horizontal). En ambos casos se identifica perfectamente el efecto de los periodos vacacionales sobre el transporte urbano de pasajeros. En las vacaciones de verano se observa una fuerte caída en el número de pasajeros, especialmente en agosto y, en menor medida, en julio y septiembre. Por otro lado, las subseries de marzo y abril muestran mucha más irregularidad que las de otros meses debido a que el volumen de pasajeros depende de cómo ha caído la Semana Santa. Si un año esta cae en marzo, ese mes presentará un volumen de pasajeros inferior al de los meses de marzo sin Semana Santa, mientras que en abril se dará el efecto contrario. Diciembre, para ser un mes de 31 días, presenta también un reducido número de pasajeros debido a las vacaciones navideñas.</p>
+<p>La <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> muestra para cada mes la serie de pasajeros (total o por día laborable) y el valor medio (línea azul horizontal). En ambos paneles se identifica perfectamente el efecto de los periodos vacacionales sobre el transporte urbano de pasajeros. En las vacaciones de verano se observa una fuerte caída en el número de pasajeros, especialmente en agosto y, en menor medida, en julio y septiembre. Por otro lado, las subseries de marzo y abril muestran mucha más irregularidad que las de otros meses debido a que el volumen de pasajeros depende de cómo ha caído la Semana Santa. Si un año esta cae en marzo, ese mes presentará un volumen de pasajeros inferior al de los meses de marzo sin Semana Santa, mientras que en abril se dará el efecto contrario. Diciembre, para ser un mes de 31 días, presenta también un reducido número de pasajeros debido a las vacaciones navideñas.</p>
 <p>La <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> a) muestra el efecto estacional total debido al número de días del mes y de días laborales. Por ejemplo, en febrero, el mes con menos días y por tanto con menos días laborales, en media se transportan menos pasajeros, comparado con enero o marzo. Octubre, un mes con 31 días, muestra un volumen medio de pasajeros mayor que noviembre de 30 días.</p>
 <p>En la <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> b) se ha eliminado el efecto de los días laborables al trabajar con la serie de pasajeros transportados por día laborable. Si la comparamos con la <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> a), destaca que las diferencias entre las medias (lineas azules) se han reducido: prácticamente no hay diferencias entre los meses de enero a junio, o entre los meses de octubre a diciembre.</p>
-<p>Cabe pensar que al excluir de la serie de días laborables la Semana Santa, en la <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> b) las subseries de marzo y abril deberían ser tan suaves como las observadas para otro meses, pero no es así. Claramente la simple exclusión de los festivos nacionales de Semana Santa no es suficiente para recoger bien su efecto sobre el transporte urbano. La razón hay que buscarla en las vacaciones escolares de este periodo, que en algunas comunidades autónomas tiene lugar durante la propia semana de Semana Santa, mientras que en otras comunidades tiene lugar en la semana posterior. De esta forma, el efecto sobre el transporte urbano de Semana Santa no es homogéneo en el territorio nacional y resulta difícil incluirlo en el análisis de la serie Pasajeros.</p>
+<p>Cabría pensar que al excluir de la serie de días laborables la Semana Santa, en la <a href="#fig-PasajerosEstacionalidad">Figura&nbsp;3</a> b) las subseries de marzo y abril deberían ser tan suaves como las observadas para otro meses, pero no es así. Claramente la simple exclusión de los festivos nacionales de Semana Santa no es suficiente para recoger bien su efecto sobre el transporte urbano. La razón hay que buscarla en las vacaciones escolares de este periodo, que en algunas comunidades autónomas tiene lugar durante la propia semana de Semana Santa, mientras que en otras comunidades tiene lugar en la semana posterior. De esta forma, el efecto sobre el transporte urbano de Semana Santa no es homogéneo en el territorio nacional y resulta difícil incluirlo en el análisis de la serie Pasajeros.</p>
 <p><br>
 </p>
 </section>
 <section id="análisis-numérico-de-la-estacionalidad" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="análisis-numérico-de-la-estacionalidad">Análisis numérico de la estacionalidad</h3>
-<p>Podemos obtener la componente estacional de forma sencilla para poder valorar numéricamente la componente estacional y ver que efecto tiene el número de días laborables. Previamente, debemos determinar el esquema, aditivo o multiplicativo, de la serie.</p>
+<p>Podemos obtener la componente estacional de forma sencilla para poder valorarla numéricamente y ver que efecto tiene el número de días laborables. Previamente, debemos determinar el esquema, aditivo o multiplicativo, de la serie.</p>
 <p>La gráfica media-desviación típica (<a href="#fig-Esquema">Figura&nbsp;4</a>) refuerza la impresión que se obtenía de la gráfica de la serie (<a href="#fig-Pasajeros">Figura&nbsp;1</a>), que el esquema es aditivo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>MediaAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pasajeros, <span class="at">FUN =</span> mean)</span>
@@ -695,14 +699,14 @@ Serie recortada
 </div>
 </div>
 <p>La <a href="#tbl-EfectoEstacional">Tabla&nbsp;1</a> pone en cifras el efecto estacional sobre los Pasajeros (primera columna): en agosto la caída en el número de pasajeros, respecto de la media anual, se cifra en 72 millones de pasajeros. En julio, septiembre y en menor medida febrero también el uso del transporte urbano es inferior a la media anual, en el caso de los dos primeros meses por las vacaciones de verano y en febrero debido a ser el mes con menos días del año. Por otro lado, destaca el elevado número de pasajeros en los meses de marzo, mayo y octubre, por tener 31 días, y noviembre, por razones desconocidas.</p>
-<p>Tras la corrección por el número de días laborales, el efecto estacional es más suave (véase la segunda columna en la <a href="#tbl-EfectoEstacional">Tabla&nbsp;1</a>). Ahora, los meses de febrero y marzo tienen un efecto similar, al igual que octubre y noviembre. También se observa que las diferencias entre marzo y abril se han reducido enormemente.</p>
+<p>Tras la corrección por el número de días laborales, el efecto estacional es más suave (véase la segunda columna en la <a href="#tbl-EfectoEstacional">Tabla&nbsp;1</a>). Ahora, los meses de febrero y marzo tienen un efecto similar, al igual que octubre y noviembre. También se observa que las diferencias entre marzo y abril se han reducido.</p>
 <p><br>
 </p>
 </section>
 </section>
 <section id="descomposición-de-la-serie" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="descomposición-de-la-serie"><span class="header-section-number">2.3</span> Descomposición de la serie</h2>
-<p>Ya hemos realizado una detallada descripción de las principales componentes de la serie, tendencia y estacionalidad. Ahora vamos a proceder a descomponerla a fin de analizar, aunque sea de forma gráfica, el error y tener ya una primera impresión sobre la relevancia de la componente de intervención en Pasajeros.</p>
+<p>Ya hemos realizado una descripción detallada de las principales componentes de la serie, tendencia y estacionalidad. Ahora vamos a proceder a descomponerla a fin de analizar, aunque sea de forma gráfica, el error y tener ya una primera impresión sobre la relevancia de la componente de intervención en Pasajeros.</p>
 <p>Dado que la serie presenta un esquema aditivo, usaremos el método de descomposición por regresiones locales ponderadas, asumiendo una componente estacional constante y considerando la presencia de posibles valores extremos.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>PasajerosStl <span class="ot">&lt;-</span> <span class="fu">stl</span>(Pasajeros[,<span class="dv">1</span>], </span>
@@ -765,7 +769,7 @@ Serie recortada
 <section id="conclusión" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="conclusión"><span class="header-section-number">2.4</span> Conclusión</h2>
 <p>La serie de pasajeros en transporte urbano muestra una tendencia creciente solo interrumpida entre 2008 y 2013 debido a la Gran Recesión.</p>
-<p>Los principales determinantes de la estacionalidad de la serie Pasajeros son los grandes periodos vacacionales en España (Semana Santa y verano) y el número de días laborales del mes. Sin embargo, en la serie Pasajeros corregida por días laborables la componente estacional se ha suavizado y prácticamente queda determinada por las vacaciones.</p>
+<p>Los principales determinantes de la estacionalidad de la serie Pasajeros son los grandes periodos vacacionales en España (Semana Santa y verano) y el número de días laborales del mes. Así, en la serie Pasajeros corregida por días laborables la componente estacional se ha suavizado y prácticamente queda determinada por las vacaciones.</p>
 <p>La intervención tiene lugar en los meses de marzo y abril debido al carácter móvil de la Semana Santa, y en diciembre cuando el día de Navidad cae en lunes de forma que la caída de pasajeros de nochebuena se solapa con la de cualquier domingo.</p>
 <p><br>
 <br>
@@ -778,7 +782,7 @@ Serie recortada
 <div class="cell" data-layout-align="center">
 
 </div>
-<p>Los indicadores de calidad de ajuste (predicción intra-muestral a un periodo vista) indican que repetir la última observación del mismo mes puede ser suficiente para obtener una buena predicción a corto plazo. En media el error es de 11 millones de pasajeros (RMSE), o un 3.5%. A largo plazo, las predicciones pueden perder calidad rápidamente puesto que no capturan ningún tipo de tendencia. La <a href="#fig-Sencillo">Figura&nbsp;7</a> muestra como la predicción del número de pasajeros para los años 2020 a 2024 se mantiene estacionaria y no refleja la tendencia creciente observada desde 2014.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Los indicadores de calidad de ajuste (predicción intramuestral a un periodo vista) indican que repetir la última observación del mismo mes puede ser suficiente para obtener una buena predicción a corto plazo. En media el error es de 11 millones de pasajeros (RMSE), o un 3.5%. A largo plazo, las predicciones pueden perder calidad rápidamente puesto que no capturan ningún tipo de tendencia. La <a href="#fig-Sencillo">Figura&nbsp;7</a> muestra como la predicción del número de pasajeros para los años 2020 a 2024 se mantiene estacionaria y no refleja la tendencia creciente observada desde 2014.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>PasajerosSnaive <span class="ot">&lt;-</span> <span class="fu">snaive</span>(Pasajeros, </span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">h =</span> <span class="dv">60</span>)</span>
@@ -809,8 +813,8 @@ Training set 2.377978 10.96492 8.260812 0.9534372 3.509156    1 -0.01034773</cod
 </p>
 </section>
 <section id="alisado-exponencial" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> Alisado exponencial</h1>
-<p>En primer lugar analizaremos la capacidad predictiva de los métodos de Alisado exponencial sobre la serie Pasajeros. Con este fin, ajustaremos el mejor modelo de alisado y estimaremos los criterios de calidad para el ajuste y las predicciones extra-muestrales según el horizonte temporal. Posteriormente veremos si es posible mejorar las predicciones aplicando la transformación logarítmica a Pasajeros y analizando la serie Pasajeros por día laborable.</p>
+<h1 data-number="4"><span class="header-section-number">4</span> Alisado Exponencial</h1>
+<p>En primer lugar analizaremos la capacidad predictiva de los métodos de Alisado exponencial sobre la serie Pasajeros. Con este fin, ajustaremos el mejor modelo de alisado y estimaremos los criterios de calidad para el ajuste y las predicciones extramuestrales según el horizonte temporal. Posteriormente veremos si es posible mejorar las predicciones aplicando la transformación logarítmica a Pasajeros y analizando la serie Pasajeros por día laborable.</p>
 <p><br>
 </p>
 <section id="análisis-de-la-serie-pasajeros" class="level2" data-number="4.1">
@@ -890,21 +894,21 @@ Training set -0.1434247</code></pre>
 </section>
 <section id="predicción" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="predicción">Predicción</h3>
-<p>Podemos ahora pedir los valores de predicción para los próximos cinco años y su intervalo de confianza al 95% –aunque ya sabemos que no será muy fiable. No mostramos los resultados numéricos, pero si gráficos (<a href="#fig-AlisadoPrediccion">Figura&nbsp;9</a>). Las predicciones muestran una tendencia creciente amortiguada y, por tanto, no tan acusada como la observada en los años precedentes.</p>
+<p>Podemos ahora pedir los valores de predicción para los próximos cinco años. No mostramos los resultados numéricos, pero si gráficos (<a href="#fig-AlisadoPrediccion">Figura&nbsp;9</a>). Las predicciones muestran una tendencia creciente amortiguada y, por tanto, no tan acusada como la observada en los años precedentes.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>PasajerosEtsPre <span class="ot">&lt;-</span> <span class="fu">forecast</span>(PasajerosEts, </span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">h =</span> <span class="dv">60</span>, </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">level =</span> <span class="dv">95</span>)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PasajerosEtsPre,</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Millones de pasajeros"</span>,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">h =</span> <span class="dv">60</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PasajerosEtsPre,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Millones de pasajeros"</span>,</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">PI =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-AlisadoPrediccion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoPrediccion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 9: Pasajeros (1996-2019) y predicción (2020-2024). Método de alisado exponencial</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 9: Pasajeros (1996-2019) y predicción (2020-2024). Método de Alisado Exponencial</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -932,7 +936,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-AlisadoError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 10: Error + Intervención. Método de alisado</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 10: Error + Intervención. Método de Alisado Exponencial</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -943,10 +947,10 @@ Training set -0.1434247</code></pre>
 </section>
 <section id="otras-alternativas-de-análisis" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="otras-alternativas-de-análisis"><span class="header-section-number">4.2</span> Otras alternativas de análisis</h2>
-<p>En la descriptiva se ha visto que la serie de pasajeros por día laborable tiene un comportamiento más suave (la componente estacional era más plana) y presentaba un menor número de valores atípicos que la serie original Pasajeros. Cabe esperar, por tanto, que esta serie presente un mejor ajuste con los métodos de alisado exponencial y ofrezca mejores predicciones.</p>
+<p>En la descriptiva se ha visto que la serie de pasajeros por día laborable tiene un comportamiento más suave (la componente estacional era más plana) y presentaba un menor número de valores atípicos que la serie original Pasajeros. Cabe esperar, por tanto, que esta serie presente un mejor ajuste con los métodos de Alisado Exponencial y ofrezca mejores predicciones.</p>
 <p>Por otro lado, siempre vale la pena analizar la transformación logarítmica de la serie y ver si ofrece mejores resultados que la serie original. La transformación logarítmica es especialmente eficaz para series no lineales, así que para Pasajeros posiblemente no suponga ningún mejora.</p>
 <p>Las transformaciones indicadas en los dos párrafos precedentes son solo dos de las posibles. También se pude analizar la serie de pasajeros por día del mes o la transformación óptima de Box-Cox. La idea es no quedarse con lo inmediato –la serie tal cual nos la han ofrecido–, sino probar otras alternativas. Por ejemplo, la serie de Pasajeros es el agregado del número de pasajeros que viajan en transporte urbano según el tipo de transporte (autobús, metro, tranvía…). Se podría proceder a analizar cada serie por separado (pasajeros en autobús, pasajeros en metro, etc.), para luego agregar los resultados y ver si este enfoque da mejores resultados que el análisis directo de la serie agregada Pasajeros.</p>
-<p>En este epígrafe se analizarán tres de las transformaciones indicadas: la transformación logarítmica, los pasajeros por día laborable y los pasajeros por día del mes. El objetivo es ver si es posible mejorar la calidad de las predicciones obtenidas para Pasajeros. Se usará como criterio de bondad el error de las predicciones extra-muestrales según el horizonte temporal, obtenido con el procedimiento <em>origen de predicción móvil</em>. Asumiremos que son necesarios 12 años para obtener una buena estimación del modelo y el horizonte temporal se fijará en 12 meses (<span class="math inline">\(k = 144, h = 12\)</span>). Previamente, hay que crear la serie Pasajeros por día del mes, e identificar el mejor modelo para las series transformadas.</p>
+<p>En este epígrafe se analizarán tres de las transformaciones indicadas: la transformación logarítmica, los pasajeros por día laborable y los pasajeros por día del mes. El objetivo es ver si es posible mejorar la calidad de las predicciones obtenidas para Pasajeros. Se usará como criterio de bondad el error de las predicciones extramuestrales según el horizonte temporal, obtenido con el procedimiento <em>origen de predicción móvil</em>. Asumiremos que son necesarios 12 años para obtener una buena estimación del modelo y el horizonte temporal se fijará en 12 meses (<span class="math inline">\(k = 144, h = 12\)</span>). Previamente, hay que crear la serie Pasajeros por día del mes, e identificar el mejor modelo para las series transformadas.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>PasajerosDM <span class="ot">&lt;-</span> Pasajeros<span class="sc">/</span><span class="fu">monthdays</span>(Pasajeros)</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ets</span>(Pasajeros, <span class="at">lambda =</span> <span class="dv">0</span>)<span class="sc">$</span>method</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1024,27 +1028,27 @@ Training set -0.1434247</code></pre>
 <span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"%"</span>) <span class="sc">+</span></span>
 <span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span></span>
 <span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="fl">2.6</span>, <span class="dv">4</span>, .<span class="dv">2</span>)) <span class="sc">+</span></span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Métodos"</span>)) <span class="sc">+</span> </span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Métodos"</span>) <span class="sc">+</span> </span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.15</span>,<span class="fl">0.7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-AlisadoErrorOPM" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoErrorOPM-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 11: Error de predicción (MAPE) según horizonte temporal y enfoque. Método de Alisado</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 11: Error de predicción (MAPE) según horizonte temporal y enfoque. Método de Alisado Exponencial</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Antes de pasar al análisis de los resultados, indicar que en las predicciones sobre el logaritmo no se ha pedido corrección por sesgo, y que al trabajar con errores porcentuales no es necesario pasar la predicción de pasajeros por día (laborable o del mes) a predicción de pasajeros.</p>
 <p>La <a href="#fig-AlisadoErrorOPM">Figura&nbsp;11</a> muestra los errores de predicción según el horizonte temporal para las tres aproximaciones. En todos los casos el error aumenta con el horizonte temporal de predicción, de forma que las predicciones a doce meses vista tienen un error un punto porcentual superior a las predicciones a un mes vista.</p>
-<p>Por otro lado, para predicciones hasta 8 meses vista las predicciones realizadas sobre el logaritmo de la serie original Pasajeros son las más ajustadas. Para predicciones de 9 a 12 meses, las mejores predicciones se obtienen con Pasajeros por día del mes, seguidas de las predicciones realizadas sobre la serie sin transformar. En contra de lo esperado, la predicción a partir de la serie de pasajeros por día laborable es la que mayor error porcentual presenta.</p>
+<p>Por otro lado, para horizontes temporales de hasta 8 meses vista las predicciones realizadas sobre el logaritmo de la serie original Pasajeros son las más ajustadas. Para predicciones de 9 a 12 meses, las mejores predicciones se obtienen con Pasajeros por día del mes, seguidas de las predicciones realizadas sobre la serie sin transformar. En contra de lo esperado, la predicción a partir de la serie de pasajeros por día laborable es la que mayor error porcentual presenta.</p>
 <p><br>
 </p>
 </section>
 <section id="conclusión-1" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="conclusión-1"><span class="header-section-number">4.3</span> Conclusión</h2>
-<p>Los modelos de Alisado exponencial resultan excelentes para predecir la serie Pasajeros. El error de ajuste, del 2.4%, es un punto inferior al error obtenido con el método ingenuo con estacionalidad. Además, en las predicciones extra-muestrales a 12 meses vista el error porcentual sigue manteniéndose bajo, no superando el 4%.</p>
-<p>La transformación logarítmica de la serie pasajeros y la serie Pasajeros por día del mes han dado mejores predicciones por Alisado que el análisis directo de la serie.</p>
+<p>Los modelos de Alisado Exponencial resultan excelentes para predecir la serie Pasajeros. El error de ajuste, del 2.4%, es un punto inferior al error obtenido con el método ingenuo con estacionalidad. Además, en las predicciones extramuestrales a 12 meses vista el error porcentual sigue manteniéndose bajo, no superando el 4%.</p>
+<p>La transformación logarítmica de la serie pasajeros y la serie Pasajeros por día del mes han dado mejores predicciones por Alisado Exponencial que el análisis directo de la serie.</p>
 <p><br>
 <br>
 </p>
@@ -1058,7 +1062,7 @@ Training set -0.1434247</code></pre>
 </p>
 <section id="transformación-de-la-serie-pasajeros" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="transformación-de-la-serie-pasajeros"><span class="header-section-number">5.1</span> Transformación de la serie Pasajeros</h2>
-<p>Por un lado, el análisis por Alisado exponencial ha puesto de relieve el carácter lineal de Pasajeros y la efectividad que podría tener usar la transformación logarítmica para mejorar la calidad de las predicciones.</p>
+<p>Por un lado, el análisis por Alisado Exponencial ha puesto de relieve el carácter lineal de Pasajeros y la efectividad que podría tener usar la transformación logarítmica para mejorar la calidad de las predicciones.</p>
 <p>Por otro lado, tras un análisis preliminar por modelos ARIMA se puede ver que la transformación logarítmica mejora la identificación del modelo y facilitaba su interpretación.</p>
 <p>Así, optamos por aplicar la transformación logarítmica a Pasajeros.</p>
 <p>Las FAC del logaritmo de la serie y algunas de sus diferenciaciones (<a href="#fig-PasajerosFAC">Figura&nbsp;12</a>) indican que es necesaria la doble diferenciación regular y estacional para alcanzar las hipótesis de estacionariedad y ergodicidad: <span class="math inline">\(\log(Pasajeros) \sim I(1)I_{12}(1)\)</span>. Los resultados ofrecidos por las funciones <code>ndiffs</code> y <code>nsdiffs</code> apoyan esta conclusión.</p>
@@ -1123,10 +1127,11 @@ Training set -0.1434247</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>series <span class="ot">&lt;-</span> <span class="fu">cbind</span>(<span class="st">"Original"</span> <span class="ot">=</span> Pasajeros,</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>                <span class="st">"Dif reg. y est. de log"</span> <span class="ot">=</span> <span class="fu">diff</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pasajeros), <span class="at">lag =</span> <span class="dv">12</span>)))</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(series, <span class="at">facets =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">""</span>,</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(series, <span class="at">facets =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">""</span>,</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-PasajerosyTransformacion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1180,7 +1185,8 @@ Training set -0.1434247</code></pre>
 <span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>LunesNavidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(LunesNavidad, <span class="at">start =</span> <span class="dv">1996</span>, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
 <span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>pLunesNavidad <span class="ot">&lt;-</span> <span class="fu">subset</span>(LunesNavidad, <span class="at">start =</span> <span class="fu">length</span>(LunesNavidad) <span class="sc">-</span> <span class="dv">59</span>)</span>
 <span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>LunesNavidad <span class="ot">&lt;-</span> <span class="fu">subset</span>(LunesNavidad, <span class="at">end =</span> <span class="fu">length</span>(LunesNavidad) <span class="sc">-</span> <span class="dv">60</span>)</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>LunesNavidad[LunesNavidad <span class="sc">==</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>LunesNavidad[LunesNavidad <span class="sc">==</span> <span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2000-12 2006-12 2017-12 
       1       1       1 </code></pre>
@@ -1495,7 +1501,7 @@ AIC=-1451.23   AICc=-1450.03   BIC=-1407.82</code></pre>
 </p>
 <section id="calidad-del-ajuste" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="calidad-del-ajuste">Calidad del ajuste</h3>
-<p>Analizando los criterios de bondad de ajuste (sobre el error de predicción intra-muestral a un periodo vista) se tiene un error medio (ME) de -0.05 millones de pasajeros, que es prácticamente cero por lo que no parece que haya sesgo en las predicciones; en media nos equivocamos 3.7 millones de pasajeros (RMSE) y el error porcentual medio (MAPE) es 1.3%, muy bajo. Para ambos indicadores de bondad de ajuste el error obtenido es la mitad que el visto con alisado.</p>
+<p>Analizando los criterios de bondad de ajuste (sobre el error de predicción intramuestral a un periodo vista) se tiene un error medio (ME) de -0.05 millones de pasajeros, prácticamente cero por lo que no parece que haya sesgo en las predicciones; en media nos equivocamos 3.7 millones de pasajeros (RMSE) y el error porcentual medio (MAPE) es 1.3%, muy bajo. Para ambos indicadores de bondad de ajuste el error obtenido es la mitad que el visto con Alisado Exponencial.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>                ME RMSE  MAE  MPE MAPE MASE ACF1
@@ -1507,7 +1513,7 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 </section>
 <section id="calidad-de-las-predicciones" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="calidad-de-las-predicciones">Calidad de las predicciones</h3>
-<p>Se completará el proceso de validación estimado el error de predicción extra muestral según el horizonte temporal. Se considerarán 12 años para el periodo de estimación y un año para el de predicción.</p>
+<p>Se completará el proceso de validación estimado el error de predicción extramuestral según el horizonte temporal. Se considerarán 12 años para el periodo de estimación y un año para el de predicción.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">144</span>                  </span>
 <span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                   </span>
@@ -1549,23 +1555,32 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 <pre><code> [1] 1.39 1.53 1.61 1.72 1.87 1.96 2.08 2.22 2.35 2.48 2.62 2.79</code></pre>
 </div>
 </div>
-<p>El error es creciente en el horizonte temporal de predicción. Para predicciones extra-muestrales a un periodo vista vale 1.4%, algo superior al error de estimación, pero realmente bajo. Incluso para predicciones a doce meses vista, el error sigue siendo reducido, 2.8%. Recordemos que para alisado era de 3.6%.</p>
+<p>El error es creciente en el horizonte temporal de predicción. Para predicciones extramuestrales a un periodo vista vale 1.4%, algo superior al error de estimación, pero realmente bajo. Incluso para predicciones a doce meses vista, el error sigue siendo reducido, 2.8%. Recordemos que para Alisado Exponencial era de 3.6%.</p>
 <p><br>
 </p>
 </section>
 </section>
 <section id="interpretación-del-modelo-estimado" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="interpretación-del-modelo-estimado"><span class="header-section-number">5.5</span> Interpretación del modelo estimado</h2>
-<p>El modelo estimado y validado corresponde al modelo de las aerolíneas con intervención: <span class="math inline">\(ARIMA_{12}(0,1,1)(0,1,1) + AI\)</span>. La ecuación teórica completa del modelo es: <span class="math display">\[(1-L)(1-L^{12})\log(Pasajeros) = (1+\theta_1 L)(1 + \theta_{12} L^{12})\varepsilon_t+\]</span> <span class="math display">\[\gamma_1 DiasLaborables +\gamma_2 DiasNoLaborables +\gamma_3 LunesNavidad+\]</span> <span class="math display">\[\gamma_4 DiasPreSanta + \gamma_5 DiasPascua +\]</span> <span class="math display">\[\gamma_6 d0402 +\gamma_7 d0805 +\gamma_8 d0806 +\gamma_9 d0310.\]</span></p>
+<p>El modelo estimado y validado corresponde al modelo de las aerolíneas con intervención: <span class="math inline">\(ARIMA_{12}(0,1,1)(0,1,1) + AI\)</span>. La ecuación teórica completa del modelo es:</p>
+<p><span class="math display">\[(1-L)(1-L^{12})\log(Pasajeros) = (1+\theta_1 L)(1 + \theta_{12} L^{12})\varepsilon_t+\]</span></p>
+<p><span class="math display">\[\gamma_1 DiasLaborables +\gamma_2 DiasNoLaborables +\gamma_3 LunesNavidad+\]</span></p>
+<p><span class="math display">\[\gamma_4 DiasPreSanta + \gamma_5 DiasPascua +\]</span></p>
+<p><span class="math display">\[\gamma_6 d0402 +\gamma_7 d0805 +\gamma_8 d0806 +\gamma_9 d0310.\]</span></p>
 <p>Si se desarrolla el modelo y se deja en función de la tasa de variación anual del número de pasajero, queda (la parte de intervención no cambia):</p>
-<p><span class="math display">\[TVAPasajeros_t = TVAPasajeros_{t-1} + \theta_1 \varepsilon_{t-1} + \theta_{12} \varepsilon_{t-12}+ \theta_1 \theta_{12} \varepsilon_{t-13}+\varepsilon_t + AI.\]</span> Finalmente, el modelo estimado es: <span class="math display">\[\widehat{TVAPasajeros}_t = TVAPasajeros_{t-1} -0.53 \varepsilon_{t-1} -0.37 \varepsilon_{t-12}+ 0.20 \varepsilon_{t-13} +\]</span> <span class="math display">\[0.034\cdot DiasLaborables +0.016\cdot DiasNoLaborables+ 0.026\cdot LunesNavidad\]</span> <span class="math display">\[- 0.058\cdot DiasPreSanta - 0.025\cdot DiasPascua +\]</span> <span class="math display">\[0.033\cdot d0402 +0.064\cdot d0805 +0.028\cdot d0806 +0.038\cdot d0310.\]</span> Interpretación:</p>
+<p><span class="math display">\[TVAPasajeros_t = TVAPasajeros_{t-1} + \theta_1 \varepsilon_{t-1} + \theta_{12} \varepsilon_{t-12}+ \theta_1 \theta_{12} \varepsilon_{t-13}+\varepsilon_t + AI.\]</span></p>
+<p>Finalmente, el modelo estimado es:</p>
+<p><span class="math display">\[\widehat{TVAPasajeros}_t = TVAPasajeros_{t-1} -0.53 \varepsilon_{t-1} -0.37 \varepsilon_{t-12}+ 0.20 \varepsilon_{t-13} +\]</span></p>
+<p><span class="math display">\[0.034\cdot DiasLaborables +0.016\cdot DiasNoLaborables+ 0.026\cdot LunesNavidad\]</span></p>
+<p><span class="math display">\[- 0.058\cdot DiasPreSanta - 0.025\cdot DiasPascua +\]</span></p>
+<p><span class="math display">\[0.033\cdot d0402 +0.064\cdot d0805 +0.028\cdot d0806 +0.038\cdot d0310.\]</span> Interpretación:</p>
 <ul>
 <li>La tasa de variación anual del número de pasajeros en transporte urbano para un mes dado es la misma que la observada en el mes previo.</li>
 <li>Si hace uno, doce o trece meses se observó un número atípico de pasajeros, se debe tener en cuenta para corregir la predicción.</li>
-<li>Cada día laborable adicional en un mes supone un incremento en el número de pasajeros de 3.4 p.p. y cada día no laborable un incremento adicional de 1.6 p.p.</li>
-<li>Si la Navidad cae en lunes y por tanto Nochebuena en domingo, ese mes de diciembre el número de pasajeros será 2.6 p.p. superior al de un mes de diciembre donde la Navidad no cae en lunes.</li>
-<li>Si los días laborables (lunes a jueves) de la Semana Santa caen íntegramente en marzo, ese mes el número de pasajeros cae 5.8 p.p. respecto de un marzo sin Semana Santa. Lo mismo pasaría con abril.</li>
-<li>De la misma forma, si los días laborables (lunes a viernes) de la semana posterior a Domingo de Resurrección (semana de Pascua) caen en marzo, ese mes el número de pasajeros cae 2.5 p.p. respecto de un marzo sin Pascua. Lo mismo para abril.</li>
+<li>Cada día laborable adicional en un mes supone un incremento en el número de pasajeros del 3.4% y cada día no laborable un incremento adicional del 1.6%.</li>
+<li>Si la Navidad cae en lunes y por tanto Nochebuena en domingo, ese mes de diciembre el número de pasajeros será un 2.6% superior al de un mes de diciembre donde la Navidad no cae en lunes.</li>
+<li>Si los días laborables (lunes a jueves) de la Semana Santa caen íntegramente en marzo, ese mes el número de pasajeros cae un 5.8% respecto de un marzo sin Semana Santa. Lo mismo pasaría con abril.</li>
+<li>De la misma forma, si los días laborables (lunes a viernes) de la semana posterior a Domingo de Resurrección (semana de Pascua) caen en marzo, ese mes el número de pasajeros cae un 2.5% respecto de un marzo sin Pascua. Lo mismo para abril.</li>
 <li>Ademas, para cuatro meses se observó una tasa de variación anual atípicamente superior a la esperada.</li>
 </ul>
 <p><br>
@@ -1606,9 +1621,9 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 <section id="comparación-entre-modelos" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Comparación entre modelos</h1>
 <p>Para finalizar este análisis, vamos a comparar la calidad de ajuste y de predicción de los tres modelos estimados en este ejemplo: el método ingenuo con estacionalidad, el método de Alisado exponencial y el modelo ARIMA.</p>
-<p>Recordemos que el método ingenuo con estacionalidad tenía un error de ajuste (MAPE) del 3.5% o 11 millones de pasajeros (RMSE). Mientras que para el mejor modelo de alisado obtenido (ETS(M,Ad,A)) se tiene un error del 2.4% equivalente a 7.5 millones de pasajeros. Por último, el modelo ARIMA presenta un error del 1.3% o 3.7 millones de pasajeros.</p>
+<p>Recordemos que el método ingenuo con estacionalidad tenía un error de ajuste (MAPE) del 3.5% o 11 millones de pasajeros (RMSE). Mientras que para el mejor modelo de Alisado Exponencial obtenido (ETS(M,Ad,A)) se tiene un error del 2.4% equivalente a 7.5 millones de pasajeros. Por último, el modelo ARIMA presenta un error del 1.3% o 3.7 millones de pasajeros.</p>
 <p>Claramente, el modelo de alisado supone una mejora sustancial sobre el método ingenuo y el modelo ARIMA sobre el de alisado, con una reducción, en este último caso, cercana al 50% en los dos indicadores de calidad contemplados.</p>
-<p>Respecto de la calidad de las predicciones extra-muestrales, la <a href="#fig-PasajerosComparacion">Figura&nbsp;17</a> muestra los valores para el modelo de Alisado y ARIMA.</p>
+<p>Respecto de la calidad de las predicciones extramuestrales, la <a href="#fig-PasajerosComparacion">Figura&nbsp;17</a> muestra los valores para el modelo de Alisado Exponencial y ARIMA.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">factor =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Alisado"</span>, <span class="dv">12</span>), </span>
@@ -1624,8 +1639,8 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 <span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"%"</span>) <span class="sc">+</span></span>
 <span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span></span>
 <span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="fl">1.5</span>, <span class="dv">4</span>, .<span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour =</span> <span class="fu">guide_legend</span>(<span class="at">title =</span> <span class="st">"Métodos"</span>)) <span class="sc">+</span> </span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Métodos"</span>) <span class="sc">+</span> </span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.1</span>,<span class="fl">0.8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-PasajerosComparacion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1635,8 +1650,8 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 </div>
 </div>
 </div>
-<p>Con independencia del horizonte temporal, el error de previsión extra-muestral del modelo ARIMA es menor que el error del modelo de alisado, aunque la diferencia se reduce conforme aumenta el horizonte temporal de previsión. En concreto, para previsiones a un mes vista, ARIMA comete un error 1.2 puntos porcentuales menor que el alisado, mientras que para predicciones a seis meses vista la diferencia es solo de 0.9 p.p. y para un horizonte de doce meses de 0.8 p.p.</p>
-<p>El método ARIMA nos permite obtener las predicciones más precisas y además entender un poco mejor cuales son los determinantes del número de pasajeros en transporte urbano y su efecto sobre la serie. El método de Alisado exponencial permite obtener predicciones bastante buenas con una simple línea de código. La conveniencia de uno o otro método dependerá de la importancia que se dé a la calidad de las predicciones, la comprensión de los determinantes de la serie o la complejidad de la metodología, entre otros aspectos.</p>
+<p>Con independencia del horizonte temporal, el error de previsión extramuestral del modelo ARIMA es menor que el error del modelo de Alisado Exponencial, aunque la diferencia se reduce conforme aumenta el horizonte temporal de previsión. En concreto, para previsiones a un mes vista, ARIMA comete un error 1.2 puntos porcentuales menor que el alisado, mientras que para predicciones a seis meses vista la diferencia es solo de 0.9 p.p. y para un horizonte de doce meses de 0.8 p.p.</p>
+<p>El método ARIMA nos permite obtener las predicciones más precisas y además entender un poco mejor cuales son los determinantes del número de pasajeros en transporte urbano y su efecto sobre la serie. El método de Alisado Exponencial permite obtener predicciones bastante buenas con una simple línea de código. La conveniencia de uno u otro método dependerá de la importancia que se dé a la calidad de las predicciones, la comprensión de los determinantes de la serie o la complejidad de la metodología, entre otros aspectos.</p>
 <p><br>
 <br>
 </p>
@@ -2030,7 +2045,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

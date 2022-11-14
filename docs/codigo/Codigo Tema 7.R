@@ -164,29 +164,39 @@ autoplot(error, series="Error",
              lty = 2) + 
   scale_x_continuous(breaks= seq(2000, 2020, 2)) 
 
+# Compensacion
+d12100111 <- d1210 - d0111
+
+nac.ar3 <- Arima(nacimientos, 
+                 order = c(0, 1, 1),
+                 seasonal = c(0, 1, 2),
+                 lambda = 0,
+                 xreg = cbind(DiasMes, SemanaSanta, 
+                              d1206, d12100111, d0416, d0616))
+nac.ar3
+
 # Significatividad
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 1)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 2)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 3)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 4)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 5)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 6)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 7)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 8)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 9)
-wald.test(b = coef(nac.ar2), Sigma = vcov(nac.ar2), Terms = 10)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 1)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 2)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 3)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 4)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 5)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 6)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 7)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 8)
+wald.test(b = coef(nac.ar3), Sigma = vcov(nac.ar3), Terms = 9)
 
 # Estimación
-nac.ar2 <- Arima(nacimientos, 
+nac.ar4 <- Arima(nacimientos, 
                  order = c(0, 1, 1),
                  seasonal =  c(0, 1, 1),
                  lambda = 0,
                  xreg = cbind(DiasMes, SemanaSanta, 
-                              d1206, d1210, d0111, d0416, d0616))
-nac.ar2
+                              d1206, d12100111, d0416, d0616))
+nac.ar4
 
 # Error de ajuste
-accuracy(nac.ar2)
+accuracy(nac.ar4)
 
 # Error de predicción extra-muestral origen de prediccion movil
 k <- 120                   
@@ -196,7 +206,7 @@ s<-T - k - h
 
 mapeArima <- matrix(NA, s + 1, h)
 
-X <- data.frame(cbind(DiasMes, SemanaSanta, d1206, d1210, d0111, d0416, d0616))
+X <- data.frame(cbind(DiasMes, SemanaSanta, d1206, d12100111, d0416, d0616))
 
 for (i in 0:s) {
   train.set <- subset(nacimientos, start = i + 1, end = i + k)
@@ -245,14 +255,14 @@ ggplot() +
 tmp <- ts(rep(0, 48), start = 2020, freq = 12)
 pdm <- monthdays(tmp)
 pss <- easter(tmp)
-pnac.ar2 <- forecast(nac.ar2, 
+pnac.ar4 <- forecast(nac.ar4, 
                      h = 48,
                      xreg = cbind(pdm, pss, rep(0,48), rep(0,48), 
-                                  rep(0,48), rep(0,48), rep(0,48)), 
+                                  rep(0,48), rep(0,48)), 
                      level = 95)
-pnac.ar2
+pnac.ar4
 
-autoplot(pnac.ar2, 
+autoplot(pnac.ar4, 
          ylab = "Nacimientos",
          main = "") +
   scale_x_continuous(breaks= seq(2000, 2024, 4)) 

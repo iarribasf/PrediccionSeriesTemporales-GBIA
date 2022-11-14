@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -331,9 +331,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </p>
 <section id="antecedentes" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Antecedentes</h1>
-<p>Durante este curso hemos visto tres grandes familias de modelos que permiten ajustar y predecir series temporales: medias móviles (tema 4), alisado exponencial (tema 5) y modelos ARIMA (temas 6 y 7). En los tres casos se ajusta un modelo a una serie temporal y el resultado del ajuste nos permite no solo predecir, sino aprender y entender el comportamiento de la serie. Por ejemplo, el resultado del ajuste por Alisado nos permite saber si la pendiente de la serie cambia en el tiempo (parámetro <span class="math inline">\(\beta\)</span> del ajuste) o el tipo de esquema de la serie según que la estacionalidad sea aditiva o multiplicativa. Con los modelos ARIMA podemos estimar el impacto en la serie de un efecto calendario (Semana Santa, días laborables…).</p>
+<p>En las dos grandes familias de modelos que permiten ajustar y predecir series temporales –Alisado Exponencial y modelos ARIMA– se ajusta un modelo a una serie temporal y el resultado del ajuste nos permite no solo predecir, sino aprender y entender el comportamiento de la serie. Por ejemplo, el resultado del ajuste por alisado nos permite saber si la pendiente de la serie cambia en el tiempo (parámetro <span class="math inline">\(\beta\)</span> del ajuste) o el tipo de esquema de la serie según que la estacionalidad sea aditiva o multiplicativa. Con los modelos ARIMA podemos estimar el impacto en la serie de un efecto calendario (Semana Santa, días laborables…).</p>
 <p>Otra familia de modelos muy versátiles que permiten predecir con todo tipo de datos –transversales, series temporales, imágenes, espacio-temporales…– son las <strong>redes neuronales</strong>. Estos modelos son el embrión del <em>Deep Learning</em> y el motor de muchas <em>AI</em> y los estudiaréis en detalle el próximo año en la asignatura <em>Técnicas Avanzadas de Predicción en Negocios</em>.</p>
-<p>Vamos a ver muy, pero que muy por encima en que consisten las redes neuronales y como se pueden aplicar para predecir series temporales. Ya tendrás oportunidad el próximo curso de profundizar en esta materia. Esto es una pequeña píldora.</p>
+<p>Vamos a ver muy, pero que muy por encima en que consisten las redes neuronales y como se pueden aplicar para predecir series temporales. Esto es una pequeña píldora.</p>
 </section>
 <section id="arquitectura-de-una-red-neuronal-de-una-capa" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Arquitectura de una red neuronal de una capa</h1>
@@ -352,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Las entradas que recibe cada nodo se combinan usando una función lineal ponderada. Por ejemplo, un nodo <span class="math inline">\(j\)</span> de la capa intermedia recibe las dos entradas <span class="math inline">\(x_1\)</span> y <span class="math inline">\(x_2\)</span> de los nodos de la capa de entrada y los combina linealmente</p>
 <p><span class="math display">\[z_j = b_j + \sum_{i=1}^2 w_{i,j}x_i\]</span> Para los nodos de la capa intermedia el valor <span class="math inline">\(z_j\)</span> se transforma usando una función no lineal, por ejemplo la sigmoidea:</p>
 <p><span class="math display">\[s_j = \frac{1}{1 + e^{-z_j}}\]</span> y este valor <span class="math inline">\(s_j\)</span> es la salida del nodo <span class="math inline">\(j\)</span> que va al nodo de la capa de salida.</p>
-<p>Los valores de los pesos <span class="math inline">\(b_1\)</span>, <span class="math inline">\(b_2\)</span>, <span class="math inline">\(w_{1,1}\)</span>, <span class="math inline">\(w_{1,2}\)</span>…<span class="math inline">\(w_{2,4}\)</span> se deben <em>ajustar</em> a partir de los datos. Estos valores suelen estar restringidos para evitar que sean demasiado grandes. El parámetro que restringe las ponderaciones se conoce como <em>parámetro de decaimiento</em>, y suele ser igual a <span class="math inline">\(0.1\)</span>.</p>
+<p>Los valores de los pesos <span class="math inline">\(b_1\)</span>, <span class="math inline">\(b_2\)</span>, <span class="math inline">\(w_{1,1}\)</span>, <span class="math inline">\(w_{1,2}\)</span>…<span class="math inline">\(w_{2,5}\)</span> se deben <em>ajustar</em> a partir de los datos. Estos valores suelen estar restringidos para evitar que sean demasiado grandes. El parámetro que restringe las ponderaciones se conoce como <em>parámetro de decaimiento</em>, y suele ser igual a <span class="math inline">\(0.1\)</span>.</p>
 <p>Los pesos toman valores aleatorios al principio y luego se actualizan con los datos observados en un proceso de <em>aprendizaje</em>. Por lo tanto, hay un elemento de aleatoriedad en las predicciones producidas por una red neuronal. Por este motivo, la red suele entrenarse varias veces utilizando diferentes puntos de partida aleatorios, y los resultados se promedian.</p>
 </section>
 <section id="autoregresión-de-redes-neuronales" class="level1" data-number="3">
@@ -396,16 +396,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>La <a href="#fig-ElectricidadPre">Figura&nbsp;4</a> muestra la serie y su predicción para los siguientes 14 días. El modelo ajustado es <span class="math inline">\(NNAR(8,1,4)_7\)</span>. Es decir, para predecir el consumo del día <span class="math inline">\(t\)</span>, <span class="math inline">\(y_t\)</span>, se usa el consumo de los ocho días previos <span class="math inline">\(y_{t-1}\)</span> a <span class="math inline">\(t_{t-8}\)</span>, y de hace una semana <span class="math inline">\(y_{t-7}\)</span>, y la capa intermedia tiene cuatro nodos. Observa que en la capa de entrada, con 9 nodos, el valor de <span class="math inline">\(y_7\)</span> entra en dos nodos.</p>
+<p>La <a href="#fig-ElectricidadPre">Figura&nbsp;4</a> muestra la serie y su predicción para los siguientes 14 días. El modelo ajustado es <span class="math inline">\(NNAR(8,1,4)_7\)</span>. Es decir, para predecir el consumo del día <span class="math inline">\(t\)</span>, <span class="math inline">\(y_t\)</span>, se usa el consumo de los ocho días previos <span class="math inline">\(y_{t-1}\)</span> a <span class="math inline">\(t_{t-8}\)</span>, y de hace una semana <span class="math inline">\(y_{t-7}\)</span>, y la capa intermedia tiene cuatro nodos. Observa que en la capa de entrada, con 9 nodos, el valor de <span class="math inline">\(y{t_7}\)</span> entra en dos nodos.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nnetar</span>(electricidad)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                       ME     RMSE      MAE         MPE      MAPE     MASE
-Training set -0.008637599 6.542979 4.771908 -0.02324458 0.7129442 0.239674
-                    ACF1
-Training set -0.09148154</code></pre>
+<pre><code>                    ME    RMSE      MAE         MPE      MAPE      MASE
+Training set 0.0124708 6.64622 4.832091 -0.02080721 0.7213374 0.2426967
+                   ACF1
+Training set 0.01456904</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pfit <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">14</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -416,7 +416,7 @@ Training set -0.09148154</code></pre>
 <div id="fig-ElectricidadPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="04-03-Redes_neuronales_files/figure-html/fig-ElectricidadPre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 4: Consumo eléctrico (febrero a mayo de 2021)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 4: Consumo eléctrico (febrero a mayo de 2021) y predicción</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -431,25 +431,25 @@ Training set -0.09148154</code></pre>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> tiempo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 11.47418 secs</code></pre>
+<pre><code>Time difference of 16.8413 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-23.00000       660.4780 648.8390 672.9838
-23.14286       687.7069 670.7016 704.0489
-23.28571       692.8787 666.6536 713.5229
-23.42857       695.2311 656.6511 725.0782
-23.57143       691.3245 650.9579 715.1705
-23.71429       628.0373 592.9344 661.8500
-23.85714       578.2310 547.7317 605.9081
-24.00000       655.7185 609.6250 697.2030
-24.14286       684.3920 637.1656 714.2633
-24.28571       688.2651 640.7232 717.2609
-24.42857       689.6607 629.7401 732.6440
-24.57143       690.2667 626.0051 723.2540
-24.71429       634.5380 585.8338 691.7114
-24.85714       579.8414 542.9791 631.8322</code></pre>
+23.00000       665.4774 653.3630 678.8375
+23.14286       690.2466 668.6709 708.0118
+23.28571       697.8175 673.6090 717.6983
+23.42857       699.0766 668.1848 719.2264
+23.57143       693.1425 670.3182 709.4540
+23.71429       622.7579 598.4266 647.2839
+23.85714       575.0680 555.1334 598.5972
+24.00000       666.0844 627.7490 692.3558
+24.14286       690.8119 643.2107 714.7440
+24.28571       697.2902 647.7944 717.8192
+24.42857       695.8274 653.6231 718.3009
+24.57143       689.8044 655.0122 711.4248
+24.71429       620.5539 593.2837 671.8038
+24.85714       573.0769 553.8214 628.7099</code></pre>
 </div>
 </div>
 <p>La función <code>nnetar</code> admite la inclusión de variables de intervención de la forma usual a través del argumento <code>xreg</code>.</p>
@@ -563,7 +563,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

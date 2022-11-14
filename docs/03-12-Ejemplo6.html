@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,11 +295,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
-  <li><a href="#transformación-de-la-serie" id="toc-transformación-de-la-serie" class="nav-link" data-scroll-target="#transformación-de-la-serie"> <span class="header-section-number">2</span> Transformación de la serie</a></li>
+  <li><a href="#transformación-de-la-serie" id="toc-transformación-de-la-serie" class="nav-link" data-scroll-target="#transformación-de-la-serie"> <span class="header-section-number">2</span> Transformación de la serie</a>
+  <ul class="collapse">
+  <li><a href="#la-fig-pernoctacionesfac-muestra-una-serie-con-tendencia-y-la-función-ndiffs-que-realiza-un-contraste-formal-de-estacionariedad-también-indica-que-la-serie-no-es-estacionaria.-sin-embargo-vimos-que-el-modelo-de-alisado-que-mejor-ajustaba-a-los-datos-era-un-modelo-sin-tendencia." id="toc-la-fig-pernoctacionesfac-muestra-una-serie-con-tendencia-y-la-función-ndiffs-que-realiza-un-contraste-formal-de-estacionariedad-también-indica-que-la-serie-no-es-estacionaria.-sin-embargo-vimos-que-el-modelo-de-alisado-que-mejor-ajustaba-a-los-datos-era-un-modelo-sin-tendencia." class="nav-link" data-scroll-target="#la-fig-pernoctacionesfac-muestra-una-serie-con-tendencia-y-la-función-ndiffs-que-realiza-un-contraste-formal-de-estacionariedad-también-indica-que-la-serie-no-es-estacionaria.-sin-embargo-vimos-que-el-modelo-de-alisado-que-mejor-ajustaba-a-los-datos-era-un-modelo-sin-tendencia."> <span class="header-section-number">2.1</span> La <span>Figura&nbsp;1</span> muestra una serie con tendencia y la función <code>ndiffs</code> (que realiza un contraste formal de estacionariedad) también indica que la serie no es estacionaria. Sin embargo, vimos que el modelo de alisado que mejor ajustaba a los datos era un modelo sin tendencia.</a></li>
+  </ul></li>
   <li><a href="#análisis-de-la-serie-pernoctaciones-sim-i0" id="toc-análisis-de-la-serie-pernoctaciones-sim-i0" class="nav-link" data-scroll-target="#análisis-de-la-serie-pernoctaciones-sim-i0"> <span class="header-section-number">3</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(0)\)</span></a>
   <ul class="collapse">
   <li><a href="#identificación" id="toc-identificación" class="nav-link" data-scroll-target="#identificación"> <span class="header-section-number">3.1</span> Identificación</a></li>
@@ -307,7 +310,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#variables-son-significativas" id="toc-variables-son-significativas" class="nav-link" data-scroll-target="#variables-son-significativas">Variables son significativas</a></li>
   <li><a href="#medidas-de-error" id="toc-medidas-de-error" class="nav-link" data-scroll-target="#medidas-de-error">Medidas de error</a></li>
-  <li><a href="#error-de-previsión-extra-muestral-según-horizonte-temporal" id="toc-error-de-previsión-extra-muestral-según-horizonte-temporal" class="nav-link" data-scroll-target="#error-de-previsión-extra-muestral-según-horizonte-temporal">Error de previsión extra-muestral según horizonte temporal</a></li>
+  <li><a href="#error-de-previsión-extramuestral-según-horizonte-temporal" id="toc-error-de-previsión-extramuestral-según-horizonte-temporal" class="nav-link" data-scroll-target="#error-de-previsión-extramuestral-según-horizonte-temporal">Error de previsión extramuestral según horizonte temporal</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#análisis-de-la-serie-pernoctaciones-sim-i1" id="toc-análisis-de-la-serie-pernoctaciones-sim-i1" class="nav-link" data-scroll-target="#análisis-de-la-serie-pernoctaciones-sim-i1"> <span class="header-section-number">4</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(1)\)</span></a>
@@ -316,7 +319,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#validación-1" id="toc-validación-1" class="nav-link" data-scroll-target="#validación-1"> <span class="header-section-number">4.2</span> Validación</a>
   <ul class="collapse">
   <li><a href="#medidas-de-error-1" id="toc-medidas-de-error-1" class="nav-link" data-scroll-target="#medidas-de-error-1">Medidas de error</a></li>
-  <li><a href="#error-de-previsión-extra-muestral-según-horizonte-temporal-1" id="toc-error-de-previsión-extra-muestral-según-horizonte-temporal-1" class="nav-link" data-scroll-target="#error-de-previsión-extra-muestral-según-horizonte-temporal-1">Error de previsión extra-muestral según horizonte temporal</a></li>
+  <li><a href="#error-de-previsión-extramuestral-según-horizonte-temporal-1" id="toc-error-de-previsión-extramuestral-según-horizonte-temporal-1" class="nav-link" data-scroll-target="#error-de-previsión-extramuestral-según-horizonte-temporal-1">Error de previsión extramuestral según horizonte temporal</a></li>
   </ul></li>
   </ul></li>
   <li><a href="#comparativa-entre-modelos" id="toc-comparativa-entre-modelos" class="nav-link" data-scroll-target="#comparativa-entre-modelos"> <span class="header-section-number">5</span> Comparativa entre modelos</a></li>
@@ -375,21 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">start =</span> <span class="dv">2000</span>, </span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">frequency =</span> <span class="dv">12</span>)</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, <span class="at">FUN =</span> sum)</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div id="fig-Pernoctaciones" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="03-12-Ejemplo6_files/figure-html/fig-Pernoctaciones-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 1: Pernoctaciones</figcaption><p></p>
-</figure>
-</div>
-</div>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">10</span><span class="sc">^</span><span class="dv">6</span>, <span class="at">FUN =</span> sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br>
 <br>
@@ -397,7 +386,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="transformación-de-la-serie" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Transformación de la serie</h1>
-<p>La <a href="#fig-PernoctacionesFAC">Figura&nbsp;2</a> muestra una serie con tendencia y la función <code>ndiffs</code> (que realiza un contraste formal de estacionariedad) también indica que la serie no es estacionaria. Sin embargo, vimos que el modelo de alisado que mejor ajustaba a los datos era un modelo sin tendencia .</p>
+<section id="la-fig-pernoctacionesfac-muestra-una-serie-con-tendencia-y-la-función-ndiffs-que-realiza-un-contraste-formal-de-estacionariedad-también-indica-que-la-serie-no-es-estacionaria.-sin-embargo-vimos-que-el-modelo-de-alisado-que-mejor-ajustaba-a-los-datos-era-un-modelo-sin-tendencia." class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="la-fig-pernoctacionesfac-muestra-una-serie-con-tendencia-y-la-función-ndiffs-que-realiza-un-contraste-formal-de-estacionariedad-también-indica-que-la-serie-no-es-estacionaria.-sin-embargo-vimos-que-el-modelo-de-alisado-que-mejor-ajustaba-a-los-datos-era-un-modelo-sin-tendencia."><span class="header-section-number">2.1</span> La <a href="#fig-PernoctacionesFAC">Figura&nbsp;1</a> muestra una serie con tendencia y la función <code>ndiffs</code> (que realiza un contraste formal de estacionariedad) también indica que la serie no es estacionaria. Sin embargo, vimos que el modelo de alisado que mejor ajustaba a los datos era un modelo sin tendencia.</h2>
 <p>Ante esta situación se opta por explorar ambas opciones. Es decir, analizaremos la serie <span class="math inline">\(Pernoctaciones \sim I(0)\)</span> así como la serie <span class="math inline">\(Pernoctaciones \sim I(1)\)</span> y veremos cual de las dos nos ofrece mejores predicciones.</p>
 <div>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
@@ -442,7 +432,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figura 2: Gráfica y FAC para Pernoctaciones</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 1: Gráfica y FAC para Pernoctaciones</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -455,6 +445,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><br>
 <br>
 </p>
+</section>
 </section>
 <section id="análisis-de-la-serie-pernoctaciones-sim-i0" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Análisis de la serie Pernoctaciones <span class="math inline">\(\sim I(0)\)</span></h1>
@@ -480,7 +471,7 @@ sigma^2 = 136.3:  log likelihood = -77.21
 AIC=162.43   AICc=165.09   BIC=166.41</code></pre>
 </div>
 </div>
-<p>Se identifica un proceso ARIMA(1, 0, 1) con constante. La estimación de este modelo muestra que el coeficiente asociado al proceso autorregresivo es significativo, pero no está claro que lo sea el coeficiente de la media móvil. El análisis del error no revela ningún error que supere las 2.5 desviaciones típicas (<a href="#fig-Error0">Figura&nbsp;3</a>).</p>
+<p>Se identifica un proceso ARIMA(1, 0, 1) con constante. La estimación de este modelo muestra que el coeficiente asociado al proceso autorregresivo es significativo, pero no está claro que lo sea el coeficiente de la media móvil. El análisis del error no revela ninguno que supere las 2.5 desviaciones típicas (<a href="#fig-Error0">Figura&nbsp;2</a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>arima101 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(Pernoctaciones, </span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>),</span>
@@ -503,7 +494,7 @@ AIC=162.43   AICc=165.09   BIC=166.41</code></pre>
 <div id="fig-Error0" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-12-Ejemplo6_files/figure-html/fig-Error0-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 3: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 2: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -562,8 +553,8 @@ Training set 1.03 10.76 8.06 0.17 3.45 0.86    0</code></pre>
 </div>
 </div>
 </section>
-<section id="error-de-previsión-extra-muestral-según-horizonte-temporal" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="error-de-previsión-extra-muestral-según-horizonte-temporal">Error de previsión extra-muestral según horizonte temporal</h3>
+<section id="error-de-previsión-extramuestral-según-horizonte-temporal" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="error-de-previsión-extramuestral-según-horizonte-temporal">Error de previsión extramuestral según horizonte temporal</h3>
 <p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=10\)</span>, y que el horizonte temporal es tres años vista, <span class="math inline">\(h = 3\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span>                  </span>
@@ -592,7 +583,7 @@ Training set 1.03 10.76 8.06 0.17 3.45 0.86    0</code></pre>
 <pre><code>[1]  6.537726 12.420501 15.659016</code></pre>
 </div>
 </div>
-<p>El error de previsión extra-muestral un periodo vista (6.5%) es notoriamente mayor que el error de estimación (3.9%). El error a dos y tres periodos vista supera el 10%.</p>
+<p>El error de previsión extramuestral un periodo vista (6.5%) es notoriamente mayor que el error de estimación (3.9%). El error a dos y tres periodos vista supera el 10%.</p>
 <p><br>
 <br>
 </p>
@@ -618,7 +609,7 @@ sigma^2 = 146.4:  log likelihood = -74.33
 AIC=150.66   AICc=150.9   BIC=151.61</code></pre>
 </div>
 </div>
-<p>Se identifica un proceso ARIMA(0, 1, 0) sin deriva, es decir un paseo aleatorio o método Ingenuo I. Tras estimar el modelo, el análisis del error revela de nuevo que no es necesaria la intervención (figura <a href="#fig-Error1">Figura&nbsp;4</a>).</p>
+<p>Se identifica un proceso ARIMA(0, 1, 0) sin deriva, es decir un paseo aleatorio o método Ingenuo I. Tras estimar el modelo, el análisis del error revela de nuevo que no es necesaria la intervención (<a href="#fig-Error1">Figura&nbsp;3</a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>arima010 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(Pernoctaciones, </span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
@@ -649,7 +640,7 @@ AIC=150.66   AICc=150.9   BIC=151.61</code></pre>
 <div id="fig-Error1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-12-Ejemplo6_files/figure-html/fig-Error1-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 4: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 3: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -672,8 +663,8 @@ Training set 3.27 11.79 8.9 1.11  3.7 0.95 0.27</code></pre>
 </div>
 </div>
 </section>
-<section id="error-de-previsión-extra-muestral-según-horizonte-temporal-1" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="error-de-previsión-extra-muestral-según-horizonte-temporal-1">Error de previsión extra-muestral según horizonte temporal</h3>
+<section id="error-de-previsión-extramuestral-según-horizonte-temporal-1" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="error-de-previsión-extramuestral-según-horizonte-temporal-1">Error de previsión extramuestral según horizonte temporal</h3>
 <p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=10\)</span>, y que el horizonte temporal es tres años vista, <span class="math inline">\(h = 3\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span>                  </span>
@@ -713,44 +704,10 @@ Training set 3.27 11.79 8.9 1.11  3.7 0.95 0.27</code></pre>
 <section id="comparativa-entre-modelos" class="level1" data-number="5">
 <h1 data-number="5"><span class="header-section-number">5</span> Comparativa entre modelos</h1>
 <p>Si atendemos a los indicadores de calidad de ajuste de ambos modelos, todos apuntan al proceso ARIMA(1, 0, 1) como el que mejor ajusta a los datos. El error medio (RMSE) y el error relativo (MAPE) para ARIMA(1, 0, 1) es algo inferior que para el modelo ARIMA(0, 1, 0). Además, el modelo ARIMA(1, 0, 1) tiene menos sesgo en las predicciones y las formulas usadas para las previsiones por intervalo son adecuadas.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(arima101)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>               ME  RMSE  MAE  MPE MAPE MASE ACF1
-Training set 1.03 10.76 8.06 0.17 3.45 0.86    0</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(arima010)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>               ME  RMSE MAE  MPE MAPE MASE ACF1
-Training set 3.27 11.79 8.9 1.11  3.7 0.95 0.27</code></pre>
-</div>
-</div>
-<p>Por el contrario, si atendemos a los errores de previsión extra-muestrales, el mejor proceso es ARIMA(0,1,0).</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>mapeArima101</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  6.54 12.42 15.66</code></pre>
-</div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>mapeArima010</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-layout-align="center">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1]  5.10  8.96 11.43</code></pre>
-</div>
-</div>
-<p>Otro ejemplo más en el que mejor ajuste no implica mejor predicción. En este caso el modelo AR(1, 0, 1) sobreajusta (<em>overfitting</em>) los datos y genera peores predicciones a corto y medio plazo.</p>
+<p>Por el contrario, si atendemos a los errores de previsión extramuestrales, el mejor proceso es ARIMA(0,1,0).</p>
+<p>Otro ejemplo más en el que mejor ajuste no implica mejor predicción. En este caso el modelo ARIMA(1, 0, 1) sobreajusta (<em>overfitting</em>) los datos y genera peores predicciones a corto y medio plazo.</p>
 <p>Concluimos que el mejor modelo con propósitos predictivos es <span class="math inline">\(Pernoctaciones \sim ARIMA(0, 1, 0)\)</span>.</p>
-<p><strong>Nota:</strong> Es la tercera vez que el método Ingenuo I (paseo aleatorio) aparece como el más adecuado para predecir la serie anual de pernoctaciones. Era el mejor de entre los métodos simples. Al elegir dentro de la familia de Alisado Exponencial, también fue el mejor. Ahora, es el proceso ARIMA más adecuado. Para esta serie, que es corta y aparentemente sencilla, ninguna aproximación compleja mejora el método Ingenuo I, más fácil de obtener e interpretar.</p>
+<p>Es la tercera vez que el método Ingenuo I (paseo aleatorio) aparece como el más adecuado para predecir la serie anual de pernoctaciones. Era de los mejores entre los métodos sencillos. Al elegir dentro de la familia de Alisado Exponencial, también fue el mejor. Ahora, es el proceso ARIMA más adecuado. Para esta serie, que es corta y aparentemente sencilla, ninguna aproximación compleja mejora el método Ingenuo I, más fácil de obtener e interpretar.</p>
 <p><br>
 <br>
 </p>
@@ -768,11 +725,11 @@ Training set 3.27 11.79 8.9 1.11  3.7 0.95 0.27</code></pre>
 <h1 data-number="7"><span class="header-section-number">7</span> Predicción</h1>
 <p>Podemos usar el modelo estimado para predecir las pernoctaciones para los próximos 5 años.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>parima010 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(arima010, </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">h =</span> <span class="dv">5</span>, </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">level =</span> <span class="dv">95</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>parima010</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>parima010 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(arima010, </span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">h =</span> <span class="dv">5</span>, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">level =</span> <span class="dv">95</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>parima010</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Point Forecast    Lo 95    Hi 95
 2020       299.0921 275.3749 322.8094
@@ -783,15 +740,15 @@ Training set 3.27 11.79 8.9 1.11  3.7 0.95 0.27</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(parima010, </span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2024</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(parima010, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2024</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Prevision" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-12-Ejemplo6_files/figure-html/fig-Prevision-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 5: Pernoctaciones y predicciones</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 4: Pernoctaciones y predicciones</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -906,7 +863,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

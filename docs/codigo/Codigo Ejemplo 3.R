@@ -55,8 +55,8 @@ autoplot(PernoctacionesAnual, series = "Pernoctaciones",
   autolayer(naivePernoctaciones, series="Ingenuo", PI = FALSE) +
   autolayer(derivaPernoctaciones, series="Deriva", PI = FALSE) +
   scale_colour_discrete(limits=c("Pernoctaciones", "Media", "Ingenuo", "Deriva")) +
-  guides(colour = guide_legend(title = "Métodos")) + 
-  theme(legend.position=c(0.02,0.98), legend.justification=c(0,1))
+  labs(colour="Métodos") + 
+  theme(legend.position=c(0.15,0.7))
 
 # Error de ajuste
 accuracy(mediaPernoctaciones)

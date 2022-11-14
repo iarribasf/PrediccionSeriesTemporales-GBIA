@@ -24,12 +24,6 @@ Pernoctaciones <- ts(Pernoctaciones[,2],
                      frequency = 12)
 
 Pernoctaciones <- aggregate(Pernoctaciones/10^6, FUN = sum)
-
-autoplot(Pernoctaciones,
-         xlab = "",
-         ylab = "Noches (millones)",
-         main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2))  
 #----------------------------------------------------------
 #
 #

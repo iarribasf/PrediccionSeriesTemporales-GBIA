@@ -344,8 +344,8 @@ ggplot(datos, aes(x = x, y = y,  colour= factor)) +
   ylab("%") +
   scale_x_continuous(breaks= 1:12) +
   scale_y_continuous(breaks= seq(2.6, 4, .2)) +
-  guides(colour = guide_legend(title = "Métodos")) + 
-  theme(legend.position=c(0.02,0.98), legend.justification=c(0,1))
+  labs(colour = "Métodos") + 
+  theme(legend.position=c(0.15,0.7))
 #----------------------------------------------------------
 #
 #
@@ -519,6 +519,6 @@ ggplot(datos, aes(x = x, y = y,  colour= factor)) +
   ylab("%") +
   scale_x_continuous(breaks= 1:12) +
   scale_y_continuous(breaks= seq(1.5, 4, .5)) +
-  guides(colour = guide_legend(title = "Métodos")) + 
-  theme(legend.position=c(0.02,0.98), legend.justification=c(0,1))
+  labs(colour = "Métodos") + 
+  theme(legend.position=c(0.1,0.8))
 

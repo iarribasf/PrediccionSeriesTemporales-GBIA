@@ -250,8 +250,8 @@ div.csl-indent {
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -314,7 +314,7 @@ div.csl-indent {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
@@ -362,14 +362,14 @@ div.csl-indent {
   <li><a href="#identificación-y-estimación-del-mejor-modelo" id="toc-identificación-y-estimación-del-mejor-modelo" class="nav-link" data-scroll-target="#identificación-y-estimación-del-mejor-modelo">Identificación y estimación del mejor modelo</a></li>
   <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción">Predicción</a></li>
   <li><a href="#análisis-del-residuo" id="toc-análisis-del-residuo" class="nav-link" data-scroll-target="#análisis-del-residuo">Análisis del residuo</a></li>
-  <li><a href="#validación-error-extra-muestral-a-varios-periodos-vista" id="toc-validación-error-extra-muestral-a-varios-periodos-vista" class="nav-link" data-scroll-target="#validación-error-extra-muestral-a-varios-periodos-vista">Validación: error extra-muestral a varios periodos vista</a></li>
+  <li><a href="#validación-error-extramuestral-a-varios-periodos-vista" id="toc-validación-error-extramuestral-a-varios-periodos-vista" class="nav-link" data-scroll-target="#validación-error-extramuestral-a-varios-periodos-vista">Validación: error extramuestral a varios periodos vista</a></li>
   </ul></li>
   <li><a href="#nacimientos" id="toc-nacimientos" class="nav-link" data-scroll-target="#nacimientos"> <span class="header-section-number">11.2</span> Nacimientos</a>
   <ul class="collapse">
   <li><a href="#identificación-y-estimación-del-mejor-modelo-1" id="toc-identificación-y-estimación-del-mejor-modelo-1" class="nav-link" data-scroll-target="#identificación-y-estimación-del-mejor-modelo-1">Identificación y estimación del mejor modelo</a></li>
   <li><a href="#predicción-1" id="toc-predicción-1" class="nav-link" data-scroll-target="#predicción-1">Predicción</a></li>
   <li><a href="#análisis-del-error" id="toc-análisis-del-error" class="nav-link" data-scroll-target="#análisis-del-error">Análisis del error</a></li>
-  <li><a href="#validación-error-extra-muestral-según-horizonte-temporal" id="toc-validación-error-extra-muestral-según-horizonte-temporal" class="nav-link" data-scroll-target="#validación-error-extra-muestral-según-horizonte-temporal">Validación: error extra-muestral según horizonte temporal</a></li>
+  <li><a href="#validación-error-extramuestral-según-horizonte-temporal" id="toc-validación-error-extramuestral-según-horizonte-temporal" class="nav-link" data-scroll-target="#validación-error-extramuestral-según-horizonte-temporal">Validación: error extramuestral según horizonte temporal</a></li>
   </ul></li>
   <li><a href="#demanda-eléctrica" id="toc-demanda-eléctrica" class="nav-link" data-scroll-target="#demanda-eléctrica"> <span class="header-section-number">11.3</span> Demanda eléctrica</a>
   <ul class="collapse">
@@ -423,7 +423,7 @@ div.csl-indent {
 </p>
 <section id="introducción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
-<p>Los métodos de alisado exponencial aparecen en los años 50 del siglo pasado de la mano de Brown, Holt y Winters <span class="citation" data-cites="Brown59 Holt Winters60">(see <a href="#ref-Brown59" role="doc-biblioref">Brown 1959</a>; <a href="#ref-Holt" role="doc-biblioref">Holt 2004</a>; <a href="#ref-Winters60" role="doc-biblioref">Winters 1960</a>)</span> y han sido la raíz de uno de los métodos de predicción más sencillos y eficaces. La idea básica es predecir usando una media ponderada de los datos pasados, donde los más recientes tienen un peso mayor y este decae exponencialmente conforme usamos observaciones más antiguas.</p>
+<p>Los métodos de alisado exponencial aparecen en los años 50 del siglo pasado de la mano de Brown, Holt y Winters <span class="citation" data-cites="Brown59 Holt Winters60">(véase <a href="#ref-Brown59" role="doc-biblioref">Brown 1959</a>; <a href="#ref-Holt" role="doc-biblioref">Holt 2004</a>; <a href="#ref-Winters60" role="doc-biblioref">Winters 1960</a>)</span> y han sido la raíz de uno de los métodos de predicción más sencillos y eficaces. La idea básica es predecir usando una media ponderada de los datos pasados, donde los más recientes tienen un peso mayor y este decae exponencialmente conforme usamos observaciones más antiguas.</p>
 <p>El alisado exponencial es una familia de métodos de ajuste y previsión que ofrece muy buenos resultados para predicciones a corto plazo o para predecir series con pocos datos o <em>sencillas</em> (sin mucho <em>ruido</em>).</p>
 <p>Suponen un grado de modelización mayor que los métodos sencillos vistos previamente, pero sin alcanzar la complejidad de otras metodologías (modelos ARIMA).</p>
 <p>En origen, son métodos descriptivos con el único objetivo de producir <strong>predicciones puntuales</strong>. Sin embargo, su enfoque como modelos de <em>espacio de estados</em> posibilita un marco teórico para obtener <strong>intervalos de confianza de las predicciones</strong>.</p>
@@ -527,7 +527,7 @@ s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1
 <li>(A, A, N): Alisado de Holt</li>
 <li>(A, Ad, N): Alisado con tendencia amortiguada (d de <em>damped</em>)</li>
 <li>(A, A, A): Alisado de Holt-Winters aditivo</li>
-<li>(A, A, M): Alisado de Holt-Winters multiplicativo</li>
+<li>(M, A, M): Alisado de Holt-Winters multiplicativo</li>
 </ul>
 <p>Acude al artículo de <span class="citation" data-cites="Hyndman08">Hyndman and Khandakar (<a href="#ref-Hyndman08" role="doc-biblioref">2008</a>)</span> para saber más de cada modelo, o al libro de <span class="citation" data-cites="Hyndman08b">Hyndman et al. (<a href="#ref-Hyndman08b" role="doc-biblioref">2008</a>)</span>.</p>
 <p><br>
@@ -554,7 +554,7 @@ s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1
 <section id="definición" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="definición"><span class="header-section-number">4.1</span> Definición</h2>
 <p>El alisado exponencial simple es adecuado para una serie estacionaria y sin estacionalidad. Es decir, una serie que se mueve alrededor de un nivel constante.</p>
-<p>La ecuación de la <strong>predicción intra-muestral</strong> es <span class="math display">\[\widehat{y}_{t+1} = \alpha y_t + \alpha (1-\alpha) y_{t-1} + \alpha (1-\alpha)^2 y_{t-2} + \alpha (1-\alpha)^3 y_{t-3} + \ldots =  \alpha y_t + (1-\alpha)\widehat{y}_{t},\]</span> donde <span class="math inline">\(0 \leq \alpha \leq 1\)</span> es el parámetro de suavizado. La primera <strong>predicción extra-muestral</strong> queda <span class="math display">\[\widehat{y}_{T+1}=\alpha y_T + (1-\alpha)\widehat{y}_{T}\]</span> y para las restantes <span class="math display">\[\widehat{y}_{T+h} = \widehat{y}_{T+1}.\]</span><br>
+<p>La ecuación de la <strong>predicción intramuestral</strong> es <span class="math display">\[\widehat{y}_{t+1} = \alpha y_t + \alpha (1-\alpha) y_{t-1} + \alpha (1-\alpha)^2 y_{t-2} + \alpha (1-\alpha)^3 y_{t-3} + \ldots =  \alpha y_t + (1-\alpha)\widehat{y}_{t},\]</span> donde <span class="math inline">\(0 \leq \alpha \leq 1\)</span> es el parámetro de suavizado. La primera <strong>predicción extramuestral</strong> queda <span class="math display">\[\widehat{y}_{T+1}=\alpha y_T + (1-\alpha)\widehat{y}_{T}\]</span> y para las restantes <span class="math display">\[\widehat{y}_{T+h} = \widehat{y}_{T+1}.\]</span><br>
 </p>
 </section>
 <section id="formulas-interactivas-de-sus-componentes" class="level2" data-number="4.2">
@@ -562,8 +562,8 @@ s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1
 <p>En el alisado exponencial simple solo hay una componente, el nivel <span class="math inline">\(l_t\)</span>.</p>
 <ul>
 <li>La <strong>ecuación recursiva</strong> de suavizado es <span class="math inline">\(l_t=\alpha y_t + (1-\alpha)l_{t-1}\)</span></li>
-<li>La ecuación de <strong>predicción intra-muestral</strong> es <span class="math inline">\(\widehat{y}_{t+1} = l_t\)</span></li>
-<li>La ecuación de <strong>predicción extra-muestral</strong> es <span class="math inline">\(\widehat{y}_{T+h} = \widehat{y}_{T+1} = l_T\)</span></li>
+<li>La ecuación de <strong>predicción intramuestral</strong> es <span class="math inline">\(\widehat{y}_{t+1} = l_t\)</span></li>
+<li>La ecuación de <strong>predicción extramuestral</strong> es <span class="math inline">\(\widehat{y}_{T+h} = \widehat{y}_{T+1} = l_T\)</span></li>
 </ul>
 <p>Dos estimaciones razonables de <span class="math inline">\(l_t\)</span>, el nivel de la serie en el periodo <span class="math inline">\(t\)</span>, son el valor observado para la serie en ese periodo <span class="math inline">\(y_t\)</span> y el nivel del periodo previo <span class="math inline">\(l_{t-1}\)</span>. La estimación final de <span class="math inline">\(l_t\)</span> es una media ponderada de ambas y esta estimación final es la previsión de la serie para el periodo siguiente.</p>
 <p><br>
@@ -572,12 +572,12 @@ s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1
 <section id="estimación-de-los-parámetros-del-modelo" class="level2" data-number="4.3">
 <h2 data-number="4.3" class="anchored" data-anchor-id="estimación-de-los-parámetros-del-modelo"><span class="header-section-number">4.3</span> Estimación de los parámetros del modelo</h2>
 <p>Dado el proceso iterativo para el cálculo de <span class="math inline">\(l_t\)</span> se necesita un <strong>valor inicial</strong> de arranque <span class="math inline">\(l_0\)</span>. Cada programa estadístico usa su propio método para obtener <span class="math inline">\(l_0\)</span>.</p>
-<p>Respecto de <span class="math inline">\(\alpha\)</span>, usualmente se estima el valor <strong>optimo</strong> según un criterio de precisión de la predicción. El parámetro <span class="math inline">\(\alpha\)</span> <strong>se puede interpretar</strong> como:</p>
+<p>Respecto de <span class="math inline">\(\alpha\)</span>, usualmente se estima el valor <strong>optimo</strong> según un criterio de precisión de la predicción. El parámetro <span class="math inline">\(\alpha\)</span> <strong>se puede interpretar</strong>:</p>
 <ul>
 <li>Si <span class="math inline">\(\alpha = 1\)</span> se tiene el <em>método ingenuo I</em> (<span class="math inline">\(\widehat{y}_{t+1}=y_t\)</span>), óptimo cuando el nivel de la serie varía constantemente en el tiempo.</li>
 <li>Si <span class="math inline">\(\alpha = 0\)</span> se tiene <span class="math inline">\(\widehat{y}_{t} =l_0\)</span>, óptimo cuando el nivel permanece constante en el tiempo.</li>
 </ul>
-<p>En concreto <code>ets</code> estima por defecto los parámetros <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(l_0\)</span> maximizando la función de verosimilitud. Esta búsqueda está restringida a <span class="math inline">\(0 &lt; \alpha &lt; 1\)</span>. Es decir el parámetro <span class="math inline">\(\alpha\)</span> nunca puede ser 0 o 1 y en la práctica sus valores limite son 0.0001 y 0.9999.</p>
+<p>En concreto, <code>ets</code> estima por defecto los parámetros <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(l_0\)</span> maximizando la función de verosimilitud. Esta búsqueda está restringida a <span class="math inline">\(0 &lt; \alpha &lt; 1\)</span>. Es decir el parámetro <span class="math inline">\(\alpha\)</span> nunca puede ser 0 o 1 y en la práctica sus valores limite son 0.0001 y 0.9999.</p>
 <p><br>
 </p>
 </section>
@@ -629,7 +629,7 @@ Training set 0.01332464</code></pre>
 <li><em>sigma</em> es la desviación típica del error (aditivo) de predicción. Se diferencia de RMSE en el denominador. Para calcular <em>sigma</em> en lugar de dividir por <span class="math inline">\(T\)</span> se divide por <span class="math inline">\(T\)</span> menos el número de parámetros estimados, en este caso 3: <span class="math inline">\(l_0\)</span>, <span class="math inline">\(\alpha\)</span> y <em>sigma</em>. Sí, <em>sigma</em>, se considerará siempre otro parámetro estimado.</li>
 <li>La calidad del ajuste es bueno, como evidencia el error porcentual medio del 1.8%.</li>
 </ul>
-<p>En el objeto <code>electricidadEts</code> la matriz <code>electricidadEts$states</code> guarda todos los valores del nivel obtenidos con la ecuación recursiva, incluidos el valor de arranque, así que es una matriz con <span class="math inline">\(T+1\)</span> filas (18 en el ejemplo). Puedes ver el valor de <span class="math inline">\(l_{22}\)</span> de la última semana de mayo de 2021 (semana 22 del año) en su última fila, que vale 4633.76.</p>
+<p>En el objeto <code>electricidadEts</code> la matriz <code>electricidadEts$states</code> guarda todos los valores del nivel obtenidos con la ecuación recursiva, incluido el valor de arranque, así que es una matriz con <span class="math inline">\(T+1\)</span> filas (18 en el ejemplo). Puedes ver el valor de <span class="math inline">\(l_{22}\)</span> de la última semana de mayo de 2021 (semana 22 del año) en su última fila, que vale 4633.76.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(electricidadEts<span class="sc">$</span>states, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -657,7 +657,7 @@ Frequency = 1
 27       4633.761 4156.376 5111.146</code></pre>
 </div>
 </div>
-<p>La <a href="#fig-electricidadANN">Figura&nbsp;1</a> muestra la serie Demanda eléctrica, las previsiones extra-muestrales que son constantes y el intervalo de confianza. Conforme aumentamos el horizonte de predicción, el intervalo de confianza es más amplio como reflejo de la mayor incertidumbre en la predicción.</p>
+<p>La <a href="#fig-electricidadANN">Figura&nbsp;1</a> muestra la serie Demanda eléctrica, las previsiones extramuestrales que son constantes y el intervalo de confianza. Conforme aumentamos el horizonte de predicción, el intervalo de confianza es más amplio como reflejo de la mayor incertidumbre en la predicción.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidadf,</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -685,11 +685,13 @@ Frequency = 1
 <section id="formulas-interactivas-de-sus-componentes-1" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="formulas-interactivas-de-sus-componentes-1"><span class="header-section-number">5.1</span> Formulas interactivas de sus componentes</h2>
 <p>Las <strong>ecuaciones recursivas</strong> son</p>
+<p>$$</p>
 <span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha y_t + (1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)b_{t-1}
 \end{aligned}\]</span>
-<p>La ecuación de la <strong>predicción intra-muestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1} = l_t + b_t,\]</span> de forma que la ecuación de <strong>predicción extra-muestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T.\]</span></p>
+<p>$$</p>
+<p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1} = l_t + b_t,\]</span> de forma que la ecuación de <strong>predicción extramuestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T.\]</span></p>
 <p>Dos estimaciones razonables del nivel de la serie en el periodo <span class="math inline">\(t\)</span> son el valor observado para la serie en ese periodo <span class="math inline">\(y_t\)</span>, y una estimación del nivel del periodo <span class="math inline">\(t\)</span> realizada desde el periodo <span class="math inline">\(t-1\)</span>: <span class="math inline">\(l_{t-1} + b_{t-1}\)</span>. Por otro lado, dos estimaciones razonables de la pendiente de la serie en el periodo <span class="math inline">\(t\)</span> son el cambio de nivel de <span class="math inline">\(t-1\)</span> a <span class="math inline">\(t\)</span> (el último observado) <span class="math inline">\(l_t-l_{t-1}\)</span>, y el valor de la pendiente en el periodo previo, <span class="math inline">\(b_{t-1}\)</span>. En ambos casos, nivel y pendiente, la estimación final es una media ponderada, parametrizada por <span class="math inline">\(0 \leq \alpha, \: \beta \leq 1\)</span>.</p>
 <p>Observa que el <em>método ingenuo II</em> es un caso concreto de Alisado de Holt. Si hacemos <span class="math inline">\(\alpha=\beta = 1,\)</span> queda <span class="math inline">\(l_t=y_t\)</span> y <span class="math inline">\(b_t=y_t-y_{t-1}\)</span>, por tanto <span class="math display">\[\widehat{y}_{t+1}=l_t + b_t = y_t + (y_t - y_{t-1}).\]</span> y <span class="math display">\[\widehat{y}_{T+h}=l_T + h \cdot b_T = y_T + h(y_T - y_{T-1}).\]</span></p>
 <p><br>
@@ -747,7 +749,7 @@ Training set -91.75606 5755.295 4179.61 -0.3817069 6.68946 0.9237963
 Training set 0.004201274</code></pre>
 </div>
 </div>
-<p>Los valores óptimos de los cuatro parámetros son <span class="math inline">\(\alpha=\)</span> 0.95, <span class="math inline">\(\beta=\)</span> 0, <span class="math inline">\(l_0 =\)</span> 43015.36 y <span class="math inline">\(b_0 =\)</span> 866.67. Observa que <span class="math inline">\(\alpha\)</span> es prácticamente 1 y que <span class="math inline">\(\beta\)</span> es cero. Si aplicamos estos valores de los parámetros a las ecuaciones recursivas y la predicción extra-muestral, obtenemos <span class="math inline">\(y_{T+h}=y_T + hb_0\)</span>: la predicción es el último valor observado más <span class="math inline">\(h\)</span> veces la primera pendiente estimada. La calidad de las predicciones es razonable, con un error porcentual medio del 6.7%.</p>
+<p>Los valores óptimos de los cuatro parámetros son <span class="math inline">\(\alpha=\)</span> 0.95, <span class="math inline">\(\beta=\)</span> 0, <span class="math inline">\(l_0 =\)</span> 43015.36 y <span class="math inline">\(b_0 =\)</span> 866.67. Observa que <span class="math inline">\(\alpha\)</span> es prácticamente 1 y que <span class="math inline">\(\beta\)</span> es cero. Si aplicamos estos valores de los parámetros a las ecuaciones recursivas y la predicción extramuestral, obtenemos <span class="math inline">\(y_{T+h}=y_T + hb_0\)</span>: la predicción es el último valor observado más <span class="math inline">\(h\)</span> veces la primera pendiente estimada. La calidad de las predicciones es razonable, con un error porcentual medio del 6.7%.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -788,7 +790,7 @@ Frequency = 1
 2024       68423.11 42261.77 94584.44</code></pre>
 </div>
 </div>
-<p>La <a href="#fig-librosAAN">Figura&nbsp;2</a> muestra la serie Libros y las previsiones extra-muestrales que muestran una ligera tendencia creciente.</p>
+<p>La <a href="#fig-librosAAN">Figura&nbsp;2</a> muestra la serie Libros y las previsiones extramuestrales que muestran una ligera tendencia creciente.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(librosf,</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -810,19 +812,20 @@ Frequency = 1
 </section>
 <section id="alisado-exponencial-con-pendiente-amortiguada-a-ad-n" class="level1" data-number="6">
 <h1 data-number="6"><span class="header-section-number">6</span> Alisado exponencial con pendiente amortiguada (A, Ad, N)</h1>
-<p>Las previsiones con el método de Holt presentan siempre una pendiente constante. En previsiones a corto plazo esto no es un problema, pero para previsiones a largo plazo la experiencia indica que suele aparecer un sesgo de previsión. El alisado exponencial con pendiente amortiguada trata de corregir esta limitación. El mecanismo, propuesto por <span class="citation" data-cites="Gardner85">Everette S. Gardner and Mckenzie (<a href="#ref-Gardner85" role="doc-biblioref">1985</a>)</span>, es introducir un nuevo parámetro <span class="math inline">\(0 \leq \phi \leq 1\)</span> que <em>amortigua</em> la tendencia hasta hacerla plana en el largo plazo.</p>
+<p>Las previsiones con el método de Holt presentan siempre una pendiente constante. En previsiones a corto plazo esto no es un problema, pero para previsiones a largo plazo la experiencia indica que suele aparecer un sesgo de previsión. El alisado exponencial con pendiente amortiguada trata de corregir esta limitación. El mecanismo, propuesto por <span class="citation" data-cites="Gardner85">Gardner and Mckenzie (<a href="#ref-Gardner85" role="doc-biblioref">1985</a>)</span>, es introducir un nuevo parámetro <span class="math inline">\(0 \leq \phi \leq 1\)</span> que <em>amortigua</em> la tendencia hasta hacerla plana en el largo plazo.</p>
 <p><br>
 </p>
 <section id="formulas-interactivas-de-sus-componentes-2" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="formulas-interactivas-de-sus-componentes-2"><span class="header-section-number">6.1</span> Formulas interactivas de sus componentes</h2>
-<p>Las <strong>ecuaciones recursivas</strong> son <span class="math display">\[
-\begin{aligned}
+<p>Las <strong>ecuaciones recursivas</strong> son</p>
+<p>$$</p>
+<span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha y_t + (1-\alpha)(l_{t-1}+\phi b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)\phi b_{t-1}
-\end{aligned}
-\]</span></p>
-<p>La ecuación de la <strong>predicción intra-muestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1} = l_t + \phi b_t,\]</span> de forma que la ecuación de <strong>predicción extra-muestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + (\phi + \phi^2 + \ldots + \phi^h) b_T.\]</span></p>
-<p>Como observas, se ha añadido un nuevo parámetro <span class="math inline">\(\phi\)</span>, que acompaña siempre a la pendiente $b_t. $Si <span class="math inline">\(\phi = 1\)</span>, se tiene el alisado de Holt y si <span class="math inline">\(\phi = 0\)</span>, se tiene el alisado simple. Para valores entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span> en el corto plazo las predicciones tienen pendiente y en el largo plazo se hacen constantes e iguales a <span class="math inline">\(l_T + \phi b_T/(1 - \phi)\)</span>.</p>
+\end{aligned}\]</span>
+<p>$$</p>
+<p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1} = l_t + \phi b_t,\]</span> de forma que la ecuación de <strong>predicción extramuestral</strong> es <span class="math display">\[\widehat{y}_{T+h}=l_T + (\phi + \phi^2 + \ldots + \phi^h) b_T.\]</span></p>
+<p>Como observas, se ha añadido un nuevo parámetro <span class="math inline">\(\phi\)</span>, que acompaña siempre a la pendiente <span class="math inline">\(b_t\)</span>. Si <span class="math inline">\(\phi = 1\)</span>, se tiene el alisado de Holt y si <span class="math inline">\(\phi = 0\)</span>, se tiene el alisado simple. Para valores entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span> en el corto plazo las predicciones tienen pendiente y en el largo plazo se hacen constantes e iguales a <span class="math inline">\(l_T + \phi b_T/(1 - \phi)\)</span>.</p>
 <p>Por razones prácticas el rango de búsqueda de <span class="math inline">\(\phi\)</span> queda en el intervalo <span class="math inline">\([0.8, 0.98]\)</span>. Si el valor óptimo de <span class="math inline">\(\phi\)</span> fuera su valor máximo de <span class="math inline">\(0.98\)</span> o muy cercano a este valor, cabría plantearse si no sería más adecuado un modelo sin amortiguamiento.</p>
 <p><br>
 </p>
@@ -876,27 +879,29 @@ Parámetros estimados
 <p>¿Cuántos parámetros se han estimado en este caso? ¿Cuáles?</p>
 </div>
 </div>
-<p>La <a href="#fig-librosAAdN">Figura&nbsp;3</a> muestra la serie Libros, su estimación (intra-muestral) y las predicciones a 15 años vista. Observa que la pendiente de las previsiones se <em>amortigua</em> en el tiempo, de forma que al principio las previsiones crecen más rápidamente que en los últimos años.</p>
+<p>La <a href="#fig-librosAAdN">Figura&nbsp;3</a> muestra la serie Libros, su estimación (intramuestral) y las predicciones a 15 años vista. Observa que la pendiente de las previsiones se <em>amortigua</em> en el tiempo, de forma que al principio las previsiones crecen más rápidamente que en los últimos años.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>librosfD <span class="ot">&lt;-</span> <span class="fu">forecast</span>(librosEtsD, <span class="at">h =</span> <span class="dv">15</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>librosfD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>librosfD <span class="ot">&lt;-</span> <span class="fu">forecast</span>(librosEtsD, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">h =</span> <span class="dv">15</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">level =</span> <span class="dv">95</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>librosfD</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     Point Forecast    Lo 80    Hi 80    Lo 95     Hi 95
-2020       64148.96 56153.33 72144.59 51920.70  76377.22
-2021       64325.91 53583.64 75068.19 47897.02  80754.81
-2022       64486.65 51568.74 77404.55 44730.42  84242.88
-2023       64632.65 49855.75 79409.55 42033.33  87231.96
-2024       64765.27 48338.19 81192.34 39642.22  89888.32
-2025       64885.73 46959.54 82811.92 37469.99  92301.47
-2026       64995.15 45685.72 84304.58 35463.92  94526.37
-2027       65094.54 44494.40 85694.68 33589.35  96599.73
-2028       65184.82 43370.08 86999.55 31822.06  98547.58
-2029       65266.82 42301.54 88232.11 30144.45 100389.20
-2030       65341.31 41280.33 89402.29 28543.22 102139.40
-2031       65408.97 40299.99 90517.95 27008.10 103809.84
-2032       65470.43 39355.40 91585.46 25530.94 105409.92
-2033       65526.26 38442.47 92610.05 24105.17 106947.34
-2034       65576.97 37557.83 93596.10 22725.40 108428.54</code></pre>
+<pre><code>     Point Forecast    Lo 95     Hi 95
+2020       64148.96 51920.70  76377.22
+2021       64325.91 47897.02  80754.81
+2022       64486.65 44730.42  84242.88
+2023       64632.65 42033.33  87231.96
+2024       64765.27 39642.22  89888.32
+2025       64885.73 37469.99  92301.47
+2026       64995.15 35463.92  94526.37
+2027       65094.54 33589.35  96599.73
+2028       65184.82 31822.06  98547.58
+2029       65266.82 30144.45 100389.20
+2030       65341.31 28543.22 102139.40
+2031       65408.97 27008.10 103809.84
+2032       65470.43 25530.94 105409.92
+2033       65526.26 24105.17 106947.34
+2034       65576.97 22725.40 108428.54</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(librosfD,</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -924,27 +929,27 @@ Parámetros estimados
 </p>
 <section id="alisado-de-holt-winters-aditivo-a-a-a" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="alisado-de-holt-winters-aditivo-a-a-a"><span class="header-section-number">7.1</span> Alisado de Holt-Winters aditivo (A, A, A)</h2>
-Las <strong>ecuaciones recursivas</strong> de actualización son: $$
-<span class="math display">\[\begin{aligned}
+<p>Las <strong>ecuaciones recursivas</strong> de actualización son: <span class="math display">\[
+\begin{aligned}
 l_t &amp; =\alpha (y_t - s_{t-m} ) + (1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)b_{t-1} \\
 s_t &amp; =\gamma (y_t - l_{t-1} - b_{t-1}) + (1 - \gamma)s_{t-m}
-\end{aligned}\]</span>
-<p>$$ con <span class="math inline">\(0 \leq \alpha, \beta, \gamma \leq 1\)</span>.</p>
-<p>La ecuación de la <strong>predicción intra-muestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1}  = l_t + b_t + s_{t+1-m},\]</span> de forma que la ecuación de <strong>predicción extra-muestral es</strong>: <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T + s_{T+h - m(k+1)},\]</span> con <span class="math inline">\(k = \lfloor(h-1)/m\rfloor\)</span>.</p>
+\end{aligned}
+\]</span> con <span class="math inline">\(0 \leq \alpha, \beta, \gamma \leq 1\)</span>.</p>
+<p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1}  = l_t + b_t + s_{t+1-m},\]</span> de forma que la ecuación de <strong>predicción extramuestral es</strong>: <span class="math display">\[\widehat{y}_{T+h}=l_T + h b_T + s_{T+h - m(k+1)},\]</span> con <span class="math inline">\(k = \lfloor(h-1)/m\rfloor\)</span>.</p>
 <p><br>
 </p>
 </section>
 <section id="alisado-de-holt-winters-multiplicativo-m-a-m" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="alisado-de-holt-winters-multiplicativo-m-a-m"><span class="header-section-number">7.2</span> Alisado de Holt-Winters multiplicativo (M, A, M)</h2>
-<p>Las <strong>ecuaciones recursivas</strong> de actualización son: <span class="math display">\[
-\begin{aligned}
+Las <strong>ecuaciones recursivas</strong> de actualización son: $$
+<span class="math display">\[\begin{aligned}
 l_t &amp; =\alpha \frac{y_t}{s_{t-m}} + (1-\alpha)(l_{t-1}+b_{t-1}) \\
 b_t &amp; =\beta (l_t - l_{t-1}) + (1-\beta)b_{t-1} \\
 s_t &amp; =\gamma \frac{y_t}{l_{t-1} + b_{t-1}} + (1 - \gamma)s_{t-m}
-\end{aligned}
-\]</span></p>
-<p>La ecuación de la <strong>predicción intra-muestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1}  = (l_t + b_t)s_{t+1-m},\]</span> de forma que la ecuación de <strong>predicción extra-muestral es</strong>: <span class="math display">\[\widehat{y}_{T+h}=(l_T + h b_T)s_{T+h - m(k+1)}.\]</span></p>
+\end{aligned}\]</span>
+<p>$$</p>
+<p>La ecuación de la <strong>predicción intramuestral</strong> a un periodo vista es <span class="math display">\[\widehat{y}_{t+1}  = (l_t + b_t)s_{t+1-m},\]</span> de forma que la ecuación de <strong>predicción extramuestral es</strong>: <span class="math display">\[\widehat{y}_{T+h}=(l_T + h b_T)s_{T+h - m(k+1)}.\]</span></p>
 <p><br>
 </p>
 </section>
@@ -1005,7 +1010,7 @@ Training set 0.03820125</code></pre>
 668.923   0.051 -88.685 -47.554  19.729  30.452  35.934  36.667  13.448 </code></pre>
 </div>
 </div>
-<p>Como el último dato de la serie es domingo 30 de mayo, los valores del nivel <span class="math inline">\(l\)</span> y la pendiente <span class="math inline">\(b\)</span> mostrados corresponden a ese día. Sin embargo, la componente estacional tiene un orden muy peculiar: s1 es el valor estacional para domingo (día del último dato), s2 el de sábado, s3 de viernes, hasta s7 que sería lunes. Podemos reproducir las predicciones para los próximos 7 días, 31 de mayo a 6 de junio (ojo, el etiquetado de la salida no es correcto):</p>
+<p>Como el último dato de la serie es domingo 30 de mayo, los valores del nivel <span class="math inline">\(l\)</span> y la pendiente <span class="math inline">\(b\)</span> mostrados corresponden a ese día. Sin embargo, la componente estacional tiene un orden muy peculiar: s1 es el valor estacional para domingo (día del último dato), s2 el de sábado, s3 de viernes, hasta s7 que sería lunes. Podemos reproducir las predicciones para los próximos 7 días, 31 de mayo a 6 de junio (ojo, el etiquetado de la salida no tiene sentido):</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>electricidadEts<span class="sc">$</span>states[TT, <span class="dv">1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)<span class="sc">*</span>electricidadEts<span class="sc">$</span>states[TT, <span class="dv">2</span>] <span class="sc">+</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  electricidadEts<span class="sc">$</span>states[TT, <span class="dv">9</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1038,7 +1043,7 @@ Training set 0.03820125</code></pre>
 24.85714       580.9476 471.5520 690.3432</code></pre>
 </div>
 </div>
-<p>La <a href="#fig-electricidadAAA">Figura&nbsp;4</a> muestra la serie Demanda eléctrica y las previsiones extra-muestrales.</p>
+<p>La <a href="#fig-electricidadAAA">Figura&nbsp;4</a> muestra la serie Demanda eléctrica y las previsiones extramuestrales.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(electricidadf,</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -1100,7 +1105,7 @@ Training set -13.31703 860.7476 675.2864 -0.0726126 1.823373 0.4868175
 Training set 0.0980623</code></pre>
 </div>
 </div>
-<p>L os valores óptimos de los parámetros son <span class="math inline">\(\alpha=\)</span> 0.32, <span class="math inline">\(\beta=\)</span> 0.05 y <span class="math inline">\(\gamma=\)</span> 0.18. Los valores tan bajos para <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, modifican su valor muy lentamente. La calidad de las predicciones es notable, con un error porcentual medio del 1.8%.</p>
+<p>Los valores óptimos de los parámetros son <span class="math inline">\(\alpha=\)</span> 0.32, <span class="math inline">\(\beta=\)</span> 0.05 y <span class="math inline">\(\gamma=\)</span> 0.18. Los valores tan bajos para <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, modifican su valor muy lentamente. La calidad de las predicciones es notable, con un error porcentual medio del 1.8%.</p>
 <p>Los últimos valores de las componentes son</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">nrow</span>(nacimientosbEts<span class="sc">$</span>states)</span>
@@ -1159,7 +1164,7 @@ Nov 2021       27683.28 21224.32 34142.25
 Dec 2021       27478.84 20726.54 34231.15</code></pre>
 </div>
 </div>
-<p>La <a href="#fig-nacimientosMAM">Figura&nbsp;5</a> muestra la serie Nacimientos y las previsiones extra-muestrales.</p>
+<p>La <a href="#fig-nacimientosMAM">Figura&nbsp;5</a> muestra la serie Nacimientos y las previsiones extramuestrales.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(nacimientosbf,</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -1261,7 +1266,7 @@ Dec 2021       27620.71 23108.37 32754.26</code></pre>
 </div>
 </div>
 <p>Observa que en este caso la calidad de las predicciones (MAPE = 2.0%) es inferior a la obtenida con la serie sin transformar.</p>
-<p>La <a href="#fig-nacimientoslog">Figura&nbsp;6</a> muestra la serie Nacimientos y las previsiones extra-muestrales obtenidas con y sin la transformación logarítmica.</p>
+<p>La <a href="#fig-nacimientoslog">Figura&nbsp;6</a> muestra la serie Nacimientos y las previsiones extramuestrales obtenidas con y sin la transformación logarítmica.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-nacimientoslog" class="quarto-figure quarto-figure-center anchored">
@@ -1360,7 +1365,7 @@ Dec 2021       27620.71 23108.37 32754.26</code></pre>
 </section>
 <section id="casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo" class="level1" data-number="9">
 <h1 data-number="9"><span class="header-section-number">9</span> Casos generales de alisado exponencial: la función <code>ets</code> (de nuevo)</h1>
-<p>En los epígrafes previos hemos visto cinco de los casos expuestos en la taxonomía de la <a href="#tbl-taxonomia">Tabla&nbsp;1</a>, fijados a partir del argumento <code>model</code> de la función <code>ets</code>. Veamos ahora como estimar cualquiera de los treinta modelos que surgen según las diferentes posibilidades de la tendencia (N, A, Ad, M y Md), la estacionalidad (N, A y M) y el error (A, M).</p>
+<p>En los epígrafes previos hemos visto cinco de los casos expuestos en la taxonomía de la <a href="#tbl-taxonomia">Tabla&nbsp;1</a>, fijados a partir de los argumentos <code>model</code> y <code>damped</code> de la función <code>ets</code>. Veamos ahora como estimar cualquiera de los treinta modelos que surgen según las diferentes posibilidades de la tendencia (N, A, Ad, M y Md), la estacionalidad (N, A y M) y el error (A, M).</p>
 <p>Recordemos que el tipo de error no influye en el cálculo de las previsiones, solo influye en el cálculo del intervalo de confianza de estas.</p>
 <p><strong>Podemos estimar cualquiera de los treinta modelos usando la función <code>ets</code> del paquete <code>forecast</code>.</strong></p>
 <p>Lo más habitual es no saber cual es el mejor modelo, entendiendo como tal, el que mejor se ajusta a la serie temporal. De hecho, si lo que buscamos es predecir bien, el mejor modelo será el que mejor prediga.</p>
@@ -1386,15 +1391,15 @@ Una reflexión sobre los métodos automáticos de selección de modelos
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>Con el comando <code>forecast(ets(nacimientos), h = 24)</code> obtenemos una predicción mensual a dos años vista del número de nacimientos en España. Así de simple, solo 31 caracteres. Todo esto gracias a que un algoritmo interno ha estimado los parámetros de múltiples modelos, elegido el mejor modelo de todos y lo ha usado para obtener las predicciones. Podemos afirmar que tenemos las mejores predicciones. Un momento, ¿podemos?</p>
+<p>Con el comando <code>forecast(ets(nacimientos),h=24)</code> obtenemos una predicción mensual a dos años vista del número de nacimientos en España. Así de simple, solo 31 caracteres. Todo esto gracias a que un algoritmo interno ha estimado los parámetros de múltiples modelos, elegido el mejor modelo de todos y lo ha usado para obtener las predicciones. Podemos afirmar que tenemos las mejores predicciones. Un momento, ¿podemos?</p>
 <p>Parémonos a reflexionar sobre lo que hemos hecho o, más bien, lo que el algoritmo ha hecho y a contrastarlo con lo que nosotros queríamos. Por un lado, el algoritmo estima los parámetros de un menú fijo de modelos y para ello usa un criterio de optimización, que por defecto es maximizar la función de verosimilitud; cuando ya tiene estimados todos los modelos, elije el mejor usando el criterio de información de Akaike corregido para muestras pequeñas; y finalmente, nosotros medimos la capacidad predictiva del modelo seleccionado usando el error absoluto porcentual medio. Vaya, resulta que en los procesos de identificación y estimación del mejor modelo se usan dos criterios diferentes, que además no coinciden con nuestro criterio de calidad de las predicciones.</p>
-<p>Si consideramos que la calidad de un modelo viene dada por el error absoluto porcentual medio en las predicciones intra-muestrales a un periodo vista (lo que hemos decidido llamar MAPE), ¿no deberíamos estimar los parámetros del modelo usando como criterio la minimización del MAPE?, ¿no deberíamos elegir entre varios modelos aquel que presenta un MAPE menor? De esta forma, en todos los pasos del proceso se usa el mismo criterio, que es, además, el criterio que hemos considerado adecuado para valorar la calidad de las predicciones.</p>
+<p>Si consideramos que la calidad de un modelo viene dada por el error absoluto porcentual medio en las predicciones intramuestrales a un periodo vista (lo que hemos decidido llamar MAPE), ¿no deberíamos estimar los parámetros del modelo usando como criterio la minimización del MAPE?, ¿no deberíamos elegir entre varios modelos aquel que presenta un MAPE menor? De esta forma, en todos los pasos del proceso se usa el mismo criterio, que es, además, el criterio que hemos considerado adecuado para valorar la calidad de las predicciones.</p>
 <p>Pero no es esto lo que hacemos.</p>
-<p>Nada nos garantiza que el modelo estimado y seleccionado por el algoritmo estime las mejores predicciones posibles. Y por <em>mejores</em> quiero decir que de entre todos los posibles modelos del menú y todos los posibles valores de sus parámetros, el seleccionado sea que el minimiza nuestro criterio de calidad de las predicciones.</p>
+<p>Nada nos garantiza que el modelo estimado y seleccionado por el algoritmo estime las mejores predicciones posibles. Y por <em>mejores</em> quiero decir que de entre todos los posibles modelos del menú y todos los posibles valores de sus parámetros, el seleccionado sea el que minimiza nuestro criterio de calidad de las predicciones.</p>
 <p>Ahora ya podemos dar respuesta a la pregunta del primer párrafo: no, no podemos afirmar que nuestras predicciones sean las mejores.</p>
 <p>Alguien dirá que casi seguro entre las predicciones subóptimas obtenidas por el algoritmo con su extraña mezcla de criterios y las predicciones óptimas de verdad no habrá mucha diferencia. Total, que más da una función de verosimilitud que un criterio de información que una medida del error medio. Pero lo cierto es que no lo sabemos, no tenemos ni idea de la distancia que hay entre lo óptimo y lo sub-óptimo, y si el coste de equivocarme en las predicciones es alto, puede que incluso una pequeña diferencia sea relevante.</p>
-<p>Esta reflexión realizada en el contexto de series temporales y para la función <code>ets</code> es aplicable a todos los casos donde dejamos que un algoritmo ya programado elija el mejor modelo, y se basa en el hecho de que rara vez los criterios de estimación y elección que usan los algoritmos coinciden con el concepto de calidad de ajuste que estamos interesados</p>
-<p>A pesar de lo aquí expuesto, como es más cómodo (y rápido) tirar de rutinas ya programadas que escribir tu propio código, seguiremos trabajando con modelos sub-óptimos y obteniendo estimaciones sub-óptimas, pero diciendo que son las mejores.</p>
+<p>Esta reflexión realizada en el contexto de series temporales y para la función <code>ets</code> es aplicable a todos los casos donde dejamos que un algoritmo ya programado elija el mejor modelo, y se basa en el hecho de que rara vez los criterios de estimación y elección que usan los algoritmos coinciden con el concepto de calidad de ajuste que estamos interesados.</p>
+<p>A pesar de lo aquí expuesto, como es más cómodo (y rápido) tirar de rutinas ya programadas que escribir nuestro propio código, seguiremos trabajando con modelos subóptimos y obteniendo estimaciones subóptimas, pero diciendo que son las mejores.</p>
 </div>
 </div>
 </div>
@@ -1411,7 +1416,7 @@ Una reflexión sobre los métodos automáticos de selección de modelos
 <p>En los modelos de alisado estimados por la función <code>ets</code> la fórmula para el cálculo del residuo estimado depende de su naturaleza aditiva o multiplicativa.</p>
 <p>Si el <strong>residuo es aditivo</strong>, entonces el modelo es <span class="math inline">\(y_t = \widehat{y}_t + \widehat{\varepsilon}_t\)</span> y el residuo se define de la forma usual <span class="math display">\[\widehat{\varepsilon}_t = y_t - \widehat{y}_t.\]</span></p>
 <p>Ahora bien, si el <strong>residuo es multiplicativo</strong>, entonces el modelo es <span class="math inline">\(y_t = \widehat{y}_t \cdot (1 + \widehat{\varepsilon}_t)\)</span>, y no <span class="math inline">\(y_t = \widehat{y}_t \cdot \widehat{\varepsilon}_t\)</span> como se podría esperar. Por tanto, el residuo multiplicativo se define como <span class="math display">\[\widehat{\varepsilon}_t = (y_t - \widehat{y}_t)/\widehat{y}_t.\]</span></p>
-<p>De esta forma en ambos casos –aditivo y multiplicativo– el residuo evoluciona alrededor del valor 0 y se le pueden imponer las hipótesis usuales de ruido blanco. Nota que el error aditivo tampoco es el error porcentual tal y como se define para el calculo del MPE o del MAPE.</p>
+<p>De esta forma en ambos casos –aditivo y multiplicativo– el residuo evoluciona alrededor del valor 0 y se le pueden imponer las hipótesis usuales de ruido blanco. Observa que el error multiplicativo tampoco es el error porcentual tal y como se define para el calculo del MPE o del MAPE.</p>
 <p>Si hemos estimado con la función <code>ets</code> un modelo con residuo multiplicativo y extraemos el residuo con la función <code>residuals</code> se usará la fórmula previamente indicada. Si se desea obtener el residuo aditivo, se debe usar la función <code>residuals</code> con el argumento <code>type = "response"</code>.</p>
 <p><strong>Residuo de un modelo logarítmico</strong></p>
 <p>Si tenemos una serie <span class="math inline">\(y_t\)</span>, pero el modelo se ha obtenido sobre su transformación logarítmica <span class="math inline">\(z_t = \log(y_t)\)</span>, el residuo (que siempre será aditivo) que obtendremos por defecto es <span class="math display">\[\widehat{\varepsilon}_t = z_t - \widehat{z}_t.\]</span></p>
@@ -1514,12 +1519,12 @@ Training set 877.6729 5798.394 4367.896 1.318359 6.900756 0.9654123 -0.03788908<
 </div>
 <p>La <a href="#fig-librosError">Figura&nbsp;8</a> muestra que aunque algún error supera las dos desviaciones típicas, ninguno puede ser considerado claramente como atípico.</p>
 </section>
-<section id="validación-error-extra-muestral-a-varios-periodos-vista" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="validación-error-extra-muestral-a-varios-periodos-vista">Validación: error extra-muestral a varios periodos vista</h3>
-<p>Vamos a mejorar la estimación de la calidad de las predicciones obteniendo el MAPE para <strong>previsiones extra-muestrales a varios periodos vista</strong>. Para ello vamos a reservar, por ejemplo, las últimas 6 observaciones de la serie Libros y ajustar el modelo con las restantes. Después usaremos este modelo para calcular las predicciones a 6 periodos vista y compararlas con los valores reales de la serie Libros.</p>
+<section id="validación-error-extramuestral-a-varios-periodos-vista" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="validación-error-extramuestral-a-varios-periodos-vista">Validación: error extramuestral a varios periodos vista</h3>
+<p>Vamos a mejorar la estimación de la calidad de las predicciones obteniendo el MAPE para <strong>previsiones extramuestrales a varios periodos vista</strong>. Para ello vamos a reservar, por ejemplo, las últimas 6 observaciones de la serie Libros y ajustar el modelo con las restantes. Después usaremos este modelo para calcular las predicciones a 6 periodos vista y compararlas con los valores reales de la serie Libros.</p>
 <p>Recuerda, este método para valorar la calidad de las predicciones usa la filosofía del método <em>training set/test set</em>: el periodo de datos usado en la estimación no se usa como periodo de datos para la validación. Sin embargo, tiene el problema de que el error obtenido es una mezcla de errores de predicción a corto, medio y largo plazo difícil de valorar. Además, los resultados dependen tremendamente del punto de corte temporal seleccionado.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las observaciones intra- y extra-muestrales</span></span>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Definimos las observaciones intra y extramuestrales</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>librosIntra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">end =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">6</span>)</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>librosExtra <span class="ot">&lt;-</span> <span class="fu">subset</span>(libros, <span class="at">start =</span> <span class="fu">length</span>(libros) <span class="sc">-</span> <span class="dv">5</span>)</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1542,14 +1547,14 @@ Test set      0.08397051  1.881683</code></pre>
 <div class="cell" data-layout-align="center">
 
 </div>
-<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intra-muestral</strong> de <strong>1993 a 2013</strong> es del 8%; y el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extra-muestral</strong> de <strong>2014 a 2019</strong> es del 6.8%. Sin embargo, para el periodo extra-muestral el error medio (ME) es muy elevado, un indicativo de que las previsiones están segadas. Para el punto de corte elegido, la calidad de las previsiones no se deteriora cuanto nos salimos de las condiciones óptimas.</p>
+<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intramuestral</strong> de <strong>1993 a 2013</strong> es del 8%; y el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extramuestral</strong> de <strong>2014 a 2019</strong> es del 6.8%. Sin embargo, para el periodo extramuestral el error medio (ME) es muy elevado, un indicativo de que las previsiones están segadas. Para el punto de corte elegido, la calidad de las previsiones no se deteriora cuanto nos salimos de las condiciones óptimas.</p>
 <p>Un gráfico puede ayudar a entender este proceso de validación. En la <a href="#fig-librosTSTS">Figura&nbsp;9</a>:</p>
 <ul>
-<li>La línea de puntos vertical separa el periodo muestral (1993-2013) usado para estimar el modelo, del periodo extra-muestral (2014-2019) usado sólo para hacer las previsiones.</li>
+<li>La línea de puntos vertical separa el periodo muestral (1993-2013) usado para estimar el modelo, del periodo extramuestral (2014-2019) usado sólo para hacer las previsiones.</li>
 <li>La serie Libros aparece como una línea sólida en negro, desde 1993 hasta 2019.</li>
 <li>La previsión <em>intra</em>-muestral (a un periodo vista) de la serie Libros aparece como una línea azul. Observa la previsión puede ser mayor o menor que la serie, no evidenciándose sesgo.</li>
-<li>La línea en rojo es la previsión <em>extra</em>-muestral a largo plazo: <span class="math inline">\(\hat{y}_{T+h}=l_T\)</span>, donde <span class="math inline">\(T=2013\)</span>. Observa que todas las previsiones están por debajo del valor real de la serie: la previsión extra-muestral está sesgada.</li>
-<li>Al lado de cada previsión se ha indicado el error estimado (MAPE). Para la previsión extra-muestral, el error es la media de errores muy bajos (primeras previsiones) y errores muy elevados (últimas previsiones).</li>
+<li>La línea en rojo es la previsión <em>extra</em>-muestral a largo plazo: <span class="math inline">\(\hat{y}_{T+h}=l_T\)</span>, donde <span class="math inline">\(T=2013\)</span>. Observa que todas las previsiones están por debajo del valor real de la serie: la previsión extramuestral está sesgada.</li>
+<li>Al lado de cada previsión se ha indicado el error estimado (MAPE). Para la previsión extramuestral, el error es la media de errores muy bajos (primeras previsiones) y errores muy elevados (últimas previsiones).</li>
 </ul>
 <p>Claramente estos resultados dependen del punto de corte seleccionado.</p>
 <div class="cell" data-layout-align="center">
@@ -1557,12 +1562,12 @@ Test set      0.08397051  1.881683</code></pre>
 <div id="fig-librosTSTS" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-librosTSTS-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 9: Libros, predicción intra- y extra-muestral</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura 9: Libros, predicción intra y extramuestral</figcaption><p></p>
 </figure>
 </div>
 </div>
 </div>
-<p><strong>Nota:</strong> La presencia de tendencia, primero creciente y luego decreciente, en la serie Libros puede hacernos pensar que un modelo más adecuado para su ajuste y predicción sería ETS(M,A,N), forzando a que haya pendiente. De hecho, el error de estimación de este modelo es del 6.1%, frente al 7% para el modelo ETS(M,N,N). Sin embargo, el error de previsión extra-muestral a largo plazo para el modelo ETS(M,A,N) es del 12.1%, frente al 6.8% para el modelo ETS(M,N,N). <strong>Mejor ajuste no implica mejor predicción.</strong> De nuevo, incidir en que claramente estos resultados dependen del punto de corte seleccionado.</p>
+<p>La presencia de tendencia, primero creciente y luego decreciente, en la serie Libros puede hacernos pensar que un modelo más adecuado para su ajuste y predicción sería ETS(M,A,N), forzando a que haya pendiente. De hecho, el error de estimación de este modelo es del 6.1%, frente al 6.9% para el modelo ETS(M,N,N). Sin embargo, el error de previsión extramuestral a largo plazo para el modelo ETS(M,A,N) es del 12.1%, frente al 6.8% para el modelo ETS(M,N,N). <strong>Mejor ajuste no implica mejor predicción.</strong> De nuevo, incidir en que claramente estos resultados dependen del punto de corte seleccionado.</p>
 <p><br>
 </p>
 </section>
@@ -1707,9 +1712,9 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 </div>
 </div>
 </section>
-<section id="validación-error-extra-muestral-según-horizonte-temporal" class="level3 unnumbered">
-<h3 class="unnumbered anchored" data-anchor-id="validación-error-extra-muestral-según-horizonte-temporal">Validación: error extra-muestral según horizonte temporal</h3>
-<p>En este ejemplo calcularemos el error extra-muestral según el horizonte temporal de previsión, una metodología que ya hemos visto anteriormente.</p>
+<section id="validación-error-extramuestral-según-horizonte-temporal" class="level3 unnumbered">
+<h3 class="unnumbered anchored" data-anchor-id="validación-error-extramuestral-según-horizonte-temporal">Validación: error extramuestral según horizonte temporal</h3>
+<p>En este ejemplo calcularemos el error extramuestral según el horizonte temporal de previsión, una metodología que ya hemos visto anteriormente.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                 </span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                  </span>
@@ -1749,7 +1754,7 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 </div>
 </div>
 </div>
-<p>La <a href="#fig-NacimientosErrorRW">Figura&nbsp;13</a> muestra el error de previsión extra-muestral según el horizonte temporal. El error extra-muestral a un periodo vista es comparable al error intra-muestral (1.9% frente a 1.7%). Aunque el error de previsión aumenta conforme lo hace el horizonte temporal, siempre se mantiene muy bajo. Por ejemplo, en las previsiones a 12 meses vista el error es del 3.3%.</p>
+<p>La <a href="#fig-NacimientosErrorRW">Figura&nbsp;13</a> muestra el error de previsión extramuestral según el horizonte temporal. El error extramuestral a un periodo vista es comparable al error intramuestral (1.9% frente a 1.7%). Aunque el error de previsión aumenta conforme lo hace el horizonte temporal, siempre se mantiene muy bajo. Por ejemplo, en las previsiones a 12 meses vista el error es del 3.3%.</p>
 </section>
 </section>
 <section id="demanda-eléctrica" class="level2" data-number="11.3">
@@ -1811,7 +1816,7 @@ Training set 0.04689494</code></pre>
 </section>
 <section id="predicción-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="predicción-2">Predicción</h3>
-<p>Si pedimos los valores de predicción para las cuatro siguientes semanas tenemos (sólo se muestran las dos primeras):</p>
+<p>Si pedimos los valores de predicción para las cuatro semanas siguientes, tenemos (sólo se muestran las dos primeras):</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>electricidadEtsPre <span class="ot">&lt;-</span> <span class="fu">forecast</span>(electricidadEts, </span>
 <span id="cb70-2"><a href="#cb70-2" aria-hidden="true" tabindex="-1"></a>                               <span class="at">h =</span> <span class="dv">28</span>, </span>
@@ -1888,7 +1893,7 @@ Training set 0.04689494</code></pre>
 <p>A la hora de ajustar un modelo a una serie y predecir hay que ser un poco imaginativos, dedicarle tiempo y probar cosas. Por ejemplo, podríamos considerar la transformación logarítmica de la serie. O podríamos cambiar el criterio de estimación de los parámetros o el de selección del modelo óptimo.</p>
 <p>Yendo un poco más lejos, para una serie mensual (como Nacimientos) dado que el valor de la serie dependerá forzosamente del número de días del mes, podríamos ajustar y predecir el valor medio de la serie por día del mes. Por ejemplo, los nacimientos medios por día: cociente entre los nacimientos de cada mes y el número de días del mes. Esta serie tendrá una componente estacional más suave, al eliminar el efecto de los meses de febrero bisiestos, y tendrá, previsiblemente, un mejor ajuste.</p>
 <p>También podemos mezclar varios de los enfoques previos o ser aún más imaginativos.</p>
-<p>El siguiente código muestra el MAPE (para previsiones intra-muestrales a un periodo vista) para la serie Nacimientos usando varias de estas opciones. Puedes deducir que se está haciendo en cada caso a partir del código. Sería más adecuado usar otro criterio de validación diferente, pero el objetivo de este epígrafe es recalcar que no hay que quedarse con lo inmediato (predecir una serie con las opciones por defecto de las funciones), sino probar y probar.</p>
+<p>El siguiente código muestra el MAPE (para previsiones intramuestrales a un periodo vista) para la serie Nacimientos usando varias de estas opciones. Puedes deducir que se está haciendo en cada caso a partir del código. Sería más adecuado usar otro criterio de validación diferente, pero el objetivo de este epígrafe es recalcar que no hay que quedarse con lo inmediato (predecir una serie con las opciones por defecto de las funciones), sino probar y probar.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Serie Nacimientos</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2023,13 +2028,13 @@ Training set 0.04689494</code></pre>
 Brown, Robert Goodell. 1959. <em>Statistical Forecasting for Inventory Control</em>. McGraw-Hill, New York.
 </div>
 <div id="ref-Gardner85" class="csl-entry" role="doc-biblioentry">
-Everette S. Gardner, Jr., and Ed. Mckenzie. 1985. <span>“Forecasting Trends in Time Series.”</span> <em>Management Science</em> 31 (10): 1237–46. <a href="https://doi.org/10.1287/mnsc.31.10.1237">https://doi.org/10.1287/mnsc.31.10.1237</a>.
+Gardner, Everette S., and Ed. Mckenzie. 1985. <span>“Forecasting Trends in Time Series.”</span> <em>Management Science</em> 31 (10): 1237–46. <a href="https://doi.org/10.1287/mnsc.31.10.1237">https://doi.org/10.1287/mnsc.31.10.1237</a>.
 </div>
 <div id="ref-Holt" class="csl-entry" role="doc-biblioentry">
 Holt, Charles C. 2004. <span>“Forecasting Seasonals and Trends by Exponentially Weighted Moving Averages.”</span> <em>International Journal of Forecasting</em> 20 (1): 5–10. https://doi.org/<a href="https://doi.org/10.1016/j.ijforecast.2003.09.015">https://doi.org/10.1016/j.ijforecast.2003.09.015</a>.
 </div>
 <div id="ref-Hyndman08" class="csl-entry" role="doc-biblioentry">
-Hyndman, Rob J., and Yeasmin Khandakar. 2008. <span>“Automatic Time Series Forecasting: The Forecast Package for r.”</span> <em>Journal of Statistical Software</em> 27 (3): 1–22. <a href="https://doi.org/10.18637/jss.v027.i03">https://doi.org/10.18637/jss.v027.i03</a>.
+Hyndman, Rob J., and Y. Khandakar. 2008. <span>“Automatic Time Series Forecasting: The Forecast Package for r.”</span> <em>Journal of Statistical Software</em> 27 (3): 1–22. <a href="https://doi.org/10.18637/jss.v027.i03">https://doi.org/10.18637/jss.v027.i03</a>.
 </div>
 <div id="ref-Hyndman08b" class="csl-entry" role="doc-biblioentry">
 Hyndman, Rob J., A. Koehler, K. Ord, and R. Snyder. 2008. <em>Forecasting with Exponential Smoothings. The State Space Approach</em>. Springer Berlin, Heidelberg. <a href="https://doi.org/10.1007/978-3-540-71918-2">https://doi.org/10.1007/978-3-540-71918-2</a>.
@@ -2041,7 +2046,7 @@ Winters, Peter R. 1960. <span>“Forecasting Sales by Exponentially Weighted Mov
 
 <ol>
 <li id="fn1" role="doc-endnote"><p>Formalmente en el modelo de Holt-Winters multiplicativo el error es aditivo. Es decir, debería ser <code>model = "AAM"</code>. Este modelo se puede estimar mediante la función <code>hw</code> que replica fielmente el modelo definido en su momento por Holt y Winters. Sin embargo, al usar la función <code>ets</code>, que posibilita el cálculo de intervalos de confianza para las predicciones, no es factible estimar un modelo con estacionalidad multiplicativa y error aditivo. Por este motivo se fija <code>model = "MAM"</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Una forma sencilla de identificar donde están los valores atípicos es mediante el comando <code>abs(error) &gt; 3 * sderror</code> que devuelve una tabla de FALSE y TRUE, donde TRUE identifica las fechas de los errores que superan las 3 desviaciones típicas. El comando <code>time(error)[abs(error) &gt; 3 * sderror]</code> devuelve solo las fechas asociadas a errores atípicos. El valor de 3 es uno de los posibles y debe ajustarse a las características de la serie y el análisis.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2" role="doc-endnote"><p>Una forma sencilla de identificar donde están los valores atípicos es mediante el comando <code>abs(error) &gt; 3 * sderror</code> que devuelve una tabla de FALSE y TRUE, donde TRUE identifica las fechas con errores que superan las 3 desviaciones típicas. El comando <code>time(error)[abs(error) &gt; 3 * sderror]</code> devuelve solo las fechas asociadas a errores atípicos. El valor de 3 es uno de los posibles y debe ajustarse a las características de la serie y el análisis.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -2144,7 +2149,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

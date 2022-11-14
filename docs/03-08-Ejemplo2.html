@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
@@ -366,7 +366,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="análisis-preliminar-gráfico" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Análisis preliminar gráfico</h1>
-<p>La gráfica de la serie temporal (<a href="#fig-Pernoctaciones">Figura&nbsp;1</a>) muestra una <strong>tendencia</strong> suavemente decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, aunque en los dos últimos años se ha producido una caída en el número de pernoctaciones.</p>
+<p>La gráfica de la serie temporal (<a href="#fig-Pernoctaciones">Figura&nbsp;1</a>) muestra una <strong>tendencia</strong> suavemente decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, que pasa a ser creciente. Finalmente, en los dos últimos años se ha producido una caída en el número de pernoctaciones.</p>
 <p>Las líneas verticales de la <a href="#fig-Pernoctaciones">Figura&nbsp;1</a> marcan los meses de enero de cada año y permiten identificar mejor la posible <strong>componente estacional</strong>. Las pernoctaciones aumentan notablemente en verano, especialmente en Julio y Agosto, asociadas a las vacaciones estivales. En menor medida se observa el efecto de la Semana Santa. Más adelante haremos un análisis detallado de la estacionalidad.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>,</span>
@@ -383,7 +383,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Parece que conforme disminuye el número pernoctaciones, también disminuye la amplitud estacional. Al inicio del siglo la diferencia entre los meses con más y con menos pernoctaciones superaba los 22 millones de pernoctaciones, mientras que a finales de la segunda década esta diferencia llegaba a los 27 millones de pernoctaciones. Parece, por tanto, que estamos ante un <strong>esquema multiplicativo</strong>. Para confirmar este aspecto, se ha realizado un gráfico de puntos entre el numero anual de pernoctaciones y la desviación típica intra-anual (<a href="#fig-Esquema">Figura&nbsp;2</a>).</p>
+<p>Parece que conforme disminuye el número pernoctaciones, también disminuye la amplitud estacional. Al inicio del siglo la diferencia entre los meses con más y con menos pernoctaciones superaba los 22 millones de pernoctaciones, mientras que a finales de la segunda década esta diferencia llegaba a los 27 millones de pernoctaciones. Parece, por tanto, que estamos ante un <strong>esquema multiplicativo</strong>. Para confirmar este aspecto, se ha realizado un gráfico de puntos entre el numero anual de pernoctaciones y la desviación típica intraanual (<a href="#fig-Esquema">Figura&nbsp;2</a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>CasosAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sum)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>DesviacionAnual <span class="ot">&lt;-</span> <span class="fu">aggregate</span>(Pernoctaciones, <span class="at">FUN =</span> sd)</span>
@@ -391,7 +391,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> CasosAnual, <span class="at">y =</span> DesviacionAnual), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Pernoctaciones anuales"</span>) <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Desviación típica intra-anual"</span>) <span class="sc">+</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Desviación típica intraanual"</span>) <span class="sc">+</span> </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Esquema" class="quarto-figure quarto-figure-center anchored">
@@ -402,7 +402,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Efectivamente, los años con mayor número de pernoctaciones se corresponden con una mayor variabilidad intra-anual, por lo que confirmamos el esquema multiplicativo de la serie.</p>
+<p>Efectivamente, los años con mayor número de pernoctaciones se corresponden con una mayor variabilidad intraanual, por lo que confirmamos el esquema multiplicativo de la serie.</p>
 <p><br>
 <br>
 </p>
@@ -415,7 +415,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 data-number="3.1" class="anchored" data-anchor-id="tendencia"><span class="header-section-number">3.1</span> Tendencia</h2>
 <p>Hemos obtenido la serie anual pernoctaciones, que presentamos en la <a href="#fig-Tendencia">Figura&nbsp;3</a>. Se confirma la tendencia decreciente de la primera década, aunque con un comportamiento muy irregular. En el año 2000 el número de pernoctaciones alcanzaba los 234 millones al año, mientras que en 2009 toco fondo con 200 millones. En los años siguientes se produce una recuperación de las pernoctaciones (a pesar de la crisis económica), superando rápidamente los niveles de principios de siglo y alcanzado a finales de la segunda década los 300 millones de pernoctaciones, a pesar de que en los dos últimos años disponibles las pernoctaciones han vuelto a caer.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(<span class="fu">aggregate</span>(Pernoctaciones<span class="sc">/</span><span class="dv">1000000</span>, <span class="at">FUN =</span> sum),</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(CasosAnual<span class="sc">/</span><span class="dv">1000000</span>,</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
@@ -451,7 +451,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Cada subserie en la <a href="#fig-Estacionalidad">Figura&nbsp;4</a> vuelve a mostrar la evolución de la tendencia durante el periodo de análisis. Respecto de la estacionalidad, se aprecia que el principal determinante son las vacaciones estivales puesto que el número de pernoctaciones aumenta progresivamente desde enero a agosto para luego caer bruscamente de septiembre a diciembre. También cabría esperar un efecto <em>días del mes</em> y observar más pernoctaciones en los meses de 31 días que en los de 30, pero el efecto de la vacaciones estivales es tan dominante que anula cualquier otro efecto.</p>
+<p>Cada subserie en la <a href="#fig-Estacionalidad">Figura&nbsp;4</a> vuelve a mostrar la evolución de la tendencia durante el periodo de análisis. Respecto de la estacionalidad, se aprecia que el principal determinante es la temperatura –y los movimientos vacacionales asociados a ella– puesto que el número de pernoctaciones aumenta progresivamente desde enero a agosto para luego caer bruscamente de septiembre a diciembre. También cabría esperar un efecto <em>días del mes</em> y observar más pernoctaciones en los meses de 31 días que en los de 30, pero el efecto de la temperatura es tan dominante que anula cualquier otro efecto.</p>
 <p><br>
 <br>
 </p>
@@ -477,16 +477,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <p>La <strong>tendencia</strong> obtenida tras la descomposición no hace sino confirmar lo ya observado, una tendencia decreciente en la primera década, y creciente desde entonces hasta los dos últimos años.</p>
-<p>También se aprecian muy claramente varios valores atípicos en el <strong>residuo</strong> destacando uno en 2005.</p>
-<p>Respecto de la <strong>componente estacional</strong>, se confirma el análisis preliminar: mayor número de pernoctaciones a finales de primavera y verano, especialmente en agosto, y un menor número en invierno, especialmente en diciembre –un mes en que la gente no realiza tantos viajes al extranjero. En concreto, en agosto se detecta un 72% más de pernoctaciones respecto de la media anual y en julio un 64% más. Por contra, de noviembre a febrero se observa un descenso superior al 40%.</p>
+<p>También se aprecian muy claramente varios valores atípicos en el <strong>residuo</strong>, destacando uno en el año 2005.</p>
+<p>Respecto de la <strong>componente estacional</strong>, se confirma el análisis preliminar: mayor número de pernoctaciones a finales de primavera y verano, especialmente en agosto, y un menor número en invierno, especialmente en diciembre –un mes en que la gente no realiza tantos viajes al extranjero. En concreto, en agosto se detecta un 72% más de pernoctaciones respecto de la media anual y en julio un 64% más. Por contra, de noviembre a febrero se observa un descenso superior o igual al 40%.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(PernoctacionesDesMul<span class="sc">$</span>figure, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 0.58 0.60 0.73 0.81 1.08 1.28 1.64 1.72 1.35 1.06 0.60 0.54</code></pre>
 </div>
 </div>
-<p>A fin de aislar de la componente estacional el efecto <em>días del mes</em> del efecto de las vacaciones estivales, se ha aplicado la descomposición a la serie <em>pernoctaciones por día</em> resultante de dividir la serie original por el número de días del mes (que obtenemos con la función <code>monthdays</code>). En esta nueva serie todo el efecto estacional se deberá a las vacaciones de verano.</p>
-<p>La <a href="#fig-ComponenteEstacional">Figura&nbsp;6</a> muestra que la componente estacional estimada para las pernoctaciones por día es solo algo más suave que la componente obtenida a partir la serie original. También se aprecia que el efecto del tamaño del mes es muy acusado en febrero. Para este mes el efecto estacional es el resultado de dos fuerzas en la misma dirección, no ser un periodo vacacional y el tamaño del mes (28 días), que decrementan la componente estacional. Sobre la serie original ambas fuerzas tienen lugar y el resultado es una componente estacional para febrero similar a la de enero y mucho menor que la de marzo. En la serie de pernoctaciones por día el efecto número de días del mes ha sido eliminado, solo queda el efecto <em>vacacional</em> que sitúa a febrero entre los meses de enero y marzo.</p>
+<p>A fin de aislar de la componente estacional el efecto <em>días del mes</em> del efecto de la temperatura, se ha aplicado la descomposición a la serie <em>pernoctaciones por día</em> resultante de dividir la serie original por el número de días del mes (que obtenemos con la función <code>monthdays</code>). En esta nueva serie todo el efecto estacional se deberá a la temperatura.</p>
+<p>La <a href="#fig-ComponenteEstacional">Figura&nbsp;6</a> muestra que la componente estacional estimada para las pernoctaciones por día es solo algo más suave que la componente obtenida a partir la serie original. También se aprecia que el efecto del tamaño del mes es muy acusado en febrero. Para este mes el efecto estacional es el resultado de dos fuerzas en la misma dirección, ser un mes frío y un mes con 28 días, que decrementan la componente estacional. Sobre la serie original ambas fuerzas tienen lugar y el resultado es una componente estacional para febrero similar a la de enero y mucho menor que la de marzo. En la serie de pernoctaciones por día el efecto número de días del mes ha sido eliminado, solo queda el efecto temperatura que sitúa a febrero entre los meses de enero y marzo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesDiaDesMul <span class="ot">&lt;-</span> <span class="fu">decompose</span>(Pernoctaciones<span class="sc">/</span><span class="fu">monthdays</span>(Pernoctaciones), </span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">type =</span> <span class="st">"mult"</span>)</span>
@@ -503,7 +503,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"Jul"</span>, <span class="st">"Ago"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dic"</span>)) <span class="sc">+</span></span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Componente estacional"</span>, </span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Pernoctaciones"</span>, <span class="st">"Pernoctaciones por día"</span>)) <span class="sc">+</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.02</span>,<span class="fl">0.98</span>), <span class="at">legend.justification=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position=</span><span class="fu">c</span>(<span class="fl">0.2</span>,<span class="fl">0.8</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-ComponenteEstacional" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -656,7 +656,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

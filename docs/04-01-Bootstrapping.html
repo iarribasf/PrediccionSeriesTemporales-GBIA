@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -356,7 +356,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p>A partir de la serie original vamos a generar una nueva serie que es <em>similar</em> a la original. Luego veremos como.</p></li>
 <li><p>Ajustamos nuestro modelo a la nueva serie y obtenemos una predicción <span class="math inline">\(h\)</span> periodos hacia adelante, que llamaremos <span class="math inline">\(\hat y_{T+h|T}^1\)</span>.</p></li>
 <li><p>Repetimos el paso 2 y 3 un numero <span class="math inline">\(n\)</span> de veces (típicamente <span class="math inline">\(n=5000\)</span>), de forma que al final del proceso tenemos <span class="math inline">\(n\)</span> predicciones <span class="math inline">\(h\)</span> periodos hacia adelante: <span class="math inline">\(\hat y_{T+h|T}^1,\; \hat y_{T+h|T}^2,\; \ldots,\; \hat y_{T+h|T}^n\)</span>.</p></li>
-<li><p>Por último, obtenemos los intervalos de predicción calculando los percentiles correspondientes a partir de estas <span class="math inline">\(k\)</span> predicciones.</p></li>
+<li><p>Por último, obtenemos el intervalo de predicción calculando los percentiles correspondientes a partir de estas <span class="math inline">\(n\)</span> predicciones.</p></li>
 </ol>
 <p>Este proceso hay que repetirlo para cada horizonte de predicción en que estemos interesados.</p>
 </section>
@@ -366,9 +366,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h3 class="unnumbered anchored" data-anchor-id="paso-2-nueva-serie">Paso 2: nueva serie</h3>
 <p>El paso clave del proceso es el paso 2, donde se obtiene una <em>nueva serie similar a la original</em>. En lo que viene a continuación no voy a ser riguroso para no perdernos en cuestiones matemáticas, pero sí suficientemente preciso para entender bien el proceso.</p>
 <ul>
-<li><p>Dada la serie original, la descomponemos (recuerda el tema 2) en sus tres componentes: tendencia, estacionalidad y error.</p></li>
+<li><p>Dada la serie original, la descomponemos en sus tres componentes: tendencia, estacionalidad y error.</p></li>
 <li><p>A continuación, obtenemos una versión barajada de la componente del error. (Aquí es donde no estoy siendo preciso porque el proceso de barajado se tiene que hacer por bloques y es con reemplazamiento.)</p></li>
-<li><p>Ahora se combinan –sumando o multiplicando, según el esquema– la tendencia, la estacionalidad y el error barajado para obtener una nueva serie que se parecerá a la original.</p></li>
+<li><p>Ahora se combinan –sumando o multiplicando, según el esquema– la tendencia, la estacionalidad y el <strong>error barajado</strong> para obtener una nueva serie que se parecerá a la original.</p></li>
 </ul>
 <p>Veamos un ejemplo muy sencillo, para una serie simulada de orden estacional 5.</p>
 <ul>
@@ -440,7 +440,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 </div>
-<p>Ahora vamos a ajustar la serie por alisado exponencial y obtener las predicciones y sus intervalos a 12 meses vista. Vamos a realizar estos cálculos de dos formas, usando la fórmula teórica –que solo es correcta bajo ciertos supuestos sobre el residuo– y por bootstrapping. Para el segundo caso necesitamos la función de <code>R</code> <code>baggedETS</code>, que por defecto genera 100 nuevas series por bootstrapping.</p>
+<p>Ahora vamos a ajustar la serie por Alisado Exponencial y obtener las predicciones y sus intervalos a 12 meses vista. Vamos a realizar estos cálculos de dos formas, usando la fórmula teórica –que solo es correcta bajo ciertos supuestos sobre el residuo– y por bootstrapping. Para el segundo caso necesitamos la función de <code>R</code> <code>baggedETS</code>, que por defecto genera 100 nuevas series por bootstrapping.</p>
 <div class="cell" data-layout-align="center">
 
 </div>
@@ -499,43 +499,32 @@ Dec 2020       28916.78 27903.01 30988.78</code></pre>
 
 </div>
 <p>Observa que ni las predicciones puntuales ni sus intervalos coinciden. Las predicciones son muy parecidas, pero en este caso las obtenidas con bootstrapping son algo superiores a las obtenidas por Alisado (véase <a href="#fig-NacimientosPre">Figura&nbsp;2</a> a). Además, los intervalos de confianza obtenidos por bootstrapping no son simétricos respecto de la predicción y son más pequeños que los estimados usando las fórmulas clásicas (véase <a href="#fig-NacimientosPre">Figura&nbsp;2</a> b).</p>
-<div id="fig-NacimientosPre" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-NacimientosPre" class="cell quarto-layout-panel">
 <figure class="figure">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(nacimientos) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Año"</span>) <span class="sc">+</span> </span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Bebés"</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">2015</span>, <span class="dv">2021</span>) <span class="sc">+</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(baggedetsfc, <span class="at">series=</span><span class="st">"Bootstraping"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(etsfc, <span class="at">series=</span><span class="st">"ETS"</span>, <span class="at">PI =</span> <span class="cn">FALSE</span>) </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(nacimientos) <span class="sc">+</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Año"</span>) <span class="sc">+</span> </span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Bebés"</span>) <span class="sc">+</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">2019</span>, <span class="dv">2021</span>) <span class="sc">+</span> </span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(etsfc, <span class="at">series=</span><span class="st">"ETS"</span>) <span class="sc">+</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(baggedetsfc, <span class="at">series=</span><span class="st">"Bootstraping"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-NacimientosPre-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-01-Bootstrapping_files/figure-html/fig-NacimientosPre-1.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosPre" style="width:80.0%"></p>
+<p><img src="04-01-Bootstrapping_files/figure-html/fig-NacimientosPre-1.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosPre"></p>
 <p></p><figcaption class="figure-caption">(a) Predicciones puntuales (2015 a 2020)</figcaption><p></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display">
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
 <div id="fig-NacimientosPre-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="04-01-Bootstrapping_files/figure-html/fig-NacimientosPre-2.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosPre" style="width:80.0%"></p>
+<p><img src="04-01-Bootstrapping_files/figure-html/fig-NacimientosPre-2.png" class="img-fluid figure-img" data-ref-parent="fig-NacimientosPre"></p>
 <p></p><figcaption class="figure-caption">(b) Intervalos de confianza</figcaption><p></p>
 </figure>
+</div>
 </div>
 </div>
 <p></p><figcaption class="figure-caption">Figura 2: Nacimientos y predicciones puntuales</figcaption><p></p>
 </figure>
 </div>
-<p>En media, bagging da mejores predicciones que la simple aplicación de <code>ets()</code> a la serie original. Pero como nada es gratis, esta mejora es a costa de un incremento significativo en los tiempos de computación. En concreto, por Alisado los cálculos tardan 0.45 segundos y por bootstrapping tardan 37.79 segundo, ¡y solo hemos pedido 100 simulaciones!</p>
+<p>En media, bagging da mejores predicciones que la simple aplicación de <code>ets()</code> a la serie original. Pero como nada es gratis, esta mejora es a costa de un incremento significativo en los tiempos de computación. En concreto, por Alisado los cálculos tardan 0.64 segundos y por bootstrapping tardan 56.45 segundos, ¡y solo hemos pedido 100 simulaciones, no las habituales 5000!</p>
 <p><br>
 <br>
 <br>
@@ -646,7 +635,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

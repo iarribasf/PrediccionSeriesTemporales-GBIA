@@ -47,8 +47,15 @@ mmf <- function(x, r = 3, h = 5) {
   frecuencia <-frequency(x)
   
   z$mm <- stats::filter(x, rep(1/r, r), side = 1)
-  z$fitted <- ts(c(NA, z$mm[-TT]), start = inicio, freq = frecuencia)
-  z$mean <- ts(rep(z$mm[TT], h), start = time(x)[TT] + 1/frecuencia, freq = frecuencia)
+  
+  z$fitted <- ts(c(NA, z$mm[-TT]), 
+                 start = inicio, 
+                 freq = frecuencia)
+  
+  z$mean <- ts(rep(z$mm[TT], h), 
+               start = time(x)[TT] + 1/frecuencia, 
+               freq = frecuencia)
+  
   z$residuals <- x - z$fitted
   
   class(z) <- "forecast"

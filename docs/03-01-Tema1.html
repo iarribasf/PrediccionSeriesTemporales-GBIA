@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.0.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,15 +12,10 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
-  vertical-align: middle;
-}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -80,11 +75,9 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
-    <a class="navbar-brand" href="./index.html">
+      <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
-    </a>
-  </div>
+  </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -194,8 +187,8 @@ div.csl-indent {
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -257,21 +250,21 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
+        <nav id="TOC" role="doc-toc">
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#las-previsiones" id="toc-las-previsiones" class="nav-link active" data-scroll-target="#las-previsiones"><span class="toc-section-number">1</span>  Las previsiones</a></li>
-  <li><a href="#métodos-de-previsión" id="toc-métodos-de-previsión" class="nav-link" data-scroll-target="#métodos-de-previsión"><span class="toc-section-number">2</span>  Métodos de previsión</a>
+  <li><a href="#las-previsiones" id="toc-las-previsiones" class="nav-link active" data-scroll-target="#las-previsiones"> <span class="header-section-number">1</span> Las previsiones</a></li>
+  <li><a href="#métodos-de-previsión" id="toc-métodos-de-previsión" class="nav-link" data-scroll-target="#métodos-de-previsión"> <span class="header-section-number">2</span> Métodos de previsión</a>
   <ul class="collapse">
-  <li><a href="#métodos-subjetivos" id="toc-métodos-subjetivos" class="nav-link" data-scroll-target="#métodos-subjetivos"><span class="toc-section-number">2.1</span>  Métodos subjetivos</a>
+  <li><a href="#métodos-subjetivos" id="toc-métodos-subjetivos" class="nav-link" data-scroll-target="#métodos-subjetivos"> <span class="header-section-number">2.1</span> Métodos subjetivos</a>
   <ul class="collapse">
   <li><a href="#principios-básico-en-la-implementación" id="toc-principios-básico-en-la-implementación" class="nav-link" data-scroll-target="#principios-básico-en-la-implementación">Principios básico en la implementación</a></li>
   <li><a href="#algunos-métodos-subjetivos" id="toc-algunos-métodos-subjetivos" class="nav-link" data-scroll-target="#algunos-métodos-subjetivos">Algunos métodos subjetivos</a></li>
   </ul></li>
-  <li><a href="#métodos-objetivos" id="toc-métodos-objetivos" class="nav-link" data-scroll-target="#métodos-objetivos"><span class="toc-section-number">2.2</span>  Métodos objetivos</a></li>
+  <li><a href="#métodos-objetivos" id="toc-métodos-objetivos" class="nav-link" data-scroll-target="#métodos-objetivos"> <span class="header-section-number">2.2</span> Métodos objetivos</a></li>
   </ul></li>
-  <li><a href="#qué-haremos-y-qué-no-haremos-en-este-curso" id="toc-qué-haremos-y-qué-no-haremos-en-este-curso" class="nav-link" data-scroll-target="#qué-haremos-y-qué-no-haremos-en-este-curso"><span class="toc-section-number">3</span>  ¿Qué haremos y qué no haremos en este curso?</a></li>
+  <li><a href="#qué-haremos-y-qué-no-haremos-en-este-curso" id="toc-qué-haremos-y-qué-no-haremos-en-este-curso" class="nav-link" data-scroll-target="#qué-haremos-y-qué-no-haremos-en-este-curso"> <span class="header-section-number">3</span> ¿Qué haremos y qué no haremos en este curso?</a></li>
   </ul>
 </nav>
     </div>
@@ -319,7 +312,7 @@ div.csl-indent {
 <p>En prácticamente todas las áreas funcionales de una empresa o negocio se realiza algún tipo de previsión.</p>
 <ul>
 <li><p>Las cabeceras de prensa determinan el número de ejemplares a imprimir cada día analizando el histórico de ventas de su diario.</p></li>
-<li><p>Los supermercados predicen la demanda de sus principales referencias (productos) a fin de ajustar su flujo logístico y evitar que se agoten en el lineal o que caduquen.</p></li>
+<li><p>Los supermercados predicen la demanda de sus principales referencias (productos) a fin de ajustar su logística y evitar que se agoten en el lineal o que caduquen.</p></li>
 <li><p>Los directores de producción han de basarse en predicciones para ajustar las necesidades de materias primas y el nivel de existencias de los productos elaborados.</p></li>
 <li><p>Los directores financieros hacen previsiones de los flujos de caja para evitar tensiones en la tesorería.</p></li>
 </ul>
@@ -348,13 +341,13 @@ div.csl-indent {
 <li>la semejanza del pasado con el futuro</li>
 <li>si las previsiones pueden afectar a lo que intentamos predecir.</li>
 </ol>
-<p>En el caso extremo de la previsión a corto, medio y largo plazo de la hora de la salida del Sol la precisión es absoluta porque se cumplen las cuatro condiciones, especialmente la primera. Nuestro entendimiento del movimiento de los planetas del Sistema Solar es muy preciso, tenemos abundantes datos, no cabe esperar ninguna catástrofe cósmica en breve y, desde luego, nuestra previsión no afectará en absoluto el movimiento de los planetas.</p>
-<p>Ahora bien, en las previsiones a largo plazo de la demanda de electricidad residencial solo serán razonablemente precisas porque suelen cumplirse las dos primeras condiciones, pero no las dos últimas. La demanda de electricidad está impulsada en gran medida por las temperaturas, con efectos menores por la variación del calendario, como el día de la semana y las vacaciones, y las condiciones económicas. Por lo general, se dispone de varios años de datos sobre la demanda de electricidad y de muchas décadas de datos sobre las condiciones meteorológicas. Ahora bien, para las previsiones a largo plazo (dentro de unos años) no está claro que el comportamiento de la demanda vaya a ser similar al observado en el pasado: la sustitución por equipamiento eléctrico más eficiente en el hogar, la aparición de nuevo equipamiento electrónico, la penetración de dispositivos de movilidad individual eléctricos, entre otros elementos, pueden modificar notablemente el consumo eléctrico residencial. Por otro lado, si la previsión indica que la demanda eléctrica va a aumentar, es razonable pensar que también lo hará su precio y que los hogares decidan tomar medias para reducir su consumo. El resultado será que la demanda eléctrica no aumentará tanto como las predicciones indicaban.</p>
+<p>En el caso extremo de la previsión. sea a corto, medio o largo plazo, de la hora de la salida del Sol la precisión es absoluta porque se cumplen las cuatro condiciones, especialmente la primera. Nuestro entendimiento del movimiento de los planetas del Sistema Solar es muy preciso, tenemos abundantes datos, no cabe esperar ninguna catástrofe cósmica en breve y, desde luego, nuestra previsión no afectará en absoluto el movimiento de los planetas.</p>
+<p>Ahora bien, en las previsiones a largo plazo de la demanda de electricidad residencial solo serán razonablemente precisas porque suelen cumplirse las dos primeras condiciones, pero no las dos últimas. La demanda de electricidad está impulsada en gran medida por las temperaturas, con efectos menores por la variación del calendario –como el día de la semana y las vacaciones–, y las condiciones económicas. Por lo general, se dispone de varios años de datos sobre la demanda de electricidad y de muchas décadas de datos sobre las condiciones meteorológicas. Ahora bien, para las previsiones a largo plazo (dentro de unos años) no está claro que el comportamiento de la demanda vaya a ser similar al observado en el pasado: la sustitución en el hogar por equipamiento eléctrico más eficiente, la aparición de nuevo equipamiento electrónico, la penetración de dispositivos de movilidad individual eléctricos, entre otros elementos, pueden modificar notablemente el consumo eléctrico residencial. Por otro lado, si la previsión indica que la demanda eléctrica va a aumentar, es razonable pensar que también lo hará su precio y que los hogares decidan tomar medias para reducir su consumo. El resultado será que la demanda eléctrica no aumentará tanto como las predicciones indicaban.</p>
 <p>Para la lotería de Navidad tenemos muchos datos, pero no nos van a ayudar nada en la predicción porque somos incapaces de describir con suficiente detalle el comportamiento físico de las bolas en un bombo.</p>
 <p>Es muy conveniente saber cuándo se puede pronosticar algo con precisión (consumo eléctrico en el corto plazo) y cuándo las previsiones no serán mejores que lanzar una moneda (evolución de la bolsa).</p>
 <p><br>
 </p>
-<p>El método de predicción dependerá de las características del acontecimiento que deseamos predecir. Hay métodos de previsión muy sencillos, como utilizar la observación más reciente como previsión (lo que se denomina método ingenuo), o muy complejos, como las redes neuronales. A veces, no se dispone de ningún dato porque, por ejemplo, queremos predecir las ventas de un producto totalmente nuevo. En situaciones como ésta, utilizamos la previsión de juicio o modelos de Bass.</p>
+<p>El método de predicción dependerá de las características del acontecimiento que deseamos predecir. Hay métodos de previsión muy sencillos, como utilizar la observación más reciente como previsión (lo que se denomina método ingenuo), o muy complejos, como las redes neuronales. A veces, no se dispone de ningún dato porque, por ejemplo, queremos predecir las ventas de un producto totalmente nuevo. En situaciones como ésta última, utilizamos la previsión de juicio o modelos de Bass.</p>
 <p><br>
 <br>
 </p>
@@ -362,7 +355,7 @@ div.csl-indent {
 <section id="métodos-de-previsión" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Métodos de previsión</h1>
 <p>Un método de previsión es un proceso detallado que describe los pasos a seguir desde que se plantea el problema hasta que se obtiene la previsión: recogida de la información, procesamiento de la información, estimación de la previsión, medida de incertidumbre…</p>
-<p>La literatura recoge dos grandes métodos de previsión:</p>
+<p>La literatura agrupa los métodos de previsión en dos grandes categorías:</p>
 <ul>
 <li>Métodos subjetivos</li>
 <li>Métodos objetivos</li>
@@ -370,7 +363,7 @@ div.csl-indent {
 <p>En este tema hablaremos algo sobre los primeros y en los restantes temas analizaremos en detalle los segundos.</p>
 <section id="métodos-subjetivos" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="métodos-subjetivos"><span class="header-section-number">2.1</span> Métodos subjetivos</h2>
-<p>Realizar predicciones a partir de opiniones y juicios subjetivos es práctica común. En muchas ocasiones las previsiones subjetivas es la única opción, tales como cuando no hay datos históricos, cuando un nuevo producto se va a sacar al mercado, cuando entra en el mercado un nuevo competidor, o cuando el entorno de mercado cambia notablemente. Por ejemplo, predecir el efecto que iba a tener la Covid-19 en el grado de ocupación hotelera de agosto, una situación sin precedentes, requiere necesariamente de juicios subjetivos.</p>
+<p>Realizar predicciones a partir de opiniones y juicios subjetivos es práctica común. En muchas ocasiones las previsiones subjetivas son la única opción, tales como cuando no hay datos históricos, cuando un nuevo producto se va a sacar al mercado, cuando entra en el mercado un nuevo competidor, o cuando el entorno de mercado cambia notablemente. Por ejemplo, predecir el efecto que iba a tener la Covid-19, una situación sin precedentes, en el grado de ocupación hotelera de agosto de 2020 requiere necesariamente de juicios subjetivos.</p>
 <p>Con los años las predicciones por métodos subjetivos han ido ganando aceptación y reconocimiento como una ciencia. En parte porque la calidad de sus predicciones ha mejorado como resultado directo del uso de metodologías mejor estructuradas y más sistemáticas.</p>
 <p>La predicciones a partir de opiniones y juicios son subjetivas y por tanto sujetas a un montón de sesgos y limitaciones. Por citar algunas:</p>
 <ul>
@@ -396,8 +389,7 @@ div.csl-indent {
 <h3 class="unnumbered anchored" data-anchor-id="algunos-métodos-subjetivos">Algunos métodos subjetivos</h3>
 <ul>
 <li><em>Jurado de opinión</em>: la predicción la realizan un conjunto de expertos por consenso.</li>
-<li><em>Predicción por analogía</em>: se realiza la predicción buscando situaciones o entornos análogos donde se conoce la información solicitada.<br>
-</li>
+<li><em>Predicción por analogía</em>: se realiza la predicción buscando situaciones o entornos análogos donde se conoce la información solicitada.</li>
 <li><em>Método Delphi</em>: similar al jurado de opinión, pero se preserva el anonimato de los expertos y el consenso se obtiene a partir de un proceso iterativo en varias rondas.</li>
 <li><em>Método de escenarios</em>: se definen una serie de posibles escenarios considerando todos los factores relevantes y se les asigna una probabilidad. Para cada escenario se obtiene, siguiendo un determinado método, la predicción deseada.</li>
 <li><em>Ajustes por juicios subjetivos</em>: propiamente este no es un método subjetivo. Consiste en realizar una predicción con información histórica disponible usando herramientas estadísticas para después ser ajustada a partir del juicio de expertos.</li>
@@ -424,7 +416,7 @@ div.csl-indent {
 </section>
 <section id="qué-haremos-y-qué-no-haremos-en-este-curso" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> ¿Qué haremos y qué no haremos en este curso?</h1>
-<p>En este curso nos vamos a centrar en los métodos más fiables para obtener predicciones. Métodos que son replicables, cuyos resultados –las predicciones– son verificables y que son usados ampliamente por parte de organizaciones y empresas. Métodos objetivos.</p>
+<p>En este curso nos vamos a centrar en los métodos objetivos más fiables para obtener predicciones. Métodos que son replicables, cuyos resultados –las predicciones– son verificables y que son usados ampliamente por parte de organizaciones y empresas.</p>
 <p>No podremos ver todos los métodos existentes, ¡ni aunque hubiera un grado solo para predicciones! Pero los que veremos te darán la base para aprender otros métodos de previsión: alisado exponencial con doble estacionalidad, el vecino más próximo, vectores autorregresivos, redes neuronales; y para aprender otros enfoques a la hora de hacer previsiones: modelos jerárquicos de series, boostrapping, bagging…</p>
 <p>No vamos a aprender a predecir cotizaciones de bolsa. La metodología para predecir estas series es completamente diferente y muy poco exitosa. Si fuera fácil, estaríamos todos invirtiendo, no dando clases (yo) o recibiéndolas (vosotros).</p>
 <p><br>
@@ -514,8 +506,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      let href = ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
@@ -546,7 +537,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

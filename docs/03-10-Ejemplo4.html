@@ -231,8 +231,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Pasajeros.html">
- <span class="dropdown-text">Efecto de la Covid-19 en Pasajeros</span></a>
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+ <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
@@ -295,7 +295,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc">
-    <h2 id="toc-title">On this page</h2>
+    <h2 id="toc-title">Índice</h2>
    
   <ul>
   <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
@@ -345,7 +345,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="introducción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
-<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por las vacaciones de verano. El esquema es multiplicativo.</p>
+<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por la temperatura. El esquema es multiplicativo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
@@ -404,15 +404,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  frecuencia <span class="ot">&lt;-</span><span class="fu">frequency</span>(x)</span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mm <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(x, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span>r, r), <span class="at">side =</span> <span class="dv">1</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>mm[<span class="sc">-</span>TT]), <span class="at">start =</span> inicio, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rep</span>(z<span class="sc">$</span>mm[TT], h), <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, <span class="at">freq =</span> frecuencia)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">"forecast"</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  z</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>fitted <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">c</span>(<span class="cn">NA</span>, z<span class="sc">$</span>mm[<span class="sc">-</span>TT]), </span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">start =</span> inicio, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">freq =</span> frecuencia)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>mean <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">rep</span>(z<span class="sc">$</span>mm[TT], h), </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">start =</span> <span class="fu">time</span>(x)[TT] <span class="sc">+</span> <span class="dv">1</span><span class="sc">/</span>frecuencia, </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">freq =</span> frecuencia)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  z<span class="sc">$</span>residuals <span class="ot">&lt;-</span> x <span class="sc">-</span> z<span class="sc">$</span>fitted</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">class</span>(z) <span class="ot">&lt;-</span> <span class="st">"forecast"</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  z</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Veamos primero los resultados asumiendo un orden de la media móvil de 4 años (<span class="math inline">\(r = 4\)</span>) y realizando una predicción para los próximos 5 años (<code>h = 5</code>). La figura 3 muestra la serie Pernoctaciones, la serie ajustada y la predicción.</p>
+<p>Veamos primero los resultados asumiendo un orden de la media móvil de 4 años (<span class="math inline">\(r = 4\)</span>) y realizando una predicción para los próximos 5 años (<code>h = 5</code>). La <a href="#fig-PernoctacionesMM">Figura&nbsp;3</a> muestra la serie Pernoctaciones, la serie ajustada y la predicción.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mmPernoctaciones <span class="ot">&lt;-</span> <span class="fu">mmf</span>(Pernoctaciones, </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                        <span class="at">r =</span> <span class="dv">4</span>, </span>
@@ -448,8 +455,7 @@ Training set 12.00632 21.00165 18.40444 4.162454 7.260456 1.966314 0.5940658</co
 </section>
 <section id="selección-del-orden-y-predicción-usando-origen-de-predicción-móvil" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Selección del orden y predicción usando origen de predicción móvil</h1>
-<p>Vamos a mejorar nuestra primera aproximación usando el método del origen de predicción móvil para identificar el orden óptimo de la doble media móvil según que la predicción sea de 1 a 5 años.</p>
-<p>Consideraremos órdenes desde 1 hasta 5, y asumiremos que el mínimo número de años para hacer las estimaciones es de 10</p>
+<p>Vamos a mejorar nuestra primera aproximación usando el método del origen de predicción móvil para identificar el orden óptimo de la doble media móvil según que la predicción sea de 1 a 5 años. Asumiremos que el mínimo número de años para hacer las estimaciones es de 10</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">10</span>                   </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">5</span>                    </span>
@@ -485,7 +491,7 @@ Para un orden de 4 los errores son 8.09 12.28 15.76 18.67 20.91
 Para un orden de 5 los errores son 8.67 13.05 16.48 19.38 21.63</code></pre>
 </div>
 </div>
-<p>Con independencia del horizonte temporal de predicción considerado, el error se hace mínimo para un orden de las medias móviles de 1, ¡el método Ingenuo I!. Además, el error para las predicciones extra-muestrales es solo aceptable a un año vista.</p>
+<p>Con independencia del horizonte temporal de predicción considerado, el error se hace mínimo para un orden de las medias móviles de 1, ¡el método Ingenuo I!. Además, el error para las predicciones extramuestrales es solo aceptable a un año vista.</p>
 <p><br>
 <br>
 <br>
@@ -596,7 +602,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.e</a></div>   
+    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
