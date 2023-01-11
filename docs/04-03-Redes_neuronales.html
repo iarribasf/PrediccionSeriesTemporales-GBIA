@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -54,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -67,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,9 +124,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -345,7 +352,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-RN" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./imagenes/Redes_neuronales.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura 1: Red neuronal con una sola capa intermedia</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Red neuronal con una sola capa intermedia</figcaption><p></p>
 </figure>
 </div>
 <p>En esta red cada nodo de una capa recibe entradas de los nodos de la capa previa. Dicho de otra forma, las salidas de los nodos de una capa son las entradas de los nodos de la siguiente capa. Es lo que se denomina una <em>multilayer feed-forward network</em>.</p>
@@ -361,7 +368,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-RN2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./imagenes/Redes_neuronales2.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura 2: Red neuronal para predecir una serie temporal. El dato del periodo <span class="math inline">\(t\)</span> se predice a partir de los dos datos previos.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Red neuronal para predecir una serie temporal. El dato del periodo <span class="math inline">\(t\)</span> se predice a partir de los dos datos previos.</figcaption><p></p>
 </figure>
 </div>
 <p>Vamos a extender estas ideas e ir añadiendo algo de notación.</p>
@@ -391,7 +398,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-Electricidad" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="04-03-Redes_neuronales_files/figure-html/fig-Electricidad-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 3: Consumo eléctrico (febrero a mayo de 2021)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Consumo eléctrico (febrero a mayo de 2021)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -402,10 +409,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                    ME    RMSE      MAE         MPE      MAPE      MASE
-Training set 0.0124708 6.64622 4.832091 -0.02080721 0.7213374 0.2426967
-                   ACF1
-Training set 0.01456904</code></pre>
+<pre><code>                     ME     RMSE     MAE         MPE      MAPE      MASE
+Training set 0.02916695 6.267122 4.50083 -0.01593382 0.6739243 0.2260588
+                    ACF1
+Training set -0.03286461</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pfit <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">14</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -416,7 +423,7 @@ Training set 0.01456904</code></pre>
 <div id="fig-ElectricidadPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="04-03-Redes_neuronales_files/figure-html/fig-ElectricidadPre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 4: Consumo eléctrico (febrero a mayo de 2021) y predicción</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;4: Consumo eléctrico (febrero a mayo de 2021) y predicción</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -431,25 +438,25 @@ Training set 0.01456904</code></pre>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> tiempo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 16.8413 secs</code></pre>
+<pre><code>Time difference of 11.93189 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-23.00000       665.4774 653.3630 678.8375
-23.14286       690.2466 668.6709 708.0118
-23.28571       697.8175 673.6090 717.6983
-23.42857       699.0766 668.1848 719.2264
-23.57143       693.1425 670.3182 709.4540
-23.71429       622.7579 598.4266 647.2839
-23.85714       575.0680 555.1334 598.5972
-24.00000       666.0844 627.7490 692.3558
-24.14286       690.8119 643.2107 714.7440
-24.28571       697.2902 647.7944 717.8192
-24.42857       695.8274 653.6231 718.3009
-24.57143       689.8044 655.0122 711.4248
-24.71429       620.5539 593.2837 671.8038
-24.85714       573.0769 553.8214 628.7099</code></pre>
+23.00000       660.1970 648.0293 673.0927
+23.14286       687.4519 669.7536 704.8511
+23.28571       692.2981 670.1886 711.5032
+23.42857       696.9493 662.7058 722.1158
+23.57143       692.7313 660.0361 712.7235
+23.71429       627.7911 593.0543 658.6375
+23.85714       576.4037 552.4308 603.8449
+24.00000       656.4954 617.8300 691.7628
+24.14286       682.8674 647.1780 717.4875
+24.28571       687.2124 659.3483 718.4406
+24.42857       690.8260 657.3454 725.1586
+24.57143       689.4707 655.0937 715.4719
+24.71429       630.4250 594.0594 679.4806
+24.85714       575.3611 551.6234 627.3078</code></pre>
 </div>
 </div>
 <p>La función <code>nnetar</code> admite la inclusión de variables de intervención de la forma usual a través del argumento <code>xreg</code>.</p>
@@ -532,7 +539,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

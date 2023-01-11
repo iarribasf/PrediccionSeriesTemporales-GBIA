@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -54,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -67,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -119,9 +124,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -294,20 +301,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
-  <li><a href="#ajuste-por-alisado-exponencial-de-las-pernoctaciones-anuales" id="toc-ajuste-por-alisado-exponencial-de-las-pernoctaciones-anuales" class="nav-link" data-scroll-target="#ajuste-por-alisado-exponencial-de-las-pernoctaciones-anuales"> <span class="header-section-number">2</span> Ajuste por alisado exponencial de las Pernoctaciones anuales</a></li>
-  <li><a href="#pernoctaciones-mensuales" id="toc-pernoctaciones-mensuales" class="nav-link" data-scroll-target="#pernoctaciones-mensuales"> <span class="header-section-number">3</span> Pernoctaciones mensuales</a>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
+  <li><a href="#ajuste-por-alisado-exponencial-de-las-pernoctaciones-anuales" id="toc-ajuste-por-alisado-exponencial-de-las-pernoctaciones-anuales" class="nav-link" data-scroll-target="#ajuste-por-alisado-exponencial-de-las-pernoctaciones-anuales"><span class="toc-section-number">2</span>  Ajuste por alisado exponencial de las Pernoctaciones anuales</a></li>
+  <li><a href="#pernoctaciones-mensuales" id="toc-pernoctaciones-mensuales" class="nav-link" data-scroll-target="#pernoctaciones-mensuales"><span class="toc-section-number">3</span>  Pernoctaciones mensuales</a>
   <ul class="collapse">
-  <li><a href="#ajuste-por-alisado-exponencial" id="toc-ajuste-por-alisado-exponencial" class="nav-link" data-scroll-target="#ajuste-por-alisado-exponencial"> <span class="header-section-number">3.1</span> Ajuste por alisado exponencial</a></li>
-  <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción"> <span class="header-section-number">3.2</span> Predicción</a></li>
-  <li><a href="#análisis-del-error" id="toc-análisis-del-error" class="nav-link" data-scroll-target="#análisis-del-error"> <span class="header-section-number">3.3</span> Análisis del error</a></li>
-  <li><a href="#validación" id="toc-validación" class="nav-link" data-scroll-target="#validación"> <span class="header-section-number">3.4</span> Validación</a></li>
+  <li><a href="#ajuste-por-alisado-exponencial" id="toc-ajuste-por-alisado-exponencial" class="nav-link" data-scroll-target="#ajuste-por-alisado-exponencial"><span class="toc-section-number">3.1</span>  Ajuste por alisado exponencial</a></li>
+  <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción"><span class="toc-section-number">3.2</span>  Predicción</a></li>
+  <li><a href="#análisis-del-error" id="toc-análisis-del-error" class="nav-link" data-scroll-target="#análisis-del-error"><span class="toc-section-number">3.3</span>  Análisis del error</a></li>
+  <li><a href="#validación" id="toc-validación" class="nav-link" data-scroll-target="#validación"><span class="toc-section-number">3.4</span>  Validación</a></li>
   </ul></li>
-  <li><a href="#modelos-alternativos" id="toc-modelos-alternativos" class="nav-link" data-scroll-target="#modelos-alternativos"> <span class="header-section-number">4</span> Modelos alternativos</a></li>
+  <li><a href="#modelos-alternativos" id="toc-modelos-alternativos" class="nav-link" data-scroll-target="#modelos-alternativos"><span class="toc-section-number">4</span>  Modelos alternativos</a></li>
   </ul>
 </nav>
     </div>
@@ -371,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-Pernoctaciones" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-Pernoctaciones-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 1: Pernoctaciones</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Pernoctaciones</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -389,7 +396,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-PernoctacionesAnual" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesAnual-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 2: Pernoctaciones anuales</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Pernoctaciones anuales</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -492,7 +499,7 @@ Training set 50058.34 727644.8 539050 0.1356775 2.606948 0.5925429 0.1478231</co
 <div id="fig-PernoctacionesETS" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesETS-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 3: Descomposición para Pernoctaciones</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Descomposición para Pernoctaciones</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -529,7 +536,7 @@ Training set 50058.34 727644.8 539050 0.1356775 2.606948 0.5925429 0.1478231</co
 <div id="fig-PernoctacionesETSComponente" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesETSComponente-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 4: Componente estacional</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;4: Componente estacional</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -575,7 +582,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <div id="fig-PernoctacionesETSPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesETSPre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 5: Pernoctaciones (2000-2019) y predicción (2020-2022)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;5: Pernoctaciones (2000-2019) y predicción (2020-2022)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -603,7 +610,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <div id="fig-PernoctacionesETSError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesETSError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 6: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;6: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -649,7 +656,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <div id="fig-PernoctacionesETSOPM" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesETSOPM-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 7: Error de predicción según horizonte temporal</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7: Error de predicción según horizonte temporal</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -667,7 +674,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <p>La <a href="#tbl-modelos">Tabla&nbsp;1</a> muestra seis modelos alternativos para estimar y predecir la serie, donde el Modelo 1 sería el estudiado en el epígrafe previo.</p>
 <div id="tbl-modelos" class="anchored">
 <table class="table">
-<caption>Tabla 1: Especificación de los modelos usados para estimar y predecir la serie Pernoctaciones</caption>
+<caption>Tabla&nbsp;1: Especificación de los modelos usados para estimar y predecir la serie Pernoctaciones</caption>
 <colgroup>
 <col style="width: 24%">
 <col style="width: 24%">
@@ -737,7 +744,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 <div id="fig-PernoctacionesOtros" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-11-Ejemplo5_files/figure-html/fig-PernoctacionesOtros-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 8: Errores de previsión extramuestral. Varios modelos</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;8: Errores de previsión extramuestral. Varios modelos</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -827,7 +834,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -54,7 +59,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -67,7 +72,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -138,9 +143,11 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -313,60 +320,60 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"> <span class="header-section-number">1</span> Introducción</a></li>
-  <li><a href="#proceso-estocástico" id="toc-proceso-estocástico" class="nav-link" data-scroll-target="#proceso-estocástico"> <span class="header-section-number">2</span> Proceso estocástico</a>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
+  <li><a href="#proceso-estocástico" id="toc-proceso-estocástico" class="nav-link" data-scroll-target="#proceso-estocástico"><span class="toc-section-number">2</span>  Proceso estocástico</a>
   <ul class="collapse">
-  <li><a href="#definición-e-hipótesis-sobre-el-proceso" id="toc-definición-e-hipótesis-sobre-el-proceso" class="nav-link" data-scroll-target="#definición-e-hipótesis-sobre-el-proceso"> <span class="header-section-number">2.1</span> Definición e hipótesis sobre el proceso</a></li>
-  <li><a href="#proceso-estacionario" id="toc-proceso-estacionario" class="nav-link" data-scroll-target="#proceso-estacionario"> <span class="header-section-number">2.2</span> Proceso estacionario</a></li>
-  <li><a href="#proceso-ergódico" id="toc-proceso-ergódico" class="nav-link" data-scroll-target="#proceso-ergódico"> <span class="header-section-number">2.3</span> Proceso ergódico</a></li>
-  <li><a href="#normalidad" id="toc-normalidad" class="nav-link" data-scroll-target="#normalidad"> <span class="header-section-number">2.4</span> Normalidad</a></li>
+  <li><a href="#definición-e-hipótesis-sobre-el-proceso" id="toc-definición-e-hipótesis-sobre-el-proceso" class="nav-link" data-scroll-target="#definición-e-hipótesis-sobre-el-proceso"><span class="toc-section-number">2.1</span>  Definición e hipótesis sobre el proceso</a></li>
+  <li><a href="#proceso-estacionario" id="toc-proceso-estacionario" class="nav-link" data-scroll-target="#proceso-estacionario"><span class="toc-section-number">2.2</span>  Proceso estacionario</a></li>
+  <li><a href="#proceso-ergódico" id="toc-proceso-ergódico" class="nav-link" data-scroll-target="#proceso-ergódico"><span class="toc-section-number">2.3</span>  Proceso ergódico</a></li>
+  <li><a href="#normalidad" id="toc-normalidad" class="nav-link" data-scroll-target="#normalidad"><span class="toc-section-number">2.4</span>  Normalidad</a></li>
   </ul></li>
-  <li><a href="#transformaciones-de-una-serie" id="toc-transformaciones-de-una-serie" class="nav-link" data-scroll-target="#transformaciones-de-una-serie"> <span class="header-section-number">3</span> Transformaciones de una serie</a>
+  <li><a href="#transformaciones-de-una-serie" id="toc-transformaciones-de-una-serie" class="nav-link" data-scroll-target="#transformaciones-de-una-serie"><span class="toc-section-number">3</span>  Transformaciones de una serie</a>
   <ul class="collapse">
-  <li><a href="#ideas-generales" id="toc-ideas-generales" class="nav-link" data-scroll-target="#ideas-generales"> <span class="header-section-number">3.1</span> Ideas generales</a></li>
-  <li><a href="#diferenciación" id="toc-diferenciación" class="nav-link" data-scroll-target="#diferenciación"> <span class="header-section-number">3.2</span> Diferenciación</a>
+  <li><a href="#ideas-generales" id="toc-ideas-generales" class="nav-link" data-scroll-target="#ideas-generales"><span class="toc-section-number">3.1</span>  Ideas generales</a></li>
+  <li><a href="#diferenciación" id="toc-diferenciación" class="nav-link" data-scroll-target="#diferenciación"><span class="toc-section-number">3.2</span>  Diferenciación</a>
   <ul class="collapse">
   <li><a href="#diferenciación-regular-k1" id="toc-diferenciación-regular-k1" class="nav-link" data-scroll-target="#diferenciación-regular-k1">Diferenciación regular (<span class="math inline">\(k=1\)</span>)</a></li>
   <li><a href="#diferenciación-con-r" id="toc-diferenciación-con-r" class="nav-link" data-scroll-target="#diferenciación-con-r">Diferenciación con <code>R</code></a></li>
   <li><a href="#operador-retardo" id="toc-operador-retardo" class="nav-link" data-scroll-target="#operador-retardo">Operador Retardo</a></li>
   </ul></li>
-  <li><a href="#transformación-logarítmica" id="toc-transformación-logarítmica" class="nav-link" data-scroll-target="#transformación-logarítmica"> <span class="header-section-number">3.3</span> Transformación logarítmica</a></li>
-  <li><a href="#diferencia-logaritmo-y-tasa-de-variación" id="toc-diferencia-logaritmo-y-tasa-de-variación" class="nav-link" data-scroll-target="#diferencia-logaritmo-y-tasa-de-variación"> <span class="header-section-number">3.4</span> Diferencia, Logaritmo y Tasa de variación</a></li>
+  <li><a href="#transformación-logarítmica" id="toc-transformación-logarítmica" class="nav-link" data-scroll-target="#transformación-logarítmica"><span class="toc-section-number">3.3</span>  Transformación logarítmica</a></li>
+  <li><a href="#diferencia-logaritmo-y-tasa-de-variación" id="toc-diferencia-logaritmo-y-tasa-de-variación" class="nav-link" data-scroll-target="#diferencia-logaritmo-y-tasa-de-variación"><span class="toc-section-number">3.4</span>  Diferencia, Logaritmo y Tasa de variación</a></li>
   </ul></li>
-  <li><a href="#función-de-autocorrelación" id="toc-función-de-autocorrelación" class="nav-link" data-scroll-target="#función-de-autocorrelación"> <span class="header-section-number">4</span> Función de autocorrelación</a></li>
-  <li><a href="#procesos-arima" id="toc-procesos-arima" class="nav-link" data-scroll-target="#procesos-arima"> <span class="header-section-number">5</span> Procesos ARIMA</a>
+  <li><a href="#función-de-autocorrelación" id="toc-función-de-autocorrelación" class="nav-link" data-scroll-target="#función-de-autocorrelación"><span class="toc-section-number">4</span>  Función de autocorrelación</a></li>
+  <li><a href="#procesos-arima" id="toc-procesos-arima" class="nav-link" data-scroll-target="#procesos-arima"><span class="toc-section-number">5</span>  Procesos ARIMA</a>
   <ul class="collapse">
-  <li><a href="#procesos-autorregresivos-arp" id="toc-procesos-autorregresivos-arp" class="nav-link" data-scroll-target="#procesos-autorregresivos-arp"> <span class="header-section-number">5.1</span> Procesos autorregresivos AR(p)</a>
+  <li><a href="#procesos-autorregresivos-arp" id="toc-procesos-autorregresivos-arp" class="nav-link" data-scroll-target="#procesos-autorregresivos-arp"><span class="toc-section-number">5.1</span>  Procesos autorregresivos AR(p)</a>
   <ul class="collapse">
   <li><a href="#definición" id="toc-definición" class="nav-link" data-scroll-target="#definición">Definición</a></li>
   <li><a href="#ejemplos" id="toc-ejemplos" class="nav-link" data-scroll-target="#ejemplos">Ejemplos</a></li>
   </ul></li>
-  <li><a href="#procesos-en-medias-móviles-maq" id="toc-procesos-en-medias-móviles-maq" class="nav-link" data-scroll-target="#procesos-en-medias-móviles-maq"> <span class="header-section-number">5.2</span> Procesos en medias móviles MA(q)</a>
+  <li><a href="#procesos-en-medias-móviles-maq" id="toc-procesos-en-medias-móviles-maq" class="nav-link" data-scroll-target="#procesos-en-medias-móviles-maq"><span class="toc-section-number">5.2</span>  Procesos en medias móviles MA(q)</a>
   <ul class="collapse">
   <li><a href="#definición-1" id="toc-definición-1" class="nav-link" data-scroll-target="#definición-1">Definición</a></li>
   <li><a href="#ejemplos-1" id="toc-ejemplos-1" class="nav-link" data-scroll-target="#ejemplos-1">Ejemplos</a></li>
   </ul></li>
-  <li><a href="#procesos-armapq" id="toc-procesos-armapq" class="nav-link" data-scroll-target="#procesos-armapq"> <span class="header-section-number">5.3</span> Procesos ARMA(p,q)</a>
+  <li><a href="#procesos-armapq" id="toc-procesos-armapq" class="nav-link" data-scroll-target="#procesos-armapq"><span class="toc-section-number">5.3</span>  Procesos ARMA(p,q)</a>
   <ul class="collapse">
   <li><a href="#definición-2" id="toc-definición-2" class="nav-link" data-scroll-target="#definición-2">Definición</a></li>
   <li><a href="#ejemplos-2" id="toc-ejemplos-2" class="nav-link" data-scroll-target="#ejemplos-2">Ejemplos</a></li>
   </ul></li>
-  <li><a href="#proceso-arimapdq" id="toc-proceso-arimapdq" class="nav-link" data-scroll-target="#proceso-arimapdq"> <span class="header-section-number">5.4</span> Proceso ARIMA(p,d,q)</a>
+  <li><a href="#proceso-arimapdq" id="toc-proceso-arimapdq" class="nav-link" data-scroll-target="#proceso-arimapdq"><span class="toc-section-number">5.4</span>  Proceso ARIMA(p,d,q)</a>
   <ul class="collapse">
   <li><a href="#ejemplos-3" id="toc-ejemplos-3" class="nav-link" data-scroll-target="#ejemplos-3">Ejemplos</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#aproximación-de-box-jenkins" id="toc-aproximación-de-box-jenkins" class="nav-link" data-scroll-target="#aproximación-de-box-jenkins"> <span class="header-section-number">6</span> Aproximación de Box-Jenkins</a>
+  <li><a href="#aproximación-de-box-jenkins" id="toc-aproximación-de-box-jenkins" class="nav-link" data-scroll-target="#aproximación-de-box-jenkins"><span class="toc-section-number">6</span>  Aproximación de Box-Jenkins</a>
   <ul class="collapse">
   <li><a href="#identificación-automática" id="toc-identificación-automática" class="nav-link" data-scroll-target="#identificación-automática">Identificación automática</a></li>
   </ul></li>
-  <li><a href="#ejemplos-4" id="toc-ejemplos-4" class="nav-link" data-scroll-target="#ejemplos-4"> <span class="header-section-number">7</span> Ejemplos</a>
+  <li><a href="#ejemplos-4" id="toc-ejemplos-4" class="nav-link" data-scroll-target="#ejemplos-4"><span class="toc-section-number">7</span>  Ejemplos</a>
   <ul class="collapse">
-  <li><a href="#títulos-de-libros-y-panfletos" id="toc-títulos-de-libros-y-panfletos" class="nav-link" data-scroll-target="#títulos-de-libros-y-panfletos"> <span class="header-section-number">7.1</span> Títulos de libros y panfletos</a>
+  <li><a href="#títulos-de-libros-y-panfletos" id="toc-títulos-de-libros-y-panfletos" class="nav-link" data-scroll-target="#títulos-de-libros-y-panfletos"><span class="toc-section-number">7.1</span>  Títulos de libros y panfletos</a>
   <ul class="collapse">
   <li><a href="#transformación-de-la-serie" id="toc-transformación-de-la-serie" class="nav-link" data-scroll-target="#transformación-de-la-serie">Transformación de la serie</a></li>
   <li><a href="#identificación" id="toc-identificación" class="nav-link" data-scroll-target="#identificación">Identificación</a></li>
@@ -375,7 +382,7 @@ div.csl-indent {
   <li><a href="#medidas-de-error" id="toc-medidas-de-error" class="nav-link" data-scroll-target="#medidas-de-error">Medidas de error</a></li>
   <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción">Predicción</a></li>
   </ul></li>
-  <li><a href="#aforo-de-vehículos" id="toc-aforo-de-vehículos" class="nav-link" data-scroll-target="#aforo-de-vehículos"> <span class="header-section-number">7.2</span> Aforo de vehículos</a>
+  <li><a href="#aforo-de-vehículos" id="toc-aforo-de-vehículos" class="nav-link" data-scroll-target="#aforo-de-vehículos"><span class="toc-section-number">7.2</span>  Aforo de vehículos</a>
   <ul class="collapse">
   <li><a href="#transformación-de-la-serie-1" id="toc-transformación-de-la-serie-1" class="nav-link" data-scroll-target="#transformación-de-la-serie-1">Transformación de la serie</a></li>
   <li><a href="#identificación-y-estimación" id="toc-identificación-y-estimación" class="nav-link" data-scroll-target="#identificación-y-estimación">Identificación y Estimación</a></li>
@@ -385,7 +392,7 @@ div.csl-indent {
   <li><a href="#predicción-1" id="toc-predicción-1" class="nav-link" data-scroll-target="#predicción-1">Predicción</a></li>
   <li><a href="#validación-con-origen-de-predicción-móvil" id="toc-validación-con-origen-de-predicción-móvil" class="nav-link" data-scroll-target="#validación-con-origen-de-predicción-móvil">Validación con origen de predicción móvil</a></li>
   </ul></li>
-  <li><a href="#consumo-de-alimentos-en-el-hogar-per-cápita" id="toc-consumo-de-alimentos-en-el-hogar-per-cápita" class="nav-link" data-scroll-target="#consumo-de-alimentos-en-el-hogar-per-cápita"> <span class="header-section-number">7.3</span> Consumo de alimentos en el hogar per cápita</a>
+  <li><a href="#consumo-de-alimentos-en-el-hogar-per-cápita" id="toc-consumo-de-alimentos-en-el-hogar-per-cápita" class="nav-link" data-scroll-target="#consumo-de-alimentos-en-el-hogar-per-cápita"><span class="toc-section-number">7.3</span>  Consumo de alimentos en el hogar per cápita</a>
   <ul class="collapse">
   <li><a href="#transformación-de-la-serie-2" id="toc-transformación-de-la-serie-2" class="nav-link" data-scroll-target="#transformación-de-la-serie-2">Transformación de la serie</a></li>
   <li><a href="#identificación-y-estimación-1" id="toc-identificación-y-estimación-1" class="nav-link" data-scroll-target="#identificación-y-estimación-1">Identificación y Estimación</a></li>
@@ -394,9 +401,9 @@ div.csl-indent {
   <li><a href="#interpretación-del-modelo-1" id="toc-interpretación-del-modelo-1" class="nav-link" data-scroll-target="#interpretación-del-modelo-1">Interpretación del modelo</a></li>
   <li><a href="#predicciones-de-la-serie" id="toc-predicciones-de-la-serie" class="nav-link" data-scroll-target="#predicciones-de-la-serie">Predicciones de la serie</a></li>
   </ul></li>
-  <li><a href="#comparación-con-alisado-exponencial" id="toc-comparación-con-alisado-exponencial" class="nav-link" data-scroll-target="#comparación-con-alisado-exponencial"> <span class="header-section-number">7.4</span> Comparación con alisado exponencial</a></li>
+  <li><a href="#comparación-con-alisado-exponencial" id="toc-comparación-con-alisado-exponencial" class="nav-link" data-scroll-target="#comparación-con-alisado-exponencial"><span class="toc-section-number">7.4</span>  Comparación con alisado exponencial</a></li>
   </ul></li>
-  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"> <span class="header-section-number">8</span> Resumen de los comandos utilizados</a></li>
+  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"><span class="toc-section-number">8</span>  Resumen de los comandos utilizados</a></li>
   </ul>
 </nav>
     </div>
@@ -490,7 +497,7 @@ div.csl-indent {
 <div id="fig-Nacimientos" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-Nacimientos-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 1: Nacimientos mensuales</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;1: Nacimientos mensuales</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -501,7 +508,9 @@ div.csl-indent {
 <section id="proceso-ergódico" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="proceso-ergódico"><span class="header-section-number">2.3</span> Proceso ergódico</h2>
 <p>Para que un proceso sea ergódico las observaciones nuevas tienen que aportar suficiente información para que la varianza del valor medio converja a 0.</p>
-<p>Una condición necesaria, pero no suficiente, para que un proceso estacionario sea ergódico es: <span class="math display">\[\lim_{k\rightarrow \infty} \gamma_k = 0.\]</span> Es decir, que cuanto más distancia hay entre dos periodos, menos información se transmite. Alternativamente, que el pasado cada vez ayuda menos a entender el presente.</p>
+<p>Una condición necesaria, pero no suficiente, para que un proceso estacionario sea ergódico es:</p>
+<p><span class="math display">\[\lim_{k\rightarrow \infty} \gamma_k = 0.\]</span></p>
+<p>Es decir, que cuanto más distancia hay entre dos periodos, menos información se transmite. Alternativamente, que el pasado cada vez ayuda menos a entender el presente.</p>
 <p><br>
 </p>
 </section>
@@ -526,7 +535,7 @@ div.csl-indent {
 <div id="fig-Nacimientos2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-Nacimientos2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 2: Serie Nacimientos, su diferencia y la diferencia del logaritmo</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;2: Serie Nacimientos, su diferencia y la diferencia del logaritmo</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -552,7 +561,7 @@ div.csl-indent {
 <div id="fig-NacimientosAnual" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-NacimientosAnual-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 3: Nacimientos (anual), su primera y su segunda diferencia regular</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;3: Nacimientos (anual), su primera y su segunda diferencia regular</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -584,7 +593,7 @@ div.csl-indent {
 <div class="cell-output-display">
 <div id="tbl-operadorretardo" class="anchored">
 <table class="table table-sm table-striped">
-<caption>Tabla 1: Ejemplo de aplicación del operador retardo</caption>
+<caption>Tabla&nbsp;1: Ejemplo de aplicación del operador retardo</caption>
 <thead>
 <tr class="header">
 <th style="text-align: right;">y</th>
@@ -654,7 +663,7 @@ div.csl-indent {
 <div id="fig-NacimientosLog" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-NacimientosLog-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 4: Serie Nacimientos y su transformaciones logarítmica</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;4: Serie Nacimientos y su transformaciones logarítmica</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -782,7 +791,7 @@ La diferenciacion y el logaritmo en series sin estacionalidad
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figura 5: FAC para Nacimientos</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;5: FAC para Nacimientos</figcaption><p></p>
 </figure>
 </div>
 <p>Las bandas azules de la FAC muestran el intervalo de confianza al 95% (IC95). Si <span class="math inline">\(\rho_k = 0\)</span>, la distribución del estimador <span class="math inline">\(r_k\)</span> se distribuye aproximadamente como una normal de media <span class="math inline">\(-1/T\)</span> y varianza <span class="math inline">\(1/T\)</span>. Las líneas punteadas de la FAC están dibujadas en las posiciones <span class="math inline">\(\frac{-1}{T} \pm \frac{1.96}{\sqrt{T}}\)</span>.</p>
@@ -931,7 +940,7 @@ Autocorrelations of series 'diff(nacimientosAnual, differences = 2)', by lag
 <div id="fig-AproximacionBoxJenkins" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="./imagenes/BoxJenkins.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Figura 6: Esquema de la aproximación de Box-Jenkins a la modelización de procesos ARIMA</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;6: Esquema de la aproximación de Box-Jenkins a la modelización de procesos ARIMA</figcaption><p></p>
 </figure>
 </div>
 <p><br>
@@ -982,7 +991,7 @@ Autocorrelations of series 'diff(nacimientosAnual, differences = 2)', by lag
 <div id="fig-Libros" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-Libros-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 7: Títulos publicados</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;7: Títulos publicados</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1034,7 +1043,7 @@ Autocorrelations of series 'diff(nacimientosAnual, differences = 2)', by lag
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figura 8: Gráfica y FAC para Libros</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;8: Gráfica y FAC para Libros</figcaption><p></p>
 </figure>
 </div>
 <p>Además,</p>
@@ -1113,7 +1122,7 @@ AIC=527.36   AICc=527.53   BIC=528.62</code></pre>
 <div id="fig-LibrosError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-LibrosError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 9: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;9: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1160,7 +1169,7 @@ Training set 868.03 5798.12 4358.32 1.29 6.88 0.96 -0.04</code></pre>
 <div id="fig-LibrosPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-LibrosPre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 10: Libros (1993-2019) y predicción (2020-2024)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;10: Libros (1993-2019) y predicción (2020-2024)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1185,7 +1194,7 @@ Training set 868.03 5798.12 4358.32 1.29 6.88 0.96 -0.04</code></pre>
 <div id="fig-Aforo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-Aforo-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 11: Aforo de vehículos en N-340, Oropesa</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;11: Aforo de vehículos en N-340, Oropesa</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1240,7 +1249,7 @@ Training set 868.03 5798.12 4358.32 1.29 6.88 0.96 -0.04</code></pre>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figura 12: Gráfica y FAC para Aforo</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;12: Gráfica y FAC para Aforo</figcaption><p></p>
 </figure>
 </div>
 <div class="cell" data-layout-align="center">
@@ -1297,7 +1306,7 @@ AIC=964.91   AICc=966.04   BIC=975.3</code></pre>
 <div id="fig-AforoError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-AforoError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 13: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;13: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1365,7 +1374,7 @@ AIC=958.14   AICc=959.27   BIC=968.53</code></pre>
 <div id="fig-AforoError2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-AforoError2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 14: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;14: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1473,7 +1482,7 @@ Training set 47.2 737.37 535.16 1.32 5.67 0.79 0.04</code></pre>
 <div id="fig-AforoPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-AforoPre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 15: Aforo (1960-2019) y predicción (2020-2024)</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;15: Aforo (1960-2019) y predicción (2020-2024)</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1552,7 +1561,7 @@ Training set 47.2 737.37 535.16 1.32 5.67 0.79 0.04</code></pre>
 <div id="fig-Alimentos" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-Alimentos-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 16: Consumo alimentario en hogar</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;16: Consumo alimentario en hogar</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1605,7 +1614,7 @@ Training set 47.2 737.37 535.16 1.32 5.67 0.79 0.04</code></pre>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figura 17: Gráfica y FAC para Alimentos</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;17: Gráfica y FAC para Alimentos</figcaption><p></p>
 </figure>
 </div>
 <div class="cell" data-layout-align="center">
@@ -1660,7 +1669,7 @@ AIC=297.22   AICc=297.99   BIC=301.88</code></pre>
 <div id="fig-AlimentosError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-AlimentosError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 18: Error + Intervención</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;18: Error + Intervención</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1778,7 +1787,7 @@ La contante del modelo teórico y la media del modelo estimado
 <div id="fig-AlimentosPre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-06-Tema6_files/figure-html/fig-AlimentosPre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura 19: Consumo de alimentos y predicción</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figura&nbsp;19: Consumo de alimentos y predicción</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -1882,10 +1891,10 @@ La contante del modelo teórico y la media del modelo estimado
 <div id="ref-BoxJenkins76" class="csl-entry" role="doc-biblioentry">
 Box, G. E. P., and G. M. Jenkins. 1976. <em>Time Series Analysis: Forecasting and Control</em>. Holden-Day, San Francisco.
 </div>
-</div></section><section class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
-<li id="fn1" role="doc-endnote"><p>La transformación logarítmica es un caso concreto de otra más general, la transformación de Box-Cox que no veremos en este curso: <span class="math display">\[
+<li id="fn1"><p>La transformación logarítmica es un caso concreto de otra más general, la transformación de Box-Cox que no veremos en este curso: <span class="math display">\[
   z_t =
   \begin{cases}
     (y_t^{\lambda}-1)/\lambda &amp; \,\,\,\lambda \neq 0 \\
@@ -1893,7 +1902,7 @@ Box, G. E. P., and G. M. Jenkins. 1976. <em>Time Series Analysis: Forecasting an
   \end{cases}
   \]</span> Se puede demostrar que <span class="math inline">\(\lim_{\lambda \rightarrow 0} \;\; (y_t^{\lambda}-1)/\lambda = log(y_t)\)</span>.</p>
 <p>El argumento <code>lambda</code> que hemos usado en algunas funciones de la librería <code>forecast</code> hace referencia al parámetro <span class="math inline">\(\lambda\)</span> de la transformación Box-Cox. Siempre lo hemos fijado a cero, indicando la transformación logarítmica.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2" role="doc-endnote"><p>Mira en la ayuda de la función <code>Arima</code> la diferencia entre los argumentos <code>include.mean</code>, <code>include.drift</code> e <code>include.constant</code><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Mira en la ayuda de la función <code>Arima</code> la diferencia entre los argumentos <code>include.mean</code>, <code>include.drift</code> e <code>include.constant</code><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -1965,7 +1974,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);

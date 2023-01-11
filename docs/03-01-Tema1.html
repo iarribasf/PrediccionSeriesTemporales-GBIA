@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.36">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,10 +12,15 @@
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
@@ -75,9 +80,11 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg navbar-dark ">
       <div class="navbar-container container-fluid">
-      <a class="navbar-brand" href="./index.html">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
-  </a>
+    </a>
+  </div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
@@ -250,21 +257,21 @@ div.csl-indent {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc">
+        <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#las-previsiones" id="toc-las-previsiones" class="nav-link active" data-scroll-target="#las-previsiones"> <span class="header-section-number">1</span> Las previsiones</a></li>
-  <li><a href="#métodos-de-previsión" id="toc-métodos-de-previsión" class="nav-link" data-scroll-target="#métodos-de-previsión"> <span class="header-section-number">2</span> Métodos de previsión</a>
+  <li><a href="#las-previsiones" id="toc-las-previsiones" class="nav-link active" data-scroll-target="#las-previsiones"><span class="toc-section-number">1</span>  Las previsiones</a></li>
+  <li><a href="#métodos-de-previsión" id="toc-métodos-de-previsión" class="nav-link" data-scroll-target="#métodos-de-previsión"><span class="toc-section-number">2</span>  Métodos de previsión</a>
   <ul class="collapse">
-  <li><a href="#métodos-subjetivos" id="toc-métodos-subjetivos" class="nav-link" data-scroll-target="#métodos-subjetivos"> <span class="header-section-number">2.1</span> Métodos subjetivos</a>
+  <li><a href="#métodos-subjetivos" id="toc-métodos-subjetivos" class="nav-link" data-scroll-target="#métodos-subjetivos"><span class="toc-section-number">2.1</span>  Métodos subjetivos</a>
   <ul class="collapse">
   <li><a href="#principios-básico-en-la-implementación" id="toc-principios-básico-en-la-implementación" class="nav-link" data-scroll-target="#principios-básico-en-la-implementación">Principios básico en la implementación</a></li>
   <li><a href="#algunos-métodos-subjetivos" id="toc-algunos-métodos-subjetivos" class="nav-link" data-scroll-target="#algunos-métodos-subjetivos">Algunos métodos subjetivos</a></li>
   </ul></li>
-  <li><a href="#métodos-objetivos" id="toc-métodos-objetivos" class="nav-link" data-scroll-target="#métodos-objetivos"> <span class="header-section-number">2.2</span> Métodos objetivos</a></li>
+  <li><a href="#métodos-objetivos" id="toc-métodos-objetivos" class="nav-link" data-scroll-target="#métodos-objetivos"><span class="toc-section-number">2.2</span>  Métodos objetivos</a></li>
   </ul></li>
-  <li><a href="#qué-haremos-y-qué-no-haremos-en-este-curso" id="toc-qué-haremos-y-qué-no-haremos-en-este-curso" class="nav-link" data-scroll-target="#qué-haremos-y-qué-no-haremos-en-este-curso"> <span class="header-section-number">3</span> ¿Qué haremos y qué no haremos en este curso?</a></li>
+  <li><a href="#qué-haremos-y-qué-no-haremos-en-este-curso" id="toc-qué-haremos-y-qué-no-haremos-en-este-curso" class="nav-link" data-scroll-target="#qué-haremos-y-qué-no-haremos-en-este-curso"><span class="toc-section-number">3</span>  ¿Qué haremos y qué no haremos en este curso?</a></li>
   </ul>
 </nav>
     </div>
@@ -506,7 +513,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
