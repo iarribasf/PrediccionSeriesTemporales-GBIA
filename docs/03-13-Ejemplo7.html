@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -113,6 +84,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -135,163 +107,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Inicio</a>
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./01-Guia-curso.html">Guía del curso</a>
+    <a class="nav-link" href="./01-Guia-curso.html" rel="" target="">
+ <span class="menu-text">Guía del curso</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./02-Logistica.html">Logística</a>
+    <a class="nav-link" href="./02-Logistica.html" rel="" target="">
+ <span class="menu-text">Logística</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Diapos</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Diapos</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
         <li class="dropdown-header">Teoría</li>
         <li>
-    <a class="dropdown-item" href="./03-01-Tema1.html">
+    <a class="dropdown-item" href="./03-01-Tema1.html" rel="" target="">
  <span class="dropdown-text">Tema 1: Introducción</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-02-Tema2.html">
+    <a class="dropdown-item" href="./03-02-Tema2.html" rel="" target="">
  <span class="dropdown-text">Tema 2: Definición</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-03-Tema3.html">
+    <a class="dropdown-item" href="./03-03-Tema3.html" rel="" target="">
  <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-04-Tema4.html">
+    <a class="dropdown-item" href="./03-04-Tema4.html" rel="" target="">
  <span class="dropdown-text">Tema 4: Media móvil</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-05-Tema5.html">
+    <a class="dropdown-item" href="./03-05-Tema5.html" rel="" target="">
  <span class="dropdown-text">Tema 5: Alisado</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-06-Tema6.html">
+    <a class="dropdown-item" href="./03-06-Tema6.html" rel="" target="">
  <span class="dropdown-text">Tema 6: ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-07-Tema7.html">
+    <a class="dropdown-item" href="./03-07-Tema7.html" rel="" target="">
  <span class="dropdown-text">Tema 7: SARIMA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Ejemplo de aplicación</li>
         <li>
-    <a class="dropdown-item" href="./03-08-Ejemplo2.html">
+    <a class="dropdown-item" href="./03-08-Ejemplo2.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-09-Ejemplo3.html">
+    <a class="dropdown-item" href="./03-09-Ejemplo3.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-10-Ejemplo4.html">
+    <a class="dropdown-item" href="./03-10-Ejemplo4.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 4</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-11-Ejemplo5.html">
+    <a class="dropdown-item" href="./03-11-Ejemplo5.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 5</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-12-Ejemplo6.html">
+    <a class="dropdown-item" href="./03-12-Ejemplo6.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 6</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-13-Ejemplo7.html">
+    <a class="dropdown-item" href="./03-13-Ejemplo7.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 7</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otro ejemplo</li>
         <li>
-    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html">
+    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html" rel="" target="">
  <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">Píldoras</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Píldoras</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
         <li>
-    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html" rel="" target="">
  <span class="dropdown-text">Bootstrapping para IC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html" rel="" target="">
  <span class="dropdown-text">Múltiples componentes estacionales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html" rel="" target="">
  <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html" rel="" target="">
  <span class="dropdown-text">Series acotadas</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html" rel="" target="">
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html" rel="" target="">
  <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./05-Recursos-R.html">Recursos de la asignatura</a>
+    <a class="nav-link" href="./05-Recursos-R.html" rel="" target="">
+ <span class="menu-text">Recursos de la asignatura</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./06-Evaluacion_Continua.html">Evaluacion Continua</a>
+    <a class="nav-link" href="./06-Evaluacion_Continua.html" rel="" target="">
+ <span class="menu-text">Evaluacion Continua</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Más</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
         <li class="dropdown-header">R</li>
         <li>
-    <a class="dropdown-item" href="https://cran.r-project.org">
+    <a class="dropdown-item" href="https://cran.r-project.org" rel="" target="">
  <span class="dropdown-text">Dónde está R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rstudio.com">
+    <a class="dropdown-item" href="https://rstudio.com" rel="" target="">
  <span class="dropdown-text">Donde está RStudio</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Markdown</li>
         <li>
-    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/" rel="" target="">
  <span class="dropdown-text">Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html" rel="" target="">
  <span class="dropdown-text">R Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf" rel="" target="">
  <span class="dropdown-text">R Markdown (pdf)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html" rel="" target="">
  <span class="dropdown-text">Quatro</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otros</li>
         <li>
-    <a class="dropdown-item" href="https://www.r-bloggers.com">
+    <a class="dropdown-item" href="https://www.r-bloggers.com" rel="" target="">
  <span class="dropdown-text">Blog sobre R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://bookdown.org">
+    <a class="dropdown-item" href="https://bookdown.org" rel="" target="">
  <span class="dropdown-text">Libros online que debes conocer</span></a>
   </li>  
     </ul>
   </li>
 </ul>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -305,20 +291,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
-  <li><a href="#identificación" id="toc-identificación" class="nav-link" data-scroll-target="#identificación"><span class="toc-section-number">2</span>  Identificación</a>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#identificación" id="toc-identificación" class="nav-link" data-scroll-target="#identificación"><span class="header-section-number">2</span> Identificación</a>
   <ul class="collapse">
-  <li><a href="#diferenciación-y-logaritmo" id="toc-diferenciación-y-logaritmo" class="nav-link" data-scroll-target="#diferenciación-y-logaritmo"><span class="toc-section-number">2.1</span>  Diferenciación y logaritmo</a></li>
-  <li><a href="#identificación-del-orden-regular-y-estacional" id="toc-identificación-del-orden-regular-y-estacional" class="nav-link" data-scroll-target="#identificación-del-orden-regular-y-estacional"><span class="toc-section-number">2.2</span>  Identificación del orden regular y estacional</a></li>
+  <li><a href="#diferenciación-y-logaritmo" id="toc-diferenciación-y-logaritmo" class="nav-link" data-scroll-target="#diferenciación-y-logaritmo"><span class="header-section-number">2.1</span> Diferenciación y logaritmo</a></li>
+  <li><a href="#identificación-del-orden-regular-y-estacional" id="toc-identificación-del-orden-regular-y-estacional" class="nav-link" data-scroll-target="#identificación-del-orden-regular-y-estacional"><span class="header-section-number">2.2</span> Identificación del orden regular y estacional</a></li>
   </ul></li>
-  <li><a href="#estimación" id="toc-estimación" class="nav-link" data-scroll-target="#estimación"><span class="toc-section-number">3</span>  Estimación</a></li>
-  <li><a href="#validación" id="toc-validación" class="nav-link" data-scroll-target="#validación"><span class="toc-section-number">4</span>  Validación</a></li>
-  <li><a href="#ecuación-del-modelo-identificado" id="toc-ecuación-del-modelo-identificado" class="nav-link" data-scroll-target="#ecuación-del-modelo-identificado"><span class="toc-section-number">5</span>  Ecuación del modelo identificado</a></li>
-  <li><a href="#predicción-de-las-pernoctaciones" id="toc-predicción-de-las-pernoctaciones" class="nav-link" data-scroll-target="#predicción-de-las-pernoctaciones"><span class="toc-section-number">6</span>  Predicción de las pernoctaciones</a></li>
-  <li><a href="#comparación-con-otros-modelos" id="toc-comparación-con-otros-modelos" class="nav-link" data-scroll-target="#comparación-con-otros-modelos"><span class="toc-section-number">7</span>  Comparación con otros modelos</a>
+  <li><a href="#estimación" id="toc-estimación" class="nav-link" data-scroll-target="#estimación"><span class="header-section-number">3</span> Estimación</a></li>
+  <li><a href="#validación" id="toc-validación" class="nav-link" data-scroll-target="#validación"><span class="header-section-number">4</span> Validación</a></li>
+  <li><a href="#ecuación-del-modelo-identificado" id="toc-ecuación-del-modelo-identificado" class="nav-link" data-scroll-target="#ecuación-del-modelo-identificado"><span class="header-section-number">5</span> Ecuación del modelo identificado</a></li>
+  <li><a href="#predicción-de-las-pernoctaciones" id="toc-predicción-de-las-pernoctaciones" class="nav-link" data-scroll-target="#predicción-de-las-pernoctaciones"><span class="header-section-number">6</span> Predicción de las pernoctaciones</a></li>
+  <li><a href="#comparación-con-otros-modelos" id="toc-comparación-con-otros-modelos" class="nav-link" data-scroll-target="#comparación-con-otros-modelos"><span class="header-section-number">7</span> Comparación con otros modelos</a>
   <ul class="collapse">
-  <li><a href="#calidad-de-ajuste" id="toc-calidad-de-ajuste" class="nav-link" data-scroll-target="#calidad-de-ajuste"><span class="toc-section-number">7.1</span>  Calidad de ajuste</a></li>
-  <li><a href="#predicciones-extramuestrales" id="toc-predicciones-extramuestrales" class="nav-link" data-scroll-target="#predicciones-extramuestrales"><span class="toc-section-number">7.2</span>  Predicciones extramuestrales</a></li>
+  <li><a href="#calidad-de-ajuste" id="toc-calidad-de-ajuste" class="nav-link" data-scroll-target="#calidad-de-ajuste"><span class="header-section-number">7.1</span> Calidad de ajuste</a></li>
+  <li><a href="#predicciones-extramuestrales" id="toc-predicciones-extramuestrales" class="nav-link" data-scroll-target="#predicciones-extramuestrales"><span class="header-section-number">7.2</span> Predicciones extramuestrales</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -343,28 +329,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
   </div>
     
+  
     
   </div>
   
 
 </header>
 
-<div class="cell">
-
-</div>
-<div class="cell" data-layout-align="center">
-
-</div>
-<div class="cell" data-layout-align="center">
-
-</div>
 <p><br>
 <br>
 </p>
 <section id="introducción" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
-<p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2019, un total de 20 años y 240 observaciones.</p>
-<p>La serie presenta tendencia decreciente hasta finales de la primera década del presente siglo y luego creciente hasta los dos últimos años. La estacionalidad de orden 12 esta determinada por la temperatura. El esquema es multiplicativo.</p>
+<p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2022, un total de 23 años y 276 observaciones.</p>
+<p>La serie temporal muestra una tendencia suavemente decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, que pasa a ser creciente. A finales de la década pasada se observa una caída en el número de pernoctaciones y en los últimos años el efecto de la Covid-19 y posterior recuperación. El esquema es multiplicativo.</p>
+<p>Para este análisis consideraremos la serie hasta diciembre de 2019, eliminando el periodo afectado por la pandemia de Covid-19. Posteriormente usaremos las predicciones para los años 2020 a 2022 para cuantificar el efecto de la pandemia sobre las pernoctaciones y su impacto económico.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
@@ -377,12 +356,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Noches (millones)"</span>,</span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>))  </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2022</span>, <span class="dv">2</span>))  </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>Pernoctacionesb <span class="ot">&lt;-</span> <span class="fu">window</span>(Pernoctaciones, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Pernoctaciones" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-Pernoctaciones-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;1: Pernoctaciones</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;1: Pernoctaciones</figcaption>
 </figure>
 </div>
 </div>
@@ -400,10 +381,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>El esquema multiplicativo de la serie aconseja el uso de la transformación logarítmica. Además, vamos a ver que para que la serie sea estacionaria es necesario diferenciarla tanto regular como estacionalmente, así que el uso de logaritmo vuelve a ser aconsejable si queremos ganar en interpretabilidad.</p>
 <p>La <a href="#fig-PernoctacionesFAC">Figura&nbsp;2</a> muestra la FAC para la serie Pernoctaciones (log) y algunas de sus transformaciones. En los paneles a) y b) las autocorrelaciones estacionales decrecen muy lentamente, indicando que la serie analizada no es ergódica. El panel c) muestra que las autocorrelaciones en la parte regular decrecen lentamente, indicando que la serie analizada no es estacionaria. Solo la doble diferenciación regular y estacional de la serie muestra un rápido descenso en los coeficiente de autocorrelación (panel d), indicando que la serie así transformada es estacionaria en media y ergódica.</p>
 <div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(Pernoctaciones), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctaciones)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctaciones), <span class="at">lag =</span> <span class="dv">12</span>), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctaciones), <span class="at">lag=</span><span class="dv">12</span>)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag =</span> <span class="dv">12</span>), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag=</span><span class="dv">12</span>)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-PernoctacionesFAC" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -411,7 +392,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-PernoctacionesFAC-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-PernoctacionesFAC-1.png" class="img-fluid figure-img" data-ref-parent="fig-PernoctacionesFAC"></p>
-<p></p><figcaption class="figure-caption">(a) Log serie</figcaption><p></p>
+<figcaption class="figure-caption">(a) Log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -419,7 +400,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-PernoctacionesFAC-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-PernoctacionesFAC-2.png" class="img-fluid figure-img" data-ref-parent="fig-PernoctacionesFAC"></p>
-<p></p><figcaption class="figure-caption">(b) Dif. regular log serie</figcaption><p></p>
+<figcaption class="figure-caption">(b) Dif. regular log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -429,7 +410,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-PernoctacionesFAC-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-PernoctacionesFAC-3.png" class="img-fluid figure-img" data-ref-parent="fig-PernoctacionesFAC"></p>
-<p></p><figcaption class="figure-caption">(c) Dif. estacional log serie</figcaption><p></p>
+<figcaption class="figure-caption">(c) Dif. estacional log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -437,7 +418,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-PernoctacionesFAC-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-PernoctacionesFAC-4.png" class="img-fluid figure-img" data-ref-parent="fig-PernoctacionesFAC"></p>
-<p></p><figcaption class="figure-caption">(d) Dif. regular y estacional log serie</figcaption><p></p>
+<figcaption class="figure-caption">(d) Dif. regular y estacional log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -448,11 +429,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <p>Por otro lado, la identificación automática de la diferenciación también concluye que es necesaria la doble diferenciación.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ndiffs</span>(<span class="fu">log</span>(Pernoctaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ndiffs</span>(<span class="fu">log</span>(Pernoctacionesb))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nsdiffs</span>(<span class="fu">log</span>(Pernoctaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nsdiffs</span>(<span class="fu">log</span>(Pernoctacionesb))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1</code></pre>
 </div>
@@ -466,16 +447,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Vamos a identificar los valores de <span class="math inline">\(p\)</span>, <span class="math inline">\(q\)</span>, <span class="math inline">\(P\)</span> y <span class="math inline">\(Q\)</span>. Para ello solicitaremos con <code>auto.arima</code> y <code>seas</code> una identificación automática.</p>
 <p>Con <code>auto.arima</code> incluiremos dos efectos calendarios, uno para el número de días del mes y otro para el efecto Semana Santa.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>DiasMes <span class="ot">&lt;-</span> <span class="fu">monthdays</span>(Pernoctaciones)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SemanaSanta <span class="ot">&lt;-</span> <span class="fu">easter</span>(Pernoctaciones)</span>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>DiasMes <span class="ot">&lt;-</span> <span class="fu">monthdays</span>(Pernoctacionesb)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>SemanaSanta <span class="ot">&lt;-</span> <span class="fu">easter</span>(Pernoctacionesb)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">auto.arima</span>(Pernoctaciones, </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">auto.arima</span>(Pernoctacionesb, </span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>           <span class="at">d =</span> <span class="dv">1</span>, </span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">D =</span> <span class="dv">1</span>,</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">lambda =</span> <span class="dv">0</span>,</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">xreg =</span> <span class="fu">cbind</span>(DiasMes, SemanaSanta))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Series: Pernoctaciones 
+<pre><code>Series: Pernoctacionesb 
 Regression with ARIMA(0,1,1)(2,1,2)[12] errors 
 Box Cox transformation: lambda= 0 
 
@@ -491,11 +472,11 @@ AIC=-950.7   AICc=-950.04   BIC=-923.3</code></pre>
 <p>La función <code>auto.arima</code> identifica un proceso <span class="math inline">\(ARIMA_{12}(0,1,1)(2,1,2)\)</span>, donde el coeficiente para <code>sar2</code> no parece ser significativo (el coeficiente no supera los dos errores estándar).</p>
 <p>La identificación alcanzada por <code>seas</code> es un proceso <span class="math inline">\(ARIMA_{12}(0,1,1)(0,1,1)\)</span> (modelo de las aerolíneas) de la transformación logarítmica, con intervención en Semana Santa y días laborables. Además, se identifica un cambio de nivel desde marzo de 2005.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">seas</span>(Pernoctaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">seas</span>(Pernoctacionesb))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-seas(x = Pernoctaciones)
+seas(x = Pernoctacionesb)
 
 Coefficients:
                     Estimate Std. Error z value             Pr(&gt;|z|)    
@@ -625,16 +606,16 @@ Warnings:
 </div>
 <p>La siguiente salida muestra el modelo estimado y la <a href="#fig-Error1">Figura&nbsp;3</a> permite analizar la presencia de más valores extremos.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>DiasMes <span class="ot">&lt;-</span> <span class="fu">monthdays</span>(Pernoctaciones)</span>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>DiasMes <span class="ot">&lt;-</span> <span class="fu">monthdays</span>(Pernoctacionesb)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Arima1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(Pernoctaciones, </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>Arima1 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(Pernoctacionesb, </span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),  </span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">lambda =</span> <span class="dv">0</span>,</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">xreg =</span> <span class="fu">cbind</span>(DiasMes, SemanaSanta))</span>
 <span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>Arima1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Series: Pernoctaciones 
+<pre><code>Series: Pernoctacionesb 
 Regression with ARIMA(0,1,1)(0,1,1)[12] errors 
 Box Cox transformation: lambda= 0 
 
@@ -664,25 +645,25 @@ AIC=-945.71   AICc=-945.44   BIC=-928.59</code></pre>
 <div id="fig-Error1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-Error1-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;3: Error + Intervención</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;3: Error + Intervención</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Se observan dos valores claramente extremos en marzo de 2005 y mayo de 2013. Al estimar un nuevo modelo incluyendo estas dos intervenciones, el análisis del error revela una nueva intervención en abril de 2006, por lo que vamos a aprovechar para incluirla ya.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>d0305 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">cycle</span>(Pernoctaciones) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">trunc</span>(<span class="fu">time</span>(Pernoctaciones)) <span class="sc">==</span> <span class="dv">2005</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>d0406 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">cycle</span>(Pernoctaciones) <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> <span class="fu">trunc</span>(<span class="fu">time</span>(Pernoctaciones)) <span class="sc">==</span> <span class="dv">2006</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>d0513 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">cycle</span>(Pernoctaciones) <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> <span class="fu">trunc</span>(<span class="fu">time</span>(Pernoctaciones)) <span class="sc">==</span> <span class="dv">2013</span>)</span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>d0305 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">cycle</span>(Pernoctacionesb) <span class="sc">==</span> <span class="dv">3</span> <span class="sc">&amp;</span> <span class="fu">trunc</span>(<span class="fu">time</span>(Pernoctacionesb)) <span class="sc">==</span> <span class="dv">2005</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>d0406 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">cycle</span>(Pernoctacionesb) <span class="sc">==</span> <span class="dv">4</span> <span class="sc">&amp;</span> <span class="fu">trunc</span>(<span class="fu">time</span>(Pernoctacionesb)) <span class="sc">==</span> <span class="dv">2006</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>d0513 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span>(<span class="fu">cycle</span>(Pernoctacionesb) <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> <span class="fu">trunc</span>(<span class="fu">time</span>(Pernoctacionesb)) <span class="sc">==</span> <span class="dv">2013</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Arima2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(Pernoctaciones, </span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>Arima2 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(Pernoctacionesb, </span>
 <span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),  </span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>                         <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>                         <span class="at">lambda =</span> <span class="dv">0</span>,</span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>                         <span class="at">xreg =</span> <span class="fu">cbind</span>(DiasMes, SemanaSanta, d0305, d0406, d0513))</span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>Arima2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Series: Pernoctaciones 
+<pre><code>Series: Pernoctacionesb 
 Regression with ARIMA(0,1,1)(0,1,1)[12] errors 
 Box Cox transformation: lambda= 0 
 
@@ -713,32 +694,28 @@ AIC=-956.96   AICc=-956.3   BIC=-929.56</code></pre>
 <div id="fig-Error2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-Error2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;4: Error + Intervención</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;4: Error + Intervención</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>Por último, veamos si efectivamente todos los coeficientes del modelo son significativos.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ancho <span class="ot">&lt;-</span> <span class="fu">max</span>(<span class="fu">nchar</span>(<span class="fu">names</span>(<span class="fu">coef</span>(Arima2)))) <span class="sc">+</span> <span class="dv">2</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(<span class="fu">coef</span>(Arima2))) {</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  wt <span class="ot">&lt;-</span> <span class="fu">wald.test</span>(<span class="at">b =</span> <span class="fu">coef</span>(Arima2), </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Sigma =</span> <span class="fu">vcov</span>(Arima2), </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">Terms =</span> i)</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Coeficiente: "</span>, </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>      <span class="fu">format</span>(<span class="fu">names</span>(<span class="fu">coef</span>(Arima2))[i], <span class="at">width =</span> ancho), </span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"valor de p: "</span>,</span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>      <span class="fu">formatC</span>(wt<span class="sc">$</span>result<span class="sc">$</span>chi2[<span class="dv">3</span>], <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">format =</span> <span class="st">"f"</span>))</span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coeftest</span>(Arima2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
-Coeficiente:  ma1           valor de p:  0.0000
-Coeficiente:  sma1          valor de p:  0.0000
-Coeficiente:  DiasMes       valor de p:  0.0021
-Coeficiente:  SemanaSanta   valor de p:  0.0000
-Coeficiente:  d0305         valor de p:  0.0034
-Coeficiente:  d0406         valor de p:  0.0591
-Coeficiente:  d0513         valor de p:  0.0088</code></pre>
+z test of coefficients:
+
+              Estimate Std. Error z value            Pr(&gt;|z|)    
+ma1         -0.3303816  0.0660871 -4.9992 0.00000057574208836 ***
+sma1        -0.3770336  0.0767203 -4.9144 0.00000089057446340 ***
+DiasMes      0.0278712  0.0090465  3.0809            0.002064 ** 
+SemanaSanta  0.0555809  0.0072613  7.6544 0.00000000000001943 ***
+d0305       -0.0616243  0.0210342 -2.9297            0.003393 ** 
+d0406        0.0371492  0.0196842  1.8873            0.059125 .  
+d0513        0.0503104  0.0192104  2.6189            0.008821 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
 <p>Para un nivel de significatividad del 5% todos los coeficientes del modelo son significativos, excepto el de abril de 2006. Sin embargo, dejaremos esta variable ficticia por ser significativa al 10% y estar asociada a un error notoriamente elevado.</p>
@@ -797,16 +774,28 @@ Training set -10132.57 606418 443952.6 -0.04 2.19 0.49    0</code></pre>
 <span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
 <span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Pernoctaciones"</span>,</span>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2022</span>, <span class="dv">4</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2022</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Prevision" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-Prevision-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;5: Pernoctaciones y predicciones</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;5: Pernoctaciones y predicciones</figcaption>
 </figure>
 </div>
 </div>
 </div>
+<p>A partir de las predicciones podemos evaluar el efecto que la pandemia de la Covid-19 tuvo sobre las pernoctaciones.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(Pernoctaciones <span class="sc">-</span> pArima2<span class="sc">$</span>mean, <span class="at">FUN =</span> sum) <span class="sc">/</span> <span class="dv">1000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Time Series:
+Start = 2020 
+End = 2022 
+Frequency = 1 
+[1] -245.15718 -195.30848  -42.38915</code></pre>
+</div>
+</div>
+<p>En 2020 la caída estimada de las pernoctaciones fue de 245 millones y en 2021 de 195 millones. El efecto de la pandemia casi había desaparecido en el año 2022, con una caída de las pernoctaciones respecto de los valores previstos de 42 millones.</p>
 <p><br>
 <br>
 </p>
@@ -816,9 +805,6 @@ Training set -10132.57 606418 443952.6 -0.04 2.19 0.49    0</code></pre>
 <section id="calidad-de-ajuste" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="calidad-de-ajuste"><span class="header-section-number">7.1</span> Calidad de ajuste</h2>
 <p>La serie Pernoctaciones la hemos ajustado por el método ingenuo con estacionalidad, el método de Alisado Exponencial y procesos ARIMA. La <a href="#tbl-calidad">Tabla&nbsp;1</a> recoge el error medio (RMSE) y porcentual (MAPE) al usar estas tres aproximaciones con la serie original y su transformación logarítmica.</p>
-<div class="cell" data-layout-align="center">
-
-</div>
 <div id="tbl-calidad" class="anchored">
 <table class="table">
 <caption>Tabla&nbsp;1: Criterios de calidad para previsiones intramuestrales a un periodo vista. Varios modelos</caption>
@@ -876,99 +862,99 @@ Training set -10132.57 606418 443952.6 -0.04 2.19 0.49    0</code></pre>
 </tbody>
 </table>
 </div>
-<p>Podemos extraer varias conclusiones: i) la transformación logarítmica no mejora necesariamente el ajuste de los datos; ii) el proceso ARIMA con transformación logarítmica es la mejor aproximación; y iii) el método de alisado muestra una calidad de ajuste comparable a la de los procesos ARIMA. La ligera mejora en el ajuste de los modelos ARIMA respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención.</p>
+<p>Podemos extraer varias conclusiones: i) la transformación logarítmica no mejora necesariamente el ajuste de los datos; ii) el proceso ARIMA con transformación logarítmica es el modelo con mejor ajuste; y iii) el método de alisado muestra una calidad de ajuste comparable a la de los procesos ARIMA. La ligera mejora en el ajuste de los modelos ARIMA respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención.</p>
 </section>
 <section id="predicciones-extramuestrales" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="predicciones-extramuestrales"><span class="header-section-number">7.2</span> Predicciones extramuestrales</h2>
 <p>Vamos a determinar si también la aplicación de modelos ARIMA mejora la calidad de las predicciones extra-muestrales lo suficiente como para justificar su uso –frente a los métodos de alisado, mucho más sencillos. Para ello, aplicaremos la metodología de origen de predicción móvil para estimar la capacidad predictiva del modelo ARIMA y compararla con el modelo de Alisado y el ingenuo con estacionalidad.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                   </span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                    </span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">length</span>(Pernoctaciones)     </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> T <span class="sc">-</span> k <span class="sc">-</span> h               </span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>mapeIngenuo <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>mapeAlisadoLog <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>mapeArimaLog <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(DiasMes, SemanaSanta, d0305, d0406, d0513))</span>
-<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
-<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(Pernoctaciones, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
-<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(Pernoctaciones, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h) </span>
-<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k),])</span>
-<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>  hay <span class="ot">&lt;-</span> <span class="fu">colSums</span>(X.train)</span>
-<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> X.train[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k <span class="sc">+</span> h),])</span>
-<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> X.test[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Ingenuo</span></span>
-<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
-<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a>  mapeIngenuo[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fit<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado sin log</span></span>
-<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"MNM"</span>)</span>
-<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
-<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a>  mapeAlisado[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado con log</span></span>
-<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"ANA"</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
-<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
-<span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>  mapeAlisadoLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA sin log</span></span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
-<span id="cb27-42"><a href="#cb27-42" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb27-43"><a href="#cb27-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb27-44"><a href="#cb27-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.train)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-45"><a href="#cb27-45" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-46"><a href="#cb27-46" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
-<span id="cb27-47"><a href="#cb27-47" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test))</span>
-<span id="cb27-48"><a href="#cb27-48" aria-hidden="true" tabindex="-1"></a>    mapeArima[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb27-49"><a href="#cb27-49" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb27-50"><a href="#cb27-50" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-51"><a href="#cb27-51" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA con log</span></span>
-<span id="cb27-52"><a href="#cb27-52" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
-<span id="cb27-53"><a href="#cb27-53" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb27-54"><a href="#cb27-54" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb27-55"><a href="#cb27-55" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lambda =</span> <span class="dv">0</span>,</span>
-<span id="cb27-56"><a href="#cb27-56" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.train)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-57"><a href="#cb27-57" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-58"><a href="#cb27-58" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
-<span id="cb27-59"><a href="#cb27-59" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test)) </span>
-<span id="cb27-60"><a href="#cb27-60" aria-hidden="true" tabindex="-1"></a>    mapeArimaLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb27-61"><a href="#cb27-61" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb27-62"><a href="#cb27-62" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb27-63"><a href="#cb27-63" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-64"><a href="#cb27-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-65"><a href="#cb27-65" aria-hidden="true" tabindex="-1"></a>mapeIngenuo <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeIngenuo)</span>
-<span id="cb27-66"><a href="#cb27-66" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
-<span id="cb27-67"><a href="#cb27-67" aria-hidden="true" tabindex="-1"></a>mapeAlisadoLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisadoLog)</span>
-<span id="cb27-68"><a href="#cb27-68" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb27-69"><a href="#cb27-69" aria-hidden="true" tabindex="-1"></a>mapeArimaLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArimaLog, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                   </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                    </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">length</span>(Pernoctacionesb)     </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> T <span class="sc">-</span> k <span class="sc">-</span> h               </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>mapeIngenuo <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>mapeAlisadoLog <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>mapeArimaLog <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">cbind</span>(DiasMes, SemanaSanta, d0305, d0406, d0513))</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h) </span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k),])</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  hay <span class="ot">&lt;-</span> <span class="fu">colSums</span>(X.train)</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> X.train[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k <span class="sc">+</span> h),])</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> X.test[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Ingenuo</span></span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  mapeIngenuo[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fit<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado sin log</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"MNM"</span>)</span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>  mapeAlisado[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado con log</span></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"ANA"</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  mapeAlisadoLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA sin log</span></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.train)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test))</span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    mapeArima[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA con log</span></span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lambda =</span> <span class="dv">0</span>,</span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.train)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test)) </span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a>    mapeArimaLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>mapeIngenuo <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeIngenuo)</span>
+<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
+<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a>mapeAlisadoLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisadoLog)</span>
+<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a>mapeArimaLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArimaLog, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeIngenuo, <span class="at">colour =</span> <span class="st">"Ingenuo"</span>)) <span class="sc">+</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeAlisado, <span class="at">colour =</span> <span class="st">"Alisado"</span>)) <span class="sc">+</span> </span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeAlisadoLog, <span class="at">colour =</span> <span class="st">"Alisado (log)"</span>)) <span class="sc">+</span></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeArima, <span class="at">colour =</span> <span class="st">"Arima"</span>)) <span class="sc">+</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeArimaLog, <span class="at">colour =</span> <span class="st">"Arima (log)"</span>)) <span class="sc">+</span></span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"MAPE"</span>) <span class="sc">+</span></span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Modelos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeIngenuo, <span class="at">colour =</span> <span class="st">"Ingenuo"</span>)) <span class="sc">+</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeAlisado, <span class="at">colour =</span> <span class="st">"Alisado"</span>)) <span class="sc">+</span> </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeAlisadoLog, <span class="at">colour =</span> <span class="st">"Alisado (log)"</span>)) <span class="sc">+</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeArima, <span class="at">colour =</span> <span class="st">"Arima"</span>)) <span class="sc">+</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> mapeArimaLog, <span class="at">colour =</span> <span class="st">"Arima (log)"</span>)) <span class="sc">+</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"MAPE"</span>) <span class="sc">+</span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_discrete</span>(<span class="at">name =</span> <span class="st">"Modelos"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-PrevisionRW" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-13-Ejemplo7_files/figure-html/fig-PrevisionRW-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;6: Errores de previsión extra-muestral. Varios modelos</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;6: Errores de previsión extra-muestral. Varios modelos</figcaption>
 </figure>
 </div>
 </div>
@@ -1014,9 +1000,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1028,7 +1028,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -1064,31 +1081,138 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-left">© Copyright 2023, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

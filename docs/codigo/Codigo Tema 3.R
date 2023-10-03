@@ -45,8 +45,8 @@ autoplot(nacimientos,
 electricidad <- read.csv2("./series/Consumo electrico.csv", 
                           header = TRUE)
 
-electricidad <- ts(electricidad[, 2],
-                   start = c(1, 5),
+electricidad <- ts(electricidad[, 1],
+                   start = c(1, 6),
                    frequency = 7)
 
 autoplot(electricidad,
@@ -97,7 +97,8 @@ autoplot(snaive.nacimientos,
          xlab = "",
          ylab = "Nacimientos",
          main = "",
-         PI = FALSE)
+         PI = FALSE,
+         xlim = c(2000, 2025))
 
 # Demanda electrica
 snaive.electricidad <- snaive(electricidad, 

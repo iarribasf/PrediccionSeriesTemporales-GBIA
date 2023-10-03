@@ -47,8 +47,8 @@ autoplot(nacimientosb,
 electricidad <- read.csv2("./series/Consumo electrico.csv", 
                           header = TRUE)
 
-electricidad <- ts(electricidad[, 2],
-                   start = c(1, 5),
+electricidad <- ts(electricidad[, 1],
+                   start = c(1, 6),
                    frequency = 7)
 
 electricidad <- window(electricidad, start = c(6, 1), end = c(22, 7)) 
@@ -350,18 +350,21 @@ autoplot(error, series="Error",
              colour = c("red", "blue", "blue", "red"), lty = 2) + 
   scale_x_continuous(breaks= seq(6, 26, 2)) 
 
+abs(error) > 3 * sderror
+time(error)[abs(error) > 3 * sderror]
+
 # Error extramuestral: origen de prediccion movil
-k <- 120                 
-h <- 12                  
-TT <- length(nacimientosb)
+k <- 70                
+h <- 14                  
+TT <- length(electricidad)
 s <- TT - k - h          
 
 mapeAlisado <- matrix(NA, s + 1, h)
 for (i in 0:s) {
-  train.set <- subset(nacimientosb, start = i + 1, end = i + k)
-  test.set <-  subset(nacimientosb, start = i + k + 1, end = i + k + h)
+  train.set <- subset(electricidad, start = i + 1, end = i + k)
+  test.set <-  subset(electricidad, start = i + k + 1, end = i + k + h)
   
-  fit <- ets(train.set, model = "MAA", damped = FALSE)
+  fit <- ets(train.set, model = "ANA", damped = FALSE)
   fcast<-forecast(fit, h = h)
   mapeAlisado[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
 }
@@ -370,11 +373,11 @@ errorAlisado <- colMeans(mapeAlisado)
 errorAlisado
 
 ggplot() +
-  geom_line(aes(x = 1:12, y = errorAlisado)) +
+  geom_line(aes(x = 1:14, y = errorAlisado)) +
   ggtitle("") +
   xlab("Horizonte temporal de predicción") +
   ylab("MAPE") +
-  scale_x_continuous(breaks= 1:12)
+  scale_x_continuous(breaks= 1:14)
 
 #----------------------------------------------------------
 #

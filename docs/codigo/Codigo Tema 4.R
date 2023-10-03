@@ -19,8 +19,8 @@ library(ggplot2); theme_set(theme_bw())
 electricidad <- read.csv2("./series/Consumo electrico.csv", 
                           header = TRUE)
 
-electricidad <- ts(electricidad[, 2],
-                   start = c(1, 5),
+electricidad <- ts(electricidad[, 1],
+                   start = c(1, 6),
                    frequency = 7)
 
 electricidad <- aggregate(electricidad, FUN = sum) 
@@ -47,7 +47,8 @@ mmf <- function(x, r = 3, h = 5) {
   inicio <- start(x)
   frecuencia <-frequency(x)
   
-  z$mm <- stats::filter(x, rep(1/r, r), 
+  z$mm <- stats::filter(x, 
+                        rep(1/r, r), 
                         side = 1)
   
   z$fitted <- ts(c(NA, z$mm[-TT]), 
@@ -72,7 +73,8 @@ mmelectricidad <- mmf(electricidad,
 autoplot(mmelectricidad,
          xlab = "",
          ylab = "GWh",
-         main = "") +
+         main = "",
+         ylim= c(0, 6000)) +
   autolayer(mmelectricidad$fitted) + 
   theme(legend.position="none")
 
@@ -91,7 +93,7 @@ for(r in 1:4) {
       r, 
       "el error es", 
       formatC(error, format = "f", digits = 2),
-      " %")
+      "%")
 }
 
 # Selección usando origen de predicción móvil
@@ -117,5 +119,4 @@ for(r in 1:4){
       r, 
       "los errores son", 
       formatC(mapemm, format = "f", digits = 2)) 
-  
 }

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,48 +48,19 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -102,8 +74,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -132,6 +103,7 @@ div.csl-indent {
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -154,163 +126,177 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Inicio</a>
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./01-Guia-curso.html">Guía del curso</a>
+    <a class="nav-link" href="./01-Guia-curso.html" rel="" target="">
+ <span class="menu-text">Guía del curso</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./02-Logistica.html">Logística</a>
+    <a class="nav-link" href="./02-Logistica.html" rel="" target="">
+ <span class="menu-text">Logística</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Diapos</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Diapos</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
         <li class="dropdown-header">Teoría</li>
         <li>
-    <a class="dropdown-item" href="./03-01-Tema1.html">
+    <a class="dropdown-item" href="./03-01-Tema1.html" rel="" target="">
  <span class="dropdown-text">Tema 1: Introducción</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-02-Tema2.html">
+    <a class="dropdown-item" href="./03-02-Tema2.html" rel="" target="">
  <span class="dropdown-text">Tema 2: Definición</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-03-Tema3.html">
+    <a class="dropdown-item" href="./03-03-Tema3.html" rel="" target="">
  <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-04-Tema4.html">
+    <a class="dropdown-item" href="./03-04-Tema4.html" rel="" target="">
  <span class="dropdown-text">Tema 4: Media móvil</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-05-Tema5.html">
+    <a class="dropdown-item" href="./03-05-Tema5.html" rel="" target="">
  <span class="dropdown-text">Tema 5: Alisado</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-06-Tema6.html">
+    <a class="dropdown-item" href="./03-06-Tema6.html" rel="" target="">
  <span class="dropdown-text">Tema 6: ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-07-Tema7.html">
+    <a class="dropdown-item" href="./03-07-Tema7.html" rel="" target="">
  <span class="dropdown-text">Tema 7: SARIMA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Ejemplo de aplicación</li>
         <li>
-    <a class="dropdown-item" href="./03-08-Ejemplo2.html">
+    <a class="dropdown-item" href="./03-08-Ejemplo2.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-09-Ejemplo3.html">
+    <a class="dropdown-item" href="./03-09-Ejemplo3.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-10-Ejemplo4.html">
+    <a class="dropdown-item" href="./03-10-Ejemplo4.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 4</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-11-Ejemplo5.html">
+    <a class="dropdown-item" href="./03-11-Ejemplo5.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 5</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-12-Ejemplo6.html">
+    <a class="dropdown-item" href="./03-12-Ejemplo6.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 6</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-13-Ejemplo7.html">
+    <a class="dropdown-item" href="./03-13-Ejemplo7.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 7</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otro ejemplo</li>
         <li>
-    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html">
+    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html" rel="" target="">
  <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">Píldoras</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Píldoras</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
         <li>
-    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html" rel="" target="">
  <span class="dropdown-text">Bootstrapping para IC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html" rel="" target="">
  <span class="dropdown-text">Múltiples componentes estacionales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html" rel="" target="">
  <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html" rel="" target="">
  <span class="dropdown-text">Series acotadas</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html" rel="" target="">
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html" rel="" target="">
  <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./05-Recursos-R.html">Recursos de la asignatura</a>
+    <a class="nav-link" href="./05-Recursos-R.html" rel="" target="">
+ <span class="menu-text">Recursos de la asignatura</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./06-Evaluacion_Continua.html">Evaluacion Continua</a>
+    <a class="nav-link" href="./06-Evaluacion_Continua.html" rel="" target="">
+ <span class="menu-text">Evaluacion Continua</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Más</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
         <li class="dropdown-header">R</li>
         <li>
-    <a class="dropdown-item" href="https://cran.r-project.org">
+    <a class="dropdown-item" href="https://cran.r-project.org" rel="" target="">
  <span class="dropdown-text">Dónde está R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rstudio.com">
+    <a class="dropdown-item" href="https://rstudio.com" rel="" target="">
  <span class="dropdown-text">Donde está RStudio</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Markdown</li>
         <li>
-    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/" rel="" target="">
  <span class="dropdown-text">Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html" rel="" target="">
  <span class="dropdown-text">R Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf" rel="" target="">
  <span class="dropdown-text">R Markdown (pdf)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html" rel="" target="">
  <span class="dropdown-text">Quatro</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otros</li>
         <li>
-    <a class="dropdown-item" href="https://www.r-bloggers.com">
+    <a class="dropdown-item" href="https://www.r-bloggers.com" rel="" target="">
  <span class="dropdown-text">Blog sobre R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://bookdown.org">
+    <a class="dropdown-item" href="https://bookdown.org" rel="" target="">
  <span class="dropdown-text">Libros online que debes conocer</span></a>
   </li>  
     </ul>
   </li>
 </ul>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -324,69 +310,69 @@ div.csl-indent {
     <h2 id="toc-title">Índice</h2>
    
   <ul>
-  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="toc-section-number">1</span>  Introducción</a></li>
-  <li><a href="#componentes-de-una-serie-en-el-contexto-del-alisado-exponencial" id="toc-componentes-de-una-serie-en-el-contexto-del-alisado-exponencial" class="nav-link" data-scroll-target="#componentes-de-una-serie-en-el-contexto-del-alisado-exponencial"><span class="toc-section-number">2</span>  Componentes de una serie en el contexto del alisado exponencial</a></li>
-  <li><a href="#casos-posibles" id="toc-casos-posibles" class="nav-link" data-scroll-target="#casos-posibles"><span class="toc-section-number">3</span>  Casos posibles</a>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link active" data-scroll-target="#introducción"><span class="header-section-number">1</span> Introducción</a></li>
+  <li><a href="#componentes-de-una-serie-en-el-contexto-del-alisado-exponencial" id="toc-componentes-de-una-serie-en-el-contexto-del-alisado-exponencial" class="nav-link" data-scroll-target="#componentes-de-una-serie-en-el-contexto-del-alisado-exponencial"><span class="header-section-number">2</span> Componentes de una serie en el contexto del alisado exponencial</a></li>
+  <li><a href="#casos-posibles" id="toc-casos-posibles" class="nav-link" data-scroll-target="#casos-posibles"><span class="header-section-number">3</span> Casos posibles</a>
   <ul class="collapse">
-  <li><a href="#las-funciones-ets-y-forecast" id="toc-las-funciones-ets-y-forecast" class="nav-link" data-scroll-target="#las-funciones-ets-y-forecast"><span class="toc-section-number">3.1</span>  Las funciones <code>ets</code> y <code>forecast</code></a></li>
+  <li><a href="#las-funciones-ets-y-forecast" id="toc-las-funciones-ets-y-forecast" class="nav-link" data-scroll-target="#las-funciones-ets-y-forecast"><span class="header-section-number">3.1</span> Las funciones <code>ets</code> y <code>forecast</code></a></li>
   </ul></li>
-  <li><a href="#alisado-exponencial-simple-a-n-n" id="toc-alisado-exponencial-simple-a-n-n" class="nav-link" data-scroll-target="#alisado-exponencial-simple-a-n-n"><span class="toc-section-number">4</span>  Alisado exponencial simple (A, N, N)</a>
+  <li><a href="#alisado-exponencial-simple-a-n-n" id="toc-alisado-exponencial-simple-a-n-n" class="nav-link" data-scroll-target="#alisado-exponencial-simple-a-n-n"><span class="header-section-number">4</span> Alisado exponencial simple (A, N, N)</a>
   <ul class="collapse">
-  <li><a href="#definición" id="toc-definición" class="nav-link" data-scroll-target="#definición"><span class="toc-section-number">4.1</span>  Definición</a></li>
-  <li><a href="#formulas-interactivas-de-sus-componentes" id="toc-formulas-interactivas-de-sus-componentes" class="nav-link" data-scroll-target="#formulas-interactivas-de-sus-componentes"><span class="toc-section-number">4.2</span>  Formulas interactivas de sus componentes</a></li>
-  <li><a href="#estimación-de-los-parámetros-del-modelo" id="toc-estimación-de-los-parámetros-del-modelo" class="nav-link" data-scroll-target="#estimación-de-los-parámetros-del-modelo"><span class="toc-section-number">4.3</span>  Estimación de los parámetros del modelo</a></li>
-  <li><a href="#ejemplo" id="toc-ejemplo" class="nav-link" data-scroll-target="#ejemplo"><span class="toc-section-number">4.4</span>  Ejemplo</a></li>
+  <li><a href="#definición" id="toc-definición" class="nav-link" data-scroll-target="#definición"><span class="header-section-number">4.1</span> Definición</a></li>
+  <li><a href="#formulas-interactivas-de-sus-componentes" id="toc-formulas-interactivas-de-sus-componentes" class="nav-link" data-scroll-target="#formulas-interactivas-de-sus-componentes"><span class="header-section-number">4.2</span> Formulas interactivas de sus componentes</a></li>
+  <li><a href="#estimación-de-los-parámetros-del-modelo" id="toc-estimación-de-los-parámetros-del-modelo" class="nav-link" data-scroll-target="#estimación-de-los-parámetros-del-modelo"><span class="header-section-number">4.3</span> Estimación de los parámetros del modelo</a></li>
+  <li><a href="#ejemplo" id="toc-ejemplo" class="nav-link" data-scroll-target="#ejemplo"><span class="header-section-number">4.4</span> Ejemplo</a></li>
   </ul></li>
-  <li><a href="#alisado-exponencial-de-holt-a-a-n" id="toc-alisado-exponencial-de-holt-a-a-n" class="nav-link" data-scroll-target="#alisado-exponencial-de-holt-a-a-n"><span class="toc-section-number">5</span>  Alisado exponencial de Holt (A, A, N)</a>
+  <li><a href="#alisado-exponencial-de-holt-a-a-n" id="toc-alisado-exponencial-de-holt-a-a-n" class="nav-link" data-scroll-target="#alisado-exponencial-de-holt-a-a-n"><span class="header-section-number">5</span> Alisado exponencial de Holt (A, A, N)</a>
   <ul class="collapse">
-  <li><a href="#formulas-interactivas-de-sus-componentes-1" id="toc-formulas-interactivas-de-sus-componentes-1" class="nav-link" data-scroll-target="#formulas-interactivas-de-sus-componentes-1"><span class="toc-section-number">5.1</span>  Formulas interactivas de sus componentes</a></li>
-  <li><a href="#estimación-de-los-parámetros-del-modelo-1" id="toc-estimación-de-los-parámetros-del-modelo-1" class="nav-link" data-scroll-target="#estimación-de-los-parámetros-del-modelo-1"><span class="toc-section-number">5.2</span>  Estimación de los parámetros del modelo</a></li>
-  <li><a href="#ejemplo-1" id="toc-ejemplo-1" class="nav-link" data-scroll-target="#ejemplo-1"><span class="toc-section-number">5.3</span>  Ejemplo</a></li>
+  <li><a href="#formulas-interactivas-de-sus-componentes-1" id="toc-formulas-interactivas-de-sus-componentes-1" class="nav-link" data-scroll-target="#formulas-interactivas-de-sus-componentes-1"><span class="header-section-number">5.1</span> Formulas interactivas de sus componentes</a></li>
+  <li><a href="#estimación-de-los-parámetros-del-modelo-1" id="toc-estimación-de-los-parámetros-del-modelo-1" class="nav-link" data-scroll-target="#estimación-de-los-parámetros-del-modelo-1"><span class="header-section-number">5.2</span> Estimación de los parámetros del modelo</a></li>
+  <li><a href="#ejemplo-1" id="toc-ejemplo-1" class="nav-link" data-scroll-target="#ejemplo-1"><span class="header-section-number">5.3</span> Ejemplo</a></li>
   </ul></li>
-  <li><a href="#alisado-exponencial-con-pendiente-amortiguada-a-ad-n" id="toc-alisado-exponencial-con-pendiente-amortiguada-a-ad-n" class="nav-link" data-scroll-target="#alisado-exponencial-con-pendiente-amortiguada-a-ad-n"><span class="toc-section-number">6</span>  Alisado exponencial con pendiente amortiguada (A, Ad, N)</a>
+  <li><a href="#alisado-exponencial-con-pendiente-amortiguada-a-ad-n" id="toc-alisado-exponencial-con-pendiente-amortiguada-a-ad-n" class="nav-link" data-scroll-target="#alisado-exponencial-con-pendiente-amortiguada-a-ad-n"><span class="header-section-number">6</span> Alisado exponencial con pendiente amortiguada (A, Ad, N)</a>
   <ul class="collapse">
-  <li><a href="#formulas-interactivas-de-sus-componentes-2" id="toc-formulas-interactivas-de-sus-componentes-2" class="nav-link" data-scroll-target="#formulas-interactivas-de-sus-componentes-2"><span class="toc-section-number">6.1</span>  Formulas interactivas de sus componentes</a></li>
-  <li><a href="#ejemplo-2" id="toc-ejemplo-2" class="nav-link" data-scroll-target="#ejemplo-2"><span class="toc-section-number">6.2</span>  Ejemplo</a></li>
+  <li><a href="#formulas-interactivas-de-sus-componentes-2" id="toc-formulas-interactivas-de-sus-componentes-2" class="nav-link" data-scroll-target="#formulas-interactivas-de-sus-componentes-2"><span class="header-section-number">6.1</span> Formulas interactivas de sus componentes</a></li>
+  <li><a href="#ejemplo-2" id="toc-ejemplo-2" class="nav-link" data-scroll-target="#ejemplo-2"><span class="header-section-number">6.2</span> Ejemplo</a></li>
   </ul></li>
-  <li><a href="#alisado-de-holt-winters-aditivo-a-a-a-y-multiplicativo-m-a-m" id="toc-alisado-de-holt-winters-aditivo-a-a-a-y-multiplicativo-m-a-m" class="nav-link" data-scroll-target="#alisado-de-holt-winters-aditivo-a-a-a-y-multiplicativo-m-a-m"><span class="toc-section-number">7</span>  Alisado de Holt-Winters aditivo (A, A, A) y multiplicativo (M, A, M)</a>
+  <li><a href="#alisado-de-holt-winters-aditivo-a-a-a-y-multiplicativo-m-a-m" id="toc-alisado-de-holt-winters-aditivo-a-a-a-y-multiplicativo-m-a-m" class="nav-link" data-scroll-target="#alisado-de-holt-winters-aditivo-a-a-a-y-multiplicativo-m-a-m"><span class="header-section-number">7</span> Alisado de Holt-Winters aditivo (A, A, A) y multiplicativo (M, A, M)</a>
   <ul class="collapse">
-  <li><a href="#alisado-de-holt-winters-aditivo-a-a-a" id="toc-alisado-de-holt-winters-aditivo-a-a-a" class="nav-link" data-scroll-target="#alisado-de-holt-winters-aditivo-a-a-a"><span class="toc-section-number">7.1</span>  Alisado de Holt-Winters aditivo (A, A, A)</a></li>
-  <li><a href="#alisado-de-holt-winters-multiplicativo-m-a-m" id="toc-alisado-de-holt-winters-multiplicativo-m-a-m" class="nav-link" data-scroll-target="#alisado-de-holt-winters-multiplicativo-m-a-m"><span class="toc-section-number">7.2</span>  Alisado de Holt-Winters multiplicativo (M, A, M)</a></li>
-  <li><a href="#ejemplo-con-demanda-electrica" id="toc-ejemplo-con-demanda-electrica" class="nav-link" data-scroll-target="#ejemplo-con-demanda-electrica"><span class="toc-section-number">7.3</span>  Ejemplo con Demanda electrica</a></li>
-  <li><a href="#ejemplo-con-nacimientos" id="toc-ejemplo-con-nacimientos" class="nav-link" data-scroll-target="#ejemplo-con-nacimientos"><span class="toc-section-number">7.4</span>  Ejemplo con Nacimientos</a></li>
+  <li><a href="#alisado-de-holt-winters-aditivo-a-a-a" id="toc-alisado-de-holt-winters-aditivo-a-a-a" class="nav-link" data-scroll-target="#alisado-de-holt-winters-aditivo-a-a-a"><span class="header-section-number">7.1</span> Alisado de Holt-Winters aditivo (A, A, A)</a></li>
+  <li><a href="#alisado-de-holt-winters-multiplicativo-m-a-m" id="toc-alisado-de-holt-winters-multiplicativo-m-a-m" class="nav-link" data-scroll-target="#alisado-de-holt-winters-multiplicativo-m-a-m"><span class="header-section-number">7.2</span> Alisado de Holt-Winters multiplicativo (M, A, M)</a></li>
+  <li><a href="#ejemplo-con-demanda-electrica" id="toc-ejemplo-con-demanda-electrica" class="nav-link" data-scroll-target="#ejemplo-con-demanda-electrica"><span class="header-section-number">7.3</span> Ejemplo con Demanda electrica</a></li>
+  <li><a href="#ejemplo-con-nacimientos" id="toc-ejemplo-con-nacimientos" class="nav-link" data-scroll-target="#ejemplo-con-nacimientos"><span class="header-section-number">7.4</span> Ejemplo con Nacimientos</a></li>
   </ul></li>
-  <li><a href="#ejemplo-con-transformación-logarítmica" id="toc-ejemplo-con-transformación-logarítmica" class="nav-link" data-scroll-target="#ejemplo-con-transformación-logarítmica"><span class="toc-section-number">8</span>  Ejemplo con transformación logarítmica</a></li>
-  <li><a href="#casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo" id="toc-casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo" class="nav-link" data-scroll-target="#casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo"><span class="toc-section-number">9</span>  Casos generales de alisado exponencial: la función <code>ets</code> (de nuevo)</a>
+  <li><a href="#ejemplo-con-transformación-logarítmica" id="toc-ejemplo-con-transformación-logarítmica" class="nav-link" data-scroll-target="#ejemplo-con-transformación-logarítmica"><span class="header-section-number">8</span> Ejemplo con transformación logarítmica</a></li>
+  <li><a href="#casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo" id="toc-casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo" class="nav-link" data-scroll-target="#casos-generales-de-alisado-exponencial-la-función-ets-de-nuevo"><span class="header-section-number">9</span> Casos generales de alisado exponencial: la función <code>ets</code> (de nuevo)</a>
   <ul class="collapse">
-  <li><a href="#criterios-de-optimización" id="toc-criterios-de-optimización" class="nav-link" data-scroll-target="#criterios-de-optimización"><span class="toc-section-number">9.1</span>  Criterios de optimización</a></li>
-  <li><a href="#criterios-de-selección-de-modelos" id="toc-criterios-de-selección-de-modelos" class="nav-link" data-scroll-target="#criterios-de-selección-de-modelos"><span class="toc-section-number">9.2</span>  Criterios de selección de modelos</a></li>
+  <li><a href="#criterios-de-optimización" id="toc-criterios-de-optimización" class="nav-link" data-scroll-target="#criterios-de-optimización"><span class="header-section-number">9.1</span> Criterios de optimización</a></li>
+  <li><a href="#criterios-de-selección-de-modelos" id="toc-criterios-de-selección-de-modelos" class="nav-link" data-scroll-target="#criterios-de-selección-de-modelos"><span class="header-section-number">9.2</span> Criterios de selección de modelos</a></li>
   </ul></li>
-  <li><a href="#residuo-de-un-modelo" id="toc-residuo-de-un-modelo" class="nav-link" data-scroll-target="#residuo-de-un-modelo"><span class="toc-section-number">10</span>  Residuo de un modelo</a></li>
-  <li><a href="#ejemplos-de-aplicación" id="toc-ejemplos-de-aplicación" class="nav-link" data-scroll-target="#ejemplos-de-aplicación"><span class="toc-section-number">11</span>  Ejemplos de aplicación</a>
+  <li><a href="#residuo-de-un-modelo" id="toc-residuo-de-un-modelo" class="nav-link" data-scroll-target="#residuo-de-un-modelo"><span class="header-section-number">10</span> Residuo de un modelo</a></li>
+  <li><a href="#ejemplos-de-aplicación" id="toc-ejemplos-de-aplicación" class="nav-link" data-scroll-target="#ejemplos-de-aplicación"><span class="header-section-number">11</span> Ejemplos de aplicación</a>
   <ul class="collapse">
-  <li><a href="#libros" id="toc-libros" class="nav-link" data-scroll-target="#libros"><span class="toc-section-number">11.1</span>  Libros</a>
+  <li><a href="#libros" id="toc-libros" class="nav-link" data-scroll-target="#libros"><span class="header-section-number">11.1</span> Libros</a>
   <ul class="collapse">
   <li><a href="#identificación-y-estimación-del-mejor-modelo" id="toc-identificación-y-estimación-del-mejor-modelo" class="nav-link" data-scroll-target="#identificación-y-estimación-del-mejor-modelo">Identificación y estimación del mejor modelo</a></li>
   <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción">Predicción</a></li>
   <li><a href="#análisis-del-residuo" id="toc-análisis-del-residuo" class="nav-link" data-scroll-target="#análisis-del-residuo">Análisis del residuo</a></li>
   <li><a href="#validación-error-extramuestral-a-varios-periodos-vista" id="toc-validación-error-extramuestral-a-varios-periodos-vista" class="nav-link" data-scroll-target="#validación-error-extramuestral-a-varios-periodos-vista">Validación: error extramuestral a varios periodos vista</a></li>
   </ul></li>
-  <li><a href="#nacimientos" id="toc-nacimientos" class="nav-link" data-scroll-target="#nacimientos"><span class="toc-section-number">11.2</span>  Nacimientos</a>
+  <li><a href="#nacimientos" id="toc-nacimientos" class="nav-link" data-scroll-target="#nacimientos"><span class="header-section-number">11.2</span> Nacimientos</a>
   <ul class="collapse">
   <li><a href="#identificación-y-estimación-del-mejor-modelo-1" id="toc-identificación-y-estimación-del-mejor-modelo-1" class="nav-link" data-scroll-target="#identificación-y-estimación-del-mejor-modelo-1">Identificación y estimación del mejor modelo</a></li>
   <li><a href="#predicción-1" id="toc-predicción-1" class="nav-link" data-scroll-target="#predicción-1">Predicción</a></li>
   <li><a href="#análisis-del-error" id="toc-análisis-del-error" class="nav-link" data-scroll-target="#análisis-del-error">Análisis del error</a></li>
   <li><a href="#validación-error-extramuestral-según-horizonte-temporal" id="toc-validación-error-extramuestral-según-horizonte-temporal" class="nav-link" data-scroll-target="#validación-error-extramuestral-según-horizonte-temporal">Validación: error extramuestral según horizonte temporal</a></li>
   </ul></li>
-  <li><a href="#demanda-eléctrica" id="toc-demanda-eléctrica" class="nav-link" data-scroll-target="#demanda-eléctrica"><span class="toc-section-number">11.3</span>  Demanda eléctrica</a>
+  <li><a href="#demanda-eléctrica" id="toc-demanda-eléctrica" class="nav-link" data-scroll-target="#demanda-eléctrica"><span class="header-section-number">11.3</span> Demanda eléctrica</a>
   <ul class="collapse">
   <li><a href="#identificación-y-estimación-del-mejor-modelo-2" id="toc-identificación-y-estimación-del-mejor-modelo-2" class="nav-link" data-scroll-target="#identificación-y-estimación-del-mejor-modelo-2">Identificación y estimación del mejor modelo</a></li>
   <li><a href="#predicción-2" id="toc-predicción-2" class="nav-link" data-scroll-target="#predicción-2">Predicción</a></li>
   <li><a href="#análisis-del-error-1" id="toc-análisis-del-error-1" class="nav-link" data-scroll-target="#análisis-del-error-1">Análisis del error</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#otras-alternativas-para-ajustar-un-modelo-y-predecir" id="toc-otras-alternativas-para-ajustar-un-modelo-y-predecir" class="nav-link" data-scroll-target="#otras-alternativas-para-ajustar-un-modelo-y-predecir"><span class="toc-section-number">12</span>  Otras alternativas para ajustar un modelo y predecir</a></li>
-  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"><span class="toc-section-number">13</span>  Resumen de los comandos utilizados</a></li>
+  <li><a href="#otras-alternativas-para-ajustar-un-modelo-y-predecir" id="toc-otras-alternativas-para-ajustar-un-modelo-y-predecir" class="nav-link" data-scroll-target="#otras-alternativas-para-ajustar-un-modelo-y-predecir"><span class="header-section-number">12</span> Otras alternativas para ajustar un modelo y predecir</a></li>
+  <li><a href="#resumen-de-los-comandos-utilizados" id="toc-resumen-de-los-comandos-utilizados" class="nav-link" data-scroll-target="#resumen-de-los-comandos-utilizados"><span class="header-section-number">13</span> Resumen de los comandos utilizados</a></li>
   </ul>
 </nav>
     </div>
@@ -410,21 +396,13 @@ div.csl-indent {
           </div>
   </div>
     
+  
     
   </div>
   
 
 </header>
 
-<div class="cell">
-
-</div>
-<div class="cell" data-layout-align="center">
-
-</div>
-<div class="cell" data-layout-align="center">
-
-</div>
 <p><br>
 <br>
 </p>
@@ -603,11 +581,11 @@ s_t&amp; = f_s(y_t,y_{t-1}\ldots, l_{t},l_{t-1}\ldots,b_{t},b_{t-1}\ldots,s_{t-1
 </section>
 <section id="ejemplo" class="level2" data-number="4.4">
 <h2 data-number="4.4" class="anchored" data-anchor-id="ejemplo"><span class="header-section-number">4.4</span> Ejemplo</h2>
-<p>Vamos a usar el método de alisado exponencial simple para predecir la serie Demanda eléctrica semanal desde la primera semana de febrero (semana 6 del año) hasta la última semana de mayo (semana 22 del año), en total 17 semanas. Usaremos para ello la función <code>ets</code> con `model = “ANN”.</p>
+<p>Vamos a usar el método de alisado exponencial simple para predecir la serie Demanda eléctrica semanal desde la primera semana de febrero (semana 6 del año) hasta la última semana completa de mayo (semana 22 del año), en total 17 semanas. Usaremos para ello la función <code>ets</code> con `model = “ANN”.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">1</span>],</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">6</span>),</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">#Nos quedamos con los meses de febrero a mayo.</span></span>
@@ -625,31 +603,29 @@ Call:
  ets(y = electricidadSemanal, model = "ANN") 
 
   Smoothing parameters:
-    alpha = 0.5839 
+    alpha = 0.5912 
 
   Initial states:
-    l = 5034.1607 
+    l = 5101.1606 
 
-  sigma:  158.4303
+  sigma:  175.1913
 
      AIC     AICc      BIC 
-224.2576 226.1037 226.7572 
+227.6767 229.5229 230.1764 
 
 Training set error measures:
-                    ME     RMSE      MAE        MPE     MAPE      MASE
-Training set -40.34035 148.8194 82.91992 -0.9090506 1.789911 0.8506723
-                   ACF1
-Training set 0.01332464</code></pre>
+                   ME     RMSE      MAE       MPE     MAPE      MASE       ACF1
+Training set -44.6217 164.5636 99.49524 -1.008795 2.167762 0.8915993 -0.1809408</code></pre>
 </div>
 </div>
 <p>Veamos la salida en detalle:</p>
 <ul>
-<li>El valor de <span class="math inline">\(\alpha\)</span> que optimiza el criterio usado para medir la calidad del ajuste es <span class="math inline">\(\alpha =\)</span> 0.58, un valor intermedio, ni cercano a 0 ni cercano a 1. Es decir, la serie Demanda eléctrica cambia de nivel poco a poco.</li>
-<li>El valor de arranque <span class="math inline">\(l_0\)</span> óptimo es 5034.16.</li>
+<li>El valor de <span class="math inline">\(\alpha\)</span> que optimiza el criterio usado para medir la calidad del ajuste es <span class="math inline">\(\alpha =\)</span> 0.59, un valor intermedio, ni cercano a 0 ni cercano a 1. Es decir, la serie Demanda eléctrica cambia de nivel poco a poco.</li>
+<li>El valor de arranque <span class="math inline">\(l_0\)</span> óptimo es 5101.16.</li>
 <li><em>sigma</em> es la desviación típica del error (aditivo) de predicción. Se diferencia de RMSE en el denominador. Para calcular <em>sigma</em> en lugar de dividir por <span class="math inline">\(T\)</span> se divide por <span class="math inline">\(T\)</span> menos el número de parámetros estimados, en este caso 3: <span class="math inline">\(l_0\)</span>, <span class="math inline">\(\alpha\)</span> y <em>sigma</em>. Sí, <em>sigma</em>, se considerará siempre otro parámetro estimado.</li>
-<li>La calidad del ajuste es bueno, como evidencia el error porcentual medio del 1.8%.</li>
+<li>La calidad del ajuste es bueno, como evidencia el error porcentual medio del 2.2%.</li>
 </ul>
-<p>En el objeto <code>electricidadEts</code> la matriz <code>electricidadEts$states</code> guarda todos los valores del nivel obtenidos con la ecuación recursiva, incluido el valor de arranque, así que es una matriz con <span class="math inline">\(T+1\)</span> filas (18 en el ejemplo). Puedes ver el valor de <span class="math inline">\(l_{22}\)</span> de la última semana de mayo de 2021 (semana 22 del año) en su última fila, que vale 4633.76.</p>
+<p>En el objeto <code>electricidadEts</code> la matriz <code>electricidadEts$states</code> guarda todos los valores del nivel obtenidos con la ecuación recursiva, incluido el valor de arranque, así que es una matriz con <span class="math inline">\(T+1\)</span> filas (18 en el ejemplo). Puedes ver el valor de <span class="math inline">\(l_{22}\)</span> de la última semana completa de mayo de 2022 (semana 22 del año) en su última fila, que vale 4652.69.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(electricidadEts<span class="sc">$</span>states, <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -658,10 +634,10 @@ Start = 22
 End = 22 
 Frequency = 1 
             l
-[1,] 4633.761</code></pre>
+[1,] 4652.686</code></pre>
 </div>
 </div>
-<p>Así, la predicción para la primera semana de junio es <span class="math inline">\(\widehat{y}_{23}=l_{22}=\)</span> 4633.76. Igualmente <span class="math inline">\(\widehat{y}_{24}=l_{22}=\)</span> 4633.76. Es decir, todas las previsiones son iguales a <span class="math inline">\(l_{22}\)</span>.</p>
+<p>Así, la predicción para la primera semana de junio es <span class="math inline">\(\widehat{y}_{23}=l_{22}=\)</span> 4652.69. Igualmente <span class="math inline">\(\widehat{y}_{24}=l_{22}=\)</span> 4652.69. Es decir, todas las previsiones son iguales a <span class="math inline">\(l_{22}\)</span>.</p>
 <p>Mediante la función <code>forecast</code> podemos predecir los casos de Demanda eléctrica para las próximas 5 semanas. Por tratarse de un modelo sin pendiente ni estacionalidad, la predicción es constante en el tiempo. Recuerda que <span class="math inline">\(\widehat{y}_{T+h} = l_T\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>electricidadf <span class="ot">&lt;-</span> <span class="fu">forecast</span>(electricidadEts,</span>
@@ -670,11 +646,11 @@ Frequency = 1
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>electricidadf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   Point Forecast    Lo 95    Hi 95
-23       4633.761 4323.243 4944.279
-24       4633.761 4274.192 4993.330
-25       4633.761 4231.072 5036.450
-26       4633.761 4192.142 5075.380
-27       4633.761 4156.376 5111.146</code></pre>
+23       4652.686 4309.317 4996.055
+24       4652.686 4253.797 5051.575
+25       4652.686 4205.112 5100.261
+26       4652.686 4161.226 5144.146
+27       4652.686 4120.949 5184.423</code></pre>
 </div>
 </div>
 <p>La <a href="#fig-electricidadANN">Figura&nbsp;1</a> muestra la serie Demanda eléctrica, las previsiones extramuestrales que son constantes y el intervalo de confianza. Conforme aumentamos el horizonte de predicción, el intervalo de confianza es más amplio como reflejo de la mayor incertidumbre en la predicción.</p>
@@ -687,7 +663,7 @@ Frequency = 1
 <div id="fig-electricidadANN" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-electricidadANN-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;1: Consumo semanal de electricidad (febrero a mayo 2021) y predicción con alisado simple</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;1: Consumo semanal de electricidad (febrero a mayo 2022) y predicción con alisado simple</figcaption>
 </figure>
 </div>
 </div>
@@ -772,12 +748,12 @@ Training set 0.004201274</code></pre>
 </div>
 </div>
 <p>Los valores óptimos de los cuatro parámetros son <span class="math inline">\(\alpha=\)</span> 0.95, <span class="math inline">\(\beta=\)</span> 0, <span class="math inline">\(l_0 =\)</span> 43015.36 y <span class="math inline">\(b_0 =\)</span> 866.67. Observa que <span class="math inline">\(\alpha\)</span> es prácticamente 1 y que <span class="math inline">\(\beta\)</span> es cero. Si aplicamos estos valores de los parámetros a las ecuaciones recursivas y la predicción extramuestral, obtenemos <span class="math inline">\(y_{T+h}=y_T + hb_0\)</span>: la predicción es el último valor observado más <span class="math inline">\(h\)</span> veces la primera pendiente estimada. La calidad de las predicciones es razonable, con un error porcentual medio del 6.7%.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Parámetros estimados
 </div>
 </div>
@@ -822,7 +798,7 @@ Frequency = 1
 <div id="fig-librosAAN" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-librosAAN-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;2: Libros y predicción con alisado de Holt</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;2: Libros y predicción con alisado de Holt</figcaption>
 </figure>
 </div>
 </div>
@@ -886,12 +862,12 @@ Training set 0.01091024</code></pre>
 </div>
 </div>
 <p>El valor óptimo del parámetro <span class="math inline">\(\phi\)</span> es <span class="math inline">\(0.91\)</span> y el error porcentual 6.3%, algo inferior al obtenido con el alisado de Holt sin amortiguamiento. La inclusión de un nuevo parámetro en el modelo mejora el ajuste.</p>
-<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Parámetros estimados
 </div>
 </div>
@@ -932,7 +908,7 @@ Parámetros estimados
 <div id="fig-librosAAdN" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-librosAAdN-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;3: Libros y predicción con alisado exponencial con amortiguamiento</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;3: Libros y predicción con alisado exponencial con amortiguamiento</figcaption>
 </figure>
 </div>
 </div>
@@ -974,12 +950,12 @@ s_t &amp; =\gamma \frac{y_t}{l_{t-1} + b_{t-1}} + (1 - \gamma)s_{t-m}
 </section>
 <section id="ejemplo-con-demanda-electrica" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="ejemplo-con-demanda-electrica"><span class="header-section-number">7.3</span> Ejemplo con Demanda electrica</h2>
-<p>Vamos a usar el método de <strong>Holt-Winters Aditivo</strong> para predecir la serie Demanda eléctrica, que presentaba un esquema aditivo. Para ello usaremos la función <code>ets</code> con el argumento <code>model = "AAA"</code> (y <code>damped = FALSE</code>). Vamos a considerar la serie desde el 1 de febrero (lunes) hasta el 30 de mayo (domingo), 17 semanas, y pedir una previsión a dos semanas vista.</p>
+<p>Vamos a usar el método de <strong>Holt-Winters Aditivo</strong> para predecir la serie Demanda eléctrica, que presentaba un esquema aditivo. Para ello usaremos la función <code>ets</code> con el argumento <code>model = "AAA"</code> (y <code>damped = FALSE</code>). Vamos a considerar la serie desde el 31 de enero (lunes) hasta el 29 de mayo (domingo), 17 semanas, y pedir una previsión a dos semanas vista.</p>
 <p>En el proceso de estimación, el parámetro <span class="math inline">\(\gamma\)</span> que gobierna la componente estacional está restringido a <span class="math inline">\(0 &lt; \gamma &lt; 1 - \alpha\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Consumo electrico.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">2</span>],</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>),</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">ts</span>(electricidad[, <span class="dv">1</span>],</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">6</span>),</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">frequency =</span> <span class="dv">7</span>)</span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co">#Nos quedamos con los meses de febrero a mayo.</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">window</span>(electricidad, <span class="at">start =</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">1</span>), <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">22</span>, <span class="dv">7</span>)) </span>
@@ -995,29 +971,29 @@ Call:
  ets(y = electricidad, model = "AAA", damped = FALSE) 
 
   Smoothing parameters:
-    alpha = 0.8355 
+    alpha = 0.9995 
     beta  = 0.0001 
     gamma = 0.0001 
 
   Initial states:
-    l = 741.55 
-    b = 0.0601 
-    s = -88.686 -47.5536 19.731 30.4514 35.9361 36.6726
-           13.4485
+    l = 744.5107 
+    b = -0.4279 
+    s = -90.7869 -45.8445 24.1349 31.8978 36.7843 33.9753
+           9.8391
 
-  sigma:  17.5704
+  sigma:  19.3728
 
      AIC     AICc      BIC 
-1263.333 1266.276 1296.682 
+1286.574 1289.518 1319.924 
 
 Training set error measures:
-                     ME     RMSE      MAE        MPE     MAPE      MASE
-Training set -0.7940567 16.73864 10.45847 -0.1438659 1.587029 0.5252875
+                     ME     RMSE      MAE         MPE     MAPE      MASE
+Training set -0.1920454 18.45569 11.78346 -0.06782005 1.802602 0.4649929
                    ACF1
-Training set 0.03820125</code></pre>
+Training set 0.04506439</code></pre>
 </div>
 </div>
-<p>Los valores óptimos de los parámetros son <span class="math inline">\(\alpha=\)</span> 0.84, <span class="math inline">\(\beta=\)</span> 0 y <span class="math inline">\(\gamma=\)</span> 0. Los valores nulos para <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, permanecen constantes en el tiempo. La calidad de las predicciones es notable, con un error porcentual medio del 1.6%.</p>
+<p>Los valores óptimos de los parámetros son <span class="math inline">\(\alpha=\)</span> 1, <span class="math inline">\(\beta=\)</span> 0 y <span class="math inline">\(\gamma=\)</span> 0. Los valores nulos para <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, permanecen constantes en el tiempo. La calidad de las predicciones es notable, con un error porcentual medio del 1.8%.</p>
 <p>Los últimos valores de las componentes son</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">nrow</span>(electricidadEts<span class="sc">$</span>states)</span>
@@ -1026,16 +1002,16 @@ Training set 0.03820125</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>      l       b      s1      s2      s3      s4      s5      s6      s7 
-668.923   0.051 -88.685 -47.554  19.729  30.452  35.934  36.667  13.448 </code></pre>
+670.293  -0.430 -90.791 -45.840  24.135  31.896  36.785  33.972   9.841 </code></pre>
 </div>
 </div>
-<p>Como el último dato de la serie es domingo 30 de mayo, los valores del nivel <span class="math inline">\(l\)</span> y la pendiente <span class="math inline">\(b\)</span> mostrados corresponden a ese día. Sin embargo, la componente estacional tiene un orden muy peculiar: s1 es el valor estacional para domingo (día del último dato), s2 el de sábado, s3 de viernes, hasta s7 que sería lunes. Podemos reproducir las predicciones para los próximos 7 días, 31 de mayo a 6 de junio (ojo, el etiquetado de la salida no tiene sentido):</p>
+<p>Como el último dato de la serie es domingo 29 de mayo, los valores del nivel <span class="math inline">\(l\)</span> y la pendiente <span class="math inline">\(b\)</span> mostrados corresponden a ese día. Sin embargo, la componente estacional tiene un orden muy peculiar: s1 es el valor estacional para domingo (día del último dato), s2 el de sábado, s3 de viernes, hasta s7 que sería lunes. Podemos reproducir las predicciones para los próximos 7 días, 30 de mayo a 5 de junio (ojo, el etiquetado de la salida no tiene sentido):</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>electricidadEts<span class="sc">$</span>states[TT, <span class="dv">1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">7</span>)<span class="sc">*</span>electricidadEts<span class="sc">$</span>states[TT, <span class="dv">2</span>] <span class="sc">+</span> </span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  electricidadEts<span class="sc">$</span>states[TT, <span class="dv">9</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      s7       s6       s5       s4       s3       s2       s1 
-682.4217 705.6918 705.0094 699.5780 688.9063 621.6741 580.5928 </code></pre>
+679.7032 703.4046 705.7874 700.4685 692.2764 621.8714 576.4903 </code></pre>
 </div>
 </div>
 <p>O mejor usar la función <code>forecast</code> para obtener las predicciones y sus intervalos a dos semanas vista.</p>
@@ -1046,20 +1022,20 @@ Training set 0.03820125</code></pre>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>electricidadf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-23.00000       682.4217 647.9844 716.8591
-23.14286       705.6918 660.8134 750.5702
-23.28571       705.0094 651.6952 758.3236
-23.42857       699.5780 638.9897 760.1663
-23.57143       688.9063 621.8267 755.9859
-23.71429       621.6741 548.6768 694.6714
-23.85714       580.5928 502.1216 659.0640
-24.00000       682.7765 599.1867 766.3664
-24.14286       706.0466 617.6340 794.4592
-24.28571       705.3642 612.3776 798.3508
-24.42857       699.9328 602.5858 797.2798
-24.57143       689.2611 587.7399 790.7823
-24.71429       622.0289 516.4975 727.5603
-24.85714       580.9476 471.5520 690.3432</code></pre>
+23.00000       679.7032 641.7332 717.6731
+23.14286       703.4046 649.7171 757.0921
+23.28571       705.7874 640.0358 771.5390
+23.42857       700.4685 624.5443 776.3927
+23.57143       692.2764 607.3884 777.1645
+23.71429       621.8714 528.8780 714.8648
+23.85714       576.4903 476.0421 676.9385
+24.00000       676.6920 569.3025 784.0815
+24.14286       700.3934 586.4849 814.3019
+24.28571       702.7762 582.7008 822.8516
+24.42857       697.4573 571.5156 823.3991
+24.57143       689.2653 557.7174 820.8131
+24.71429       618.8603 481.9345 755.7860
+24.85714       573.4791 431.3779 715.5803</code></pre>
 </div>
 </div>
 <p>La <a href="#fig-electricidadAAA">Figura&nbsp;4</a> muestra la serie Demanda eléctrica y las previsiones extramuestrales.</p>
@@ -1073,7 +1049,7 @@ Training set 0.03820125</code></pre>
 <div id="fig-electricidadAAA" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-electricidadAAA-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;4: Demanda eléctrica y predicción con alisado de Holt-Winters aditivo</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;4: Demanda eléctrica y predicción con alisado de Holt-Winters aditivo</figcaption>
 </figure>
 </div>
 </div>
@@ -1102,29 +1078,29 @@ Call:
  ets(y = nacimientosb, model = "MAM", damped = FALSE) 
 
   Smoothing parameters:
-    alpha = 0.3187 
-    beta  = 0.0541 
-    gamma = 0.1828 
+    alpha = 0.5267 
+    beta  = 0.0322 
+    gamma = 0.0474 
 
   Initial states:
-    l = 33016.8308 
-    b = 134.4179 
-    s = 0.9976 0.9806 1.0479 1.0246 1.0248 1.0326
-           0.9789 1.0242 0.9739 1.0001 0.919 0.996
+    l = 33033.5584 
+    b = 132.3618 
+    s = 0.9949 0.9946 1.0457 1.0364 1.0274 1.0425
+           0.9816 1.0158 0.9621 0.995 0.9072 0.9966
 
-  sigma:  0.0236
+  sigma:  0.028
 
      AIC     AICc      BIC 
-4575.865 4578.621 4635.035 
+5374.038 5376.410 5435.585 
 
 Training set error measures:
-                    ME     RMSE      MAE        MPE     MAPE      MASE
-Training set -13.31703 860.7476 675.2864 -0.0726126 1.823373 0.4868175
-                  ACF1
-Training set 0.0980623</code></pre>
+                    ME     RMSE      MAE         MPE     MAPE      MASE
+Training set -15.26284 901.2576 684.0782 -0.08154216 1.974927 0.4907011
+                   ACF1
+Training set 0.05530167</code></pre>
 </div>
 </div>
-<p>Los valores óptimos de los parámetros son <span class="math inline">\(\alpha=\)</span> 0.32, <span class="math inline">\(\beta=\)</span> 0.05 y <span class="math inline">\(\gamma=\)</span> 0.18. Los valores tan bajos para <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, modifican su valor muy lentamente. La calidad de las predicciones es notable, con un error porcentual medio del 1.8%.</p>
+<p>Los valores óptimos de los parámetros son <span class="math inline">\(\alpha=\)</span> 0.53, <span class="math inline">\(\beta=\)</span> 0.03 y <span class="math inline">\(\gamma=\)</span> 0.05. Los valores tan bajos para <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, modifican su valor muy lentamente. La calidad de las predicciones es notable, con un error porcentual medio del 2.0%.</p>
 <p>Los últimos valores de las componentes son</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">nrow</span>(nacimientosbEts<span class="sc">$</span>states)</span>
@@ -1133,21 +1109,21 @@ Training set 0.0980623</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>        l         b        s1        s2        s3        s4        s5        s6 
-29462.334   -77.537     0.995     1.000     1.066     1.042     1.046     1.049 
+27846.854   -18.102     0.990     0.995     1.051     1.039     1.034     1.045 
        s7        s8        s9       s10       s11       s12 
-    0.978     0.999     0.949     0.980     0.896     0.994 </code></pre>
+    0.982     1.008     0.959     0.997     0.907     0.994 </code></pre>
 </div>
 </div>
-<p>Como el último dato de la serie es diciembre de 2019, los valores del nivel <span class="math inline">\(l\)</span> y la pendiente <span class="math inline">\(b\)</span> mostrados corresponden a ese mes. Sin embargo, recuerda que la componente estacional sigue un orden inverso: s1 es el valor estacional para diciembre (mes del último dato), s2 el de noviembre, s3 de octubre, hasta s11 que sería febrero y s12 que es enero.</p>
+<p>Como el último dato de la serie es diciembre de 2022, los valores del nivel <span class="math inline">\(l\)</span> y la pendiente <span class="math inline">\(b\)</span> mostrados corresponden a ese mes. Sin embargo, recuerda que la componente estacional sigue un orden inverso: s1 es el valor estacional para diciembre (mes del último dato), s2 el de noviembre, s3 de octubre, hasta s11 que sería febrero y s12 que es enero.</p>
 <p>Podemos reproducir las predicciones para los primeros 12 meses de enero a diciembre (ojo, el etiquetado de la salida no es correcto) para ver que coinciden con las obtenidas con la función <code>forecast</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>(nacimientosbEts<span class="sc">$</span>states[TT, <span class="dv">1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)<span class="sc">*</span>nacimientosbEts<span class="sc">$</span>states[TT, <span class="dv">2</span>]) <span class="sc">*</span> </span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  nacimientosbEts<span class="sc">$</span>states[TT, <span class="dv">14</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     s12      s11      s10       s9       s8       s7       s6       s5 
-29208.44 26261.08 28659.28 27669.53 29035.26 28350.73 30332.66 30170.34 
+27649.64 25216.01 27712.05 26626.41 27976.30 27235.50 28968.53 28643.58 
       s4       s3       s2       s1 
-29982.89 30583.87 28610.96 28402.26 </code></pre>
+28768.20 29074.70 27505.07 27347.00 </code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -1157,30 +1133,30 @@ Training set 0.0980623</code></pre>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>nacimientosbf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-Jan 2020       29208.44 27858.19 30558.69
-Feb 2020       26261.08 24965.01 27557.14
-Mar 2020       28659.28 27134.81 30183.74
-Apr 2020       27669.53 26072.36 29266.71
-May 2020       29035.26 27208.76 30861.76
-Jun 2020       28350.73 26403.10 30298.36
-Jul 2020       30332.66 28056.12 32609.20
-Aug 2020       30170.34 27698.52 32642.16
-Sep 2020       29982.89 27305.72 32660.06
-Oct 2020       30583.87 27614.07 33553.67
-Nov 2020       28610.96 25597.03 31624.89
-Dec 2020       28402.26 25164.92 31639.60
-Jan 2021       28286.46 24710.45 31862.47
-Feb 2021       25429.93 21982.37 28877.49
-Mar 2021       27749.82 23723.48 31776.16
-Apr 2021       26789.14 22637.45 30940.82
-May 2021       28108.94 23465.20 32752.67
-Jun 2021       27443.82 22620.07 32267.58
-Jul 2021       29359.74 23879.54 34839.95
-Aug 2021       29200.02 23422.41 34977.63
-Sep 2021       29015.99 22940.65 35091.33
-Oct 2021       29594.92 23048.56 36141.28
-Nov 2021       27683.28 21224.32 34142.25
-Dec 2021       27478.84 20726.54 34231.15</code></pre>
+Jan 2023       27649.64 26131.95 29167.34
+Feb 2023       25216.01 23630.03 26801.99
+Mar 2023       27712.05 25750.14 29673.95
+Apr 2023       26626.41 24531.86 28720.97
+May 2023       27976.30 25554.99 30397.60
+Jun 2023       27235.50 24662.31 29808.69
+Jul 2023       28968.53 25999.87 31937.19
+Aug 2023       28643.58 25476.67 31810.49
+Sep 2023       28768.20 25352.21 32184.20
+Oct 2023       29074.70 25381.48 32767.93
+Nov 2023       27505.07 23780.37 31229.78
+Dec 2023       27347.00 23411.02 31282.98
+Jan 2024       27434.75 23225.26 31644.25
+Feb 2024       25019.90 20963.26 29076.54
+Mar 2024       27496.39 22795.51 32197.27
+Apr 2024       26419.07 21665.79 31172.35
+May 2024       27758.30 22511.93 33004.67
+Jun 2024       27023.14 21666.77 32379.50
+Jul 2024       28742.51 22776.86 34708.15
+Aug 2024       28419.95 22252.12 34587.78
+Sep 2024       28543.44 22074.85 35012.04
+Oct 2024       28847.40 22029.33 35665.47
+Nov 2024       27289.90 20571.02 34008.79
+Dec 2024       27132.93 20181.84 34084.01</code></pre>
 </div>
 </div>
 <p>La <a href="#fig-nacimientosMAM">Figura&nbsp;5</a> muestra la serie Nacimientos y las previsiones extramuestrales.</p>
@@ -1194,7 +1170,7 @@ Dec 2021       27478.84 20726.54 34231.15</code></pre>
 <div id="fig-nacimientosMAM" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-nacimientosMAM-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;5: Nacimientos y predicción con alisado de Holt-Winters multiplicativo</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;5: Nacimientos y predicción con alisado de Holt-Winters multiplicativo</figcaption>
 </figure>
 </div>
 </div>
@@ -1232,24 +1208,26 @@ Call:
   Box-Cox transformation: lambda= 0 
 
   Smoothing parameters:
-    alpha = 0.1837 
-    beta  = 0.0388 
-    gamma = 0.2065 
+    alpha = 0.4194 
+    beta  = 0.0677 
+    gamma = 0.1403 
 
   Initial states:
-    l = 10.4277 
-    b = 0.0054 
-    s = -0.002 -0.0129 0.0234 0.0279 0.0247 0.0463
-           -0.0196 0.0249 -0.0159 0.0048 -0.0917 -0.01
+    l = 10.4564 
+    b = 0.0015 
+    s = -0.0135 0.0076 0.0343 0.033 0.0198 0.0408
+           -0.0297 0.0236 -0.0283 0.0123 -0.0965 -0.0035
 
-  sigma:  0.0251
+  sigma:  0.0297
 
       AIC      AICc       BIC 
--435.0269 -432.2701 -375.8560 
+-371.8794 -369.5073 -310.3326 
 
 Training set error measures:
-                    ME     RMSE      MAE        MPE    MAPE      MASE      ACF1
-Training set -41.36344 920.7979 725.9736 -0.1486283 1.95657 0.5233582 0.3028936</code></pre>
+                    ME    RMSE      MAE         MPE     MAPE      MASE
+Training set -14.18804 953.356 727.8843 -0.08137768 2.097494 0.5221239
+                  ACF1
+Training set 0.1264407</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>nacimientosbfl <span class="ot">&lt;-</span> <span class="fu">forecast</span>(nacimientosbEtsl,</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>                           <span class="at">h =</span> <span class="dv">24</span>,</span>
@@ -1258,40 +1236,40 @@ Training set -41.36344 920.7979 725.9736 -0.1486283 1.95657 0.5233582 0.3028936<
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>nacimientosbfl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-Jan 2020       29254.96 27839.14 30723.35
-Feb 2020       26281.62 24979.19 27633.61
-Mar 2020       28628.09 27164.86 30148.82
-Apr 2020       27589.67 26124.95 29114.26
-May 2020       28904.00 27299.75 30576.95
-Jun 2020       28198.65 26553.18 29918.37
-Jul 2020       30208.17 28346.45 32158.83
-Aug 2020       30108.75 28142.19 32175.16
-Sep 2020       29953.46 27875.09 32144.30
-Oct 2020       30594.89 28336.41 32983.84
-Nov 2020       28662.62 26410.16 31054.13
-Dec 2020       28450.02 26069.89 30987.22
-Jan 2021       28342.75 25713.85 31165.40
-Feb 2021       25465.54 22966.39 28160.40
-Mar 2021       27743.17 24863.99 30861.88
-Apr 2021       26741.03 23808.63 29932.45
-May 2021       28019.64 24776.14 31567.10
-Jun 2021       27340.77 24003.55 31009.48
-Jul 2021       29294.73 25528.88 33456.66
-Aug 2021       29204.21 25255.37 33592.34
-Sep 2021       29059.78 24932.13 33672.57
-Oct 2021       29688.73 25264.69 34661.52
-Nov 2021       27820.24 23476.76 32731.64
-Dec 2021       27620.71 23108.37 32754.26</code></pre>
+Jan 2023       27537.54 25967.36 29176.87
+Feb 2023       25398.85 23791.89 27084.73
+Mar 2023       28139.29 26155.46 30232.29
+Apr 2023       26852.85 24742.41 29093.59
+May 2023       28272.77 25800.76 30915.77
+Jun 2023       28014.35 25299.00 30939.52
+Jul 2023       30046.70 26832.06 33537.77
+Aug 2023       29861.34 26351.23 33705.97
+Sep 2023       29826.07 25992.10 34063.26
+Oct 2023       30216.58 25988.40 34933.47
+Nov 2023       28672.66 24324.23 33571.27
+Dec 2023       28164.81 23554.48 33411.28
+Jan 2024       28432.04 23348.26 34292.19
+Feb 2024       26240.59 21225.47 32083.31
+Mar 2024       29091.76 23166.53 36070.78
+Apr 2024       27782.11 21769.07 34944.80
+May 2024       29273.96 22559.12 37365.74
+Jun 2024       29030.36 21991.05 37614.40
+Jul 2024       31163.60 23194.50 41000.23
+Aug 2024       30999.82 22658.71 41424.34
+Sep 2024       30993.08 22237.05 42075.91
+Oct 2024       31430.61 22125.95 43361.33
+Nov 2024       29856.14 20612.10 41866.62
+Dec 2024       29359.59 19869.31 41856.89</code></pre>
 </div>
 </div>
-<p>Observa que en este caso la calidad de las predicciones (MAPE = 2.0%) es inferior a la obtenida con la serie sin transformar.</p>
+<p>Observa que en este caso la calidad de las predicciones (MAPE = 2.1%) es algo superior a la obtenida con la serie sin transformar.</p>
 <p>La <a href="#fig-nacimientoslog">Figura&nbsp;6</a> muestra la serie Nacimientos y las previsiones extramuestrales obtenidas con y sin la transformación logarítmica.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-nacimientoslog" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-nacimientoslog-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;6: Nacimientos y dos predicciones con alisado de Holt-Winters</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;6: Nacimientos y dos predicciones con alisado de Holt-Winters</figcaption>
 </figure>
 </div>
 </div>
@@ -1300,7 +1278,7 @@ Dec 2021       27620.71 23108.37 32754.26</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="tbl-nacimientoslog" class="anchored">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <caption>Tabla&nbsp;2: Diferencias en la predicción según transformación logarítmica y corrección por sesgo</caption>
 <thead>
 <tr class="header">
@@ -1311,64 +1289,64 @@ Dec 2021       27620.71 23108.37 32754.26</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: right;">29208.44</td>
-<td style="text-align: right;">29254.96</td>
-<td style="text-align: right;">29245.71</td>
+<td style="text-align: right;">27649.64</td>
+<td style="text-align: right;">27537.54</td>
+<td style="text-align: right;">27525.38</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">26261.08</td>
-<td style="text-align: right;">26281.62</td>
-<td style="text-align: right;">26272.90</td>
+<td style="text-align: right;">25216.01</td>
+<td style="text-align: right;">25398.85</td>
+<td style="text-align: right;">25384.97</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">28659.28</td>
-<td style="text-align: right;">28628.09</td>
-<td style="text-align: right;">28617.97</td>
+<td style="text-align: right;">27712.05</td>
+<td style="text-align: right;">28139.29</td>
+<td style="text-align: right;">28120.09</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">27669.53</td>
-<td style="text-align: right;">27589.67</td>
-<td style="text-align: right;">27579.14</td>
+<td style="text-align: right;">26626.41</td>
+<td style="text-align: right;">26852.85</td>
+<td style="text-align: right;">26829.94</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">29035.26</td>
-<td style="text-align: right;">28904.00</td>
-<td style="text-align: right;">28891.92</td>
+<td style="text-align: right;">27976.30</td>
+<td style="text-align: right;">28272.77</td>
+<td style="text-align: right;">28242.70</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">28350.73</td>
-<td style="text-align: right;">28198.65</td>
-<td style="text-align: right;">28185.60</td>
+<td style="text-align: right;">27235.50</td>
+<td style="text-align: right;">28014.35</td>
+<td style="text-align: right;">27977.47</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">30332.66</td>
-<td style="text-align: right;">30208.17</td>
-<td style="text-align: right;">30192.53</td>
+<td style="text-align: right;">28968.53</td>
+<td style="text-align: right;">30046.70</td>
+<td style="text-align: right;">29998.12</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">30170.34</td>
-<td style="text-align: right;">30108.75</td>
-<td style="text-align: right;">30091.18</td>
+<td style="text-align: right;">28643.58</td>
+<td style="text-align: right;">29861.34</td>
+<td style="text-align: right;">29802.58</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">29982.89</td>
-<td style="text-align: right;">29953.46</td>
-<td style="text-align: right;">29933.68</td>
+<td style="text-align: right;">28768.20</td>
+<td style="text-align: right;">29826.07</td>
+<td style="text-align: right;">29755.26</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">30583.87</td>
-<td style="text-align: right;">30594.89</td>
-<td style="text-align: right;">30571.95</td>
+<td style="text-align: right;">29074.70</td>
+<td style="text-align: right;">30216.58</td>
+<td style="text-align: right;">30130.80</td>
 </tr>
 <tr class="odd">
-<td style="text-align: right;">28610.96</td>
-<td style="text-align: right;">28662.62</td>
-<td style="text-align: right;">28638.17</td>
+<td style="text-align: right;">27505.07</td>
+<td style="text-align: right;">28672.66</td>
+<td style="text-align: right;">28576.13</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;">28402.26</td>
-<td style="text-align: right;">28450.02</td>
-<td style="text-align: right;">28422.41</td>
+<td style="text-align: right;">27347.00</td>
+<td style="text-align: right;">28164.81</td>
+<td style="text-align: right;">28053.26</td>
 </tr>
 </tbody>
 </table>
@@ -1398,12 +1376,12 @@ Dec 2021       27620.71 23108.37 32754.26</code></pre>
 <h2 data-number="9.2" class="anchored" data-anchor-id="criterios-de-selección-de-modelos"><span class="header-section-number">9.2</span> Criterios de selección de modelos</h2>
 <p>Queda pendiente saber que criterio se usa para seleccionar el modelo cuando se ofrece esta opción. Esto se hace a partir de un criterio de información entre Akaike (aic), Akaike corregido para pequeñas muestras (aicc) y el Bayesiano (bic). Sus fórmulas son: <span class="math display">\[aic = -2log(L) + 2k\]</span> <span class="math display">\[aicc = aic + \frac{k(k+1)}{T-k-1}\]</span> <span class="math display">\[bic=aic + k(log(T) - 2)\]</span> donde <span class="math inline">\(L\)</span> es la verosimilitud, <span class="math inline">\(T\)</span> el número de datos y <span class="math inline">\(k\)</span> el de parámetros estimados (incluidos los puntos iniciales de arranque y la desviación típica del error).</p>
 <p><strong>Cuanto menor es el criterio de información, mejor modelo</strong>. Por defecto se usa Akaike corregido para pequeñas muestras (aicc), pero el argumento <code>ic</code> permite cambiar de criterio.</p>
-<div class="callout-caution callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Una reflexión sobre los métodos automáticos de selección de modelos
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
@@ -1506,7 +1484,7 @@ Training set 877.6729 5798.394 4367.896 1.318359 6.900756 0.9654123 -0.03788908<
 <div id="fig-librosETSLibre" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-librosETSLibre-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7: Libros y predicción a 5 años vista</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;7: Libros y predicción a 5 años vista</figcaption>
 </figure>
 </div>
 </div>
@@ -1531,7 +1509,7 @@ Training set 877.6729 5798.394 4367.896 1.318359 6.900756 0.9654123 -0.03788908<
 <div id="fig-librosError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-librosError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;8: Error + Intervención</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;8: Error + Intervención</figcaption>
 </figure>
 </div>
 </div>
@@ -1563,9 +1541,6 @@ Training set -0.04292193        NA
 Test set      0.08397051  1.881683</code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-
-</div>
 <p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intramuestral</strong> de <strong>1993 a 2013</strong> es del 8%; y el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extramuestral</strong> de <strong>2014 a 2019</strong> es del 6.8%. Sin embargo, para el periodo extramuestral el error medio (ME) es muy elevado, un indicativo de que las previsiones están segadas. Para el punto de corte elegido, la calidad de las previsiones no se deteriora cuanto nos salimos de las condiciones óptimas.</p>
 <p>Un gráfico puede ayudar a entender este proceso de validación. En la <a href="#fig-librosTSTS">Figura&nbsp;9</a>:</p>
 <ul>
@@ -1581,7 +1556,7 @@ Test set      0.08397051  1.881683</code></pre>
 <div id="fig-librosTSTS" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-librosTSTS-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9: Libros, predicción intra y extramuestral</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;9: Libros, predicción intra y extramuestral</figcaption>
 </figure>
 </div>
 </div>
@@ -1596,37 +1571,37 @@ Test set      0.08397051  1.881683</code></pre>
 <p>Veamos un segundo ejemplo con la serie Nacimientos (desde el año 2000).</p>
 <section id="identificación-y-estimación-del-mejor-modelo-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="identificación-y-estimación-del-mejor-modelo-1">Identificación y estimación del mejor modelo</h3>
-<p>Si damos total libertad al proceso de selección del mejor modelo, el modelo estimado es ETS(M,A,A), es decir, <span class="math inline">\(y_{t+1} = (l_t + b_t + s_{t+1-m}) \cdot (1+ \varepsilon_{t+1})\)</span>.</p>
+<p>Si damos total libertad al proceso de selección del mejor modelo, el modelo estimado es ETS(A,A,A), es decir, <span class="math inline">\(y_{t+1} = l_t + b_t + s_{t+1-m} + \varepsilon_{t+1}\)</span>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>nacimientosEts <span class="ot">&lt;-</span> <span class="fu">ets</span>(nacimientosb, <span class="at">damped =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(nacimientosEts) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>ETS(M,A,A) 
+<pre><code>ETS(A,A,A) 
 
 Call:
  ets(y = nacimientosb, damped = FALSE) 
 
   Smoothing parameters:
-    alpha = 0.4474 
-    beta  = 0.0128 
+    alpha = 0.4933 
+    beta  = 0.0108 
     gamma = 0.0001 
 
   Initial states:
-    l = 33059.0092 
-    b = 133.8769 
-    s = 182.5531 -22.7455 1980.873 1425.817 900.8348 1155.648
-           -1072.562 328.585 -1319.188 -230.6447 -3327.042 -2.1282
+    l = 33050.1612 
+    b = 144.1429 
+    s = -25.3765 -47.6828 2011.89 1490.777 974.0097 1251.884
+           -975.9382 256.4606 -1342.336 -158.8668 -3355.703 -79.1191
 
-  sigma:  0.0222
+  sigma:  916.531
 
      AIC     AICc      BIC 
-4548.513 4551.270 4607.684 
+5333.717 5336.089 5395.264 
 
 Training set error measures:
-                    ME    RMSE     MAE        MPE     MAPE      MASE
-Training set -75.41839 803.969 635.127 -0.2331352 1.729529 0.4578664
-                    ACF1
-Training set -0.01404832</code></pre>
+                    ME     RMSE      MAE       MPE     MAPE      MASE
+Training set -69.50818 889.5682 675.4783 -0.221582 1.957404 0.4845322
+                   ACF1
+Training set 0.06139082</code></pre>
 </div>
 </div>
 <p>El bajo valor de <span class="math inline">\(\beta\)</span> y <span class="math inline">\(\gamma\)</span> indican que ambas, la pendiente y la estacionalidad, varían muy lentamente en el tiempo (véase la <a href="#fig-nacimientoscomponentes">Figura&nbsp;10</a>).</p>
@@ -1638,38 +1613,38 @@ Training set -0.01404832</code></pre>
 <div id="fig-nacimientoscomponentes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-nacimientoscomponentes-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;10: Componentes del modelo óptimo para Nacimientos</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;10: Componentes del modelo óptimo para Nacimientos</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Respecto de la calidad del modelo, el MAPE de 1.7% indica que estamos ante un modelo que se ajusta muy bien a los datos; y el valor de MASE igual a 0.46 indica que este modelo reduce en un 54% el error del método ingenuo con estacionalidad, el más sencillo posible.</p>
+<p>Respecto de la calidad del modelo, el MAPE de 2% indica que estamos ante un modelo que se ajusta muy bien a los datos; y el valor de MASE igual a 0.48 indica que este modelo reduce en un 52% el error del método ingenuo con estacionalidad, el más sencillo posible.</p>
 <p>Podemos ver los últimos valores estimados del nivel, la pendiente y la estacionalidad para interpretarlos.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">nrow</span>(nacimientosEts<span class="sc">$</span>states)</span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>nacimientosEts<span class="sc">$</span>states[TT,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>           l            b           s1           s2           s3           s4 
-29320.777216   -97.750950   182.341671   -22.911478  1980.732161  1425.627100 
-          s5           s6           s7           s8           s9          s10 
-  900.711756  1155.516255 -1072.778571   328.464694 -1319.322763  -230.718073 
-         s11          s12 
--3327.380739    -2.092064 </code></pre>
+<pre><code>          l           b          s1          s2          s3          s4 
+27519.26626   -63.61016   -25.53601   -47.67198  2011.60284  1490.50180 
+         s5          s6          s7          s8          s9         s10 
+  973.93433  1251.73023  -976.16193   256.24927 -1342.52402  -159.02341 
+        s11         s12 
+-3355.79580   -79.22413 </code></pre>
 </div>
 </div>
-<p>Febrero es el mes con menor número de nacimientos: nacen 3327 bebés menos, respecto de la media anual. En octubre es cuando más bebés nacen: 1980 más que la media anual.</p>
+<p>Febrero es el mes con menor número de nacimientos: nacen 3355 bebés menos, respecto de la media anual. En octubre es cuando más bebés nacen: 2011 más que la media anual.</p>
 <p>Podemos usar estos valores para predecir un año,</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a>nacimientosEts<span class="sc">$</span>states[TT, <span class="dv">1</span>] <span class="sc">+</span> (<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>) <span class="sc">*</span> nacimientosEts<span class="sc">$</span>states[TT, <span class="dv">2</span>] <span class="sc">+</span> </span>
 <span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  nacimientosEts<span class="sc">$</span>states[TT, <span class="dv">14</span><span class="sc">:</span><span class="dv">3</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     s12      s11      s10       s9       s8       s7       s6       s5 
-29220.93 25797.89 28796.81 27610.45 29160.49 27661.49 29792.04 29439.48 
+27376.43 24036.25 27169.41 25922.30 27457.46 26161.44 28325.73 27984.32 
       s4       s3       s2       s1 
-29866.65 30324.00 28222.61 28330.11 </code></pre>
+28437.28 28894.77 26771.88 26730.41 </code></pre>
 </div>
 </div>
-<p>Nuestra predicción para enero de 2020 es de 29221 bebés y para diciembre de 2020 de 28330 bebés.</p>
+<p>Nuestra predicción para enero de 2020 es de 27376 bebés y para diciembre de 2020 de 26730 bebés.</p>
 </section>
 <section id="predicción-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="predicción-1">Predicción</h3>
@@ -1683,11 +1658,11 @@ Training set -0.01404832</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-Jan 2020       29220.93 27947.01 30494.86
-Feb 2020       25797.89 24529.51 27066.28
-Mar 2020       28796.81 27311.06 30282.55
-Apr 2020       27610.45 26045.43 29175.48
-May 2020       29160.49 27434.66 30886.32</code></pre>
+Jan 2023       27376.43 25580.06 29172.80
+Feb 2023       24036.25 22024.56 26047.94
+Mar 2023       27169.41 24955.26 29383.56
+Apr 2023       25922.30 23515.15 28329.46
+May 2023       27457.46 24864.50 30050.43</code></pre>
 </div>
 </div>
 <p>La <a href="#fig-nacimientosPrediccion">Figura&nbsp;11</a> muestra la serie Nacimientos, su predicción a dos años vista y el intervalo de confianza.</p>
@@ -1700,7 +1675,7 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 <div id="fig-nacimientosPrediccion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-nacimientosPrediccion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11: Nacimientos y predicción</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;11: Nacimientos y predicción</figcaption>
 </figure>
 </div>
 </div>
@@ -1708,7 +1683,7 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 </section>
 <section id="análisis-del-error" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="análisis-del-error">Análisis del error</h3>
-<p>Se identifica un valor claramente atípico –supera las 4 desviaciones típicas– que corresponde a enero de 2011. Abril de 2008 y Junio de 2016 son otros candidatos a intervención por superar las 2.5 desviaciones típicas.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>Se identifica varios valores claramente atípicos –superan las 4 desviaciones típicas– que corresponden a enero de 2011 y, aproximadamente, nueves después del confinamiento por la pandemia (diciembre de 2020, y febrero y marzo de 2021). Abril de 2008 y diciembre de 2010 son otros candidatos a intervención por superar las 2.5 desviaciones típicas.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>error <span class="ot">&lt;-</span> <span class="fu">residuals</span>(nacimientosEts)</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>sderror <span class="ot">&lt;-</span> <span class="fu">sd</span>(error)</span>
@@ -1725,7 +1700,7 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 <div id="fig-NacimientosError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-NacimientosError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;12: Error + Intervención</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;12: Error + Intervención</figcaption>
 </figure>
 </div>
 </div>
@@ -1753,8 +1728,8 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 <span id="cb61-16"><a href="#cb61-16" aria-hidden="true" tabindex="-1"></a>errorAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
 <span id="cb61-17"><a href="#cb61-17" aria-hidden="true" tabindex="-1"></a>errorAlisado</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 1.895690 2.132387 2.242887 2.585539 2.558460 2.566431 2.776798 2.744558
- [9] 2.832179 2.999329 3.016310 3.250591</code></pre>
+<pre><code> [1] 2.222763 2.546718 2.695250 3.024869 2.988470 3.023482 3.225675 3.221769
+ [9] 3.310989 3.499843 3.442572 3.645526</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -1768,17 +1743,17 @@ May 2020       29160.49 27434.66 30886.32</code></pre>
 <div id="fig-NacimientosErrorRW" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-NacimientosErrorRW-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;13: Error de predicción según horizonte temporal</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;13: Error de predicción según horizonte temporal</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>La <a href="#fig-NacimientosErrorRW">Figura&nbsp;13</a> muestra el error de previsión extramuestral según el horizonte temporal. El error extramuestral a un periodo vista es comparable al error intramuestral (1.9% frente a 1.7%). Aunque el error de previsión aumenta conforme lo hace el horizonte temporal, siempre se mantiene muy bajo. Por ejemplo, en las previsiones a 12 meses vista el error es del 3.3%.</p>
+<p>La <a href="#fig-NacimientosErrorRW">Figura&nbsp;13</a> muestra el error de previsión extramuestral según el horizonte temporal. El error extramuestral a un periodo vista es comparable al error intramuestral (2.2% frente a 2.0%). Aunque el error de previsión aumenta conforme lo hace el horizonte temporal, siempre se mantiene muy bajo. Por ejemplo, en las previsiones a 12 meses vista el error es del 3.6%.</p>
 </section>
 </section>
 <section id="demanda-eléctrica" class="level2" data-number="11.3">
 <h2 data-number="11.3" class="anchored" data-anchor-id="demanda-eléctrica"><span class="header-section-number">11.3</span> Demanda eléctrica</h2>
-<p>Consideraremos la serie de Demanda eléctrica desde el 1 de febrero hasta el 30 de mayo, 17 semanas completas de 2021.</p>
+<p>Consideraremos la serie de Demanda eléctrica desde el 31 de enero hasta el 29 de mayo, 17 semanas completas de 2022.</p>
 <section id="identificación-y-estimación-del-mejor-modelo-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="identificación-y-estimación-del-mejor-modelo-2">Identificación y estimación del mejor modelo</h3>
 <p>El modelo óptimo (ANA) no presenta tendencia y tiene error y estacionalidad aditiva, es decir, <span class="math inline">\(y_{t+1} = l_t + s_{t+1-m} + \varepsilon_{t+1}\)</span>.</p>
@@ -1792,44 +1767,44 @@ Call:
  ets(y = electricidad) 
 
   Smoothing parameters:
-    alpha = 0.8153 
-    gamma = 0.0001 
+    alpha = 0.9995 
+    gamma = 0.0003 
 
   Initial states:
-    l = 722.0988 
-    s = -88.4954 -48.1336 18.9787 30.7625 35.2935 36.6034
-           14.991
+    l = 733.1601 
+    s = -91.5867 -44.288 22.3851 31.0969 38.0069 33.3497
+           11.0362
 
-  sigma:  17.1482
+  sigma:  19.2269
 
      AIC     AICc      BIC 
-1255.728 1257.765 1283.519 
+1282.960 1284.997 1310.751 
 
 Training set error measures:
-                     ME     RMSE      MAE        MPE     MAPE      MASE
-Training set -0.5481487 16.48698 10.17435 -0.1139339 1.549188 0.5110171
+                    ME     RMSE      MAE        MPE     MAPE      MASE
+Training set -0.521831 18.48558 12.05976 -0.1171496 1.840559 0.4758963
                    ACF1
-Training set 0.04689494</code></pre>
+Training set 0.04606669</code></pre>
 </div>
 </div>
 <p>El valor <span class="math inline">\(\gamma = 0\)</span> indica que las estacionalidad se mantiene contante en el tiempo, mientras que el elevado valor de <span class="math inline">\(\alpha\)</span> indica que el nivel de la serie cambia de forma constante.</p>
-<p>Respecto de la calidad del modelo, el MAPE de 1.5% indica que estamos ante un modelo que se ajusta muy bien a los datos; no hay sesgo (ME es casi cero); y el valor de ACF1 casi nulo indica que la fórmula usada para el cálculo del intervalo de confianza de las predicciones es válida.</p>
+<p>Respecto de la calidad del modelo, el MAPE de 1.8% indica que estamos ante un modelo que se ajusta muy bien a los datos; no hay sesgo (ME es casi cero); y el valor de ACF1, muy bajo, indica que la fórmula usada para el cálculo del intervalo de confianza de las predicciones es válida.</p>
 <p>Podemos ver los últimos valores estimados del nivel y la estacionalidad para interpretarlos.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">nrow</span>(electricidadEts<span class="sc">$</span>states)</span>
 <span id="cb66-2"><a href="#cb66-2" aria-hidden="true" tabindex="-1"></a>electricidadEts<span class="sc">$</span>states[TT,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        l        s1        s2        s3        s4        s5        s6        s7 
-668.91416 -88.49612 -48.13342  18.97883  30.76151  35.29273  36.60043  14.98952 </code></pre>
+671.09030 -91.59002 -44.29457  22.38701  31.10112  37.99754  33.34777  11.03184 </code></pre>
 </div>
 </div>
-<p>El domingo la demanda eléctrica cae 88 GWh respecto de la media semanal. Por el contrario, el martes y el miércoles son los días de mayor demanda respecto de la media semanal: 36 GWh y 35 GWh respectivamente.</p>
+<p>El domingo la demanda eléctrica cae 91 GWh respecto de la media semanal. Por el contrario, el martes y el miércoles son los días de mayor demanda respecto de la media semanal: 33 GWh y 37 GWh respectivamente.</p>
 <p>También podemos usarlos para predecir una semana,</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>electricidadEts<span class="sc">$</span>states[TT, <span class="dv">1</span>] <span class="sc">+</span> electricidadEts<span class="sc">$</span>states[TT, <span class="dv">8</span><span class="sc">:</span><span class="dv">2</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      s7       s6       s5       s4       s3       s2       s1 
-683.9037 705.5146 704.2069 699.6757 687.8930 620.7807 580.4180 </code></pre>
+682.1221 704.4381 709.0878 702.1914 693.4773 626.7957 579.5003 </code></pre>
 </div>
 </div>
 </section>
@@ -1845,20 +1820,20 @@ Training set 0.04689494</code></pre>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-23.00000       683.9037 650.2939 717.5135
-23.14286       705.5146 662.1490 748.8802
-23.28571       704.2069 652.9085 755.5053
-23.42857       699.6757 641.5165 757.8348
-23.57143       687.8930 623.6012 752.1848
-23.71429       620.7807 550.8923 690.6692
-23.85714       580.4180 505.3479 655.4882
-24.00000       683.9037 603.9882 763.8192
-24.14286       705.5146 621.0312 789.9980
-24.28571       704.2069 615.3903 793.0235
-24.42857       699.6757 606.7276 792.6238
-24.57143       687.8930 590.9894 784.7966
-24.71429       620.7807 520.0769 721.4846
-24.85714       580.4180 476.0514 684.7847</code></pre>
+23.00000       682.1221 644.4380 719.8062
+23.14286       704.4381 651.1568 757.7194
+23.28571       709.0878 643.8368 774.3389
+23.42857       702.1914 626.8488 777.5340
+23.57143       693.4773 609.2436 777.7110
+23.71429       626.7957 534.5237 719.0677
+23.85714       579.5003 479.8318 679.1688
+24.00000       682.1221 575.5735 788.6708
+24.14286       704.4381 591.4273 817.4488
+24.28571       709.0878 589.9651 828.2106
+24.42857       702.1914 577.2553 827.1276
+24.57143       693.4773 562.9865 823.9681
+24.71429       626.7957 490.9773 762.6142
+24.85714       579.5003 438.5523 720.4483</code></pre>
 </div>
 </div>
 <p>La <a href="#fig-electricidadPrediccion">Figura&nbsp;14</a> muestra la serie Demanda eléctrica, su predicción a cuatro semanas vista y el intervalo de confianza.</p>
@@ -1871,7 +1846,7 @@ Training set 0.04689494</code></pre>
 <div id="fig-electricidadPrediccion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-05-Tema5_files/figure-html/fig-electricidadPrediccion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;14: Demanda eléctrica y predicción</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;14: Demanda eléctrica y predicción</figcaption>
 </figure>
 </div>
 </div>
@@ -1892,15 +1867,15 @@ Training set 0.04689494</code></pre>
 <span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
 <span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">6</span>, <span class="dv">26</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-NacimientosError2" class="quarto-figure quarto-figure-center anchored">
+<div id="fig-electricidadError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="03-05-Tema5_files/figure-html/fig-NacimientosError2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;15: Error + Intervención</figcaption><p></p>
+<p><img src="03-05-Tema5_files/figure-html/fig-electricidadError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;15: Error + Intervención</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>El la <a href="#fig-NacimientosError2">Figura&nbsp;15</a> se identifican en la semana 14 varios días atípicos –supera las 4 desviaciones típicas– que corresponden a la Semana Santa, que en 2021 fue del 28 de marzo al 4 de abril. Los dos valores mas extremos corresponden al Jueves Santo, que por ser vacacional tuvo un consumo de electricidad inferior al esperado; y el sábado siguiente donde el consumo fue superior al esperado.</p>
+<p>El la <a href="#fig-electricidadError">Figura&nbsp;15</a> se identifican en la semana 16 varios días atípicos –supera las 4 desviaciones típicas– que corresponden a la Semana Santa, que en 2022 fue del 10 de abril al 17 de abril. Los dos valores mas extremos corresponden al Jueves Santo, que por ser vacacional tuvo un consumo de electricidad inferior al esperado; y el sábado siguiente donde el consumo fue superior al esperado.</p>
 <p><br>
 <br>
 </p>
@@ -1917,51 +1892,51 @@ Training set 0.04689494</code></pre>
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Serie Nacimientos</span></span>
 <span id="cb74-2"><a href="#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.729529</code></pre>
+<pre><code>[1] 1.957404</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"mse"</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.735199</code></pre>
+<pre><code>[1] 1.957395</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"amse"</span>,</span>
 <span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">nmse =</span> <span class="dv">4</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.733763</code></pre>
+<pre><code>[1] 1.983517</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformación logarítmica</span></span>
 <span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">lambda =</span> <span class="dv">0</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.736988</code></pre>
+<pre><code>[1] 1.929991</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">lambda =</span> <span class="dv">0</span>, </span>
 <span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"mse"</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.736988</code></pre>
+<pre><code>[1] 1.929991</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">lambda =</span> <span class="dv">0</span>, </span>
 <span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"amse"</span>,</span>
 <span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">nmse =</span> <span class="dv">4</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.759407</code></pre>
+<pre><code>[1] 2.079451</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Transformación logarítmica insesgada</span></span>
 <span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">lambda =</span> <span class="dv">0</span>,</span>
 <span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">biasadj =</span> <span class="cn">TRUE</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.738206</code></pre>
+<pre><code>[1] 1.933898</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb88"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">lambda =</span> <span class="dv">0</span>, </span>
 <span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">biasadj =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"mse"</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.738206</code></pre>
+<pre><code>[1] 1.933898</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb, </span>
 <span id="cb90-2"><a href="#cb90-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">lambda =</span> <span class="dv">0</span>, </span>
@@ -1969,30 +1944,30 @@ Training set 0.04689494</code></pre>
 <span id="cb90-4"><a href="#cb90-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"amse"</span>,</span>
 <span id="cb90-5"><a href="#cb90-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">nmse =</span> <span class="dv">4</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.760741</code></pre>
+<pre><code>[1] 2.081935</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb92"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Nacimientos por dia</span></span>
 <span id="cb92-2"><a href="#cb92-2" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb<span class="sc">/</span><span class="fu">monthdays</span>(nacimientosb)))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.654761</code></pre>
+<pre><code>[1] 1.861714</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb94"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb<span class="sc">/</span><span class="fu">monthdays</span>(nacimientosb), </span>
 <span id="cb94-2"><a href="#cb94-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"mse"</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.651274</code></pre>
+<pre><code>[1] 1.861714</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(<span class="fu">ets</span>(nacimientosb<span class="sc">/</span><span class="fu">monthdays</span>(nacimientosb), </span>
 <span id="cb96-2"><a href="#cb96-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">opt.crit =</span> <span class="st">"amse"</span>,</span>
 <span id="cb96-3"><a href="#cb96-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">nmse =</span> <span class="dv">4</span>))[<span class="dv">5</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.66276</code></pre>
+<pre><code>[1] 1.919763</code></pre>
 </div>
 </div>
 <p>La principal conclusión en este caso es que salirse de la estimación directa sobre la serie original no reduce el error significativamente. Sin embargo, cabe destacar que,</p>
 <ul>
 <li>El error de estimación de los nacimientos por día es menor que el error obtenido con la serie original de nacimiento. Véanse los tres últimos modelos respecto de los tres primeros.</li>
-<li>Usar la transformación logarítmica (con o sin predicciones insesgadas) no mejora la capacidad predictiva del modelo. Véanse los modelos 4 a 9 respecto de los modelos 1 a 3.</li>
-<li>El mejor modelo estima los nacimientos por día y estima los parámetros minimizando el error cuadrático medio (“mse”). Todo menos lo <em>directo</em>.</li>
+<li>Usar la transformación logarítmica (con o sin predicciones insesgadas) puede mejorar o no la capacidad predictiva del modelo, dependiendo del resto de parámetros. Véanse los modelos 4 a 9 respecto de los modelos 1 a 3.</li>
+<li>El mejor modelo estima los nacimientos por día y estima los parámetros minimizando la verosimilitud o el error cuadrático medio (“mse”). No siempre el uso directo de la serie ofrece los mejores resultados.</li>
 </ul>
 <p><br>
 <br>
@@ -2042,23 +2017,23 @@ Training set 0.04689494</code></pre>
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
-<div id="ref-Brown59" class="csl-entry" role="doc-biblioentry">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-Brown59" class="csl-entry" role="listitem">
 Brown, Robert Goodell. 1959. <em>Statistical Forecasting for Inventory Control</em>. McGraw-Hill, New York.
 </div>
-<div id="ref-Gardner85" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Gardner85" class="csl-entry" role="listitem">
 Gardner, Everette S., and Ed. Mckenzie. 1985. <span>“Forecasting Trends in Time Series.”</span> <em>Management Science</em> 31 (10): 1237–46. <a href="https://doi.org/10.1287/mnsc.31.10.1237">https://doi.org/10.1287/mnsc.31.10.1237</a>.
 </div>
-<div id="ref-Holt" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Holt" class="csl-entry" role="listitem">
 Holt, Charles C. 2004. <span>“Forecasting Seasonals and Trends by Exponentially Weighted Moving Averages.”</span> <em>International Journal of Forecasting</em> 20 (1): 5–10. https://doi.org/<a href="https://doi.org/10.1016/j.ijforecast.2003.09.015">https://doi.org/10.1016/j.ijforecast.2003.09.015</a>.
 </div>
-<div id="ref-Hyndman08" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hyndman08" class="csl-entry" role="listitem">
 Hyndman, Rob J., and Y. Khandakar. 2008. <span>“Automatic Time Series Forecasting: The Forecast Package for r.”</span> <em>Journal of Statistical Software</em> 27 (3): 1–22. <a href="https://doi.org/10.18637/jss.v027.i03">https://doi.org/10.18637/jss.v027.i03</a>.
 </div>
-<div id="ref-Hyndman08b" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Hyndman08b" class="csl-entry" role="listitem">
 Hyndman, Rob J., A. Koehler, K. Ord, and R. Snyder. 2008. <em>Forecasting with Exponential Smoothings. The State Space Approach</em>. Springer Berlin, Heidelberg. <a href="https://doi.org/10.1007/978-3-540-71918-2">https://doi.org/10.1007/978-3-540-71918-2</a>.
 </div>
-<div id="ref-Winters60" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Winters60" class="csl-entry" role="listitem">
 Winters, Peter R. 1960. <span>“Forecasting Sales by Exponentially Weighted Moving Averages.”</span> <em>Management Science</em> 6 (3): 324–42. <a href="https://doi.org/10.1287/mnsc.6.3.324">https://doi.org/10.1287/mnsc.6.3.324</a>.
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
@@ -2095,9 +2070,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -2109,7 +2098,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -2145,31 +2151,138 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-left">© Copyright 2023, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>

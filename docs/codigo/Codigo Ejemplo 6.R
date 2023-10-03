@@ -8,7 +8,7 @@
 # Librerias
 library(forecast)
 library(ggplot2); theme_set(theme_bw())
-library(aod)
+library(lmtest)
 #----------------------------------------------------------
 #
 #
@@ -24,6 +24,7 @@ Pernoctaciones <- ts(Pernoctaciones[,2],
                      frequency = 12)
 
 Pernoctaciones <- aggregate(Pernoctaciones/10^6, FUN = sum)
+Pernoctacionesb <- window(Pernoctaciones, end = 2019)
 #----------------------------------------------------------
 #
 #
@@ -31,12 +32,12 @@ Pernoctaciones <- aggregate(Pernoctaciones/10^6, FUN = sum)
 #----------------------------------------------------------
 # Transformacion
 #----------------------------------------------------------
-autoplot(Pernoctaciones, xlab = "", ylab = "", main = "")
-autoplot(diff(Pernoctaciones), xlab = "", ylab = "", main = "")
-ggAcf(Pernoctaciones, xlab = "", ylab = "", main = "")
-ggAcf(diff(Pernoctaciones), xlab = "", ylab = "", main = "")
+autoplot(Pernoctacionesb, xlab = "", ylab = "", main = "")
+autoplot(diff(Pernoctacionesb), xlab = "", ylab = "", main = "")
+ggAcf(Pernoctacionesb, xlab = "", ylab = "", main = "")
+ggAcf(diff(Pernoctacionesb), xlab = "", ylab = "", main = "")
 
-ndiffs(Pernoctaciones)
+ndiffs(Pernoctacionesb)
 #----------------------------------------------------------
 #
 #
@@ -45,11 +46,11 @@ ndiffs(Pernoctaciones)
 # Pernoctaciones - I(0)
 #----------------------------------------------------------
 # Identificación
-auto.arima(Pernoctaciones, 
+auto.arima(Pernoctacionesb, 
            d = 0)
 
 # Estimacion
-arima101 <- Arima(Pernoctaciones, 
+arima101 <- Arima(Pernoctacionesb, 
                   order = c(1, 0, 1),
                   include.constant = TRUE)
 
@@ -70,9 +71,7 @@ autoplot(error, series="Error",
 
 
 # Variables son significativas
-wald.test(b = coef(arima101), Sigma = vcov(arima101), Terms = 1)
-wald.test(b = coef(arima101), Sigma = vcov(arima101), Terms = 2)
-wald.test(b = coef(arima101), Sigma = vcov(arima101), Terms = 3)
+coeftest(arima101)
 
 # Medidas de error
 accuracy(arima101)
@@ -80,14 +79,14 @@ accuracy(arima101)
 # Error de previsión extra-muestral: origen de prevision movil
 k <- 10                  
 h <- 3                    
-T <- length(Pernoctaciones)     
+T <- length(Pernoctacionesb)     
 s <- T - k - h    
 
 mapeArima101 <- matrix(NA, s + 1, h)
 
 for (i in 0:s) {
-  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
-  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h) 
+  train.set <- subset(Pernoctacionesb, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctacionesb, start = i + k + 1, end = i + k + h) 
   
   fit <- Arima(train.set, 
                include.constant = TRUE,
@@ -108,11 +107,11 @@ mapeArima101
 # Pernoctaciones - I(1)
 #----------------------------------------------------------
 # Identificación
-auto.arima(Pernoctaciones, 
+auto.arima(Pernoctacionesb, 
            d = 1)
 
 # Estimacion
-arima010 <- Arima(Pernoctaciones, 
+arima010 <- Arima(Pernoctacionesb, 
                   order = c(0, 1, 0),
                   include.constant = FALSE)
 
@@ -139,14 +138,14 @@ accuracy(arima010)
 # Error de previsión extra-muestral: origen de prevision movil
 k <- 10                  
 h <- 3                    
-T <- length(Pernoctaciones)     
+T <- length(Pernoctacionesb)     
 s <- T - k - h    
 
 mapeArima010 <- matrix(NA, s + 1, h)
 
 for (i in 0:s) {
-  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
-  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h) 
+  train.set <- subset(Pernoctacionesb, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctacionesb, start = i + k + 1, end = i + k + h) 
   
   fit <- Arima(train.set, 
                include.constant = FALSE,
@@ -173,3 +172,4 @@ autoplot(parima010,
          main = "") +
   scale_x_continuous(breaks= seq(2000, 2024, 2)) 
 
+Pernoctaciones - parima010$mean

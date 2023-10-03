@@ -9,7 +9,7 @@
 library(forecast)
 library(ggplot2); theme_set(theme_bw())
 library(seasonal)
-library(aod)
+library(lmtest)
 library(timeDate)
 library(knitr)
 #----------------------------------------------------------
@@ -430,19 +430,7 @@ autoplot(error, series="Error",
   scale_x_continuous(breaks= seq(1996, 2020, 2))
 
 # Validacion
-datos <- NULL
-for(i in 1:length(coef(PasajerosAri))) {
-  datos <- rbind(datos,
-                 data.frame(
-                   "Coeficiente" = names(coef(PasajerosAri))[i],
-                   "Valor de p" = wald.test(b = coef(PasajerosAri), 
-                                            Sigma = vcov(PasajerosAri), 
-                                            Terms = i)$result$chi2[3])
-  )
-}
-
-kable(datos, digits = 4, row.names = FALSE)
-
+coeftest(PasajerosAri)
 
 # Calidad del ajuste
 accuracy(PasajerosAri)

@@ -26,7 +26,7 @@ autoplot(Pernoctaciones/1000000,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
 #----------------------------------------------------------
 #
 #
@@ -41,10 +41,11 @@ autoplot(PernoctacionesAnual,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
 
 # Ajuste
-PernoctacionesAnualEts <- ets(PernoctacionesAnual)
+PernoctacionesAnualb <- window(PernoctacionesAnual, end = 2019)
+PernoctacionesAnualEts <- ets(PernoctacionesAnualb)
 summary(PernoctacionesAnualEts) 
 
 # Prediccion
@@ -59,7 +60,8 @@ forecast(PernoctacionesAnualEts,
 # Alisado exponencial para la serie mensual
 #----------------------------------------------------------
 # Ajuste
-PernoctacionesEts <- ets(Pernoctaciones)
+Pernoctacionesb <- window(Pernoctaciones, end = c(2019, 12))
+PernoctacionesEts <- ets(Pernoctacionesb)
 summary(PernoctacionesEts) 
 
 autoplot(PernoctacionesEts,
@@ -96,6 +98,8 @@ autoplot(PernoctacionesEtsPre,
          main = "",
          PI = FALSE)
 
+aggregate(Pernoctaciones - PernoctacionesEtsPre$mean, FUN = sum)/1000000
+
 # Análisis del error
 error <- residuals(PernoctacionesEts)
 sderror <- sd(error)
@@ -112,13 +116,13 @@ autoplot(error,
 # Error por origen de prediccion movil
 k <- 120                 
 h <- 12                  
-TT <- length(Pernoctaciones)
+TT <- length(Pernoctacionesb)
 s <- TT - k - h          
 
 mapeAlisado <- matrix(NA, s + 1, h)
 for (i in 0:s) {
-  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
-  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  train.set <- subset(Pernoctacionesb, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctacionesb, start = i + k + 1, end = i + k + h)
   
   fit <- ets(train.set, model = "MNM")
   fcast<-forecast(fit, h = h)
@@ -144,7 +148,7 @@ ggplot() +
 #----------------------------------------------------------
 k <- 120                 
 h <- 12                  
-TT <- length(Pernoctaciones)
+TT <- length(Pernoctacionesb)
 s <- TT - k - h
 
 mapeAlisado1 <- matrix(NA, s + 1, h)
@@ -155,8 +159,8 @@ mapeAlisado5 <- matrix(NA, s + 1, h)
 mapeAlisado6 <- matrix(NA, s + 1, h)
 
 for (i in 0:s) {
-  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
-  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  train.set <- subset(Pernoctacionesb, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctacionesb, start = i + k + 1, end = i + k + h)
   
   fit <- ets(train.set, model = "MNM")
   fcast<-forecast(fit, h = h)

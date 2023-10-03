@@ -8,7 +8,7 @@
 # Librerias
 library(forecast)
 library(ggplot2); theme_set(theme_bw())
-library(aod)
+library(lmtest)
 library(seasonal)
 library(timeDate)
 #----------------------------------------------------------
@@ -29,7 +29,9 @@ autoplot(Pernoctaciones,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+  scale_x_continuous(breaks= seq(2000, 2020, 2))
+
+Pernoctacionesb <- window(Pernoctaciones, end = c(2019, 12))
 #----------------------------------------------------------
 #
 #
@@ -37,13 +39,13 @@ autoplot(Pernoctaciones,
 #----------------------------------------------------------
 # Transformacion
 #----------------------------------------------------------
-ggAcf(log(Pernoctaciones), lag = 48, xlab = "", ylab = "", main = "")
-ggAcf(diff(log(Pernoctaciones)), lag = 48, xlab = "", ylab = "", main = "")
-ggAcf(diff(log(Pernoctaciones), lag = 12), lag = 48, xlab = "", ylab = "", main = "")
-ggAcf(diff(diff(log(Pernoctaciones), lag=12)), lag = 48, xlab = "", ylab = "", main = "")
+ggAcf(log(Pernoctacionesb), lag = 48, xlab = "", ylab = "", main = "")
+ggAcf(diff(log(Pernoctacionesb)), lag = 48, xlab = "", ylab = "", main = "")
+ggAcf(diff(log(Pernoctacionesb), lag = 12), lag = 48, xlab = "", ylab = "", main = "")
+ggAcf(diff(diff(log(Pernoctacionesb), lag=12)), lag = 48, xlab = "", ylab = "", main = "")
 
-ndiffs(log(Pernoctaciones))
-nsdiffs(log(Pernoctaciones))
+ndiffs(log(Pernoctacionesb))
+nsdiffs(log(Pernoctacionesb))
 #----------------------------------------------------------
 #
 #
@@ -52,17 +54,17 @@ nsdiffs(log(Pernoctaciones))
 # Identificacion
 #----------------------------------------------------------
 # Auto.arima
-DiasMes <- monthdays(Pernoctaciones)
-SemanaSanta <- easter(Pernoctaciones)
+DiasMes <- monthdays(Pernoctacionesb)
+SemanaSanta <- easter(Pernoctacionesb)
 
-auto.arima(Pernoctaciones, 
+auto.arima(Pernoctacionesb, 
            d = 1, 
            D = 1,
            lambda = 0,
            xreg = cbind(DiasMes, SemanaSanta))
 
 # Seas
-summary(seas(Pernoctaciones))
+summary(seas(Pernoctacionesb))
 #----------------------------------------------------------
 #
 #
@@ -103,9 +105,9 @@ pSemanaSanta <- subset(SemanaSanta, start = length(SemanaSanta) - 35)
 SemanaSanta <- subset(SemanaSanta, end = length(SemanaSanta) - 36)
 
 # Ajuste
-DiasMes <- monthdays(Pernoctaciones)
+DiasMes <- monthdays(Pernoctacionesb)
 
-Arima1 <- Arima(Pernoctaciones, 
+Arima1 <- Arima(Pernoctacionesb, 
                 order = c(0, 1, 1),  
                 seasonal = c(0, 1, 1),
                 lambda = 0,
@@ -126,12 +128,12 @@ autoplot(error, series="Error",
              lty = 2) + 
   scale_x_continuous(breaks= seq(2000, 2020, 2))  
 
-d0305 <- 1*(cycle(Pernoctaciones) == 3 & trunc(time(Pernoctaciones)) == 2005)
-d0406 <- 1*(cycle(Pernoctaciones) == 4 & trunc(time(Pernoctaciones)) == 2006)
-d0513 <- 1*(cycle(Pernoctaciones) == 5 & trunc(time(Pernoctaciones)) == 2013)
+d0305 <- 1*(cycle(Pernoctacionesb) == 3 & trunc(time(Pernoctacionesb)) == 2005)
+d0406 <- 1*(cycle(Pernoctacionesb) == 4 & trunc(time(Pernoctacionesb)) == 2006)
+d0513 <- 1*(cycle(Pernoctacionesb) == 5 & trunc(time(Pernoctacionesb)) == 2013)
 
 #Ajuste
-Arima2 <- Arima(Pernoctaciones, 
+Arima2 <- Arima(Pernoctacionesb, 
                 order = c(0, 1, 1),  
                 seasonal = c(0, 1, 1),
                 lambda = 0,
@@ -159,13 +161,7 @@ autoplot(error, series="Error",
 # Validacion
 #----------------------------------------------------------
 # Coeficientes significativos
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 1)
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 2)
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 3)
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 4)
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 5)
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 6)
-wald.test(b = coef(Arima2), Sigma = vcov(Arima2), Terms = 7)
+coeftest(Arima2)
 
 # Error de ajuste
 accuracy(Arima2)
@@ -188,7 +184,10 @@ autoplot(pArima2,
          xlab = "",
          ylab = "Pernoctaciones",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2022, 4)) 
+  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
+
+
+aggregate(Pernoctaciones - pArima2$mean, FUN = sum) / 1000000
 #----------------------------------------------------------
 #
 #
@@ -197,11 +196,11 @@ autoplot(pArima2,
 # Comparacion entre modelos
 #----------------------------------------------------------
 # Error de ajuste
-modelSen <- snaive(Pernoctaciones)
-modelSenL <- snaive(Pernoctaciones, lambda = 0)
-modelAli <- ets(Pernoctaciones, model = "MNM")
-modelAliL <- ets(Pernoctaciones, model = "ANA", lambda = 0)
-Arima22 <- Arima(Pernoctaciones, 
+modelSen <- snaive(Pernoctacionesb)
+modelSenL <- snaive(Pernoctacionesb, lambda = 0)
+modelAli <- ets(Pernoctacionesb, model = "MNM")
+modelAliL <- ets(Pernoctacionesb, model = "ANA", lambda = 0)
+Arima22 <- Arima(Pernoctacionesb, 
                  order = c(0, 1, 1),  
                  seasonal = c(0, 1, 1),
                  xreg = cbind(DiasMes, SemanaSanta, d0305, d0406, d0513))
@@ -215,7 +214,7 @@ accuracy(Arima2)
 # Errores con origen de predicción movil
 k <- 120                   
 h <- 12                    
-T <- length(Pernoctaciones)     
+T <- length(Pernoctacionesb)     
 s <- T - k - h               
 
 mapeIngenuo <- matrix(NA, s + 1, h)
@@ -228,8 +227,8 @@ mapeArimaLog <- matrix(NA, s + 1, h)
 X <- data.frame(cbind(DiasMes, SemanaSanta, d0305, d0406, d0513))
 
 for (i in 0:s) {
-  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
-  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h) 
+  train.set <- subset(Pernoctacionesb, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctacionesb, start = i + k + 1, end = i + k + h) 
   
   X.train <- data.frame(X[(i + 1):(i + k),])
   hay <- colSums(X.train)

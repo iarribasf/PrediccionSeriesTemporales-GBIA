@@ -26,7 +26,7 @@ autoplot(Pernoctaciones/1000000,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+  scale_x_continuous(breaks= seq(2000, 2022, 2))  
 #----------------------------------------------------------
 #
 #
@@ -34,8 +34,8 @@ autoplot(Pernoctaciones/1000000,
 #----------------------------------------------------------
 # Esquema
 #----------------------------------------------------------
-CasosAnual <- aggregate(Pernoctaciones, FUN = sum)
-DesviacionAnual <- aggregate(Pernoctaciones, FUN = sd)
+CasosAnual <- aggregate(window(Pernoctaciones, end = c(2019, 12)), FUN = sum)
+DesviacionAnual <- aggregate(window(Pernoctaciones, end = c(2019, 12)), FUN = sd)
 
 ggplot() +
   geom_point(aes(x = CasosAnual, y = DesviacionAnual), size = 2) +
@@ -50,11 +50,11 @@ ggplot() +
 # Componentes
 #----------------------------------------------------------
 # Tendencia
-autoplot(CasosAnual/1000000,
+autoplot(aggregate(Pernoctaciones, FUN = sum)/1000000,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2)) 
+  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
 
 # Estacionalidad
 ggmonthplot(Pernoctaciones, 
@@ -70,7 +70,7 @@ ggmonthplot(Pernoctaciones,
 #----------------------------------------------------------
 # Descomposicion
 #----------------------------------------------------------
-PernoctacionesDesMul <- decompose(Pernoctaciones, 
+PernoctacionesDesMul <- decompose(window(Pernoctaciones, end = c(2019, 12)),
                                   type = "mult")
 
 autoplot(PernoctacionesDesMul,
@@ -79,7 +79,7 @@ autoplot(PernoctacionesDesMul,
 
 PernoctacionesDesMul$figure
 
-PernoctacionesDiaDesMul <- decompose(Pernoctaciones/monthdays(Pernoctaciones), 
+PernoctacionesDiaDesMul <- decompose(window(Pernoctaciones/monthdays(Pernoctaciones), end = c(2019, 12)), 
                                      type = "mult")
 
 ggplot() +
@@ -102,7 +102,7 @@ ggplot() +
 #----------------------------------------------------------
 # Analisis del error
 #----------------------------------------------------------
-error <- Pernoctaciones - trendcycle(PernoctacionesDesMul) * seasonal(PernoctacionesDesMul)
+error <- log(remainder(PernoctacionesDesMul))
 
 sderror <- sd(error, na.rm = TRUE)
 

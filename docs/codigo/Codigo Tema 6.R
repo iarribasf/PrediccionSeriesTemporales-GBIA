@@ -8,7 +8,7 @@
 # Librerias
 library(forecast)
 library(ggplot2); theme_set(theme_bw())
-library(aod)
+library(lmtest)
 #----------------------------------------------------------
 #
 #
@@ -42,12 +42,12 @@ autoplot(aforo,
          ylab = "Vehículos (000)",
          main = "")
 
-# Consumo de alimnetos per capita
+# Consumo de alimentos per capita
 alimentospc <- read.csv2("./series/alimentacionpc.csv", 
                          header = TRUE)
 
 alimentospc <- ts(alimentospc, 
-                  start = 1987, 
+                  start = 1990, 
                   freq = 1)
 
 autoplot(alimentospc, 
@@ -194,11 +194,11 @@ ndiffs(aforo)
 auto.arima(aforo,
            d = 1)
 
-arima212 <- Arima(aforo, 
-                  order = c(2, 1, 2),
+arima010 <- Arima(aforo, 
+                  order = c(0, 1, 0),
                   include.constant = FALSE)
 
-error <- residuals(arima212)
+error <- residuals(arima010)
 sderror <- sd(error)
 
 autoplot(error, series="Error",
@@ -216,15 +216,16 @@ time(error)[abs(error) > 2.5*sderror]
 
 d1979 <- 1*(time(error) == 1979)
 d2011 <- 1*(time(error) == 2011)
+d2020 <- 1*(time(error) == 2020)
 
 auto.arima(aforo,
            d = 1,
-           xreg = cbind(d1979,  d2011))
+           xreg = cbind(d1979,  d2011, d2020))
 
 arima210 <- Arima(aforo, 
                   order = c(2, 1, 0),
                   include.constant = FALSE,
-                  xreg = cbind(d1979, d2011))
+                  xreg = cbind(d1979, d2011, d2020))
 arima210
 
 error <- residuals(arima210)
@@ -242,21 +243,7 @@ autoplot(error, series="Error",
   scale_x_continuous(breaks= seq(1960, 2020, 4)) 
 
 # Validacion: Coeficientes significativos
-wald.test(b = coef(arima210), 
-          Sigma = vcov(arima210), 
-          Terms = 1)
-
-wald.test(b = coef(arima210), 
-          Sigma = vcov(arima210), 
-          Terms = 2)
-
-wald.test(b = coef(arima210), 
-          Sigma = vcov(arima210), 
-          Terms = 3)
-
-wald.test(b = coef(arima210), 
-          Sigma = vcov(arima210), 
-          Terms = 4)
+coeftest(arima210)
 
 # Error de ajuste
 accuracy(arima210)
@@ -265,14 +252,14 @@ accuracy(arima210)
 parima210 <- forecast(arima210, 
                       h = 5, 
                       level = 95,
-                      xreg = cbind(d1979=rep(0, 5), d2011=rep(0, 5)))
+                      xreg = cbind(d1979=rep(0, 5), d2011=rep(0, 5), d2020=rep(0, 5)))
 parima210
 
 autoplot(parima210, 
          xlab = "",
          ylab = "Vehículos (000)",
          main = "") +
-  scale_x_continuous(breaks= seq(1960, 2024, 4))  
+  scale_x_continuous(breaks= seq(1960, 2026, 4))  
 
 # Validación con origen de predicción movil
 k <- 30                  
@@ -282,7 +269,7 @@ s <- T - k - h
 
 mapeArima <- matrix(NA, s + 1, h)
 
-X <- data.frame(cbind(d1979, d2011))
+X <- data.frame(cbind(d1979, d2011, d2020))
 
 for (i in 0:s) {
   train.set <- subset(aforo, start = i + 1, end = i + k)
@@ -333,11 +320,11 @@ ggAcf(diff(alimentospc), xlab = "", ylab = "", main = "")
 ndiffs(alimentospc)
 
 # Identificacion, Intervencion y Estimacion
-arima100 <- Arima(alimentospc, 
+arima001 <- Arima(alimentospc, 
                   include.constant = TRUE,
-                  order = c(1, 0, 0))
+                  order = c(0, 0, 1))
 
-error <- residuals(arima100)
+error <- residuals(arima001)
 sderror <- sd(error)
 
 autoplot(error, series="Error",
@@ -349,28 +336,26 @@ autoplot(error, series="Error",
              colour = c("red", "green", "green", "red"), 
              lty = 2) + 
   geom_point() +
-  scale_x_continuous(breaks= seq(1987, 2021, 3)) 
+  scale_x_continuous(breaks= seq(1990, 2022, 3)) 
 
 time(alimentospc)[abs(error) > 2.5 * sderror]
 
+d2020 <- 1* (time(alimentospc) == 2020)
+auto.arima(alimentospc, d = 0, xreg = d2020)
+
 d1993 <- 1* (time(alimentospc) == 1993)
 d1995 <- 1* (time(alimentospc) == 1995)
-d2009 <- 1* (time(alimentospc) == 2009)
-d2020 <- 1* (time(alimentospc) == 2020)
+d1999 <- 1* (time(alimentospc) == 1999)
+d2022 <- 1* (time(alimentospc) == 2022)
 
 arima100 <- Arima(alimentospc, 
-                  include.constant = TRUE,
                   order = c(1, 0, 0),
-                  xreg = cbind(d1993, d1995, d2009, d2020))
+                  include.constant = TRUE,
+                  xreg = cbind(d1993, d1995, d1999, d2020, d2022))
 arima100
 
 # Significatividad
-wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 1)
-wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 2)
-wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 3)
-wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 4)
-wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 5)
-wald.test(b = coef(arima100), Sigma = vcov(arima100), Terms = 6)
+coeftest(arima100)
 
 # Error de ajuste
 accuracy(arima100)
@@ -379,11 +364,11 @@ accuracy(arima100)
 parima100 <- forecast(arima100, 
                       h = 5, 
                       level = 95,
-                      xreg = cbind(rep(0, 5), rep(0, 5), rep(0, 5), rep(0, 5)))
+                      xreg = cbind(rep(0, 5), rep(0, 5), rep(0, 5), rep(0, 5), rep(0, 5)))
 parima100
 
 autoplot(parima100, 
          ylab = "Kilos per cápita",
          main = "") +
-  scale_x_continuous(breaks= seq(1986, 2026, 4)) 
+  scale_x_continuous(breaks= seq(1990, 2026, 4)) 
 

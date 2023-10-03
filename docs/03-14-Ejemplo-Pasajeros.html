@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -18,9 +18,10 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,43 +48,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -113,6 +84,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   }
 }</script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -135,163 +107,177 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Inicio</a>
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./01-Guia-curso.html">Guía del curso</a>
+    <a class="nav-link" href="./01-Guia-curso.html" rel="" target="">
+ <span class="menu-text">Guía del curso</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./02-Logistica.html">Logística</a>
+    <a class="nav-link" href="./02-Logistica.html" rel="" target="">
+ <span class="menu-text">Logística</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">Diapos</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Diapos</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
         <li class="dropdown-header">Teoría</li>
         <li>
-    <a class="dropdown-item" href="./03-01-Tema1.html">
+    <a class="dropdown-item" href="./03-01-Tema1.html" rel="" target="">
  <span class="dropdown-text">Tema 1: Introducción</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-02-Tema2.html">
+    <a class="dropdown-item" href="./03-02-Tema2.html" rel="" target="">
  <span class="dropdown-text">Tema 2: Definición</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-03-Tema3.html">
+    <a class="dropdown-item" href="./03-03-Tema3.html" rel="" target="">
  <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-04-Tema4.html">
+    <a class="dropdown-item" href="./03-04-Tema4.html" rel="" target="">
  <span class="dropdown-text">Tema 4: Media móvil</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-05-Tema5.html">
+    <a class="dropdown-item" href="./03-05-Tema5.html" rel="" target="">
  <span class="dropdown-text">Tema 5: Alisado</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-06-Tema6.html">
+    <a class="dropdown-item" href="./03-06-Tema6.html" rel="" target="">
  <span class="dropdown-text">Tema 6: ARIMA</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-07-Tema7.html">
+    <a class="dropdown-item" href="./03-07-Tema7.html" rel="" target="">
  <span class="dropdown-text">Tema 7: SARIMA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Ejemplo de aplicación</li>
         <li>
-    <a class="dropdown-item" href="./03-08-Ejemplo2.html">
+    <a class="dropdown-item" href="./03-08-Ejemplo2.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 2</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-09-Ejemplo3.html">
+    <a class="dropdown-item" href="./03-09-Ejemplo3.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 3</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-10-Ejemplo4.html">
+    <a class="dropdown-item" href="./03-10-Ejemplo4.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 4</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-11-Ejemplo5.html">
+    <a class="dropdown-item" href="./03-11-Ejemplo5.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 5</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-12-Ejemplo6.html">
+    <a class="dropdown-item" href="./03-12-Ejemplo6.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 6</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-13-Ejemplo7.html">
+    <a class="dropdown-item" href="./03-13-Ejemplo7.html" rel="" target="">
  <span class="dropdown-text">Ejemplo Tema 7</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otro ejemplo</li>
         <li>
-    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html">
+    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html" rel="" target="">
  <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">Píldoras</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Píldoras</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
         <li>
-    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html" rel="" target="">
  <span class="dropdown-text">Bootstrapping para IC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html" rel="" target="">
  <span class="dropdown-text">Múltiples componentes estacionales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html" rel="" target="">
  <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html" rel="" target="">
  <span class="dropdown-text">Series acotadas</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html" rel="" target="">
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html" rel="" target="">
  <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./05-Recursos-R.html">Recursos de la asignatura</a>
+    <a class="nav-link" href="./05-Recursos-R.html" rel="" target="">
+ <span class="menu-text">Recursos de la asignatura</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./06-Evaluacion_Continua.html">Evaluacion Continua</a>
+    <a class="nav-link" href="./06-Evaluacion_Continua.html" rel="" target="">
+ <span class="menu-text">Evaluacion Continua</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">Más</span>
+    </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
         <li class="dropdown-header">R</li>
         <li>
-    <a class="dropdown-item" href="https://cran.r-project.org">
+    <a class="dropdown-item" href="https://cran.r-project.org" rel="" target="">
  <span class="dropdown-text">Dónde está R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rstudio.com">
+    <a class="dropdown-item" href="https://rstudio.com" rel="" target="">
  <span class="dropdown-text">Donde está RStudio</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Markdown</li>
         <li>
-    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/" rel="" target="">
  <span class="dropdown-text">Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html" rel="" target="">
  <span class="dropdown-text">R Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf" rel="" target="">
  <span class="dropdown-text">R Markdown (pdf)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html" rel="" target="">
  <span class="dropdown-text">Quatro</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otros</li>
         <li>
-    <a class="dropdown-item" href="https://www.r-bloggers.com">
+    <a class="dropdown-item" href="https://www.r-bloggers.com" rel="" target="">
  <span class="dropdown-text">Blog sobre R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://bookdown.org">
+    <a class="dropdown-item" href="https://bookdown.org" rel="" target="">
  <span class="dropdown-text">Libros online que debes conocer</span></a>
   </li>  
     </ul>
   </li>
 </ul>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -306,50 +292,50 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul>
   <li><a href="#antecedentes" id="toc-antecedentes" class="nav-link active" data-scroll-target="#antecedentes">Antecedentes</a></li>
-  <li><a href="#pasajeros-en-transporte-urbano" id="toc-pasajeros-en-transporte-urbano" class="nav-link" data-scroll-target="#pasajeros-en-transporte-urbano"><span class="toc-section-number">1</span>  Pasajeros en transporte urbano</a></li>
-  <li><a href="#descriptiva" id="toc-descriptiva" class="nav-link" data-scroll-target="#descriptiva"><span class="toc-section-number">2</span>  Descriptiva</a>
+  <li><a href="#pasajeros-en-transporte-urbano" id="toc-pasajeros-en-transporte-urbano" class="nav-link" data-scroll-target="#pasajeros-en-transporte-urbano"><span class="header-section-number">1</span> Pasajeros en transporte urbano</a></li>
+  <li><a href="#descriptiva" id="toc-descriptiva" class="nav-link" data-scroll-target="#descriptiva"><span class="header-section-number">2</span> Descriptiva</a>
   <ul class="collapse">
-  <li><a href="#análisis-de-la-tendencia" id="toc-análisis-de-la-tendencia" class="nav-link" data-scroll-target="#análisis-de-la-tendencia"><span class="toc-section-number">2.1</span>  Análisis de la tendencia</a></li>
-  <li><a href="#análisis-de-la-estacionalidad" id="toc-análisis-de-la-estacionalidad" class="nav-link" data-scroll-target="#análisis-de-la-estacionalidad"><span class="toc-section-number">2.2</span>  Análisis de la estacionalidad</a>
+  <li><a href="#análisis-de-la-tendencia" id="toc-análisis-de-la-tendencia" class="nav-link" data-scroll-target="#análisis-de-la-tendencia"><span class="header-section-number">2.1</span> Análisis de la tendencia</a></li>
+  <li><a href="#análisis-de-la-estacionalidad" id="toc-análisis-de-la-estacionalidad" class="nav-link" data-scroll-target="#análisis-de-la-estacionalidad"><span class="header-section-number">2.2</span> Análisis de la estacionalidad</a>
   <ul class="collapse">
   <li><a href="#días-laborables-de-cada-mes" id="toc-días-laborables-de-cada-mes" class="nav-link" data-scroll-target="#días-laborables-de-cada-mes">Días laborables de cada mes</a></li>
   <li><a href="#análisis-gráfico-de-la-estacionalidad" id="toc-análisis-gráfico-de-la-estacionalidad" class="nav-link" data-scroll-target="#análisis-gráfico-de-la-estacionalidad">Análisis gráfico de la estacionalidad</a></li>
   <li><a href="#análisis-numérico-de-la-estacionalidad" id="toc-análisis-numérico-de-la-estacionalidad" class="nav-link" data-scroll-target="#análisis-numérico-de-la-estacionalidad">Análisis numérico de la estacionalidad</a></li>
   </ul></li>
-  <li><a href="#descomposición-de-la-serie" id="toc-descomposición-de-la-serie" class="nav-link" data-scroll-target="#descomposición-de-la-serie"><span class="toc-section-number">2.3</span>  Descomposición de la serie</a></li>
-  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión"><span class="toc-section-number">2.4</span>  Conclusión</a></li>
+  <li><a href="#descomposición-de-la-serie" id="toc-descomposición-de-la-serie" class="nav-link" data-scroll-target="#descomposición-de-la-serie"><span class="header-section-number">2.3</span> Descomposición de la serie</a></li>
+  <li><a href="#conclusión" id="toc-conclusión" class="nav-link" data-scroll-target="#conclusión"><span class="header-section-number">2.4</span> Conclusión</a></li>
   </ul></li>
-  <li><a href="#un-predicción-rápida-y-sencilla" id="toc-un-predicción-rápida-y-sencilla" class="nav-link" data-scroll-target="#un-predicción-rápida-y-sencilla"><span class="toc-section-number">3</span>  Un predicción rápida y sencilla</a></li>
-  <li><a href="#alisado-exponencial" id="toc-alisado-exponencial" class="nav-link" data-scroll-target="#alisado-exponencial"><span class="toc-section-number">4</span>  Alisado Exponencial</a>
+  <li><a href="#un-predicción-rápida-y-sencilla" id="toc-un-predicción-rápida-y-sencilla" class="nav-link" data-scroll-target="#un-predicción-rápida-y-sencilla"><span class="header-section-number">3</span> Un predicción rápida y sencilla</a></li>
+  <li><a href="#alisado-exponencial" id="toc-alisado-exponencial" class="nav-link" data-scroll-target="#alisado-exponencial"><span class="header-section-number">4</span> Alisado Exponencial</a>
   <ul class="collapse">
-  <li><a href="#análisis-de-la-serie-pasajeros" id="toc-análisis-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#análisis-de-la-serie-pasajeros"><span class="toc-section-number">4.1</span>  Análisis de la serie Pasajeros</a>
+  <li><a href="#análisis-de-la-serie-pasajeros" id="toc-análisis-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#análisis-de-la-serie-pasajeros"><span class="header-section-number">4.1</span> Análisis de la serie Pasajeros</a>
   <ul class="collapse">
   <li><a href="#estimación-e-interpretación" id="toc-estimación-e-interpretación" class="nav-link" data-scroll-target="#estimación-e-interpretación">Estimación e interpretación</a></li>
   <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción">Predicción</a></li>
   <li><a href="#análisis-del-error" id="toc-análisis-del-error" class="nav-link" data-scroll-target="#análisis-del-error">Análisis del error</a></li>
   </ul></li>
-  <li><a href="#otras-alternativas-de-análisis" id="toc-otras-alternativas-de-análisis" class="nav-link" data-scroll-target="#otras-alternativas-de-análisis"><span class="toc-section-number">4.2</span>  Otras alternativas de análisis</a></li>
-  <li><a href="#conclusión-1" id="toc-conclusión-1" class="nav-link" data-scroll-target="#conclusión-1"><span class="toc-section-number">4.3</span>  Conclusión</a></li>
+  <li><a href="#otras-alternativas-de-análisis" id="toc-otras-alternativas-de-análisis" class="nav-link" data-scroll-target="#otras-alternativas-de-análisis"><span class="header-section-number">4.2</span> Otras alternativas de análisis</a></li>
+  <li><a href="#conclusión-1" id="toc-conclusión-1" class="nav-link" data-scroll-target="#conclusión-1"><span class="header-section-number">4.3</span> Conclusión</a></li>
   </ul></li>
-  <li><a href="#modelos-arima" id="toc-modelos-arima" class="nav-link" data-scroll-target="#modelos-arima"><span class="toc-section-number">5</span>  Modelos Arima</a>
+  <li><a href="#modelos-arima" id="toc-modelos-arima" class="nav-link" data-scroll-target="#modelos-arima"><span class="header-section-number">5</span> Modelos Arima</a>
   <ul class="collapse">
-  <li><a href="#transformación-de-la-serie-pasajeros" id="toc-transformación-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#transformación-de-la-serie-pasajeros"><span class="toc-section-number">5.1</span>  Transformación de la serie Pasajeros</a></li>
-  <li><a href="#identificación-de-la-serie-pasajeros" id="toc-identificación-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#identificación-de-la-serie-pasajeros"><span class="toc-section-number">5.2</span>  Identificación de la serie Pasajeros</a>
+  <li><a href="#transformación-de-la-serie-pasajeros" id="toc-transformación-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#transformación-de-la-serie-pasajeros"><span class="header-section-number">5.1</span> Transformación de la serie Pasajeros</a></li>
+  <li><a href="#identificación-de-la-serie-pasajeros" id="toc-identificación-de-la-serie-pasajeros" class="nav-link" data-scroll-target="#identificación-de-la-serie-pasajeros"><span class="header-section-number">5.2</span> Identificación de la serie Pasajeros</a>
   <ul class="collapse">
   <li><a href="#identificación-automática-con-auto.arima" id="toc-identificación-automática-con-auto.arima" class="nav-link" data-scroll-target="#identificación-automática-con-auto.arima">Identificación automática con <code>auto.arima</code></a></li>
   <li><a href="#identificación-automática-con-seas" id="toc-identificación-automática-con-seas" class="nav-link" data-scroll-target="#identificación-automática-con-seas">Identificación automática con <code>seas</code></a></li>
   </ul></li>
-  <li><a href="#estimación-del-modelo-e-identificación-de-otras-componentes-de-intervención" id="toc-estimación-del-modelo-e-identificación-de-otras-componentes-de-intervención" class="nav-link" data-scroll-target="#estimación-del-modelo-e-identificación-de-otras-componentes-de-intervención"><span class="toc-section-number">5.3</span>  Estimación del modelo e identificación de otras componentes de intervención</a></li>
-  <li><a href="#validación-del-modelo" id="toc-validación-del-modelo" class="nav-link" data-scroll-target="#validación-del-modelo"><span class="toc-section-number">5.4</span>  Validación del modelo</a>
+  <li><a href="#estimación-del-modelo-e-identificación-de-otras-componentes-de-intervención" id="toc-estimación-del-modelo-e-identificación-de-otras-componentes-de-intervención" class="nav-link" data-scroll-target="#estimación-del-modelo-e-identificación-de-otras-componentes-de-intervención"><span class="header-section-number">5.3</span> Estimación del modelo e identificación de otras componentes de intervención</a></li>
+  <li><a href="#validación-del-modelo" id="toc-validación-del-modelo" class="nav-link" data-scroll-target="#validación-del-modelo"><span class="header-section-number">5.4</span> Validación del modelo</a>
   <ul class="collapse">
   <li><a href="#calidad-del-ajuste" id="toc-calidad-del-ajuste" class="nav-link" data-scroll-target="#calidad-del-ajuste">Calidad del ajuste</a></li>
   <li><a href="#calidad-de-las-predicciones" id="toc-calidad-de-las-predicciones" class="nav-link" data-scroll-target="#calidad-de-las-predicciones">Calidad de las predicciones</a></li>
   </ul></li>
-  <li><a href="#interpretación-del-modelo-estimado" id="toc-interpretación-del-modelo-estimado" class="nav-link" data-scroll-target="#interpretación-del-modelo-estimado"><span class="toc-section-number">5.5</span>  Interpretación del modelo estimado</a></li>
-  <li><a href="#predicción-del-número-de-pasajeros-en-transporte-urbano" id="toc-predicción-del-número-de-pasajeros-en-transporte-urbano" class="nav-link" data-scroll-target="#predicción-del-número-de-pasajeros-en-transporte-urbano"><span class="toc-section-number">5.6</span>  Predicción del número de pasajeros en transporte urbano</a></li>
+  <li><a href="#interpretación-del-modelo-estimado" id="toc-interpretación-del-modelo-estimado" class="nav-link" data-scroll-target="#interpretación-del-modelo-estimado"><span class="header-section-number">5.5</span> Interpretación del modelo estimado</a></li>
+  <li><a href="#predicción-del-número-de-pasajeros-en-transporte-urbano" id="toc-predicción-del-número-de-pasajeros-en-transporte-urbano" class="nav-link" data-scroll-target="#predicción-del-número-de-pasajeros-en-transporte-urbano"><span class="header-section-number">5.6</span> Predicción del número de pasajeros en transporte urbano</a></li>
   </ul></li>
-  <li><a href="#comparación-entre-modelos" id="toc-comparación-entre-modelos" class="nav-link" data-scroll-target="#comparación-entre-modelos"><span class="toc-section-number">6</span>  Comparación entre modelos</a></li>
-  <li><a href="#lista-de-funciones-utilizadas" id="toc-lista-de-funciones-utilizadas" class="nav-link" data-scroll-target="#lista-de-funciones-utilizadas"><span class="toc-section-number">7</span>  Lista de funciones utilizadas</a></li>
+  <li><a href="#comparación-entre-modelos" id="toc-comparación-entre-modelos" class="nav-link" data-scroll-target="#comparación-entre-modelos"><span class="header-section-number">6</span> Comparación entre modelos</a></li>
+  <li><a href="#lista-de-funciones-utilizadas" id="toc-lista-de-funciones-utilizadas" class="nav-link" data-scroll-target="#lista-de-funciones-utilizadas"><span class="header-section-number">7</span> Lista de funciones utilizadas</a></li>
   </ul>
 </nav>
     </div>
@@ -373,15 +359,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
   </div>
     
+  
     
   </div>
   
 
 </header>
 
-<div class="cell">
-
-</div>
 <section id="antecedentes" class="level1 unnumbered">
 <h1 class="unnumbered">Antecedentes</h1>
 <p>En este curso hemos aprendido a describir una serie temporal, estimar su proceso generador de datos y realizar predicciones, tanto puntuales como por intervalo. Para ello, hemos estudiado los principales aspectos teóricos relacionados con las series temporales, sus componentes, modelos de ajuste, predicción, criterios de calidad, etc. También hemos practicado la aplicación de estos conceptos a través de diferentes series temporales: Títulos publicados, Nacimientos, Aforo de vehículos, Consumo de alimentos per cápita, Exportaciones, Producción de chocolate y Pernoctaciones de turistas extranjeros, entre otras.</p>
@@ -400,7 +384,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="pasajeros-en-transporte-urbano" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Pasajeros en transporte urbano</h1>
-<p>La serie que se va a analizar corresponde al número de pasajeros en transporte urbano en España. Es una serie mensual que puede ser consultada en el <a href="\http://www.ine.es">Instituto Nacional de Estadística</a> y para la que se dispone de datos desde enero de 1996 hasta diciembre de 2021.</p>
+<p>La serie que se va a analizar corresponde al número de pasajeros en transporte urbano en España. Es una serie mensual que puede ser consultada en el <a href="\http://www.ine.es">Instituto Nacional de Estadística</a> y para la que se dispone de datos desde enero de 1996 hasta diciembre de 2022.</p>
 <p>Por transporte urbano de pasajeros se hace referencia a los servicios de transporte terrestre de pasajeros, urbano y suburbano, por itinerarios regulares, con horario establecido y con paradas fijas, realizados por autobuses, tranvías, trolebuses, metros y metros ligeros. También se incluyen las líneas de servicio al aeropuerto y a las estaciones y la explotación de funiculares y teleféricos si forman parte de los sistemas de tránsito urbanos e interurbanos.</p>
 <p>Los datos de la serie, que denominaremos de forma abreviada Pasajeros, han sido descargados en el fichero <em>Pasajeros.csv</em> y aunque en origen la unidad es miles de pasajeros, la cambiaremos a millones de pasajeros.</p>
 <div class="cell" data-layout-align="center">
@@ -417,7 +401,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </section>
 <section id="descriptiva" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Descriptiva</h1>
-<p>La <a href="#fig-Pasajeros">Figura&nbsp;1</a> muestra la evolución de la serie Pasajeros en transporte urbano desde 1996 hasta 2021 Destaca que la tendencia de la serie ha seguido el ciclo económico. Durante el periodo de crecimiento de finales del siglo pasado y principios de este, el número de pasajeros en transporte urbano creció de forma sostenida. Con la Gran Recesión (2008 - 2014) se observa un cambio en la tendencia y el número de pasajeros se reduce. No es hasta el final la crisis, en 2014, que la tendencia vuelve a cambiar y pasar a ser creciente de nuevo. Al final del periodo se observa el tremendo efecto que tuvo sobre la serie el confinamiento por la Covid-19 (marzo a junio de 2020) y el incremento del trabajo en casa, con una brusca caída y lenta recuperación.</p>
+<p>La <a href="#fig-Pasajeros">Figura&nbsp;1</a> muestra la evolución de la serie Pasajeros en transporte urbano desde 1996 hasta 2021 Destaca que la tendencia de la serie ha seguido el ciclo económico. Durante el periodo de crecimiento de finales del siglo pasado y principios de este, el número de pasajeros en transporte urbano creció de forma sostenida. Con la Gran Recesión (2008 - 2014) se observa un cambio en la tendencia y el número de pasajeros se reduce. No es hasta el final la crisis, en 2014, que la tendencia vuelve a cambiar y pasar a ser creciente de nuevo. Al final del periodo se observa el tremendo efecto que tuvo sobre la serie el confinamiento por la Covid-19 (marzo a junio de 2020) y el incremento del trabajo en casa, con una brusca caída y lenta recuperación. No parece que en 2022 se haya recuperado el volumen de pasajeros prepandemia.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(Pasajeros, <span class="at">colour =</span> <span class="st">"darkblue"</span>,</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -428,7 +412,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="fig-Pasajeros" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-Pasajeros-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;1: Pasajeros en transporte urbano (datos mensuales)</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;1: Pasajeros en transporte urbano (datos mensuales)</figcaption>
 </figure>
 </div>
 </div>
@@ -436,12 +420,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>La serie presenta una acusada estacionalidad, causada principalmente por la distribución de las vacaciones a lo largo de un año y el número de días laborables de cada mes. Pensemos que el principal uso del transporte urbano es el traslado hasta y desde el lugar de trabajo o estudio, seguido del ocio (ir de compras, al cine, a restaurantes, etc.). Así, cada año el mes con menor número de pasajeros es agosto (los valles en la <a href="#fig-Pasajeros">Figura&nbsp;1</a>) por estar la mayoría de la gente de vacaciones, fuera de sus ciudades de residencia habituales, y no usar tan intensamente el transporte urbano.</p>
 <p>El esquema parece ser aditivo porque no se aprecia que la amplitud estacional se amplíe conforme el número de pasajeros aumenta.</p>
 <p>En los siguientes epígrafes se hará una descriptiva de la tendencia y la estacionalidad más detallada.</p>
-<div class="callout-important callout callout-style-default callout-captioned">
+<div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-caption-container flex-fill">
+<div class="callout-title-container flex-fill">
 Serie recortada
 </div>
 </div>
@@ -469,7 +453,7 @@ Serie recortada
 <div id="fig-PasajerosTendencia" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosTendencia-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;2: Pasajeros en transporte urbano (datos anuales)</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;2: Pasajeros en transporte urbano (datos anuales)</figcaption>
 </figure>
 </div>
 </div>
@@ -565,7 +549,7 @@ Serie recortada
 <div id="fig-PasajerosEstacionalidad-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosEstacionalidad-1.png" class="img-fluid figure-img" data-ref-parent="fig-PasajerosEstacionalidad"></p>
-<p></p><figcaption class="figure-caption">(a) Pasajeros</figcaption><p></p>
+<figcaption class="figure-caption">(a) Pasajeros</figcaption>
 </figure>
 </div>
 </div>
@@ -575,7 +559,7 @@ Serie recortada
 <div id="fig-PasajerosEstacionalidad-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosEstacionalidad-2.png" class="img-fluid figure-img" data-ref-parent="fig-PasajerosEstacionalidad"></p>
-<p></p><figcaption class="figure-caption">(b) Pasajeros por día laborable</figcaption><p></p>
+<figcaption class="figure-caption">(b) Pasajeros por día laborable</figcaption>
 </figure>
 </div>
 </div>
@@ -608,7 +592,7 @@ Serie recortada
 <div id="fig-Esquema" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-Esquema-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;4: Identificación del tipo de esquema</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;4: Identificación del tipo de esquema</figcaption>
 </figure>
 </div>
 </div>
@@ -630,7 +614,7 @@ Serie recortada
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="tbl-EfectoEstacional" class="anchored">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <caption>Tabla&nbsp;1: Efecto estacional</caption>
 <thead>
 <tr class="header">
@@ -736,7 +720,7 @@ Serie recortada
 <div id="fig-ErrorDescomposicion1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-ErrorDescomposicion1-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;5: Error + Intervención. Descomposición de Pasajeros</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;5: Error + Intervención. Descomposición de Pasajeros</figcaption>
 </figure>
 </div>
 </div>
@@ -764,7 +748,7 @@ Serie recortada
 <div id="fig-ErrorDescomposicion2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-ErrorDescomposicion2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;6: Error + Intervención. Descomposición de Pasajeros por día laborable</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;6: Error + Intervención. Descomposición de Pasajeros por día laborable</figcaption>
 </figure>
 </div>
 </div>
@@ -786,9 +770,6 @@ Serie recortada
 <section id="un-predicción-rápida-y-sencilla" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Un predicción rápida y sencilla</h1>
 <p>En los siguientes epígrafes aplicaremos técnicas de predicción crecientes en complejidad conceptual y computacional, y que requerirán de más hipótesis para su correcta aplicación. Aunque actualmente más complejidad no siempre implica más recursos (temporales, humanos, informáticos), cabe preguntarse si vale la pena. Así, más por una cuestión teórica que práctica, veamos cual sería la calidad de las predicciones si aplicamos una metodología sencilla, en este caso el método ingenuo con estacionalidad.</p>
-<div class="cell" data-layout-align="center">
-
-</div>
 <p>Los indicadores de calidad de ajuste (predicción intramuestral a un periodo vista) indican que repetir la última observación del mismo mes puede ser suficiente para obtener una buena predicción a corto plazo. En media el error es de 11 millones de pasajeros (RMSE), o un 3.5%. A largo plazo, las predicciones pueden perder calidad rápidamente puesto que no capturan ningún tipo de tendencia. La <a href="#fig-Sencillo">Figura&nbsp;7</a> muestra como la predicción del número de pasajeros para los años 2020 a 2024 se mantiene estacionaria y no refleja la tendencia creciente observada desde 2014.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>PasajerosSnaive <span class="ot">&lt;-</span> <span class="fu">snaive</span>(Pasajeros, </span>
@@ -809,7 +790,7 @@ Training set 2.377978 10.96492 8.260812 0.9534372 3.509156    1 -0.01034773</cod
 <div id="fig-Sencillo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-Sencillo-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;7: Pasajeros (1996-2019) y predicción (2020-2024). Método ingenuo con estacionalidad</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;7: Pasajeros (1996-2019) y predicción (2020-2024). Método ingenuo con estacionalidad</figcaption>
 </figure>
 </div>
 </div>
@@ -891,7 +872,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-AlisadoComponente" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoComponente-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;8: Componente estacional estimada con Alisado exponencial</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;8: Componente estacional estimada con Alisado exponencial</figcaption>
 </figure>
 </div>
 </div>
@@ -909,13 +890,12 @@ Training set -0.1434247</code></pre>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(PasajerosEtsPre,</span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Millones de pasajeros"</span>,</span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">PI =</span> <span class="cn">FALSE</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-AlisadoPrediccion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoPrediccion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;9: Pasajeros (1996-2019) y predicción (2020-2024). Método de Alisado Exponencial</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;9: Pasajeros (1996-2019) y predicción (2020-2024). Método de Alisado Exponencial</figcaption>
 </figure>
 </div>
 </div>
@@ -943,7 +923,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-AlisadoError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoError-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;10: Error + Intervención. Método de Alisado Exponencial</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;10: Error + Intervención. Método de Alisado Exponencial</figcaption>
 </figure>
 </div>
 </div>
@@ -1041,7 +1021,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-AlisadoErrorOPM" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-AlisadoErrorOPM-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;11: Error de predicción (MAPE) según horizonte temporal y enfoque. Método de Alisado Exponencial</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;11: Error de predicción (MAPE) según horizonte temporal y enfoque. Método de Alisado Exponencial</figcaption>
 </figure>
 </div>
 </div>
@@ -1085,7 +1065,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-PasajerosFAC-1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosFAC-1.png" class="img-fluid figure-img" data-ref-parent="fig-PasajerosFAC"></p>
-<p></p><figcaption class="figure-caption">(a) Log serie</figcaption><p></p>
+<figcaption class="figure-caption">(a) Log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -1093,7 +1073,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-PasajerosFAC-2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosFAC-2.png" class="img-fluid figure-img" data-ref-parent="fig-PasajerosFAC"></p>
-<p></p><figcaption class="figure-caption">(b) Dif. regular log serie</figcaption><p></p>
+<figcaption class="figure-caption">(b) Dif. regular log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -1103,7 +1083,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-PasajerosFAC-3" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosFAC-3.png" class="img-fluid figure-img" data-ref-parent="fig-PasajerosFAC"></p>
-<p></p><figcaption class="figure-caption">(c) Dif. estacional log serie</figcaption><p></p>
+<figcaption class="figure-caption">(c) Dif. estacional log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -1111,7 +1091,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-PasajerosFAC-4" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosFAC-4.png" class="img-fluid figure-img" data-ref-parent="fig-PasajerosFAC"></p>
-<p></p><figcaption class="figure-caption">(d) Dif. regular y estacional log serie</figcaption><p></p>
+<figcaption class="figure-caption">(d) Dif. regular y estacional log serie</figcaption>
 </figure>
 </div>
 </div>
@@ -1143,7 +1123,7 @@ Training set -0.1434247</code></pre>
 <div id="fig-PasajerosyTransformacion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosyTransformacion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;13: Serie original de Pasajeros y su transformación</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;13: Serie original de Pasajeros y su transformación</figcaption>
 </figure>
 </div>
 </div>
@@ -1363,7 +1343,7 @@ AIC=-1420.51   AICc=-1419.97   BIC=-1391.58</code></pre>
 <div id="fig-PasajerosError1" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosError1-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;14: Error + Intervención. Modelo ARIMA</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;14: Error + Intervención. Modelo ARIMA</figcaption>
 </figure>
 </div>
 </div>
@@ -1418,7 +1398,7 @@ AIC=-1451.23   AICc=-1450.03   BIC=-1407.82</code></pre>
 <div id="fig-PasajerosError2" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosError2-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;15: Error + Intervención. Modelo ARIMA</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;15: Error + Intervención. Modelo ARIMA</figcaption>
 </figure>
 </div>
 </div>
@@ -1440,7 +1420,7 @@ AIC=-1451.23   AICc=-1450.03   BIC=-1407.82</code></pre>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(datos, <span class="at">digits =</span> <span class="dv">4</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="tbl-Significatividad" class="anchored">
-<table class="table table-sm table-striped">
+<table class="table table-sm table-striped small">
 <caption>Tabla&nbsp;2: Contrastes de significatividad</caption>
 <thead>
 <tr class="header">
@@ -1613,7 +1593,7 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 <div id="fig-PasajerosPrediccion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosPrediccion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;16: Pasajeros (1996-2019) y predicción (2020-2024). Modelo ARIMA</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;16: Pasajeros (1996-2019) y predicción (2020-2024). Modelo ARIMA</figcaption>
 </figure>
 </div>
 </div>
@@ -1652,7 +1632,7 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 <div id="fig-PasajerosComparacion" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="03-14-Ejemplo-Pasajeros_files/figure-html/fig-PasajerosComparacion-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<p></p><figcaption class="figure-caption">Figura&nbsp;17: Error de predicción (MAPE) según horizonte temporal y enfoque</figcaption><p></p>
+<figcaption class="figure-caption">Figura&nbsp;17: Error de predicción (MAPE) según horizonte temporal y enfoque</figcaption>
 </figure>
 </div>
 </div>
@@ -1676,260 +1656,260 @@ Training set -0.05 3.72 2.92 0.01 1.26 0.35 0.02</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">aod</td>
-<td style="text-align: left;">wald.test</td>
-<td style="text-align: left;">forecast</td>
-<td style="text-align: left;">ggsubseriesplot</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">base</td>
 <td style="text-align: left;">abs</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">monthdays</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">as.Date</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">ndiffs</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">as.numeric</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">nsdiffs</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">as.POSIXlt</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">remainder</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">c</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">snaive</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">cbind</td>
 <td style="text-align: left;">ggplot2</td>
 <td style="text-align: left;">aes</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">class</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">geom_hline</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">colMeans</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">geom_line</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">colnames</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">geom_point</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">colSums</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">ggplot</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">data.frame</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">ggtitle</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">diff</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">guide_legend</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">expression</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">guides</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">is.element</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">scale_colour_manual</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">length</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">scale_x_continuous</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">library</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">scale_y_continuous</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">list</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">theme</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">log</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">theme_bw</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">matrix</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">theme_set</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">mean</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">xlab</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">names</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">ylab</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">nrow</td>
 <td style="text-align: left;">knitr</td>
 <td style="text-align: left;">kable</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;"></td>
 <td style="text-align: left;">rbind</td>
+<td style="text-align: left;">lmtest</td>
+<td style="text-align: left;">coeftest.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"></td>
+<td style="text-align: left;">rep</td>
 <td style="text-align: left;">seasonal</td>
 <td style="text-align: left;">seas</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">rep</td>
+<td style="text-align: left;">round</td>
 <td style="text-align: left;">stats</td>
 <td style="text-align: left;">aggregate</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">round</td>
+<td style="text-align: left;">rownames</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">coef</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">rownames</td>
+<td style="text-align: left;">seq</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">cycle</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">seq</td>
+<td style="text-align: left;">subset</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">residuals</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">subset</td>
+<td style="text-align: left;">summary</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">sd</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">summary</td>
+<td style="text-align: left;">table</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">stl</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">table</td>
+<td style="text-align: left;">tapply</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">time</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">tapply</td>
+<td style="text-align: left;">trunc</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">ts</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">trunc</td>
+<td style="text-align: left;">try</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">vcov</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"></td>
-<td style="text-align: left;">try</td>
+<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">accuracy</td>
 <td style="text-align: left;">timeDate</td>
 <td style="text-align: left;">dayOfWeek</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">forecast</td>
-<td style="text-align: left;">accuracy</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Arima</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">Easter</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">Arima</td>
+<td style="text-align: left;">auto.arima</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">format</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">auto.arima</td>
+<td style="text-align: left;">autoplot</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">isBizday</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">autoplot</td>
+<td style="text-align: left;">autolayer</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">timeCalendar</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">autolayer</td>
+<td style="text-align: left;">easter</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;">timeSequence</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">easter</td>
+<td style="text-align: left;">ets</td>
 <td style="text-align: left;">utils</td>
 <td style="text-align: left;">read.csv2</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">ets</td>
+<td style="text-align: left;">forecast</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">forecast</td>
+<td style="text-align: left;">ggAcf</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"></td>
-<td style="text-align: left;">ggAcf</td>
+<td style="text-align: left;">ggsubseriesplot</td>
 <td style="text-align: left;"></td>
 <td style="text-align: left;"></td>
 </tr>
@@ -1979,9 +1959,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -1993,7 +1987,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -2029,31 +2040,138 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2022, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-left">© Copyright 2023, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
     <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
   </div>
 </footer>
