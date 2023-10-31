@@ -413,7 +413,7 @@ Training set error measures:
 Training set 3.260448 11.79475 8.892639 1.105104 3.695004 0.9500814 0.2705811</code></pre>
 </div>
 </div>
-<p>Si se estima el modelo sin imponer ninguna restricción, <code>ets</code> identifica como modelo óptimo ETS(M,N,N) donde el parámetro <span class="math inline">\(\alpha\)</span> es igual a 0.2. Es decir, el mejor modelo de alisado es: <span class="math inline">\(y_{t+1} = y_t \cdot (1+ \varepsilon_{t+1)\)</span>. El error porcentual cometido (3.7%) es similar al estimado para el método ingenuo I (3.9%). La diferencia se debe a que <span class="math inline">\(\alpha\)</span> no es exactamente 1.</p>
+<p>Si se estima el modelo sin imponer ninguna restricción, <code>ets</code> identifica como modelo óptimo ETS(M,N,N) donde el parámetro <span class="math inline">\(\alpha\)</span> es igual a 0.2. Es decir, el mejor modelo de alisado es: <span class="math inline">\(y_{t+1} = y_t \cdot (1+ \varepsilon_{t+1})\)</span>. El error porcentual cometido (3.7%) es similar al estimado para el método ingenuo I (3.9%). La diferencia se debe a que <span class="math inline">\(\alpha\)</span> no es exactamente 1.</p>
 <p>Las previsiones para los próximos cinco años serían</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(PernoctacionesAnualEts, </span>
