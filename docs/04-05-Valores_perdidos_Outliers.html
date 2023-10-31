@@ -408,14 +408,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 [1]  99 112 157
 
 $replacements
-[1] 1098.898 1124.781 1386.168</code></pre>
+[1] 1098.620 1124.171 1386.450</code></pre>
 </div>
 </div>
 <p>La función <code>tsoutliers</code> identifica tres valores atípicos en las posiciones 99, 112 y 157 de la serie. La observación 99 corresponde a marzo de 2007, muy visible en el gráfico, y las otras dos a febrero de 2008 y enero de 2012. Los valores originales para estas fechas eran</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>exportaciones[<span class="fu">c</span>(<span class="dv">99</span>, <span class="dv">112</span>, <span class="dv">157</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1893.880 1417.258 1773.067</code></pre>
+<pre><code>[1] 1894 1417 1773</code></pre>
 </div>
 </div>
 <p>Observa que esta función solo identifica los valores atípicos, pero no los sustituye por los valores potenciales de reemplazamiento.</p>

@@ -390,10 +390,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>                       ME     RMSE      MAE       MPE     MAPE     MASE
-Training set -0.006793351 16.94918 11.19464 -0.106394 1.727444 0.441757
+<pre><code>                      ME    RMSE     MAE        MPE     MAPE      MASE
+Training set -0.05328687 17.3906 11.5961 -0.1199307 1.788982 0.4575994
                   ACF1
-Training set 0.3063556</code></pre>
+Training set 0.3552239</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pfit <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> <span class="dv">14</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -419,25 +419,25 @@ Training set 0.3063556</code></pre>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> tiempo</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 12.96478 secs</code></pre>
+<pre><code>Time difference of 12.55325 secs</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>pfit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>         Point Forecast    Lo 95    Hi 95
-23.00000       667.7268 634.6753 701.8307
-23.14286       689.2975 651.8610 729.9842
-23.28571       695.8934 648.7818 733.4333
-23.42857       688.7663 629.7975 740.9555
-23.57143       669.7305 614.9162 737.3732
-23.71429       612.8025 583.0483 693.5592
-23.85714       565.2207 534.9629 649.3099
-24.00000       643.2985 551.6221 708.2713
-24.14286       674.9233 589.9955 735.0770
-24.28571       686.6024 600.1948 742.5416
-24.42857       680.7710 596.4751 748.6205
-24.57143       659.2829 588.5402 742.8711
-24.71429       605.9284 562.3394 713.0864
-24.85714       560.6535 532.5333 672.0658</code></pre>
+23.00000       669.2346 637.1335 703.1826
+23.14286       692.7424 653.7749 736.1660
+23.28571       691.6910 640.3200 736.1435
+23.42857       683.1013 620.2030 743.0197
+23.57143       668.4859 620.4670 737.0478
+23.71429       618.1892 583.6217 690.8728
+23.85714       572.0808 537.4599 649.6034
+24.00000       644.4321 554.9727 710.0929
+24.14286       674.7866 602.6198 737.9461
+24.28571       683.5983 603.8294 741.8798
+24.42857       675.7923 597.8700 746.7584
+24.57143       653.4297 587.4505 742.7870
+24.71429       611.6679 567.6232 712.7619
+24.85714       569.8455 537.1166 672.7275</code></pre>
 </div>
 </div>
 <p>La función <code>nnetar</code> admite la inclusión de variables de intervención de la forma usual a través del argumento <code>xreg</code>.</p>
