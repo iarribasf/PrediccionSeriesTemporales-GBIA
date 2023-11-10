@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Consideremos de nuevo la serie temporal correspondiente al número de pernoctaciones que los turistas extranjeros realizan en España en alojamientos turísticos autorizados (que llamaremos Pernoctaciones en adelante). Esta serie está disponible en Eurostat desde enero de 2000 hasta diciembre de 2022, un total de 23 años y 276 observaciones.</p>
 <p>La serie temporal muestra una tendencia suavemente decreciente en el número de pernoctaciones en la primera década del presente siglo. Con el cambio de década se produce un cambio en la tendencia, que pasa a ser creciente. A finales de la década pasada se observa una caída en el número de pernoctaciones y en los últimos años el efecto de la Covid-19 y posterior recuperación. El esquema es multiplicativo.</p>
-<p>Para este análisis consideraremos la serie hasta diciembre de 2019, eliminando el periodo afectado por la pandemia de Covid-19. Posteriormente usaremos las predicciones para los años 2020 a 2022 para cuantificar el efecto de la pandemia sobre las pernoctaciones y su impacto económico.</p>
+<p>Para este análisis consideraremos la serie hasta diciembre de 2019, eliminando el periodo afectado por la pandemia de Covid-19. Posteriormente usaremos las predicciones para los años 2020 a 2022 para cuantificar el efecto de la pandemia sobre las pernoctaciones.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/Pernoctaciones.csv"</span>, </span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
@@ -381,10 +381,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>El esquema multiplicativo de la serie aconseja el uso de la transformación logarítmica. Además, vamos a ver que para que la serie sea estacionaria es necesario diferenciarla tanto regular como estacionalmente, así que el uso de logaritmo vuelve a ser aconsejable si queremos ganar en interpretabilidad.</p>
 <p>La <a href="#fig-PernoctacionesFAC">Figura&nbsp;2</a> muestra la FAC para la serie Pernoctaciones (log) y algunas de sus transformaciones. En los paneles a) y b) las autocorrelaciones estacionales decrecen muy lentamente, indicando que la serie analizada no es ergódica. El panel c) muestra que las autocorrelaciones en la parte regular decrecen lentamente, indicando que la serie analizada no es estacionaria. Solo la doble diferenciación regular y estacional de la serie muestra un rápido descenso en los coeficiente de autocorrelación (panel d), indicando que la serie así transformada es estacionaria en media y ergódica.</p>
 <div>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag =</span> <span class="dv">12</span>), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag=</span><span class="dv">12</span>)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span> ,<span class="dv">1</span>),</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb)), <span class="at">lag =</span> <span class="dv">48</span>,  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span> ,<span class="dv">1</span>),</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag =</span> <span class="dv">12</span>), <span class="at">lag =</span> <span class="dv">48</span>,  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span> ,<span class="dv">1</span>),</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">diff</span>(<span class="fu">log</span>(Pernoctacionesb), <span class="at">lag=</span><span class="dv">12</span>)), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span> ,<span class="dv">1</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-PernoctacionesFAC" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -479,12 +483,12 @@ Call:
 seas(x = Pernoctacionesb)
 
 Coefficients:
-                    Estimate Std. Error z value             Pr(&gt;|z|)    
-Weekday           -0.0009593  0.0003988  -2.406             0.016143 *  
-Easter[8]          0.0425480  0.0051831   8.209 0.000000000000000223 ***
-LS2005.Mar        -0.0819394  0.0225926  -3.627             0.000287 ***
-MA-Nonseasonal-01  0.2976707  0.0633552   4.698 0.000002621542191344 ***
-MA-Seasonal-12     0.4286878  0.0590994   7.254 0.000000000000405599 ***
+                    Estimate Std. Error z value Pr(&gt;|z|)    
+Weekday           -0.0009593  0.0003988  -2.406 0.016143 *  
+Easter[8]          0.0425480  0.0051831   8.209 2.23e-16 ***
+LS2005.Mar        -0.0819394  0.0225926  -3.627 0.000287 ***
+MA-Nonseasonal-01  0.2976707  0.0633552   4.698 2.62e-06 ***
+MA-Seasonal-12     0.4286878  0.0590994   7.254 4.06e-13 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
@@ -706,14 +710,14 @@ AIC=-956.96   AICc=-956.3   BIC=-929.56</code></pre>
 <pre><code>
 z test of coefficients:
 
-              Estimate Std. Error z value            Pr(&gt;|z|)    
-ma1         -0.3303816  0.0660871 -4.9992 0.00000057574208836 ***
-sma1        -0.3770336  0.0767203 -4.9144 0.00000089057446340 ***
-DiasMes      0.0278712  0.0090465  3.0809            0.002064 ** 
-SemanaSanta  0.0555809  0.0072613  7.6544 0.00000000000001943 ***
-d0305       -0.0616243  0.0210342 -2.9297            0.003393 ** 
-d0406        0.0371492  0.0196842  1.8873            0.059125 .  
-d0513        0.0503104  0.0192104  2.6189            0.008821 ** 
+              Estimate Std. Error z value  Pr(&gt;|z|)    
+ma1         -0.3303816  0.0660871 -4.9992 5.757e-07 ***
+sma1        -0.3770336  0.0767203 -4.9144 8.906e-07 ***
+DiasMes      0.0278712  0.0090465  3.0809  0.002064 ** 
+SemanaSanta  0.0555809  0.0072613  7.6544 1.943e-14 ***
+d0305       -0.0616243  0.0210342 -2.9297  0.003393 ** 
+d0406        0.0371492  0.0196842  1.8873  0.059125 .  
+d0513        0.0503104  0.0192104  2.6189  0.008821 ** 
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -725,7 +729,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="validación" class="level1" data-number="4">
 <h1 data-number="4"><span class="header-section-number">4</span> Validación</h1>
-<p>Analizando los criterios de bondad de ajuste se tiene que: el error medio (ME), igual a -10132.57 pernoctaciones, es prácticamente cero (en relación a los valores de la serie) por lo que no parece que haya sesgo en las predicciones; en media nos equivocamos en 606 mil pernoctaciones (RMSE); y el error porcentual medio es 2.2%, muy bajo.</p>
+<p>Analizando los criterios de bondad de ajuste se tiene que: el error medio (ME), igual a -1.013257^{4} pernoctaciones, es prácticamente cero (en relación a los valores de la serie) por lo que no parece que haya sesgo en las predicciones; en media nos equivocamos en 606 mil pernoctaciones (RMSE); y el error porcentual medio es 2.2%, muy bajo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(Arima2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -862,7 +866,7 @@ Frequency = 1
 </tbody>
 </table>
 </div>
-<p>Podemos extraer varias conclusiones: i) la transformación logarítmica no mejora necesariamente el ajuste de los datos; ii) el proceso ARIMA con transformación logarítmica es el modelo con mejor ajuste; y iii) el método de alisado muestra una calidad de ajuste comparable a la de los procesos ARIMA. La ligera mejora en el ajuste de los modelos ARIMA respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención.</p>
+<p>Podemos extraer varias conclusiones: i) la transformación logarítmica no mejora necesariamente el ajuste de los datos; ii) el proceso ARIMA con transformación logarítmica es el modelo con mejor ajuste; y iii) el método de Alisado muestra una calidad de ajuste comparable a la de los modelos ARIMA. La ligera mejora en el ajuste de los modelos ARIMA respecto del método de Alisado se debe a la incorporación de variables ficticias para recoger la intervención.</p>
 </section>
 <section id="predicciones-extramuestrales" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="predicciones-extramuestrales"><span class="header-section-number">7.2</span> Predicciones extramuestrales</h2>
@@ -887,56 +891,59 @@ Frequency = 1
 <span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h) </span>
 <span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k),])</span>
-<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  hay <span class="ot">&lt;-</span> <span class="fu">colSums</span>(X.train)</span>
-<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> X.train[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k <span class="sc">+</span> h),])</span>
-<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> X.test[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Ingenuo</span></span>
-<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
-<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  mapeIngenuo[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fit<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado sin log</span></span>
-<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"MNM"</span>)</span>
-<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
-<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>  mapeAlisado[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado con log</span></span>
-<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"ANA"</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
-<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
-<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  mapeAlisadoLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA sin log</span></span>
-<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
-<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.train)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
-<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test))</span>
-<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>    mapeArima[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA con log</span></span>
-<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
-<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lambda =</span> <span class="dv">0</span>,</span>
-<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.train)), <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
-<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test)) </span>
-<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a>    mapeArimaLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>mapeIngenuo <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeIngenuo)</span>
-<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
-<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a>mapeAlisadoLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisadoLog)</span>
-<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a>mapeArimaLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArimaLog, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k <span class="sc">+</span> h),])</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>  hay <span class="ot">&lt;-</span> <span class="fu">colSums</span>(X.train)  </span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(X.train[, hay<span class="sc">&gt;</span><span class="dv">0</span>])</span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(X.test[, hay<span class="sc">&gt;</span><span class="dv">0</span>])</span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Ingenuo</span></span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">snaive</span>(train.set, <span class="at">h =</span> h)</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a>  mapeIngenuo[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fit<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado sin log</span></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"MNM"</span>)</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
+<span id="cb29-34"><a href="#cb29-34" aria-hidden="true" tabindex="-1"></a>  mapeAlisado[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-35"><a href="#cb29-35" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a>  <span class="co">#Alisado con log</span></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"ANA"</span>, <span class="at">lambda =</span> <span class="dv">0</span>)</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h) </span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>  mapeAlisadoLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA sin log</span></span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> X.train), </span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a>             <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> X.test)</span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a>    mapeArima[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a>  <span class="co">#ARIMA con log</span></span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">try</span>(<span class="fu">Arima</span>(train.set, </span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a>                   <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a>                   <span class="at">seasonal =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a>                   <span class="at">lambda =</span> <span class="dv">0</span>,</span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>                   <span class="at">xreg =</span> X.train),</span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a>             <span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.element</span>(<span class="st">"try-error"</span>, <span class="fu">class</span>(fit))) {</span>
+<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> X.test) </span>
+<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>    mapeArimaLog[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a>mapeIngenuo <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeIngenuo)</span>
+<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
+<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a>mapeAlisadoLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisadoLog)</span>
+<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a>mapeArimaLog <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArimaLog, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>

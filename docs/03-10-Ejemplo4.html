@@ -382,7 +382,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Dado que la serie tiene tendencia, no esperemos grandes resultados con el método de las medias móviles, ni en ajuste ni en calidad de las predicciones. Así usaremos nuestra función <code>mmf</code>.</p>
+<p>Dado que la serie tiene tendencia, no esperemos grandes resultados con el método de las medias móviles, ni en calidad de ajuste ni en precisión de las predicciones. Usaremos nuestra función <code>mmf</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mmf <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">r =</span> <span class="dv">3</span>, <span class="at">h =</span> <span class="dv">5</span>) {</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
@@ -438,14 +438,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Training set 12.00632 21.00165 18.40444 4.162454 7.260456 1.966314 0.5940658</code></pre>
 </div>
 </div>
-<p>Así, no sorprenden los valores de los criterios de bondad de ajuste: un error porcentual de 7.3%, algo elevado y un error medio (RMSE) de 21 millones de pernoctaciones. Estos errores son superiores a los obtenidos con el método Ingenuo I y de la Deriva (RMSE = 12 millones de pernoctaciones; MAPE = 3.9%).</p>
+<p>Así, no sorprenden los valores de los criterios de bondad de ajuste: un error porcentual de 7.3%, algo elevado y un error medio (RMSE) de 21 millones de pernoctaciones. Estos errores son superiores a los obtenidos con el método de la Deriva (RMSE = 11.6 millones de pernoctaciones; MAPE = 3.9%).</p>
 <p><br>
 </p>
 <section id="impacto-de-la-pandemia-sobre-las-pernoctaciones" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="impacto-de-la-pandemia-sobre-las-pernoctaciones">Impacto de la pandemia sobre las pernoctaciones</h2>
 <p>Podemos usar las predicciones obtenidas por el método de la media móvil para compararlas con los datos reales de pernoctaciones y obtener, así, una estimación de la magnitud de su caída debida a la pandemia.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones<span class="sc">-</span> mmPernoctaciones<span class="sc">$</span>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Pernoctaciones <span class="sc">-</span> mmPernoctaciones<span class="sc">$</span>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time Series:
 Start = 2020 

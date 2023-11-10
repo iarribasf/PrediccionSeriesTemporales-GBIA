@@ -474,7 +474,7 @@ Deriva    0.00 11.60  9.28 -0.26  3.92 0.99 0.26</code></pre>
 <pre><code>[1]  4.204332  8.547111 11.779166 14.371077 16.222312</code></pre>
 </div>
 </div>
-<p>La conclusión es clara, con independencia del horizonte temporal, el método de la Deriva es el que ofrece las mejores predicciones.</p>
+<p>La conclusión es clara, con independencia del horizonte temporal, el método de la Deriva es el que ofrece las predicciones más precisas.</p>
 <p>Para el método de la Deriva, el error de previsión extramuestral a un periodo (4.2%) es algo mayor que el error de ajuste (3.9%). Por otro lado, no parece aconsejable utilizar este método para predicciones más allá de dos años vista porque el error porcentual crece rápidamente.</p>
 <p><br>
 </p>
@@ -495,7 +495,7 @@ Deriva    0.00 11.60  9.28 -0.26  3.92 0.99 0.26</code></pre>
 </div>
 <p>A partir de las predicciones podemos evaluar el efecto que la pandemia de la Covid-19 tuvo sobre las pernoctaciones.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesAnual<span class="sc">-</span> derivaPernoctaciones<span class="sc">$</span>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>PernoctacionesAnual <span class="sc">-</span> derivaPernoctaciones<span class="sc">$</span>mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time Series:
 Start = 2020 
@@ -505,7 +505,7 @@ Frequency = 1
 </div>
 </div>
 <p>En 2020 la caída estimada de las pernoctaciones fue de 242 millones y en 2021 de 192 millones. El efecto de la pandemia casi había desaparecido en el año 2022, con una caída de las pernoctaciones respecto de los valores previstos de 38 millones.</p>
-<p>En 2019 el gasto medio por persona y día de un turista internacional era de unos 150 euros (fuente: INE, Egatur), por tanto, las pérdidas económicas directas en 2020 asociadas a la caída de las pernoctaciones se pueden estimar en 36 mil millones de euros (aproximadamente un 3% del PIB de 2019). Para el año 2021, las pérdidas fueron de 28.7 mil millones de euros.</p>
+<p>En 2019 el gasto medio por persona y día de un turista internacional era de unos 150 euros (fuente: INE, Egatur), por tanto, las pérdidas económicas directas en 2020 asociadas a la caída de las pernoctaciones se pueden estimar en 36 mil millones de euros (aproximadamente un 3% del PIB de 2019).</p>
 <p><br>
 <br>
 </p>
@@ -566,9 +566,9 @@ Training set 285945.5 1243441 909723.1 1.12597 4.601114    1 0.7869536</code></p
 </div>
 </div>
 </div>
-<p>De nuevo podemos obtener una estimación en la caída anual de las pernoctaciones comparando las previsiones mensuales con los datos de la serie.</p>
+<p>Podemos obtener la diferencia entre las pernoctaciones previstas y las reales, ahora mes a mes. Si agregamos esta serie, tendremos una estimación en la caída anual de las pernoctaciones.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(Pernoctaciones<span class="sc">-</span> PernoctacionesPre<span class="sc">$</span>mean, <span class="at">FUN =</span> sum)<span class="sc">/</span><span class="dv">1000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(Pernoctaciones <span class="sc">-</span> PernoctacionesPre<span class="sc">$</span>mean, <span class="at">FUN =</span> sum)<span class="sc">/</span><span class="dv">1000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time Series:
 Start = 2020 
@@ -620,7 +620,7 @@ Frequency = 1
 </div>
 </div>
 </div>
-<p>La <a href="#fig-Errores">Figura&nbsp;5</a> muestra el error de previsión extramuestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve en una estrecha franja de 0.5 puntos porcentuales, entre el 5.1% y el 4.6%. La serie Pernoctaciones es tan sencilla que la mejor predicción a corto plazo es repetir la última observación del mismo mes.</p>
+<p>La <a href="#fig-Errores">Figura&nbsp;5</a> muestra el error de previsión extramuestral según el horizonte de previsión. Cuidado con la interpretación. El error prácticamente no varía con el horizonte temporal y se mueve en una estrecha franja de 0.5 puntos porcentuales, entre el 4.6% y el 5.1%. La serie Pernoctaciones es tan sencilla que la mejor predicción a corto plazo es repetir la última observación del mismo mes.</p>
 <p><br>
 <br>
 <br>

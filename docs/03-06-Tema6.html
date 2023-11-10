@@ -427,8 +427,8 @@ div.csl-indent {
 <h1 data-number="1"><span class="header-section-number">1</span> Introducción</h1>
 <p>Los <strong>modelos ARIMA</strong> han mostrado ser uno se los métodos de ajuste de series temporales más valiosos desde que fueran formalizados en 1976 por Box y Jenkins <span class="citation" data-cites="BoxJenkins76">(<a href="#ref-BoxJenkins76" role="doc-biblioref">Box and Jenkins 1976</a>)</span>. Además, dieron las pautas a seguir en el ajuste de una serie temporal para alcanzar buenas predicciones (véase epígrafe 6).</p>
 <p>En este tema y el siguiente, definiremos estos procesos y aprenderemos a identificarlos, estimarlos y hacer predicciones.</p>
-<p><strong>Los procesos ARIMA son ahora el tronco de una amplia familia de procesos</strong> que requieren menos hipótesis para su aplicación o ajustan mejor bajo diferentes hipótesis: ARCH, GARCH, NGARCH, IGARCH, EGARCH, GARCH-M, QGARCH, GJR-GARCH, TGARCH, fGARCH…</p>
-<p><strong>Los procesos ARIMA y los métodos de Alisado Exponencial son complementarios</strong>:</p>
+<p><strong>Los modelos ARIMA son ahora el tronco de una amplia familia de procesos</strong> que requieren menos hipótesis para su aplicación o ajustan mejor bajo diferentes hipótesis: ARCH, GARCH, NGARCH, IGARCH, EGARCH, GARCH-M, QGARCH, GJR-GARCH, TGARCH, fGARCH…</p>
+<p><strong>Los modelos ARIMA y los métodos de Alisado Exponencial son complementarios</strong>:</p>
 <ul>
 <li>Los modelos de Alisado lineales son casos especiales de modelos Arima,</li>
 <li>Los modelos de Alisado no lineales no tienen su contrapartida en modelos Arima</li>
@@ -456,12 +456,12 @@ div.csl-indent {
 <ul>
 <li>Si <span class="math inline">\(F(Y_{t_1},..., Y_{t_k})\)</span> es la función de distribución conjunta y <span class="math inline">\(h&gt;0\)</span>, entonces el proceso es estacionario en sentido estricto si <span class="math display">\[F(Y_{t_1},..., Y_{t_k}) = F(Y_{t_1+h},..., Y_{t_k+h})\]</span></li>
 </ul>
-<p>Intuitivamente, <em>la distribución de un proceso estocástico es independiente del momento del tiempo</em>.</p>
+<p>Intuitivamente, viendo aisladamente algunos los datos de la serie es imposible saber a que periodo temporal corresponden.</p>
 <p>Comprobar si un proceso es estacionario en sentido estricto es muy difícil, así que vamos a encontrar condiciones suficientes: <em>estacionariedad en media</em> y en <em>sentido amplio</em> (covarianza). <strong>Bajo normalidad</strong> un proceso estacionario en sentido amplio también lo será en sentido estricto.</p>
 <p><strong>Proceso estacionario en media</strong></p>
 <p>Un proceso es estacionario en media (o de primer orden) si su nivel se mantiene en el tiempo: <span class="math display">\[E[Y_t] = \mu \; \; \forall t\]</span></p>
 <p><strong>Proceso estacionario en sentido amplio</strong></p>
-<p>Un proceso (ya estacionario en media) es estacionario en sentido amplio, o de segundo orden, si sus momentos de orden dos no dependen del tiempo:</p>
+<p>Un proceso (ya estacionario en media) es estacionario en sentido amplio, o de segundo orden, si sus momentos de orden dos (varianzas y covarianzas) no dependen del tiempo:</p>
 <ul>
 <li>La (auto)covarianza entre dos periodos de tiempo es finita y sólo depende del intervalo de tiempo transcurrido entre estos dos periodos: <span class="math display">\[Cov[Y_t, Y_{t+k}] = E[(Y_t - \mu)(Y_{t+k} - \mu)] = \gamma_k,\,\,\,\forall t\]</span></li>
 </ul>
@@ -506,7 +506,7 @@ div.csl-indent {
 </p>
 <section id="ideas-generales" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="ideas-generales"><span class="header-section-number">3.1</span> Ideas generales</h2>
-<p>Una serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span> no tiene porque verificar las condiciones de estacionariedad y ergodicidad. A continuación veremos una serie de transformaciones que convierten una serie no estacionaria en estacionaria; y no ergódica en ergódica.</p>
+<p>Una serie temporal <span class="math inline">\(\{y_t\}_{t=1}^T\)</span> no tiene porque verificar las condiciones de estacionariedad y ergodicidad. A continuación veremos una serie de transformaciones que convierten una serie no estacionaria en estacionaria, y no ergódica en ergódica.</p>
 <p>En el panel superior de la <a href="#fig-Nacimientos2">Figura&nbsp;2</a> vuelves a tener la serie de nacimientos, que denominaremos <span class="math inline">\(y_t\)</span>; en el segundo panel la diferencia de la serie, <span class="math inline">\(y_t - y_{t-1}\)</span>; y en el panel inferior tienes la diferencia de la transformación logarítmica de la serie, <span class="math inline">\(log(y_t) - log(y_{t-1})\)</span>. La serie nacimientos no es estacionaria en media ni en varianza, su diferencia es estacionaria en media, pero no en varianza. Sin embargo, la transformación logarítmica y la diferencia han logrado que sea estacionaria en ambos sentidos.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
@@ -544,7 +544,7 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p><em>¿Qué transformación para nacimientos consideras que genera una serie estacionaria?</em> Siempre hay un cierto grado de subjetividad en la elección de las diferencias que hay que aplicar a una serie. En la <a href="#fig-NacimientosAnual">Figura&nbsp;3</a> podemos considerar que la diferenciación regular (panel medio) es suficiente para lograr la estacionariedad (en media y en varianza) y terminar el proceso de diferenciación. Pero también podemos considerar que la serie es no del todo estacionaria en media, y optar por la doble diferenciación regular (panel inferior).</p>
+<p><em>¿Qué transformación para nacimientos consideras que genera una serie estacionaria?</em> Siempre hay un cierto grado de subjetividad en la elección de las diferencias que hay que aplicar a una serie. En la <a href="#fig-NacimientosAnual">Figura&nbsp;3</a> podemos considerar que la diferenciación regular (panel medio) es suficiente para lograr la estacionariedad (en media y en varianza) y terminar el proceso de diferenciación. Pero también podemos considerar que la serie no es del todo estacionaria en media, y optar por la doble diferenciación regular (panel inferior).</p>
 </section>
 <section id="diferenciación-con-r" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="diferenciación-con-r">Diferenciación con <code>R</code></h3>
@@ -554,7 +554,13 @@ div.csl-indent {
 <li><code>diff(x)</code> calcula la diferencia regular o de orden <span class="math inline">\(1\)</span>, <span class="math inline">\(\nabla y_t\)</span> (el valor por defecto de <code>lag</code> es 1)</li>
 <li><code>diff(x, difference = d)</code> calcula <span class="math inline">\(d\)</span> diferencias regulares, <span class="math inline">\(\nabla^d y_t\)</span></li>
 </ul>
-<p>Además, en <code>forecast</code> está disponible la función <code>ndiffs</code> que estima el número de diferencias regulares necesarias para que una serie sea estacionaria. Para ello usa un contraste de raíces unitarias (que no veremos en este curso).</p>
+<p>Además, en <code>forecast</code> está disponible la función <code>ndiffs</code> que estima el número de diferencias regulares necesarias para que una serie sea estacionaria. Para ello usa un contraste de raíces unitarias (que no veremos en este curso). Para la serie nacimientos anual la función sugiere una doble diferenciación.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ndiffs</span>(nacimientosAnual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+</div>
 </section>
 <section id="operador-retardo" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="operador-retardo">Operador Retardo</h3>
@@ -696,13 +702,13 @@ La diferenciacion y el logaritmo en series sin estacionalidad
 <li>Solo la doble diferenciación regular de la serie (original o su logaritmo) muestran un rápido descenso en los coeficientes de autocorrelación (paneles de la última fila), indicando que la serie así transformada es estacionaria y ergódica.</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nacimientosAnual es la seria anual de Nacimientos</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(nacimientosAnual, <span class="at">lag =</span> <span class="dv">10</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(nacimientosAnual), <span class="at">lag =</span> <span class="dv">10</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(nacimientosAnual), <span class="at">lag =</span> <span class="dv">10</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(nacimientosAnual)), <span class="at">lag =</span> <span class="dv">10</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(nacimientosAnual, <span class="at">differences =</span> <span class="dv">2</span>), <span class="at">lag =</span> <span class="dv">10</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(nacimientosAnual), <span class="at">differences =</span> <span class="dv">2</span>), <span class="at">lag =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># nacimientosAnual es la seria anual de Nacimientos</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(nacimientosAnual, <span class="at">lag =</span> <span class="dv">10</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(nacimientosAnual), <span class="at">lag =</span> <span class="dv">10</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(nacimientosAnual), <span class="at">lag =</span> <span class="dv">10</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(nacimientosAnual)), <span class="at">lag =</span> <span class="dv">10</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(nacimientosAnual, <span class="at">differences =</span> <span class="dv">2</span>), <span class="at">lag =</span> <span class="dv">10</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(<span class="fu">log</span>(nacimientosAnual), <span class="at">differences =</span> <span class="dv">2</span>), <span class="at">lag =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="fig-NacimientosFAC" class="cell quarto-layout-panel">
 <figure class="figure">
@@ -777,13 +783,6 @@ La diferenciacion y el logaritmo en series sin estacionalidad
 <li><p>Si un <span class="math inline">\(r_k\)</span> cae fuera del IC95, hay evidencia para rechazar la hipótesis nula de que <span class="math inline">\(\rho_k = 0\)</span> a un nivel del 5%. Recordemos que incluso si todos los <span class="math inline">\(\rho_k\)</span> son cero, cabe esperar que un 5% de sus estimaciones <span class="math inline">\(r_k\)</span> caigan fuera del IC95.</p></li>
 <li><p>Los <span class="math inline">\(\rho_k\)</span> no son independientes. Si uno cae fuera del IC95, es más probable que los valores vecinos caigan también fuera.</p></li>
 </ul>
-<p>También podemos pedir <code>R</code> que nos sugiera el orden de diferenciación con la función <code>ndiffs</code>.</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ndiffs</span>(nacimientosAnual)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 2</code></pre>
-</div>
-</div>
 <p>Si queremos ver los valores numéricos de las autocorrelaciones debemos añadir a la función <code>ggAfc</code> el argumento <code>plot = FALSE</code>. Para la serie doblemente diferenciada vemos que la relación más elevada se da para el primer retardo (<span class="math inline">\(r_{1}=-0.468\)</span>), el dato que más se parece a los nacimientos de un año son los nacimientos del año previo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">diff</span>(nacimientosAnual, <span class="at">differences =</span> <span class="dv">2</span>), </span>
@@ -812,8 +811,7 @@ Autocorrelations of series 'diff(nacimientosAnual, differences = 2)', by lag
 <p><span class="math display">\[E[y_t]  = \mu &lt; \infty \;\;\; \forall t,\]</span></p>
 <p><span class="math display">\[Cov[y_t, y_{t-k}]  = \gamma_k  \;\;\; \forall k.\]</span></p>
 <ul>
-<li><p>El proceso estocástico es <strong>ergódico</strong>, o su condición suficiente: <span class="math display">\[\lim_{k \rightarrow \infty} \gamma_k  = 0.\]</span></p></li>
-<li><p>El proceso se distribuye como una normal.</p></li>
+<li>El proceso estocástico es <strong>ergódico</strong>, o su condición suficiente: <span class="math display">\[\lim_{k \rightarrow \infty} \gamma_k  = 0.\]</span></li>
 </ul>
 <p><br>
 </p>
@@ -872,15 +870,15 @@ Autocorrelations of series 'diff(nacimientosAnual, differences = 2)', by lag
 </section>
 <section id="proceso-arimapdq" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="proceso-arimapdq"><span class="header-section-number">5.4</span> Proceso ARIMA(p,d,q)</h2>
-<p><strong>Si la serie</strong> <span class="math inline">\(y_t\)</span> no es estacionaria, pero tras diferenciarla <span class="math inline">\(d\)</span> veces se hace estacionaria, diremos que la serie es integrada de orden <span class="math inline">\(d\)</span>: <span class="math inline">\(y_t \sim I(d)\)</span>. Por tanto,</p>
+<p>Si la serie <span class="math inline">\(y_t\)</span> no es estacionaria, pero tras diferenciarla <span class="math inline">\(d\)</span> veces se hace estacionaria, diremos que la serie es integrada de orden <span class="math inline">\(d\)</span>: <span class="math inline">\(y_t \sim I(d)\)</span>. Por tanto,</p>
 <ul>
 <li>una serie estacionaria se indicará como <span class="math inline">\(y_t \sim I(0)\)</span></li>
 <li><span class="math inline">\(y_t \sim I(d)\)</span> es equivalente a <span class="math inline">\(\nabla^d y_t = (1 - L)^d y_t \sim I(0)\)</span></li>
 </ul>
 <p>Una serie <span class="math inline">\(y_t\)</span> sigue un proceso <span class="math inline">\(ARIMA(p,d,q)\)</span> si:</p>
 <ol type="1">
-<li><span class="math inline">\(y_t \sim I(d)\)</span>, hay que diferenciarla <span class="math inline">\(d\)</span> veces para hacerla estacionaria, y</li>
-<li><span class="math inline">\(\nabla^d y_t \sim ARMA(p,q)\)</span>.</li>
+<li>hay que diferenciar la serie <span class="math inline">\(d\)</span> veces para hacerla estacionaria, <span class="math inline">\(y_t \sim I(d)\)</span>; y</li>
+<li>la serie diferenciada sigue un proceso ARMA(p,q), <span class="math inline">\(\nabla^d y_t \sim ARMA(p,q)\)</span>.</li>
 </ol>
 <p>Entonces, podemos escribir <span class="math inline">\(y_t \sim ARIMA(p,d,q)\)</span>:</p>
 <span class="math display">\[\begin{equation*}
@@ -908,8 +906,7 @@ Autocorrelations of series 'diff(nacimientosAnual, differences = 2)', by lag
 <p>La <a href="#fig-AproximacionBoxJenkins">Figura&nbsp;6</a> muestra el flujo de procesos asociado a la modelización por modelos ARIMA, con cuatro grandes áreas:</p>
 <ul>
 <li><p><strong>Identificación</strong>, que requiere primero transformar la serie para que sea estacionaria y ergódica, para después identificar los valores de p y q.</p>
-<p>La FAC y la función de autocorrelación parcial (que no hemos visto) teóricas son diferentes en cada modelo ARIMA. Por tanto, idealmente estas funciones podría servir de ayuda en la identificación del modelo. En la práctica, la funciones estimadas son tan diferentes de las teóricas que resultan de muy poca ayuda.</p>
-<p>Nosotros haremos uso de algunas funciones de <em>auto</em> identificación que nos ayudaran en este punto.</p></li>
+<p>Haremos uso de algunas funciones de <em>auto</em> identificación que nos ayudaran en este punto.</p></li>
 <li><p><strong>Estimación</strong> de los parámetros del modelo, incluidas las variables de intervención y obtención del error. El método usual de estimación de los parámetros es por máxima verosimilitud.</p></li>
 <li><p><strong>Validación</strong> de las hipótesis sobre el modelo. Analizaremos que no es necesaria más intervención y veremos la pertinencia de los parámetros del modelo (bien contrastando su significatividad o bien por alguna regla más sencilla).</p>
 <p>Si la validación no se pasa, puede ser necesario volver al proceso inicial y realizar una nueva identificación del modelo.</p></li>
@@ -1122,7 +1119,7 @@ Training set 868.03 5798.12 4358.32 1.29 6.88 0.96 -0.04</code></pre>
 </section>
 <section id="predicción" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="predicción">Predicción</h3>
-<p>Una vez validado el modelo podemos pasar a realizar <strong>predicciones</strong>, en este caso a 5 años vista.</p>
+<p>Una vez validado el modelo podemos pasar a realizar predicciones, en este caso a 5 años vista.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>parima010 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(arima010, </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">h =</span> <span class="dv">5</span>, </span>
@@ -1161,13 +1158,17 @@ Training set 868.03 5798.12 4358.32 1.29 6.88 0.96 -0.04</code></pre>
 <h2 data-number="7.2" class="anchored" data-anchor-id="aforo-de-vehículos"><span class="header-section-number">7.2</span> Aforo de vehículos</h2>
 <p>Vamos a aplicar de nuevo la metodología de Box-Jenkins a la serie <strong>aforo de vehículos</strong> por Oropesa, carretera N-340, km. 996,48 (fuente Ministerio de Fomento). La serie es anual de 1960 a 2021 (62 datos).</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>aforo <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/aforo_oropesa.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>aforo <span class="ot">&lt;-</span> <span class="fu">ts</span>(aforo, <span class="at">start =</span> <span class="dv">1960</span>, <span class="at">freq =</span> <span class="dv">1</span>)</span>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>aforo <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/aforo_oropesa.csv"</span>, </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(aforo, </span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>, </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Vehículos (000)"</span>,</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>aforo <span class="ot">&lt;-</span> <span class="fu">ts</span>(aforo, </span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">start =</span> <span class="dv">1960</span>, </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">freq =</span> <span class="dv">1</span>)</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(aforo, </span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>, </span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Vehículos (000)"</span>,</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Aforo" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1360,7 +1361,7 @@ AIC=992.33   AICc=993.89   BIC=1005</code></pre>
 <section id="validación" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="validación">Validación</h3>
 <p>La identificación de errores atípicos –para la posterior inclusión de sus variables de intervención asociadas– ha sido un tanto arbitraria: ¿es atípico el error que supera las 2 desviaciones típicas, las dos y media, las tres desviaciones típicas?</p>
-<p>A fin de poner un poco de <em>objetividad</em> en la decisión, podemos ver si sus coeficientes son significativos (distintos de cero) y dejar solo aquellas variables de intervención cuyo coeficientes lo sean. Aunque si la serie es suficientemente larga, también podríamos saltarnos este paso y dejar las variables de intervención que mejoren las predicciones extramuestrales del modelo o las que recojan efectos conocidos.</p>
+<p>A fin de poner un poco de <em>objetividad</em> en la decisión, podemos ver si sus coeficientes son significativos (distintos de cero) y dejar solo aquellas variables de intervención cuyos coeficientes lo sean. Si la serie es suficientemente larga, también podríamos saltarnos este paso y dejar las variables de intervención que mejoren las predicciones extramuestrales del modelo o las que recojan efectos conocidos.</p>
 <p>Existen varias alternativas (prueba z, prueba t, prueba de Wald…), así que vamos a optar por la más sencilla y cómoda, la prueba z. Esta prueba asume normalidad asintótica en la distribución de los coeficientes o, al menos, una muestra suficientemente grande. Para implementar la prueba z usaremos la función <code>coeftest</code> (se precisa la librería <code>lmtest</code>) que permitirá contrastar individualmente si cada coeficiente es significativo. Esta función requiere por defecto un solo argumento, el que contiene la estimación del modelo Arima.</p>
 <p>Veamos qué coeficientes estimados son significativos.</p>
 <div class="cell" data-layout-align="center">
@@ -1369,12 +1370,12 @@ AIC=992.33   AICc=993.89   BIC=1005</code></pre>
 <pre><code>
 z test of coefficients:
 
-         Estimate  Std. Error z value     Pr(&gt;|z|)    
-ar1       0.20130     0.11756  1.7123    0.0868452 .  
-ar2       0.43575     0.12110  3.5981    0.0003205 ***
-d1979 -1698.43813   488.90036 -3.4740    0.0005128 ***
-d2011 -1192.72579   454.38852 -2.6249    0.0086674 ** 
-d2020 -2377.60140   476.11381 -4.9938 0.0000005921 ***
+         Estimate  Std. Error z value  Pr(&gt;|z|)    
+ar1       0.20130     0.11756  1.7123 0.0868452 .  
+ar2       0.43575     0.12110  3.5981 0.0003205 ***
+d1979 -1698.43813   488.90036 -3.4740 0.0005128 ***
+d2011 -1192.72579   454.38852 -2.6249 0.0086674 ** 
+d2020 -2377.60140   476.11381 -4.9938 5.921e-07 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1386,7 +1387,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 <section id="medidas-de-error-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="medidas-de-error-1">Medidas de error</h3>
-<p>El error medio es 738 miles de vehículos (RMSE) y el error porcentual medio (MAPE) es 5.83%. No hay sesgo de predicción y las fórmulas empleadas para el cálculo de los intervalos de confianza de las predicciones son válidas.</p>
+<p>El error medio es 738 miles de vehículos (RMSE) y el error porcentual medio (MAPE) es 5.83%. No hay sesgo de predicción y la fórmula empleada para el cálculo del intervalo de confianza de las predicciones es válida.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">accuracy</span>(arima210)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -1405,7 +1406,7 @@ Training set 20 737.94 542.1 0.91 5.83 0.74 0.05</code></pre>
 <p><span class="math display">\[(1 - \phi_1 L - \phi_2 L^2)(1 - L)aforo_t =  \varepsilon_t + \gamma_1 \cdot d1979 + \gamma_2 \cdot d2011 + \gamma_3 \cdot d2020.\]</span></p>
 <p>Si desarrollamos, queda:</p>
 <p><span class="math display">\[aforo_t = aforo_{t-1} + \phi_1(aforo_{t-1}-aforo_{t-2}) + \phi_2(aforo_{t-2}-aforo_{t-3}) +\]</span> <span class="math display">\[\gamma_1 \cdot d1979 +  \gamma_2 \cdot d2011 + \gamma_3 \cdot d2020 + \varepsilon_t.\]</span></p>
-<p>Finalmente, el <strong>modelo estimado</strong> es: <span class="math display">\[\widehat{aforo}_t = aforo_{t-1} + 0.20(aforo_{t-1}-aforo_{t-2}) + 0.44(aforo_{t-2}-aforo_{t-3})\]</span> <span class="math display">\[-1698 \cdot d1979 - 1192 \cdot d2011 - 2378 \cdot d2020\]</span> Cada año el aforo es el mismo que el aforo del año pasado más un 20% del último incremento observado y un 44% del incremento anterior.</p>
+<p>Finalmente, el <strong>modelo estimado</strong> es: <span class="math display">\[\widehat{aforo}_t = aforo_{t-1} + 0.20(aforo_{t-1}-aforo_{t-2}) + 0.44(aforo_{t-2}-aforo_{t-3})\]</span> <span class="math display">\[-1698 \cdot d1979 - 1193 \cdot d2011 - 2378 \cdot d2020\]</span> Cada año el aforo es el mismo que el aforo del año pasado más un 20% del último incremento observado y un 44% del incremento anterior.</p>
 <p>Respecto de la intervención, en 1979 hubo un 1.7 millones menos de vehículos de lo esperado, debido a la apertura de la autopista AP-7; en 2011 hubo 1.2 millones menos de vehículos, debido a la Gran Recesión; y en 2020 las restricciones de movilidad debidas a la pandemia redujeron el aforo en 2.4 millones de vehículos.</p>
 </section>
 <section id="predicción-1" class="level3 unnumbered">
@@ -1416,8 +1417,9 @@ Training set 20 737.94 542.1 0.91 5.83 0.74 0.05</code></pre>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>parima210 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(arima210, </span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">h =</span> <span class="dv">5</span>, </span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">level =</span> <span class="dv">95</span>,</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xreg =</span> <span class="fu">cbind</span>(<span class="at">d1979=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">d2011=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">d2020=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>)))</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>parima210</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xreg =</span> <span class="fu">cbind</span>(<span class="at">d1979=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="at">d2011=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">d2020=</span><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>)))</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>parima210</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Point Forecast    Lo 95     Hi 95
 2022       7425.809 5903.957  8947.661
@@ -1464,33 +1466,31 @@ Training set 20 737.94 542.1 0.91 5.83 0.74 0.05</code></pre>
 <span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(aforo, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h) </span>
 <span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a>  </span>
 <span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k),])</span>
-<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>  hay <span class="ot">&lt;-</span> <span class="fu">colSums</span>(X.train)</span>
-<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  X.train <span class="ot">&lt;-</span> X.train[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k <span class="sc">+</span> h),])</span>
-<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> X.test[, hay<span class="sc">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(X.train) <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
-<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>    fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(train.set, </span>
-<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>                 <span class="at">include.constant =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
-<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>                 <span class="at">xreg=</span><span class="fu">as.matrix</span>(X.train))</span>
-<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>    fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> <span class="fu">as.matrix</span>(X.test))</span>
-<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
-<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>      fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(train.set, </span>
-<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>                 <span class="at">include.constant =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>                 <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>))</span>
-<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a>      fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h)</span>
-<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a>  X.test <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(X[(i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(i <span class="sc">+</span> k <span class="sc">+</span> h),])</span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a>  hay <span class="ot">&lt;-</span> <span class="fu">colSums</span>(X.train)  </span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">sum</span>(hay) <span class="sc">==</span> <span class="dv">0</span>) {</span>
+<span id="cb41-20"><a href="#cb41-20" aria-hidden="true" tabindex="-1"></a>    X.train <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb41-21"><a href="#cb41-21" aria-hidden="true" tabindex="-1"></a>    X.test <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb41-22"><a href="#cb41-22" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb41-23"><a href="#cb41-23" aria-hidden="true" tabindex="-1"></a>    X.train <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(X.train[, hay<span class="sc">&gt;</span><span class="dv">0</span>])</span>
+<span id="cb41-24"><a href="#cb41-24" aria-hidden="true" tabindex="-1"></a>    X.test <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(X.test[, hay<span class="sc">&gt;</span><span class="dv">0</span>])</span>
+<span id="cb41-25"><a href="#cb41-25" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb41-26"><a href="#cb41-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-27"><a href="#cb41-27" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">Arima</span>(train.set, </span>
+<span id="cb41-28"><a href="#cb41-28" aria-hidden="true" tabindex="-1"></a>               <span class="at">include.constant =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb41-29"><a href="#cb41-29" aria-hidden="true" tabindex="-1"></a>               <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">0</span>),</span>
+<span id="cb41-30"><a href="#cb41-30" aria-hidden="true" tabindex="-1"></a>               <span class="at">xreg =</span> X.train)</span>
+<span id="cb41-31"><a href="#cb41-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb41-32"><a href="#cb41-32" aria-hidden="true" tabindex="-1"></a>  fcast <span class="ot">&lt;-</span> <span class="fu">forecast</span>(fit, <span class="at">h =</span> h, <span class="at">xreg =</span> X.test)</span>
+<span id="cb41-33"><a href="#cb41-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-34"><a href="#cb41-34" aria-hidden="true" tabindex="-1"></a>  mapeArima[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
 <span id="cb41-35"><a href="#cb41-35" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>  mapeArima[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb41-40"><a href="#cb41-40" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima)</span>
-<span id="cb41-41"><a href="#cb41-41" aria-hidden="true" tabindex="-1"></a>mapeArima</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-36"><a href="#cb41-36" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb41-37"><a href="#cb41-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-38"><a href="#cb41-38" aria-hidden="true" tabindex="-1"></a>mapeArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima)</span>
+<span id="cb41-39"><a href="#cb41-39" aria-hidden="true" tabindex="-1"></a>mapeArima</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  5.573565  9.480416 14.426596 20.527342 23.369673</code></pre>
 </div>
@@ -1504,14 +1504,18 @@ Training set 20 737.94 542.1 0.91 5.83 0.74 0.05</code></pre>
 <h2 data-number="7.3" class="anchored" data-anchor-id="consumo-de-alimentos-en-el-hogar-per-cápita"><span class="header-section-number">7.3</span> Consumo de alimentos en el hogar per cápita</h2>
 <p>Analizaremos el <strong>consumo alimentario en hogar per cápita</strong> en España. Esta serie está construida a partir de la serie de consumo alimentario en hogar (disponible en el Ministerio de Agricultura, Alimentación y Medio Ambiente), y la serie de población (disponible en el Instituto Nacional de Estadística). Es una serie anual de 1990 a 2022 (33 datos) y la unidad es el Kg per cápita. La <a href="#fig-Alimentos">Figura&nbsp;16</a> muestra que es una serie estacionaria.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>alimentospc <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/alimentacionpc.csv"</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>alimentospc <span class="ot">&lt;-</span> <span class="fu">ts</span>(alimentospc, <span class="at">start =</span> <span class="dv">1990</span>, <span class="at">freq =</span> <span class="dv">1</span>)</span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(alimentospc, </span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>, </span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Kg per cápita"</span>,</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">700</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>alimentospc <span class="ot">&lt;-</span> <span class="fu">read.csv2</span>(<span class="st">"./series/alimentacionpc.csv"</span>, </span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>alimentospc <span class="ot">&lt;-</span> <span class="fu">ts</span>(alimentospc, </span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>                  <span class="at">start =</span> <span class="dv">1990</span>, </span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">freq =</span> <span class="dv">1</span>)</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(alimentospc, </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>, </span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Kg per cápita"</span>,</span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">700</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Alimentos" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -1629,7 +1633,7 @@ AIC=293.44   AICc=294.26   BIC=297.93</code></pre>
 </div>
 </div>
 </div>
-<p>Hay un claro valor extremo en 2020. Tras crear la variable ficticia asociada al año 2020 y autoestimar el modelo, la identificación cambia y pasa a ARIMA(1, 0, 0).</p>
+<p>Hay un claro valor extremo en 2020. Tras crear la variable ficticia asociada al año 2020 y autoestimar el modelo, la identificación cambia y pasa a ARIMA(1, 0, 0) con constante.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>d2020 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span> (<span class="fu">time</span>(alimentospc) <span class="sc">==</span> <span class="dv">2020</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">auto.arima</span>(alimentospc, <span class="at">d =</span> <span class="dv">0</span>, <span class="at">xreg =</span> d2020)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1682,14 +1686,14 @@ AIC=249.97   AICc=255.97   BIC=261.94</code></pre>
 <pre><code>
 z test of coefficients:
 
-           Estimate Std. Error  z value              Pr(&gt;|z|)    
-ar1         0.78875    0.10122   7.7925  0.000000000000006569 ***
-intercept 633.37411    6.31602 100.2806 &lt; 0.00000000000000022 ***
-d1993      19.89046    6.49629   3.0618               0.00220 ** 
-d1995     -15.72498    6.48722  -2.4240               0.01535 *  
-d1999     -30.64557    6.49295  -4.7198  0.000002360494674393 ***
-d2020      56.17657    6.50736   8.6328 &lt; 0.00000000000000022 ***
-d2022     -61.89996    8.43707  -7.3367  0.000000000000218975 ***
+           Estimate Std. Error  z value  Pr(&gt;|z|)    
+ar1         0.78875    0.10122   7.7925 6.569e-15 ***
+intercept 633.37411    6.31602 100.2806 &lt; 2.2e-16 ***
+d1993      19.89046    6.49629   3.0618   0.00220 ** 
+d1995     -15.72498    6.48722  -2.4240   0.01535 *  
+d1999     -30.64557    6.49295  -4.7198 2.360e-06 ***
+d2020      56.17657    6.50736   8.6328 &lt; 2.2e-16 ***
+d2022     -61.89996    8.43707  -7.3367 2.190e-13 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1723,7 +1727,7 @@ La contante del modelo teórico y la media del modelo estimado
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El término contante <span class="math inline">\(\mu\)</span> que estima <code>R</code> no es el valor “c” que hemos visto en la teoría. Para convertir la contante estimada por <code>R</code> en “c” hemos de multiplicarla por el polinomio autorregresivo. En este caso, <span class="math display">\[c = \mu \cdot (1 - \phi_1) = 633.37411\cdot(1 - 0.78875) = 133.8\]</span></p>
+<p>El término contante <span class="math inline">\(\mu\)</span> que estima <code>R</code> no es el valor “c” que hemos visto en la teoría. Para convertir la contante estimada por <code>R</code> en “c” hemos de multiplicarla por el polinomio autorregresivo. En este caso, <span class="math display">\[c = \mu \cdot (1 - \phi_1) = 633.3741\cdot(1 - 0.7887) = 133.8\]</span></p>
 </div>
 </div>
 <p>Cada año el consumo de alimentos per cápita en el hogar es 134 kilos más un 79% del consumo del año pasado.</p>
@@ -1735,8 +1739,9 @@ La contante del modelo teórico y la media del modelo estimado
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>parima100 <span class="ot">&lt;-</span> <span class="fu">forecast</span>(arima100, </span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>                      <span class="at">h =</span> <span class="dv">5</span>, </span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">level =</span> <span class="dv">95</span>,</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xreg =</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>)))</span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>parima100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a>                      <span class="at">xreg =</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), </span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>                                   <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">5</span>)))</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>parima100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     Point Forecast    Lo 95    Hi 95
 2023       627.8780 609.6410 646.1150
@@ -1762,6 +1767,7 @@ La contante del modelo teórico y la media del modelo estimado
 </div>
 </div>
 </div>
+<p>En la previsión, al poner a 0 los valores de las variables de intervención de 2020 y 2022, estamos asumiendo que el efecto de la pandemia sobre esta serie ha desaparecido completamente.</p>
 <p><br>
 </p>
 </section>
@@ -1842,9 +1848,9 @@ La contante del modelo teórico y la media del modelo estimado
 <td style="text-align: left;">identificación automática de un modelo ARIMA</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>wald.test</code></td>
-<td style="text-align: left;">aod</td>
-<td style="text-align: left;">contrasta la significatividad conjunta de varios parámetros</td>
+<td style="text-align: left;"><code>coeftest</code></td>
+<td style="text-align: left;">lmtest</td>
+<td style="text-align: left;">contrasta la significatividad individual de los parámetros de un modelo</td>
 </tr>
 </tbody>
 </table>

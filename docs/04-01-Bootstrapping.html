@@ -353,9 +353,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="detalles" class="level2" data-number="2.2">
 <h2 data-number="2.2" class="anchored" data-anchor-id="detalles"><span class="header-section-number">2.2</span> Detalles</h2>
+<p>El paso clave del proceso es el paso 2, donde se obtiene una <em>nueva serie similar a la original</em>. También vale la pena aclarar un poco más el paso 5.</p>
 <section id="paso-2-nueva-serie" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="paso-2-nueva-serie">Paso 2: nueva serie</h3>
-<p>El paso clave del proceso es el paso 2, donde se obtiene una <em>nueva serie similar a la original</em>. En lo que viene a continuación no voy a ser riguroso para no perdernos en cuestiones matemáticas, pero sí suficientemente preciso para entender bien el proceso.</p>
+<p>En lo que viene a continuación no voy a ser riguroso para no perdernos en cuestiones matemáticas, pero sí suficientemente preciso para entender bien el proceso.</p>
 <ul>
 <li><p>Dada la serie original, la descomponemos en sus tres componentes: tendencia, estacionalidad y error.</p></li>
 <li><p>A continuación, obtenemos una versión barajada de la componente del error. (Aquí es donde no estoy siendo preciso porque el proceso de barajado se tiene que hacer por bloques y es con reemplazamiento.)</p></li>
@@ -365,7 +366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li><p>La dos primeras columnas indican la estación de cada dato y el valor de la serie, para un total de 15 observaciones.</p></li>
 <li><p>Las columnas <em>Tendencia</em>, <em>Estacionalidad</em> y <em>Error</em> han sido obtenidas aplicando el método de descomposición por regresiones locales ponderadas. Observa que cada dato de la serie es la suma de estas tres componentes.</p></li>
-<li><p>La columna <em>ErrorBootstrapping</em> se ha obtenido como un muestreo con reemplazamiento de los datos de la columna <em>Error</em>. Observa que como es una muestra con reemplazamiento hay algunos errores repetidos.</p></li>
+<li><p>La columna <em>ErrorBootstrapping</em> se ha obtenido como un muestreo con reemplazamiento de los datos de la columna <em>Error</em>. Como es una muestra con reemplazamiento, hay algunos errores repetidos.</p></li>
 <li><p>Por último, la nueva serie (columna <em>NuevaSerie</em>) se ha obtenido sumando las columnas <em>Tendencia</em>, <em>Estacionalidad</em> y <em>ErrorBootstrapping</em>. Esta serie tiene la misma tendencia y estacionalidad que la serie original y solo se diferencia en el error, así que la nueva serie debería parecerse a la serie original.</p></li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -391,7 +392,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="paso-5-predicción-por-intervalos" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="paso-5-predicción-por-intervalos">Paso 5: Predicción por intervalos</h3>
-<p>Vamos a aclarar también el paso 5.</p>
 <p>Partimos de <span class="math inline">\(n\)</span> predicciones a <span class="math inline">\(h\)</span> periodos vista (<span class="math inline">\(\hat y_{T+h|T}^1,\; \hat y_{T+h|T}^2,\; \ldots,\; \hat y_{T+h|T}^n\)</span>) y queremos obtener a partir de ellas el intervalo de confianza.</p>
 <p>Supongamos que el nivel de confianza deseado es del 95%. Entonces, debemos calcular para las predicciones el percentil 2.5% y 97.5%. Recuerda que el percentil 2.5% es el valor numérico que deja un 2.5% de las predicciones por debajo de él; y que el percentil 97.5% es el valor numérico que deja un 97.5% de las predicciones por debajo de él. La función de <code>R</code> <code>quantile()</code> permite obtener estos valores.</p>
 <p>Si denominamos <span class="math inline">\(l_h\)</span> al percentil 2.5% y <span class="math inline">\(u_h\)</span> al percentil 97.5%, el intervalo de confianza de la predicción a <span class="math inline">\(h\)</span> periodos vista es <span class="math inline">\([l_h,\; u_h]\)</span>.</p>
@@ -416,7 +416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(nacimientos) <span class="sc">+</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(bootseries, <span class="at">colour=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">autolayer</span>(nacimientos, <span class="at">colour=</span><span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Bootstrapped series"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Bebés"</span>) <span class="sc">+</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">""</span>) <span class="sc">+</span></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">guides</span>(<span class="at">colour=</span><span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">

@@ -352,17 +352,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="imputación-de-valores-perdidos" class="level1 unnumbered">
 <h1 class="unnumbered">Imputación de valores perdidos</h1>
-<p>No existe una <em>mejor forma de imputar</em>. El proceso de imputación más adecuado dependerá, entre otros factores, de la naturaleza de la base de datos (corte transversal, longitudinal o panel), de la distribución variable (estacionaria, unimodal…) y del propio concepto que recoge la variable (exportaciones, temperatura, frecuencia…).</p>
+<p>No existe una <em>mejor forma de imputar</em>. El proceso de imputación más adecuado dependerá, entre otros factores, de la naturaleza de la base de datos (corte transversal, longitudinal o panel), de la distribución de la variable (estacionaria, unimodal…) y del propio concepto que recoge la variable (exportaciones, temperatura, frecuencia…).</p>
 <p>Como regla general, las técnicas sencillas de imputación (poca manipulación de datos y poco tiempo de computación) suelen ser tan eficaces como las más complejas, que requerirán mucho más tiempo de computación. Además, el tiempo y coste dedicado a la imputación debe ser acorde con la relevancia del análisis que se está realizando.</p>
 <p>Si en algún momento necesitas trabajar profesionalmente con series temporales con datos perdidos, te recomiendo el paquete <code>imputeTS</code> que puedes descargarte desde <a href="https://cran.r-project.org/web/packages/imputeTS/index.html">CRAN</a>.</p>
 <p>Aquí vamos a ser más modestos y usar la función <code>na.interp</code> del paquete <code>forecast</code> que usa una adaptación para series temporales del método de imputación denominado <em>interpolación lineal</em>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Imputar e interpolar son dos conceptos estadísticos que, sin ser del todo equivalente, usaremos como tal en este contexto.</p>
 <p>El método de interpolación lineal es uno de los más sencillos que existen y consiste en sustituir un valor perdido por el valor estimado con una regresión lineal obtenida a partir de los puntos vecinos del valor perdido. Para series sin estacionalidad este es el método de imputación que se aplica.</p>
 <p>Para series con estacionalidad, primero se descompone la serie (aplicando la versión robusta de <code>stl</code>). Después, se aplica la interpolación lineal a la componente de la tendencia. Por último se vuelven a combinar todas las componentes –tendencia imputada, estacionalidad y error– para obtener la nueva serie imputada.</p>
+<p>La función <code>na.interp</code> devuelve la misma serie temporal donde los valores perdidos se han sustituido por sus valores imputados.</p>
 <p>Veamos como queda la serie de dinero extraído de una cajero tras imputar los valores perdidos. La <a href="#fig-Perdidos">Figura&nbsp;2</a> muestra la serie original a la que se ha superpuesto un punto sobre cada dato diario. Los dos datos imputados aparecen como puntos rojos.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dinero_imputado <span class="ot">&lt;-</span> <span class="fu">na.interp</span>(dinero)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dinero, </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(dinero_imputado, </span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>, </span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Euros"</span>,</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
@@ -372,8 +373,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">time</span>(dinero)[<span class="fu">is.na</span>(dinero)][<span class="dv">2</span>], </span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> dinero_imputado[<span class="fu">is.na</span>(dinero)][<span class="dv">2</span>]),</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">colour =</span> <span class="st">"Serie"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="st">"red"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-Perdidos" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -392,7 +392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Un valor atípico es una observación que difiere sustancialmente de la mayoría de las observaciones. El concepto de atípico es subjetivo y, por tanto, su identificación dependerá no solo de la distribución de las observaciones, sino del criterio del investigador.</p>
 <p>Aunque existen diferentes técnicas para detectar valores atípicos, una de las más ampliamente difundidas y usadas por su sencillez y por no depender de ninguna hipótesis sobre la distribución de los datos es la <em>prueba de Tukey</em>:</p>
 <ul>
-<li><p>Se calculan el primer y el tercer cuartil de las observaciones, que denominaremos <span class="math inline">\(Q_1\)</span> y <span class="math inline">\(Q_2\)</span> respectivamente. Recuerda que <span class="math inline">\(Q_1\)</span> el el valor que deja por debajo un 25% de las observaciones y <span class="math inline">\(Q_3\)</span> es el valor que deja por debajo el 75% de las observaciones. Es decir, entre <span class="math inline">\(Q_1\)</span> y <span class="math inline">\(Q_3\)</span> están el 50% de las observaciones.</p></li>
+<li><p>Se calculan el primer y el tercer cuartil de las observaciones, que denominaremos <span class="math inline">\(Q_1\)</span> y <span class="math inline">\(Q_3\)</span> respectivamente. Recuerda que <span class="math inline">\(Q_1\)</span> el el valor que deja por debajo un 25% de las observaciones y <span class="math inline">\(Q_3\)</span> es el valor que deja por debajo el 75% de las observaciones. Es decir, entre <span class="math inline">\(Q_1\)</span> y <span class="math inline">\(Q_3\)</span> están el 50% de las observaciones.</p></li>
 <li><p>Se obtiene el rango intercuartil <span class="math inline">\(IQR = Q_3 - Q_1\)</span>.</p></li>
 <li><p>Se define como valor atípico cualquier valor menor que <span class="math inline">\(Q_1 - 3\cdot IQR\)</span> o mayor que <span class="math inline">\(Q_3 + 3\cdot IQR\)</span>.</p></li>
 </ul>
@@ -402,7 +402,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Vamos a usar la función <code>tsoutliers</code> del paquete <code>forecast</code> para identificar los valores atípicos y proponer un posible valor de imputación. Esta función usa la prueba de Tukey arriba definida para identificar los valores atípicos<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> y usa la función <code>na.interp</code> para obtener los valores de imputación.</p>
 <p>Veamos la aplicación de esta función en la serie de exportaciones.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tsoutliers</span>(exportaciones)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>(atipicos <span class="ot">&lt;-</span> <span class="fu">tsoutliers</span>(exportaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$index
 [1]  99 112 157
@@ -413,7 +413,7 @@ $replacements
 </div>
 <p>La función <code>tsoutliers</code> identifica tres valores atípicos en las posiciones 99, 112 y 157 de la serie. La observación 99 corresponde a marzo de 2007, muy visible en el gráfico, y las otras dos a febrero de 2008 y enero de 2012. Los valores originales para estas fechas eran</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>exportaciones[<span class="fu">c</span>(<span class="dv">99</span>, <span class="dv">112</span>, <span class="dv">157</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>exportaciones[atipicos<span class="sc">$</span>index]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1894 1417 1773</code></pre>
 </div>

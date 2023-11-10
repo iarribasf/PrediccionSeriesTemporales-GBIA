@@ -379,7 +379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Para este análisis consideraremos la serie hasta diciembre de 2019, eliminando el periodo afectado por la pandemia de Covid-19. Posteriormente usaremos las predicciones para los años 2020 a 2022 para cuantificar el efecto de la pandemia sobre las pernoctaciones y su impacto económico.</p>
+<p>Para este análisis consideraremos la serie hasta diciembre de 2019, eliminando el periodo afectado por la pandemia de Covid-19. Posteriormente usaremos las predicciones para los años 2020 a 2022 para cuantificar el efecto de la pandemia sobre las pernoctaciones.</p>
 <p><br>
 <br>
 </p>
@@ -413,7 +413,7 @@ Training set error measures:
 Training set 3.260448 11.79475 8.892639 1.105104 3.695004 0.9500814 0.2705811</code></pre>
 </div>
 </div>
-<p>Si se estima el modelo sin imponer ninguna restricción, <code>ets</code> identifica como modelo óptimo ETS(M,N,N) donde el parámetro <span class="math inline">\(\alpha\)</span> es igual a 0.2. Es decir, el mejor modelo de alisado es: <span class="math inline">\(y_{t+1} = y_t \cdot (1+ \varepsilon_{t+1})\)</span>. El error porcentual cometido (3.7%) es similar al estimado para el método ingenuo I (3.9%). La diferencia se debe a que <span class="math inline">\(\alpha\)</span> no es exactamente 1.</p>
+<p>Si se estima el modelo sin imponer ninguna restricción, <code>ets</code> identifica como modelo óptimo ETS(A,N,N) donde el parámetro <span class="math inline">\(\alpha\)</span> es igual a 1. Es decir, el mejor modelo de alisado es: <span class="math inline">\(y_{t+1} = y_t + \varepsilon_{t+1}\)</span>. El error porcentual cometido (3.7%) es similar al estimado para el método ingenuo I (3.9%). La diferencia se debe a que <span class="math inline">\(\alpha\)</span> no es exactamente 1.</p>
 <p>Las previsiones para los próximos cinco años serían</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">forecast</span>(PernoctacionesAnualEts, </span>
@@ -568,7 +568,7 @@ Dec 2020       13920455 12043305 15797604</code></pre>
 </div>
 </div>
 </div>
-<p>Las predicciones no muestran tendencia. (Véase <a href="#fig-PernoctacionesETSPre">Figura&nbsp;5</a>.)</p>
+<p>Dado que el modelo estimado (MNM) no tiene tendencia, las predicciones tampoco muestran tendencia. (Véase <a href="#fig-PernoctacionesETSPre">Figura&nbsp;5</a>.)</p>
 <p>Podemos ahora evaluar el efecto que la pandemia de la Covid-19 tuvo sobre las pernoctaciones.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(Pernoctaciones <span class="sc">-</span> PernoctacionesEtsPre<span class="sc">$</span>mean, <span class="at">FUN =</span> sum)<span class="sc">/</span><span class="dv">1000000</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -598,7 +598,12 @@ Frequency = 1
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">colour =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="sc">-</span><span class="dv">2</span>, <span class="dv">2</span> ,<span class="dv">3</span>)<span class="sc">*</span>sderror, </span>
 <span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">colour =</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="fu">seq</span>(<span class="dv">2000</span>, <span class="dv">2020</span>, <span class="dv">2</span>)) </span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>(error)[<span class="fu">abs</span>(error) <span class="sc">&gt;</span> <span class="dv">3</span> <span class="sc">*</span> sderror]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2005.250 2011.250 2013.333 2017.250</code></pre>
+</div>
 <div class="cell-output-display">
 <div id="fig-PernoctacionesETSError" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -609,6 +614,14 @@ Frequency = 1
 </div>
 </div>
 <p>Se observan cuatro meses en los que el residuo supera las tres desviaciones típicas: abril de 2005, 2011 y 2017, y mayo de 2013. Además, en abril de 2002 el residuo está cercano a las tres desviaciones típicas. La causa de los errores negativos elevados en abril de 2002 y 2005 es que la Semana Santa cayó en marzo, de forma que el turismo de Semana Santa se trasladó ese mes y en abril hubo menos pernoctaciones de las esperadas.</p>
+<p>La prueba de Tukey no identifica ningún valor atípico.</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>atipicos <span class="ot">&lt;-</span> <span class="fu">tsoutliers</span>(error)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">time</span>(error)[atipicos<span class="sc">$</span>index]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>numeric(0)</code></pre>
+</div>
+</div>
 <p><br>
 </p>
 </section>
@@ -617,34 +630,34 @@ Frequency = 1
 <p>Ya hemos visto que el modelo comete un error próximo al 2.6%. Este valor es la estimación del <em>error en la previsión intramuestral y a un periodo vista</em>. A fin de poder estimar mejor la capacidad predictiva del modelo vamos a estimar <em>el error de previsión extramuestral según el horizonte temporal</em>.</p>
 <p>Asumimos que se precisan diez años para hacer una buena estimación, <span class="math inline">\(k=120\)</span>, y que el horizonte temporal es un año, <span class="math inline">\(h = 12\)</span> meses.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                 </span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                  </span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(Pernoctacionesb)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h          </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"MNM"</span>)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  fcast<span class="ot">&lt;-</span><span class="fu">forecast</span>(fit, <span class="at">h =</span> h)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>  mapeAlisado[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>errorAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>errorAlisado</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">120</span>                 </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>h <span class="ot">&lt;-</span> <span class="dv">12</span>                  </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>TT <span class="ot">&lt;-</span> <span class="fu">length</span>(Pernoctacionesb)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>s <span class="ot">&lt;-</span> TT <span class="sc">-</span> k <span class="sc">-</span> h          </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>mapeAlisado <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, s <span class="sc">+</span> <span class="dv">1</span>, h)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">0</span><span class="sc">:</span>s) {</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  train.set <span class="ot">&lt;-</span> <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k)</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  test.set <span class="ot">&lt;-</span>  <span class="fu">subset</span>(Pernoctacionesb, <span class="at">start =</span> i <span class="sc">+</span> k <span class="sc">+</span> <span class="dv">1</span>, <span class="at">end =</span> i <span class="sc">+</span> k <span class="sc">+</span> h)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  fit <span class="ot">&lt;-</span> <span class="fu">ets</span>(train.set, <span class="at">model =</span> <span class="st">"MNM"</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  fcast<span class="ot">&lt;-</span><span class="fu">forecast</span>(fit, <span class="at">h =</span> h)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  mapeAlisado[i <span class="sc">+</span> <span class="dv">1</span>,] <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span><span class="fu">abs</span>(test.set <span class="sc">-</span> fcast<span class="sc">$</span>mean)<span class="sc">/</span>test.set</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>errorAlisado <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeAlisado)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>errorAlisado</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 3.013355 3.768883 4.163453 4.246792 4.372550 4.506715 4.654520 5.179270
  [9] 5.440347 5.329751 5.059357 4.895968</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> errorAlisado)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Horizonte temporal de predicción"</span>) <span class="sc">+</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"MAPE"</span>) <span class="sc">+</span></span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">6</span>) <span class="sc">+</span> </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> errorAlisado)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Horizonte temporal de predicción"</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"MAPE"</span>) <span class="sc">+</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">6</span>) <span class="sc">+</span> </span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div id="fig-PernoctacionesETSOPM" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
@@ -654,7 +667,7 @@ Frequency = 1
 </div>
 </div>
 </div>
-<p>La <a href="#fig-PernoctacionesETSOPM">Figura&nbsp;7</a> muestra el error de previsión extramuestral según el horizonte de previsión. Se observa como para horizontes de predicción de uno a nueve meses el error de predicción aumenta según aumenta el horizonte de predicción, pasando del 3% para predicciones a un mes vista hasta el 5.4% para predicciones a nueve meses vista.</p>
+<p>La <a href="#fig-PernoctacionesETSOPM">Figura&nbsp;7</a> muestra el error de previsión extramuestral según el horizonte de previsión. Se observa como para horizontes de predicción de uno a nueve meses el error de predicción aumenta según lo hace el horizonte de predicción, pasando del 3% para predicciones a un mes vista hasta el 5.4% para predicciones a nueve meses vista.</p>
 <p>Sin embargo, para previsiones a más largo plazo el error de predicción decrece, hasta situarse en el 4.9% en las previsiones a un año vista.</p>
 <p><br>
 <br>
@@ -686,37 +699,37 @@ Frequency = 1
 <tr class="odd">
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">Ninguna</td>
-<td style="text-align: left;">MAM</td>
+<td style="text-align: left;">MNM</td>
 <td style="text-align: left;">Máxima verosimilitud</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">Ninguna</td>
-<td style="text-align: left;">MAM</td>
+<td style="text-align: left;">MNM</td>
 <td style="text-align: left;">Mínimo error en previsiones a 2 periodos vista</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
 <td style="text-align: left;">Logaritmo</td>
-<td style="text-align: left;">AAA</td>
+<td style="text-align: left;">ANA</td>
 <td style="text-align: left;">Máxima verosimilitud</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">4</td>
 <td style="text-align: left;">Logaritmo</td>
-<td style="text-align: left;">AAA</td>
+<td style="text-align: left;">ANA</td>
 <td style="text-align: left;">Mínimo error en previsiones a 2 periodos vista</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">Pernoctaciones por día</td>
-<td style="text-align: left;">MAM</td>
+<td style="text-align: left;">MNM</td>
 <td style="text-align: left;">Máxima verosimilitud</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">6</td>
 <td style="text-align: left;">Pernoctaciones por día</td>
-<td style="text-align: left;">MAM</td>
+<td style="text-align: left;">MNM</td>
 <td style="text-align: left;">Mínimo error en previsiones a 2 periodos vista</td>
 </tr>
 </tbody>
@@ -742,9 +755,9 @@ Frequency = 1
 </div>
 </div>
 </div>
-<p>De la <a href="#fig-PernoctacionesOtros">Figura&nbsp;8</a> deducimos que aunque todos los métodos resultan razonablemente equivalentes en el corto y largo plazo, en el plazo medio las diferencias pueden ser significativas: la mayor diferencia entre los modelos se da para la previsión a entre los 5 y los 9 meses vista y es superior a 0.5 puntos porcentuales. Si queremos entrar en matices:</p>
+<p>De la <a href="#fig-PernoctacionesOtros">Figura&nbsp;8</a> deducimos que aunque todos los métodos resultan razonablemente equivalentes en el corto y largo plazo, en el plazo medio las diferencias pueden ser significativas. La mayor diferencia entre los modelos se da para la previsión a entre los 5 y los 10 meses vista y es superior a 0.5 puntos porcentuales. Si queremos entrar en matices:</p>
 <ul>
-<li>Globalmente los modelos que ofrecen mejores previsiones son los modelos 2 y 6, que minimizan el error en previsiones a 2 periodos, en primer modelo usando Pernoctaciones y en segundo usando Pernoctaciones por día.</li>
+<li>Globalmente los modelos que ofrecen mejores previsiones son los modelos 2 y 6, que minimizan el error en previsiones hasta 3 periodos, en primer modelo usando Pernoctaciones y en segundo usando Pernoctaciones por día.</li>
 <li>A medio plazo el modelo 3 resulta tan competente como los modelos 2 y 6.</li>
 </ul>
 <p>Es decir, tanto la estrategia de predecir la serie de Pernoctaciones medias por día, (en lugar de la serie original) como la de usar como criterio para estimar los parámetros del modelo la minimización del error de previsión a dos periodos vista mejoran la calidad de las previsiones extramuestrales.</p>

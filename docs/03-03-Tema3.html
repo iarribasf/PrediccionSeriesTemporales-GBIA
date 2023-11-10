@@ -403,7 +403,7 @@ div.csl-indent {
 </section>
 <section id="criterios-de-calidad" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Criterios de calidad</h1>
-<p>En este tema y en los siguientes se verán diferentes métodos para predecir una serie temporal. Así, es preciso definir criterios de bondad de ajuste que permitan estimar tanto la calidad del ajuste como de las predicciones de un método.</p>
+<p>En este tema y en los siguientes se verán diferentes métodos para predecir una serie temporal. Así, es preciso definir criterios que permitan estimar tanto la calidad del ajuste (bondad de ajuste) como la precisión de las predicciones de un método dado.</p>
 <blockquote class="blockquote">
 <p>“The rankings of the performance of the various methods vary according to the accuracy measure being used.” <span class="citation" data-cites="Makridakis00">Makridakis and Hibon (<a href="#ref-Makridakis00" role="doc-biblioref">2000</a>)</span></p>
 </blockquote>
@@ -418,7 +418,7 @@ div.csl-indent {
 <ul>
 <li>Así, <span class="math inline">\(\hat{y}_{t+1|t}\)</span> es la <strong>previsión un periodo adelante</strong> o a un periodo vista. Es decir, la previsión de la serie en el periodo <span class="math inline">\(t+1\)</span> desde el periodo <span class="math inline">\(t\)</span>.</li>
 </ul>
-<p>Por simplicidad denotaremos a <span class="math inline">\(\hat{y}_{t+1|t}\)</span> como <span class="math inline">\(\hat{y}_{t+1}\)</span>; y como <span class="math inline">\(\hat{y}_{t}\)</span> a la previsión en <span class="math inline">\(t\)</span>, con datos hasta el periodo <span class="math inline">\(t-1\)</span> (<span class="math inline">\(\hat{y}_{t} = \hat{y}_{t|t-1}\)</span>).</p>
+<p>Por simplicidad denotaremos a <span class="math inline">\(\hat{y}_{t+1|t}\)</span> como <span class="math inline">\(\hat{y}_{t+1}\)</span>, y como <span class="math inline">\(\hat{y}_{t}\)</span> a la previsión en <span class="math inline">\(t\)</span> con datos hasta el periodo <span class="math inline">\(t-1\)</span> (<span class="math inline">\(\hat{y}_{t} = \hat{y}_{t|t-1}\)</span>).</p>
 <p>Se define como <strong>error de previsión</strong> a un periodo vista a <span class="math display">\[\hat{e}_t=y_t-\hat{y}_t,\]</span> de forma que la serie <span class="math inline">\(\{\hat{e}_t\}_{t=1}^T\)</span> nos permitirá definir varios criterios de calidad de ajuste.</p>
 <p><br>
 </p>
@@ -452,9 +452,9 @@ div.csl-indent {
 </ul>
 <p><br>
 </p>
-<p>ME y MPE permiten valorar el sesgo de las predicciones (que estas estén sistemáticamente por encima o por debajo de los valores reales).</p>
+<p>ME y MPE permiten valorar el sesgo de las predicciones (que estén sistemáticamente por encima o por debajo de los valores reales).</p>
 <ul>
-<li>Lo esperado es un valor cercano a cero (con relación al valor medio de la serie). Valores muy alejados de cero son indicadores de sesgo de predicción.</li>
+<li>Lo esperado es un valor cercano a cero (en el caso de ME con relación al valor medio de la serie). Valores muy alejados de cero son indicadores de sesgo de predicción.</li>
 </ul>
 <p>RMSE y MAE indican el error medio cometido, medido en las mismas unidades que la serie temporal.</p>
 <ul>
@@ -489,12 +489,12 @@ Cálculo del intervalo de confianza de las predicciones
 <p>Ve a la Píldora <em>Bootstrapping para intervalos de predicción</em> para saber más sobre las fórmulas usadas para estimar el intervalo de confianza de las predicciones y alternativas de cálculo cuando estas fórmulas no son válidas.</p>
 </div>
 </div>
-<p>Las <em>medias</em> se pueden sustituir por <em>medianas</em>. Esto es especialmente útil cuando para algunas observaciones hay errores atípicamente altos.</p>
+<p>En todas las fórmulas de las medidas de precisión las <em>medias</em> se pueden sustituir por <em>medianas</em>. Esto es especialmente útil cuando para algunas observaciones hay errores atípicamente altos.</p>
 <p><br>
 </p>
 <p>Si para realizar la predicción del periodo <span class="math inline">\(t\)</span> se usa una metodología que utiliza datos incluido dicho periodo, se hablará de <strong>predicción intramuestral y error intramuestral</strong> (o de ajuste). En caso contrario, si la predicción del periodo <span class="math inline">\(t\)</span> usa una metodología que solo necesita de datos hasta el periodo <span class="math inline">\(t-1\)</span>, se hablará de <strong>predicción y error extramuestral</strong>.</p>
 <p>Los indicadores de calidad que se basan en predicciones intramuestrales a un periodo vista presentan dos problemas. Primero, evalúan el error de predicción a un periodo vista, cuando en muchas situaciones reales las predicciones se realizan sobre un horizonte temporal más amplio. Segundo, son errores intramuestrales, resultantes de predecir los mismos datos que ha usado el método para calcular la predicción y, por tanto, sobrestiman la capacidad predictiva del modelo.</p>
-<p>Veremos en el epígrafe 4 de este tema métodos de evaluación de la calidad de las predicciones que superan estas limitaciones.</p>
+<p>Veremos en el epígrafe 4 de este tema métodos de evaluación de la precisión de las predicciones que superan estas limitaciones.</p>
 <p><br>
 <br>
 </p>
@@ -531,7 +531,7 @@ Cálculo del intervalo de confianza de las predicciones
 <p><strong>Método ingenuo II</strong>: <span class="math inline">\(\hat{y}_{T+h}=y_T + h(y_T-y_{T-1})\)</span>.</p>
 <ul>
 <li>La predicción <span class="math inline">\(h\)</span> periodos adelante es la <strong>última observación</strong> disponible más <span class="math inline">\(h\)</span> veces el <strong>último incremento</strong> observado.</li>
-<li>No tiene función en <code>R</code>, pero se podría emular mediante la función <code>ets</code> (véase epígrafe de 5.5 del tema 5, Alisado exponencial de Holt).</li>
+<li>No tiene función en <code>R</code>, pero se podría emular mediante la función <code>ets</code> (véase epígrafe de 5 del tema 5, Alisado exponencial de Holt).</li>
 </ul>
 <p><strong>Método de la deriva</strong>: <span class="math inline">\(\hat{y}_{T+h}=y_T+h\frac{y_T - y_1}{T-1}\)</span>.</p>
 <ul>
@@ -726,7 +726,7 @@ Interpretación de ACF1
 Training set -1.335754 44.65499 31.50877 -0.441412 4.680008    1 0.7799481</code></pre>
 </div>
 </div>
-<p>La <a href="#fig-electricidadsencillo">Figura&nbsp;3</a> muestra la serie y la predicción a cuatro semanas vista. Debido a que la semana de referencia para predecir es la semana de Navidad, donde el consumo eléctrico es inferior al usual, las predicciones resultan ser claramente incorrectas. Este es un buen ejemplo de la diferencia entre calidad de ajuste y calidad de las predicciones.</p>
+<p>La <a href="#fig-electricidadsencillo">Figura&nbsp;3</a> muestra la serie y la predicción a cuatro semanas vista. Debido a que la semana de referencia para predecir es la semana de Navidad, donde el consumo eléctrico es inferior al usual, las predicciones resultan ser claramente incorrectas. Este es un buen ejemplo de la diferencia entre calidad de ajuste y precisión de las predicciones.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">autoplot</span>(snaive.electricidad,</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">""</span>,</span>
@@ -777,7 +777,7 @@ Training set      0.00  5863.85  4279.52  -0.05  6.53 0.87 -0.19        NA
 Test set     -15817.32 15867.44 15817.32 -26.44 26.44 3.23 -0.21       6.4</code></pre>
 </div>
 </div>
-<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intramuestral</strong> de <strong>1993 a 2012</strong> es del 6.5%; mientras que el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extramuestral</strong> de <strong>2014 a 2019</strong> es del 26.4%. Ademas, para el periodo extramuestral el error medio (ME) es negativo y muy elevado, un indicativo de que las previsiones están segadas (sobrestiman la realidad). En resumen, la calidad del modelo se deteriora muy rápidamente en cuanto nos salimos de las condiciones óptimas.</p>
+<p>Atendiendo al MAPE se tiene que el error de <strong>previsión a un periodo vista</strong> en el <strong>periodo intramuestral</strong> de <strong>1993 a 2012</strong> es del 6.5%; mientras que el error de <strong>previsión a largo plazo</strong> en el <strong>periodo extramuestral</strong> de <strong>2013 a 2019</strong> es del 26.4%. Ademas, para el periodo extramuestral el error medio (ME) es negativo y muy elevado, un indicativo de que las previsiones están segadas (sobrestiman la realidad). En resumen, la calidad del modelo se deteriora muy rápidamente en cuanto nos salimos de las condiciones óptimas.</p>
 <p>Un gráfico puede ayudar a entender este proceso de validación. En la <a href="#fig-librostraintest">Figura&nbsp;4</a>:</p>
 <ul>
 <li>La línea de puntos vertical separa el periodo muestral (1993-2012) usado para estimar el modelo, del periodo extramuestral (2013-2019) usado sólo para hacer las previsiones.</li>
@@ -839,7 +839,7 @@ Test set     -1869.89 2356.87 1870.11 -6.96 6.96 1.35 0.52      1.38</code></pre
 </div>
 </div>
 </div>
-<p>Las previsiones extramuestrales muestran una menor pendiente que los casos reales de nacimientos. Por una lado, el periodo de previsión contiene el atípico año de la pandemia; y, por otro lado, conforme se avanza en el horizonte temporal las previsiones se van alejando de la realidad y el error extramuestral es del 7.0%, muy alejado del error de estimación intramuestral de 3.6%.</p>
+<p>Las previsiones extramuestrales muestran una menor pendiente que los casos reales de nacimientos. Por un lado, el periodo de previsión contiene el atípico año de la pandemia; y, por otro lado, conforme se avanza en el horizonte temporal las previsiones se van alejando de la realidad y el error extramuestral es del 7.0%, duplicando el error de estimación intramuestral de 3.6%.</p>
 </section>
 <section id="serie-demanda-eléctrica-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="serie-demanda-eléctrica-1">Serie Demanda eléctrica</h3>

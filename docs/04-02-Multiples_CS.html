@@ -346,7 +346,7 @@ div.csl-indent {
 <section id="aplicación" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Aplicación</h1>
 <p>La <a href="#fig-Electricidad">Figura&nbsp;1</a> muestra el consumo eléctrico en España en GW para las cuatro semanas de febrero de 2021. Observa que para fechar la serie con doble estacionalidad se usa la función <code>msts</code> (<em>Multi-Seasonal Time Series</em>) en lugar de <code>ts</code>.</p>
-<p>Hay una fuerte componente estacional diaria de orden <span class="math inline">\(24\)</span> con dos picos de consumo, uno hacia las dos y otro hacia las nueve de la tarde; y dos valles, uno hacia las cinco de la madrugada (muy acusado) y otro hacia las seis de la tarde. Además, hay otra componente estacional semanal de orden <span class="math inline">\(24 \times 7 = 168\)</span>, donde el consumo es alto de lunes a viernes, algo mas reducido el sábado y aún menor el domingo.</p>
+<p>Hay una fuerte componente estacional diaria de orden <span class="math inline">\(24\)</span> con dos picos de consumo, uno hacia las dos del mediodía y otro hacia las nueve de la tarde; y dos valles, uno hacia las cinco de la madrugada (muy acusado) y otro hacia las seis de la tarde. Además, hay otra componente estacional semanal de orden <span class="math inline">\(24 \times 7 = 168\)</span>, donde el consumo es alto de lunes a viernes, algo mas reducido el sábado y aún menor el domingo.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>electricidad <span class="ot">&lt;-</span> <span class="fu">read_csv2</span>(<span class="st">"./series/Consumo por hora.csv"</span>)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -383,9 +383,9 @@ div.csl-indent {
 </div>
 </div>
 </div>
-<p>En la <a href="#fig-ElectricidadDes">Figura&nbsp;2</a> aparecen los mismos paneles que has visto en el tema 2 –datos originales, tendencia y residuo–, más los dos paneles correspondientes a las dos componentes estacionales, de orden 24 y 168.</p>
-<p>Para poder interpretar adecuadamente cada serie hay que fijarse en la escala de los ejes verticales. La tendencia apenas cambia en el periodo de análisis. Las dos componentes estacionales oscilan sobre un rango de valores mayor. Dentro de cada día el consumo de electricidad oscila aproximadamente 20 GW entre las horas pico y las valle: en los picos se consumen unos 7.5 GW más que la media diaria, y en los valles unos 12.5 GW menos que la media diaria. Por otro lado, el rango de variación semanal en el consumo también es de aproximadamente 20 GWh: de lunes a viernes se consumen como máximo unos 5 GW más que la media semanal y los domingo unos 15 GWh menos.</p>
-<p>Aunque por defecto <code>mstl</code> permite que la componente estacional varíe en el tiempo, vamos a mostrar un detalle de la componente estacional diaria, semana y su composición para la primera semana de la serie (véase <a href="#fig-ElectricidadCS">Figura&nbsp;3</a>).</p>
+<p>En la <a href="#fig-ElectricidadDes">Figura&nbsp;2</a> aparecen los mismos paneles que has visto en el tema 2 –datos originales, tendencia y residuo–, más los dos paneles correspondientes a las dos componentes estacionales, de orden 24 y 168 (<em>Seasonal24</em> y <em>Seasonal168</em>).</p>
+<p>Para poder interpretar adecuadamente cada serie hay que fijarse en la escala de los ejes verticales. La tendencia apenas cambia en el periodo de análisis. Las dos componentes estacionales oscilan sobre un rango de valores mayor. Dentro de cada día el consumo de electricidad oscila aproximadamente 20 GW entre las horas pico y las valle (<em>Seasonal24</em>): en los picos se consumen unos 7.5 GW más que la media diaria, y en los valles unos 12.5 GW menos que la media diaria. Por otro lado, el rango de variación semanal en el consumo también es de aproximadamente 20 GWh (<em>Seasonal168</em>): de lunes a viernes se consumen como máximo unos 5 GW más que la media semanal y los domingo unos 15 GWh menos.</p>
+<p>Vamos a mostrar un detalle de la componente estacional diaria, semanal y su composición para la primera semana de la serie (véase <a href="#fig-ElectricidadCS">Figura&nbsp;3</a>).</p>
 <div id="fig-ElectricidadCS" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -448,8 +448,8 @@ div.csl-indent {
 <h2 data-number="2.3" class="anchored" data-anchor-id="predicción-a-partir-de-asilado-exponencial-y-series-de-furier"><span class="header-section-number">2.3</span> Predicción a partir de Asilado Exponencial y series de Furier</h2>
 <p>Uno de los inconvenientes del método visto es que estima todos los elementos de cada componente estacional (<span class="math inline">\(24 + 168\)</span> elementos en nuestro ejemplo) como si fueran independientes, sin tener en cuenta que, por lo general, evolucionan siguiendo una suave curva. Véase en el ejemplo de Demanda eléctrica la curva que sigue la estacionalidad diaria, donde la componente de una hora determinada está muy relacionada con la componente de la hora precedente y posterior.</p>
 <p>Algunos métodos alternativos de predicción usan la dependencia observada entre los elementos de una componente estacional para ajustarlos a una curva paramétrica, por ejemplo funciones trigonométricas o series de Fourier.</p>
-<p>Entre los que usan funciones trigonométricas está el implementado en <span class="citation" data-cites="Livera11">Livera, Hyndman, and Snyder (<a href="#ref-Livera11" role="doc-biblioref">2011</a>)</span>. El método de estimación que emplean los autores es complejo, requiere tiempo de computación y no siempre el ajuste obtenido es el más adecuado, así que los resultados pueden ser en ocasiones malos.</p>
-<p>Veamos un ejemplo de la implementación del método de <span class="citation" data-cites="Livera11">Livera, Hyndman, and Snyder (<a href="#ref-Livera11" role="doc-biblioref">2011</a>)</span> con la función <code>tbats</code>. La <a href="#fig-ElectricidadPre2">Figura&nbsp;5</a> muestra la predicción para dos semanas.</p>
+<p>Entre los métodos que usan funciones trigonométricas está el implementado en <span class="citation" data-cites="Livera11">Livera, Hyndman, and Snyder (<a href="#ref-Livera11" role="doc-biblioref">2011</a>)</span>. El método de estimación que emplean los autores es complejo, requiere tiempo de computación y no siempre el ajuste obtenido es el más adecuado, así que los resultados pueden ser en ocasiones malos.</p>
+<p>Veamos un ejemplo de la implementación de este método con la función <code>tbats</code>. La <a href="#fig-ElectricidadPre2">Figura&nbsp;5</a> muestra la predicción para dos semanas.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tmp <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -464,9 +464,9 @@ div.csl-indent {
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Semanas"</span>) <span class="sc">+</span> </span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">6</span>, <span class="at">by =</span> <span class="dv">1</span>))</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.time</span>() <span class="sc">-</span> tmp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>(tiempo <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>() <span class="sc">-</span> tmp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 37.59413 secs</code></pre>
+<pre><code>Time difference of 37.04141 secs</code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-ElectricidadPre2" class="quarto-figure quarto-figure-center anchored">
@@ -478,8 +478,8 @@ div.csl-indent {
 </div>
 </div>
 <p><br>
-<br>
 </p>
+<p>El título de la figura indica el modelo TBATS estimado. Su interpretación precisa la podéis encontrar en <span class="citation" data-cites="Livera11">Livera, Hyndman, and Snyder (<a href="#ref-Livera11" role="doc-biblioref">2011</a>)</span>. Observa que la estimación del modelo ha requerido de 37 segundos.</p>
 <p>Entre los métodos que involucran series de Fourier una propuesta reciente es el modelo Prophet, disponible a través del paquete <code>fable.prophet</code>. Este modelo fue introducido por Facebook (<span class="citation" data-cites="Taylor18">Taylor and Letham (<a href="#ref-Taylor18" role="doc-biblioref">2018</a>)</span>), originalmente para pronosticar datos diarios con estacionalidad semanal y anual, además de efectos calendario. Posteriormente se amplió para cubrir más tipos de datos estacionales.</p>
 <p><br>
 <br>
