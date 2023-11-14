@@ -396,18 +396,18 @@ div.csl-indent {
 <p><strong>Una serie temporal es una variable medida secuencialmente en el tiempo a intervalos equiespaciados</strong>.</p>
 <p>La representaremos por,</p>
 <p><span class="math display">\[\{y_t\}_{t=1}^T=\{y_1,y_2,\ldots,y_T\}.\]</span></p>
-<p>La serie aparece indexada por su fechado <span class="math inline">\(t\)</span> y el subíndice <span class="math inline">\(T\)</span> hará siempre referencia a la fecha del último dato.</p>
+<p>La serie aparece indexada por su fechado <span class="math inline">\(t\)</span> y el valor <span class="math inline">\(T\)</span> hará siempre referencia a la fecha del último dato.</p>
 <p>El fechado varía en su frecuencia, que puede ser anual (baja frecuencia), trimestral, mensual, semanal, diario (alta frecuencia) o disponer casi de un continuo de datos.</p>
 <p><br>
 </p>
 </section>
 <section id="proceso-generador-de-datos" class="level2" data-number="1.2">
 <h2 data-number="1.2" class="anchored" data-anchor-id="proceso-generador-de-datos"><span class="header-section-number">1.2</span> Proceso generador de datos</h2>
-<p>El proceso generador de los datos de una serie temporal es en general desconocido, pero se puede aproximar por un modelo estadístico. Estos modelos se pueden clasificar en tres grandes familias según su naturaleza: deterministas, estocásticos y ambos.</p>
+<p>El proceso generador de los datos de una serie temporal es en general desconocido, pero se puede aproximar por un modelo estadístico. Estos modelos se pueden clasificar en tres grandes familias según su naturaleza: deterministas, estocásticos y mixtos</p>
 <p>En ocasiones las series temporales pueden ser modeladas de forma <strong>determinista</strong> ajustando los datos a funciones matemáticas: <span class="math display">\[y_t=f(t)+\varepsilon_t.\]</span></p>
-<p>En los <strong>procesos estocásticos</strong> las observaciones cercanas en el tiempo tienden a estar (cor)relacionadas y se puede aprovechar esta dependencia para entender la serie y predecirla: <span class="math display">\[y_t=f(y_{t-1},y_{t-2},\ldots)+\varepsilon_t.\]</span></p>
-<p>A veces, ambas situaciones se dan simultáneamente: <span class="math display">\[y_t=f(t,y_{t-1},y_{t-2},\ldots)+\varepsilon_t.\]</span></p>
-<p>La <a href="#fig-procesosgeneradores">Figura&nbsp;1</a> muestra un ejemplo gráfico de estos tres procesos generadores.</p>
+<p>Si las observaciones cercanas en el tiempo tienden a estar (cor)relacionadas, se puede aprovechar esta dependencia para entender la serie y predecirla con un <strong>modelo estocástico</strong>: <span class="math display">\[y_t=f(y_{t-1},y_{t-2},\ldots)+\varepsilon_t.\]</span></p>
+<p>A veces, ambas situaciones se dan simultáneamente (<strong>modelos mixtos</strong>): <span class="math display">\[y_t=f(t,y_{t-1},y_{t-2},\ldots)+\varepsilon_t.\]</span></p>
+<p>La <a href="#fig-procesosgeneradores">Figura&nbsp;1</a> muestra un ejemplo gráfico de estos tres modelos estadísticos. La complejidad de la serie es mayor en los modelos con parte estocástica.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-procesosgeneradores" class="quarto-figure quarto-figure-center anchored">
@@ -451,7 +451,7 @@ Ojo con la lectura de datos
 <p>En cualquiera de estas funciones puedes modificar el separador decimal por medio del argumento <code>dec</code>; también puedes usar el argumento <code>sep</code> para indicar el carácter usado como separador de variables.</p>
 </div>
 </div>
-<p>La función <code>ts</code>, de la librería <code>stats</code>, convierte un objeto (vector o matriz) a la clase <em>serie temporal</em>. En este caso seleccionamos solo la segunda columna, la que contiene el número de títulos publicados.</p>
+<p>La función <code>ts</code>, de la librería <code>stats</code>, convierte un objeto (vector o matriz) en la clase <em>serie temporal</em>. En este caso seleccionamos solo la segunda columna, la que contiene el número de títulos publicados.</p>
 <ul>
 <li>Con <code>start</code> indicamos el fechado del primer dato.</li>
 <li>Con <code>frequency</code> indicamos la frecuencia, que en este caso es un dato por año.</li>
@@ -522,7 +522,7 @@ Nombre del fichero y nombre de la serie
 </div>
 <p>En este caso:</p>
 <ul>
-<li>Con <code>start</code> indicamos que el primer dato es enero de 1975. También sería correcto <code>start = 1975</code>. Si el primer dato fuera, por ejemplo, marzo de 1975, deberíamos poner <code>start = c(1975, 3)</code> o <code>start = 1975 + 2/12</code>.</li>
+<li>Con <code>start</code> indicamos que el primer dato es enero de 1975. También sería correcto <code>start = 1975</code>. Si el primer dato fuera, por ejemplo, marzo de 1975, podríamos poner <code>start = c(1975, 3)</code> o <code>start = 1975 + 2/12</code>.</li>
 <li>Con <code>frequency</code> indicamos que se tienen 12 datos (meses) por año. Si la serie fuera trimestral pondríamos <code>frequency = 4</code>.</li>
 </ul>
 <div class="cell" data-layout-align="center">
@@ -648,7 +648,7 @@ Fechado de la serie
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>¿Tienes claro cómo se guarda internamente el fechado de una serie? ¿Qué indican los valores decimales?</p>
+<p>¿Tienes claro cómo R guarda internamente el fechado de una serie? ¿Qué indican los valores decimales?</p>
 </div>
 </div>
 <ul>
@@ -679,6 +679,7 @@ Frequency = 7
 </section>
 <section id="componentes-de-una-serie-temporal-y-su-combinación" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> Componentes de una serie temporal y su combinación</h1>
+<p>Toda serie temporal es la combinación de hasta cinco componentes: tendencia, ciclo, estacionalidad, intervención y residuo.</p>
 <p><br>
 </p>
 <section id="tendencia-t_t" class="level2" data-number="2.1">
@@ -833,9 +834,7 @@ Frequency = 7
 </div>
 </div>
 </div>
-<p><br>
-</p>
-<p>Si el fechado de la serie es de muy alta frecuencia, puede ocurrir que se superponga más de una componente estacional. La <a href="#fig-estacionalidadmultiple">Figura&nbsp;10</a> muestra la serie corresponde a la demanda eléctrica (GW) recogida cada hora durante el mes de febrero de 2021. El eje OX señala el consumo la primera hora de cada día del mes (desde media noche hasta la una de la madrugada). Se aprecia una estacionalidad diaria de orden <span class="math inline">\(24\)</span>, otra semanal de orden <span class="math inline">\(7 \times 24\)</span> y si mostráramos varios años de consumo, también se observaría otra mensual.</p>
+<p>Si el fechado de la serie es de muy alta frecuencia, puede ocurrir que se superponga más de una componente estacional. La <a href="#fig-estacionalidadmultiple">Figura&nbsp;10</a> muestra la serie corresponde a la demanda eléctrica (GW) recogida cada hora durante el mes de febrero de 2021. El eje OX señala el consumo de la primera hora de cada día del mes (desde media noche hasta la una de la madrugada). Se aprecia una estacionalidad diaria de orden <span class="math inline">\(24\)</span>, otra semanal de orden <span class="math inline">\(168 =7 \times 24\)</span> y si mostráramos varios años de consumo, también se observaría otra mensual.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-estacionalidadmultiple" class="quarto-figure quarto-figure-center anchored">
@@ -881,7 +880,7 @@ Series con más de una componente estacional
 </div>
 </div>
 </div>
-<p>En la serie diaria Electricidad cuando un día entre semana es festivo, el consumo se reduce notablemente apareciendo un efecto calendario. Si se trata de un día aislado, el efecto es muy fácil de identificar y analizar. Un ejemplo, observable en la <a href="#fig-intervencionelectricidad">Figura&nbsp;12</a>, es el martes 1 de noviembre de 2021, día de Todos los Santos, identificado con un punto rojo en la figura. Se aprecia que el consumo fue muy inferior al observado el martes precedente y posterior (puntos verdes). Si los festivos abarcan varios días, el efecto sigue siendo perfectamente identificable, pero es más complejo de analizar. Un ejemplo es la última semana de diciembre donde el consumo es muy inferior al observado en las semanas previas debido, por un lado, al efecto del día festivo de Navidad (punto azul) y, por otro lado, al periodo semi-vacacional que estas festividades supone en España. También se aprecia la intervención asociada a la semana que contiene los festivos de la Constitución y la Inmaculada (martes 6 y jueves 8 de diciembre).</p>
+<p>En la serie diaria Electricidad cuando un día entre semana es festivo, el consumo se reduce notablemente apareciendo un efecto calendario. Si se trata de un día aislado, el efecto es muy fácil de identificar y analizar. Un ejemplo, observable en la <a href="#fig-intervencionelectricidad">Figura&nbsp;12</a>, es el martes 1 de noviembre de 2022, día de Todos los Santos, identificado con un punto rojo en la figura. Se aprecia que el consumo fue muy inferior al observado el martes precedente y posterior (puntos verdes). Si los festivos abarcan varios días, el efecto sigue siendo perfectamente identificable, pero es más complejo de analizar. Un ejemplo es la última semana de diciembre donde el consumo es muy inferior al observado en las semanas previas debido, por un lado, al efecto del día festivo de Navidad (punto azul) y, por otro lado, al periodo semi-vacacional que estas festividades supone en España. También se aprecia la intervención asociada a la semana que contiene los festivos de la Constitución y la Inmaculada (martes 6 y jueves 8 de diciembre).</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div id="fig-intervencionelectricidad" class="quarto-figure quarto-figure-center anchored">
@@ -896,15 +895,15 @@ Series con más de una componente estacional
 <dl>
 <dt><em>Pulso (Additive Outlier, AO)</em></dt>
 <dd>
-<p>En un periodo aislado la serie toma un valor anómalo. Por ejemplo, un día entre semana es festivo y la demanda eléctrica es inferior a la usual. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel derecho.</p>
+<p>En un periodo aislado la serie toma un valor anómalo (véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel derecho). Por ejemplo, un día entre semana es festivo y la demanda eléctrica es inferior a la usual.</p>
 </dd>
 <dt><em>Cambio transitorio (Transitory Change, TC)</em></dt>
 <dd>
-<p>En un periodo un <em>shock</em> genera un valor anómalo en la serie y el efecto del <em>shock</em> va desapareciendo poco a poco. Por ejemplo, las redes sociales ponen de moda un producto que temporalmente aumenta sus ventas, pero conforme pasa el tiempo los consumidores se olvidan del producto y sus ventas vuelven poco a poco a su nivel natural. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel central.</p>
+<p>En un periodo un <em>shock</em> genera un valor anómalo en la serie y el efecto del <em>shock</em> va desapareciendo poco a poco (véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel central). Por ejemplo, las redes sociales ponen de moda un producto que temporalmente aumenta sus ventas, pero conforme pasa el tiempo los consumidores se olvidan del producto y sus ventas vuelven poco a poco a su nivel previo</p>
 </dd>
 <dt><em>Cambio permanente (Level Shift, LS)</em></dt>
 <dd>
-<p>En un periodo la serie cambia de nivel y permanece de forma permanente en este nuevo nivel. Por ejemplo, enfrente de un supermercado abre la competencia, de forma que sus ventas descienden bruscamente de forma permanente. Véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel izquierdo.</p>
+<p>En un periodo la serie cambia de nivel y permanece de forma permanente en este nuevo nivel (véase <a href="#fig-intervenciontipos">Figura&nbsp;13</a>, panel izquierdo). Por ejemplo, enfrente de un supermercado abre la competencia, de forma que sus ventas descienden bruscamente de forma permanente.</p>
 </dd>
 </dl>
 <div class="cell" data-layout-align="center">
@@ -957,7 +956,7 @@ Series con más de una componente estacional
 <p></p><figcaption class="figure-caption">Figura&nbsp;14: Ejemplo de esquema aditivo</figcaption><p></p>
 </figure>
 </div>
-<p>En el <strong>esquema multiplicativo</strong> cada componente supone un incremento porcentual respecto de las demás, <span class="math inline">\(y_t = T_t \cdot S_t \cdot C_t \cdot I_t \cdot R_t\)</span>. La serie Nacimientos es un ejemplo de esquema multiplicativo: en el gráfico superior de la <a href="#fig-esquemamultiplicativo">Figura&nbsp;15</a>, que muestra la serie, se observa que según decrece el número de nacimientos, también decrece la amplitud estacional. Además, en el gráfico inferior cada punto corresponde a un año, en el eje X los nacimientos anuales y en el eje Y la desviación típica de los nacimientos mensuales. En este gráfico se observa un patrón creciente en los puntos, revelando el esquema multiplicativo de la serie.</p>
+<p>En el <strong>esquema multiplicativo</strong> cada componente supone un incremento porcentual respecto de las demás, <span class="math inline">\(y_t = T_t \cdot S_t \cdot C_t \cdot I_t \cdot R_t\)</span>. La serie Nacimientos es un ejemplo de esquema multiplicativo: en el gráfico superior de la <a href="#fig-esquemamultiplicativo">Figura&nbsp;15</a>, que muestra la serie, se observa que según decrece el número de nacimientos, también decrece la amplitud estacional. Además, en el gráfico inferior cada punto corresponde a un año: en el eje X los nacimientos de ese año y en el eje Y la desviación típica de los nacimientos mensuales de ese año. En este gráfico se observa un patrón creciente en los puntos, revelando el esquema multiplicativo de la serie.</p>
 <div id="fig-esquemamultiplicativo" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1074,11 +1073,11 @@ Atención
 <section id="extracción-de-la-estacionalidad" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="extracción-de-la-estacionalidad"><span class="header-section-number">3.3</span> Extracción de la estacionalidad</h2>
 <p>Tenemos varias alternativas gráficas y numéricas para analizar la estacionalidad de una serie. Veamos un ejemplo para la serie Nacimientos.</p>
-<p>Podemos hacer una gráfico de la serie <em>contra</em> cada periodo estacional. Este gráfico permite identificar el efecto de la estacionalidad en la serie y su evolución en el tiempo. Existen varias opciones para este tipo de gráficos, veremos dos de ellas: gráfico de subseries y gráfico de líneas. Para facilitar la interpretación vamos a trabajar con la serie desde el año 2000 hasta el año 2019, que denominaremos <em>nacimientosb</em>.</p>
+<p>Podemos hacer una gráfico de la serie <em>contra</em> cada periodo estacional. Este gráfico permite identificar el efecto de la estacionalidad en la serie y su evolución en el tiempo. Existen varias opciones para este tipo de gráficos, veremos dos de ellas: gráfico de subseries y gráfico de líneas. Para facilitar la interpretación vamos a trabajar con la serie desde el año 2000, que denominaremos <em>nacimientosb</em>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>nacimientosb <span class="ot">&lt;-</span> <span class="fu">window</span>(nacimientos, <span class="at">start =</span> <span class="dv">2000</span>, <span class="at">end =</span> <span class="fu">c</span>(<span class="dv">2019</span>, <span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Veamos primero un ejemplo de gráfico de subseries (<a href="#fig-estacionalsubseriesnacimientos">Figura&nbsp;18</a>) que muestra para cada periodo estacional la subserie de valores de ese periodo y el valor medio de la subserie. Para las series con tendencia y esquema multiplicativo, el valor medio de las subseries (líneas horizontales) puede llevarnos a una interpretación incorrecta de la estacionalidad. (La función <code>monthplot</code> de <code>stats</code> realiza un gráfico similar.)</p>
+<p>Veamos primero un ejemplo de gráfico de subseries (<a href="#fig-estacionalsubseriesnacimientos">Figura&nbsp;18</a>) que muestra para cada periodo estacional la subserie de valores de ese periodo y el valor medio de la subserie (líneas horizontales). Para las series con tendencia y esquema multiplicativo, el valor medio de las subseries puede llevarnos a una interpretación incorrecta de la estacionalidad. La función <code>monthplot</code> de <code>stats</code> realiza un gráfico similar.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggsubseriesplot</span>(nacimientosb) <span class="sc">+</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Nacimientos"</span>) <span class="sc">+</span></span>
@@ -1093,10 +1092,10 @@ Atención
 </div>
 </div>
 </div>
-<p>La <a href="#fig-estacionallineasnacimientos">Figura&nbsp;19</a> muestra el gráfico de líneas. Si se incluye el argumento <code>polar=TRUE</code>, se obtiene una versión tipo <em>tela de araña</em> de este gráfico.</p>
+<p>La <a href="#fig-estacionallineasnacimientos">Figura&nbsp;19</a> muestra el gráfico de líneas. Se observa perfectamente el efecto de la pandemia sobre el número de nacimientos desde noviembre de 2020. Si se incluye el argumento <code>polar=TRUE</code>, se obtiene una versión tipo <em>tela de araña</em> de este gráfico.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggseasonplot</span>(nacimientosb, </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">year.labels=</span><span class="cn">TRUE</span>, </span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggseasonplot</span>(nacimientosb,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">year.labels =</span> <span class="cn">TRUE</span>, </span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">""</span>,</span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">ylab =</span> <span class="st">"Nacimientos"</span>,</span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1550,7 +1549,7 @@ Media movil centrada y no centrada
 </div>
 </div>
 </div>
-<p>También podemos ver las componentes estacionales y verificar que suman 0. Ojo, como la serie empieza un sábado, la primera componente que se muestra es la del sábado y la última la del viernes.</p>
+<p>También podemos ver la componente estacional y verificar que suma 0. Ojo, como la serie empieza un sábado, el valor de la primera componente que se muestra es la del sábado y el valor de la última es la del viernes.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>eleDesAdi<span class="sc">$</span>figure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1603,7 +1602,7 @@ Media movil centrada y no centrada
 </div>
 </div>
 <p>Observa que por tratarse de un esquema multiplicativo en la <a href="#fig-desmulnaci">Figura&nbsp;23</a> la componente estacional se mueve alrededor del valor 1 y debe interpretarse como una variación porcentual. Igualmente, el residuo también gira en torno al valor 1.</p>
-<p>Las componentes estacionales se deben interpretar como incrementos porcentuales: en febrero nacen un 9.1% menos de niños y en octubre un 3.6% más, respecto de la media anual. Además, la suma de las componentes estacionales será 12.</p>
+<p>Los valores de la componente estacional se deben interpretar como incrementos porcentuales: en febrero nacen un 9.1% menos de niños y en octubre un 3.6% más, respecto de la media anual. Además, la suma de los valores de la componente estacional será 12.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>nacDesMul<span class="sc">$</span>figure</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1632,7 +1631,7 @@ Media movil centrada y no centrada
 </ul>
 <p>Su <strong>principal desventaja</strong> es que esta técnica de descomposición solo es válida para esquemas aditivos. Es posible obtener con <code>stl</code> una descomposición multiplicativa descomponiendo primero el logaritmo de la serie, para después calcular la exponencial de las componentes.</p>
 <p>La función <code>stl</code> genera un objeto con la componente <code>$time.series</code> que contiene en columna tres series temporales: <em>seasonal</em>, <em>trend</em> y <em>remainder</em> (de nuevo usa <code>names</code> y <code>str</code> para aprender más).</p>
-<p>Los dos parámetros principales que deben elegirse cuando se utiliza <code>stl</code> son la ventana de tendencia (<code>t.window</code>) y la ventana estacional (<code>s.window</code>). Estos parámetros controlan la rapidez con la que pueden cambiar los componentes de tendencia y estacional con el tiempo. Valores pequeños permiten cambios más rápidos, valores grandes implican que no hay cambios. Ambos parámetros deben ser números impares:</p>
+<p>Los dos parámetros principales que deben elegirse cuando se utiliza <code>stl</code> son la ventana de tendencia (<code>t.window</code>) y la ventana estacional (<code>s.window</code>). Estos parámetros controlan la rapidez con la que pueden cambiar los componentes de tendencia y estacionalidad con el tiempo. Valores pequeños permiten cambios más rápidos, valores grandes implican que no hay cambios. Ambos parámetros deben ser números impares:</p>
 <ul>
 <li><code>t.window</code> es el número de observaciones consecutivas que se deben utilizar al estimar la tendencia. Consulta la ayuda para ver el valor por defecto.</li>
 <li><code>s.window</code> está relacionado con el número observaciones que se deben utilizar al estimar cada valor de la componente estacional. No hay ningún valor por defecto para este parámetro. Establecerlo como <code>periodic</code> equivale a que la componente estacional sea periódica (es decir, idéntica a lo largo de los años). Si es un valor numérico, debe ser impar y mayor o igual a 7.</li>
@@ -1645,11 +1644,11 @@ Media movil centrada y no centrada
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>eleStl <span class="ot">&lt;-</span> <span class="fu">stl</span>(electricidad, </span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">s.window =</span> <span class="st">"periodic"</span>,</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">robust =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eleStl<span class="sc">$</span>time.series)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(eleStl<span class="sc">$</span>time.series, <span class="at">n =</span> <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time Series:
 Start = c(1, 6) 
-End = c(2, 4) 
+End = c(2, 5) 
 Frequency = 7 
           seasonal    trend    remainder
 1.714286 -48.49604 657.5318  -73.8957326
@@ -1657,7 +1656,8 @@ Frequency = 7
 2.000000  13.47988 677.6901    0.8000105
 2.142857  30.94559 688.2962   -1.1918358
 2.285714  33.74203 698.9024  -17.5744007
-2.428571  33.43995 708.8728 -124.3727593</code></pre>
+2.428571  33.43995 708.8728 -124.3727593
+2.571429  28.31260 718.8433  -44.1558555</code></pre>
 </div>
 </div>
 <div class="cell" data-layout-align="center">
@@ -1673,17 +1673,9 @@ Frequency = 7
 </div>
 </div>
 </div>
-<p>Podemos ver numéricamente las componentes estacionales, que de nuevo deben sumar cero.</p>
+<p>Podemos comrpobar que los valores de la componente estacional suman cero.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">seasonal</span>(eleStl), <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Time Series:
-Start = c(1, 6) 
-End = c(2, 5) 
-Frequency = 7 
-[1] -48.49604 -91.42401  13.47988  30.94559  33.74203  33.43995  28.31260</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">head</span>(<span class="fu">seasonal</span>(eleStl), <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">head</span>(<span class="fu">seasonal</span>(eleStl), <span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.0000001466144</code></pre>
 </div>
@@ -1692,12 +1684,12 @@ Frequency = 7
 </p>
 <p>Para Demanda eléctrica hemos obtenido tres estimaciones de la componente estacional: la primera obtenida con <code>tapply</code>, la segunda obtenida con <code>decompose</code> y la tercera con <code>stl</code>. Se puede observar que las tres estimaciones son muy similares, pero no coincidentes, y aunque los métodos de descomposición son preferibles a <code>tapply</code>, ninguna estimación es <em>a priori</em> mejor que otra.</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tapply</span></span>
-<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.numeric</span>(componenteEstacional), <span class="dv">2</span>)</span>
-<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># decompose</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleDesAdi)[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)], <span class="dv">2</span>)</span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="co"># stl</span></span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleStl)[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># tapply</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">as.numeric</span>(componenteEstacional), <span class="dv">2</span>)</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># decompose</span></span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleDesAdi)[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)], <span class="dv">2</span>)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a><span class="co"># stl</span></span>
+<span id="cb54-6"><a href="#cb54-6" aria-hidden="true" tabindex="-1"></a><span class="fu">round</span>(<span class="fu">seasonal</span>(eleStl)[<span class="fu">c</span>(<span class="dv">3</span><span class="sc">:</span><span class="dv">7</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)], <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output cell-output-stdout">
@@ -1834,7 +1826,7 @@ stl       13.48 30.95 33.74 33.44 28.31 -48.50 -91.42</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Todas las funciones gráficas del paquete <code>forecast</code> requieren tener instalado en R la librería <code>ggplot2</code>.</p>
+<p>Todas las funciones gráficas del paquete <code>forecast</code> requieren tener instalada en R la librería <code>ggplot2</code>.</p>
 <p><br>
 <br>
 <br>
