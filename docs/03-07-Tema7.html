@@ -1209,7 +1209,7 @@ Dec 2023       26483.08 24594.34 28516.87</code></pre>
 <section id="identificación-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="identificación-1">Identificación</h3>
 <p>La <a href="#fig-Exportaciones">Figura&nbsp;8</a> muestra dos periodos con una marcada intervención: al inicio de la Gran Recesión (2008-2014) y durante el periodo más duro de la Covid-19 en el año 2020. Además, por la naturaleza de la serie es previsible que exista un efecto días del mes o días laborables y un efecto Semana Santa.</p>
-<p>Si probamos con la función <code>auto.arima</code>, indicando la doble diferenciación, los días del mes y la Semana Santa, no sugiere <span class="math inline">\(ARIMA_{12}(2,1,2)(2,1,2)\)</span>. Demasiado complejo.</p>
+<p>Si probamos con la función <code>auto.arima</code>, indicando la doble diferenciación, los días del mes y la Semana Santa, nos sugiere <span class="math inline">\(ARIMA_{12}(2,1,2)(2,1,2)\)</span>. Demasiado complejo.</p>
 <p>Veamos qué nos indica <code>seas</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">seas</span>(exportaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>

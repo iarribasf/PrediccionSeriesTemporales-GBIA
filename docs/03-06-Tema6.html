@@ -1602,7 +1602,7 @@ sigma^2 = 372.7:  log likelihood = -143.72
 AIC=293.44   AICc=294.26   BIC=297.93</code></pre>
 </div>
 </div>
-<p>La identificación automática sugiere un proceso MA(1) con constante. Tanto el coeficiente de la constante (“mean” en la salida) como el coeficiente del proceso autorregresivo son significativos –su valor supera dos veces su error estándar.</p>
+<p>La identificación automática sugiere un proceso MA(1) con constante. Tanto el coeficiente de la constante (“mean” en la salida) como el coeficiente del proceso en medias móviles son significativos –su valor supera dos veces su error estándar.</p>
 <p>Vamos a ver la gráfica de los residuos de este proceso para identificar rápidamente si hay valores extremos (<a href="#fig-AlimentosError">Figura&nbsp;18</a>).</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>arima001 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(alimentospc, </span>
@@ -1650,19 +1650,18 @@ sigma^2 = 284.8:  log likelihood = -138.86
 AIC=285.73   AICc=287.15   BIC=291.71</code></pre>
 </div>
 </div>
-<p>Se estima el nuevo modelo y se repite el análisis de intervención, apareciendo otros valores extremos en los años 1993, 1995, 1999 y 2022 cuyo efecto es significativo.</p>
+<p>Se estima el nuevo modelo y se repite el análisis de intervención, apareciendo otros valores extremos en 1993, 1995, 1999 y 2022 cuyos efectos son significativos.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>d1993 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span> (<span class="fu">time</span>(alimentospc) <span class="sc">==</span> <span class="dv">1993</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>d1995 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span> (<span class="fu">time</span>(alimentospc) <span class="sc">==</span> <span class="dv">1995</span>)</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>d1999 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span> (<span class="fu">time</span>(alimentospc) <span class="sc">==</span> <span class="dv">1999</span>)</span>
 <span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>d2022 <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">*</span> (<span class="fu">time</span>(alimentospc) <span class="sc">==</span> <span class="dv">2022</span>)</span>
 <span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>arima100 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(alimentospc, </span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">include.constant =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xreg =</span> <span class="fu">cbind</span>(d1993, d1995, d1999, d2020, d2022))</span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>arima100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>arima100 <span class="ot">&lt;-</span> <span class="fu">Arima</span>(alimentospc, </span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>                  <span class="at">order =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>),</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">include.constant =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xreg =</span> <span class="fu">cbind</span>(d1993, d1995, d1999, d2020, d2022))</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>arima100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Series: alimentospc 
 Regression with ARIMA(1,0,0) errors 
