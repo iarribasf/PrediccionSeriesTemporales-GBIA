@@ -1,5 +1,5 @@
 #----------------------------------------------------------
-# CODIGO EJEMPLO 2
+# CODIGO EJEMPLO 2: METODOS SENCILLOS
 #----------------------------------------------------------
 #
 #
@@ -18,109 +18,123 @@ library(ggplot2); theme_set(theme_bw())
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
-Pernoctaciones <- ts(Pernoctaciones[,2], 
+Pernoctaciones <- ts(Pernoctaciones[, 2] / 1000000, 
                      start = 2000, 
-                     freq = 12)
+                     frequency = 12)
 
-autoplot(Pernoctaciones/1000000,
+autoplot(Pernoctaciones,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2022, 2))  
+  scale_x_continuous(breaks= seq(2000, 2024, 2)) 
 #----------------------------------------------------------
 #
 #
 #
 #----------------------------------------------------------
-# Esquema
+# Metodo ingenuo para la serie anual
 #----------------------------------------------------------
-CasosAnual <- aggregate(window(Pernoctaciones, end = c(2019, 12)), FUN = sum)
-DesviacionAnual <- aggregate(window(Pernoctaciones, end = c(2019, 12)), FUN = sd)
+PernoctacionesAnual <- aggregate(Pernoctaciones, FUN = sum)
 
-ggplot() +
-  geom_point(aes(x = CasosAnual, y = DesviacionAnual), size = 2) +
-  xlab("Pernoctaciones anuales") + 
-  ylab("Desviación típica intra-anual") + 
-  ggtitle("") 
-#----------------------------------------------------------
-#
-#
-#
-#----------------------------------------------------------
-# Componentes
-#----------------------------------------------------------
-# Tendencia
-autoplot(aggregate(Pernoctaciones, FUN = sum)/1000000,
+autoplot(PernoctacionesAnual,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
+  scale_x_continuous(breaks= seq(2000, 2024, 2)) 
 
-# Estacionalidad
-ggmonthplot(Pernoctaciones, 
-            xlab = "",
-            ylab = "",
-            main = "") +
-  guides(colour=FALSE)
+# Ajustes por metodos sencillos
+naivePernoctaciones <- naive(PernoctacionesAnual, h = 4)
+derivaPernoctaciones <- rwf(PernoctacionesAnual,  h = 4, drift = TRUE)
 
-# Efecto Covid-19
-ggseasonplot(window(Pernoctaciones, start = c(2018, 1)),
-             year.labels=TRUE, 
-             xlab = "",
-             ylab = "Pernoctaciones",
-             main = "") +
-  guides(colour=FALSE)
-#----------------------------------------------------------
-#
-#
-#
-#----------------------------------------------------------
-# Descomposicion
-#----------------------------------------------------------
-PernoctacionesDesMul <- decompose(window(Pernoctaciones, end = c(2019, 12)),
-                                  type = "mult")
-
-autoplot(PernoctacionesDesMul,
+autoplot(PernoctacionesAnual, series = "Pernoctaciones",
          xlab = "",
-         main = "")
+         ylab = "Noches (millones)",
+         main = "") +
+  autolayer(naivePernoctaciones, series="Ingenuo", PI = FALSE) +
+  autolayer(derivaPernoctaciones, series="Deriva", PI = FALSE) +
+  scale_colour_discrete(limits=c("Pernoctaciones", "Ingenuo", "Deriva")) +
+  labs(colour="Métodos") + 
+  theme(legend.position=c(0.15,0.2))
 
-PernoctacionesDesMul$figure
+# Error de ajuste
+round(accuracy(naivePernoctaciones, test = 1:20), 2)
+round(accuracy(derivaPernoctaciones, test = 1:20), 2)
 
-PernoctacionesDiaDesMul <- decompose(window(Pernoctaciones/monthdays(Pernoctaciones), end = c(2019, 12)), 
-                                     type = "mult")
+# Error con origen de predicciones movil
+k <- 10                  
+h <- 4                 
+TT <- length(PernoctacionesAnual) 
+s <- TT - k - h          
 
-ggplot() +
-  geom_line(aes(x = 1:12, y = PernoctacionesDesMul$figure, colour = "black")) + 
-  geom_line(aes(x = 1:12, y = PernoctacionesDiaDesMul$figure, colour = "red")) + 
-  geom_hline(yintercept = 1, colour = "blue", lty = 2) +
-  ggtitle("") +
-  xlab("") +
-  ylab("Efecto estacional") +
-  scale_x_continuous(breaks= 1:12, 
-                     labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", 
-                                "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) +
-  scale_color_discrete(name = "Componente estacional", 
-                       labels = c("Pernoctaciones", "Pernoctaciones por día")) +
-  theme(legend.position=c(0.2,0.8))
+mapeNaiveI <- matrix(NA, s + 1, h)
+mapeDeriva <- matrix(NA, s + 1, h)
+
+for (i in 0:s) {
+  train.set <- subset(PernoctacionesAnual, start = i + 1, end = i + k)
+  test.set <-  subset(PernoctacionesAnual, start = i + k + 1, end = i + k + h)
+  
+  fcast <- naive(train.set, h = h)
+  mapeNaiveI[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fcast <- rwf(train.set, h = h,  drift = TRUE)
+  mapeDeriva[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+}
+
+mapeNaiveI <- apply(mapeNaiveI, MARGIN = 2, FUN = median)
+mapeDeriva <- apply(mapeDeriva, MARGIN = 2, FUN = median)
+
+mapeNaiveI
+mapeDeriva
+
+# Predicciones
+derivaPernoctaciones
 #----------------------------------------------------------
 #
 #
 #
 #----------------------------------------------------------
-# Analisis del error
+# Metodo ingenuo con estacionalidad
 #----------------------------------------------------------
-error <- log(remainder(PernoctacionesDesMul))
+# Ajuste
+PernoctacionesPre <- snaive(Pernoctaciones, 
+                            h = 48, 
+                            level = 0.95)
 
-sderror <- sd(error, na.rm = TRUE)
+PernoctacionesPre
 
-autoplot(error,
+# Error de ajuste
+accuracy(PernoctacionesPre, test = 1:240)
+
+# Prevision
+autoplot(PernoctacionesPre,
          xlab = "",
-         ylab = "Error",
+         ylab = "Noches",
          main = "",
-         colour = "black") +
-  geom_hline(yintercept = c(3, 2, -2, -3)*sderror, 
-             colour = c("red", "green", "green", "red"),
-             lty = 2) + 
-  scale_x_continuous(breaks= seq(1980, 2020, 4)) 
+         PI = FALSE) +
+  scale_x_continuous(breaks= seq(2000, 2028, 2)) 
 
+# Error con origen de prediccion movil
+k <- 120                 
+h <- 12                  
+TT <- length(Pernoctaciones)  
+s <- TT - k - h          
 
+mapeSnaive <- matrix(NA, s + 1, h)
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  
+  fit <- snaive(train.set, h = h)
+  mapeSnaive[i + 1,] <- 100*abs(test.set - fit$mean)/test.set
+}
+
+mapeSnaive <- apply(mapeSnaive, MARGIN = 2, FUN = median)
+mapeSnaive
+
+ggplot() +
+  geom_line(aes(x = 1:12, y = mapeSnaive)) +
+  ggtitle("") +
+  xlab("Horizonte temporal de predicción") +
+  ylab("MAPE") +
+  scale_x_continuous(breaks= 1:12)

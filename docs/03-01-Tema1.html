@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.353">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,6 +25,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -64,13 +65,42 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -79,9 +109,9 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Predicción con Datos Temporales</span>
     </a>
@@ -92,178 +122,186 @@ div.csl-indent {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Inicio</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./01-Guia-curso.html" rel="" target="">
- <span class="menu-text">Guía del curso</span></a>
+    <a class="nav-link" href="./01-Guia-curso.html"> 
+<span class="menu-text">Guía del curso</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./02-Logistica.html" rel="" target="">
- <span class="menu-text">Logística</span></a>
+    <a class="nav-link" href="./02-Logistica.html"> 
+<span class="menu-text">Logística</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-diapos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Diapos</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-diapos">    
         <li class="dropdown-header">Teoría</li>
         <li>
-    <a class="dropdown-item" href="./03-01-Tema1.html" rel="" target="">
+    <a class="dropdown-item" href="./03-01-Tema1.html">
  <span class="dropdown-text">Tema 1: Introducción</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-02-Tema2.html" rel="" target="">
+    <a class="dropdown-item" href="./03-02-Tema2.html">
  <span class="dropdown-text">Tema 2: Definición</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-03-Tema3.html" rel="" target="">
- <span class="dropdown-text">Tema 3: Métodos sencillos</span></a>
+    <a class="dropdown-item" href="./03-03-Tema3.html">
+ <span class="dropdown-text">Tema 3: Métodos de predicción</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-04-Tema4.html" rel="" target="">
- <span class="dropdown-text">Tema 4: Media móvil</span></a>
+    <a class="dropdown-item" href="./03-04-Tema4.html">
+ <span class="dropdown-text">Tema 4: Series sin tendencia ni estacionalidad</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-05-Tema5.html" rel="" target="">
- <span class="dropdown-text">Tema 5: Alisado</span></a>
+    <a class="dropdown-item" href="./03-05-Tema5.html">
+ <span class="dropdown-text">Tema 5: Evaluación de las predicciones</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-06-Tema6.html" rel="" target="">
- <span class="dropdown-text">Tema 6: ARIMA</span></a>
+    <a class="dropdown-item" href="./03-06-Tema6.html">
+ <span class="dropdown-text">Tema 6: Series sin tendencia y sin estacionalidad</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-07-Tema7.html" rel="" target="">
- <span class="dropdown-text">Tema 7: SARIMA</span></a>
+    <a class="dropdown-item" href="./03-07-Tema7.html">
+ <span class="dropdown-text">Tema 7: Series con tendencia y estacionalidad (Alisado)</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./03-08-Tema8.html">
+ <span class="dropdown-text">Tema 8: Series con tendencia y estacionalidad (Arima)</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Ejemplo de aplicación</li>
         <li>
-    <a class="dropdown-item" href="./03-08-Ejemplo2.html" rel="" target="">
- <span class="dropdown-text">Ejemplo Tema 2</span></a>
+    <a class="dropdown-item" href="./03-10-Ejemplo1.html">
+ <span class="dropdown-text">Ejemplo: Descriptiva</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-09-Ejemplo3.html" rel="" target="">
- <span class="dropdown-text">Ejemplo Tema 3</span></a>
+    <a class="dropdown-item" href="./03-11-Ejemplo2.html">
+ <span class="dropdown-text">Ejemplo: Métodos sencillos</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-10-Ejemplo4.html" rel="" target="">
- <span class="dropdown-text">Ejemplo Tema 4</span></a>
+    <a class="dropdown-item" href="./03-13-Ejemplo3.html">
+ <span class="dropdown-text">Ejemplo: Alisado exponencial</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-11-Ejemplo5.html" rel="" target="">
- <span class="dropdown-text">Ejemplo Tema 5</span></a>
+    <a class="dropdown-item" href="./03-14-Ejemplo4.html">
+ <span class="dropdown-text">Ejemplo: Arima sin estacionalidad</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./03-12-Ejemplo6.html" rel="" target="">
- <span class="dropdown-text">Ejemplo Tema 6</span></a>
-  </li>  
-        <li>
-    <a class="dropdown-item" href="./03-13-Ejemplo7.html" rel="" target="">
- <span class="dropdown-text">Ejemplo Tema 7</span></a>
+    <a class="dropdown-item" href="./03-15-Ejemplo5.html">
+ <span class="dropdown-text">Ejemplo: Arima con estacionalidad</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otro ejemplo</li>
         <li>
-    <a class="dropdown-item" href="./03-14-Ejemplo-Pasajeros.html" rel="" target="">
+    <a class="dropdown-item" href="./03-20-Ejemplo-Pasajeros.html">
  <span class="dropdown-text">Ejemplo de Pasajeros</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-píldoras" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Píldoras</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-píldoras">    
         <li>
-    <a class="dropdown-item" href="./04-01-Bootstrapping.html" rel="" target="">
+    <a class="dropdown-item" href="./04-01-Bootstrapping.html">
  <span class="dropdown-text">Bootstrapping para IC</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-02-Multiples_CS.html" rel="" target="">
+    <a class="dropdown-item" href="./04-02-Multiples_CS.html">
  <span class="dropdown-text">Múltiples componentes estacionales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-03-Redes_neuronales.html" rel="" target="">
+    <a class="dropdown-item" href="./04-03-Redes_neuronales.html">
  <span class="dropdown-text">Predicción con Redes Neuronales</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-04-Series_acotadas.html" rel="" target="">
+    <a class="dropdown-item" href="./04-04-Series_acotadas.html">
  <span class="dropdown-text">Series acotadas</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html" rel="" target="">
+    <a class="dropdown-item" href="./04-05-Valores_perdidos_Outliers.html">
  <span class="dropdown-text">Valores perdidos y outliers</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html" rel="" target="">
+    <a class="dropdown-item" href="./04-06-Covid_Nacimientos.html">
  <span class="dropdown-text">Efecto de la Covid-19 en Nacimientos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-07-Combinando_predicciones.html">
+ <span class="dropdown-text">Combinación de predicciones</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./04-08-Series_interrumpidas.html">
+ <span class="dropdown-text">Series interrumpidas</span></a>
   </li>  
     </ul>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="./05-Recursos-R.html" rel="" target="">
- <span class="menu-text">Recursos de la asignatura</span></a>
+    <a class="nav-link" href="./05-Recursos-R.html"> 
+<span class="menu-text">Recursos de la asignatura</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./06-Evaluacion_Continua.html" rel="" target="">
- <span class="menu-text">Evaluacion Continua</span></a>
+    <a class="nav-link" href="./06-Evaluacion_Continua.html"> 
+<span class="menu-text">Evaluacion Continua</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-más" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Más</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-más">    
         <li class="dropdown-header">R</li>
         <li>
-    <a class="dropdown-item" href="https://cran.r-project.org" rel="" target="">
+    <a class="dropdown-item" href="https://cran.r-project.org">
  <span class="dropdown-text">Dónde está R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rstudio.com" rel="" target="">
+    <a class="dropdown-item" href="https://rstudio.com">
  <span class="dropdown-text">Donde está RStudio</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Markdown</li>
         <li>
-    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/" rel="" target="">
+    <a class="dropdown-item" href="https://bookdown.org/yihui/rmarkdown/">
  <span class="dropdown-text">Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html" rel="" target="">
+    <a class="dropdown-item" href="https://rmarkdown.rstudio.com/lesson-1.html">
  <span class="dropdown-text">R Markdown</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf" rel="" target="">
+    <a class="dropdown-item" href="https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf">
  <span class="dropdown-text">R Markdown (pdf)</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html" rel="" target="">
+    <a class="dropdown-item" href="https://quarto.org/docs/tools/rstudio.html">
  <span class="dropdown-text">Quatro</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li class="dropdown-header">Otros</li>
         <li>
-    <a class="dropdown-item" href="https://www.r-bloggers.com" rel="" target="">
+    <a class="dropdown-item" href="https://www.r-bloggers.com">
  <span class="dropdown-text">Blog sobre R</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="https://bookdown.org" rel="" target="">
+    <a class="dropdown-item" href="https://bookdown.org">
  <span class="dropdown-text">Libros online que debes conocer</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -287,7 +325,8 @@ div.csl-indent {
   </ul></li>
   <li><a href="#métodos-objetivos" id="toc-métodos-objetivos" class="nav-link" data-scroll-target="#métodos-objetivos"><span class="header-section-number">3.2</span> Métodos objetivos</a></li>
   </ul></li>
-  <li><a href="#qué-haremos-y-qué-no-haremos-en-este-curso" id="toc-qué-haremos-y-qué-no-haremos-en-este-curso" class="nav-link" data-scroll-target="#qué-haremos-y-qué-no-haremos-en-este-curso"><span class="header-section-number">4</span> ¿Qué haremos y qué no haremos en este curso?</a></li>
+  <li><a href="#para-qué-predecir" id="toc-para-qué-predecir" class="nav-link" data-scroll-target="#para-qué-predecir"><span class="header-section-number">4</span> ¿Para qué predecir?</a></li>
+  <li><a href="#qué-haremos-y-qué-no-haremos-en-este-curso" id="toc-qué-haremos-y-qué-no-haremos-en-este-curso" class="nav-link" data-scroll-target="#qué-haremos-y-qué-no-haremos-en-este-curso"><span class="header-section-number">5</span> ¿Qué haremos y qué no haremos en este curso?</a></li>
   </ul>
 </nav>
     </div>
@@ -316,7 +355,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <p><br>
 <br>
@@ -351,26 +392,30 @@ div.csl-indent {
 <p><br>
 </p>
 <div id="fig-programasBI" class="quarto-layout-panel">
-<figure class="figure">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-programasBI-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./imagenes/Power BI forecast.jpg" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Power BI</figcaption>
+<figcaption>Power BI</figcaption>
 </figure>
 </div>
 </div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./imagenes/Tableau forecast.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Tableau</figcaption>
+<figcaption>Tableau</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;1: Predicción en programas de visualización de datos</figcaption><p></p>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-programasBI-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Predicción en programas de visualización de datos
+</figcaption>
 </figure>
 </div>
 <p><br>
@@ -379,7 +424,8 @@ div.csl-indent {
 </section>
 <section id="qué-se-puede-predecir" class="level1" data-number="2">
 <h1 data-number="2"><span class="header-section-number">2</span> ¿Qué se puede predecir?</h1>
-<p>Algunos datos son más fáciles de prever que otros. Puedes consultar múltiples páginas web con la hora en que sale el Sol en Valencia desde mañana hasta dentro de un año y todas ellas coinciden. Sin embargo, no encontrarás ninguna con la valoración exacta de las acciones en bolsa de INDRA para los próximos días. En medio están las múltiples páginas que predicen el consumo eléctrico en el largo plazo (dentro de varios años), todas ofrecen valores similares, pero no coincidentes. La calidad de una predicción depende de varios factores, entre ellos:</p>
+<p>Algunos datos son más fáciles de prever que otros. Puedes consultar múltiples páginas web con la hora en que sale el Sol en Valencia desde mañana hasta dentro de un año y todas ellas coinciden. Sin embargo, no encontrarás ninguna con la valoración exacta de las acciones en bolsa de INDRA para los próximos días. En medio están las múltiples páginas que predicen el consumo eléctrico en el largo plazo (dentro de varios años); todas ofrecen valores similares, pero no coincidentes.</p>
+<p>La calidad de una predicción depende de varios factores, entre ellos:</p>
 <ol type="1">
 <li>nuestro <strong>conocimiento</strong> sobre los determinantes del acontecimiento</li>
 <li>la cantidad de <strong>información</strong> pasada disponible</li>
@@ -387,9 +433,9 @@ div.csl-indent {
 <li>si las previsiones <strong>afectan</strong> a lo que estamos prediciendo.</li>
 </ol>
 <p>En el caso de la previsión de la hora de la salida del Sol, sea a corto o largo plazo, la precisión es absoluta porque se cumplen las cuatro condiciones, especialmente la primera. Nuestro entendimiento del movimiento de los planetas del Sistema Solar es muy preciso, tenemos abundantes datos, no cabe esperar ninguna catástrofe cósmica en breve y, desde luego, nuestra previsión no afectará en absoluto el movimiento de los planetas.</p>
-<p>Ahora bien, en las previsiones a largo plazo de la demanda de electricidad residencial solo serán razonablemente precisas porque suelen cumplirse las dos primeras condiciones, pero no las dos últimas. La demanda de electricidad está impulsada en gran medida por las temperaturas, con efectos menores por la variación del calendario –como el día de la semana y las vacaciones–, y las condiciones económicas. Por lo general, se dispone de varios años de datos sobre la demanda de electricidad y de muchas décadas de datos sobre las condiciones meteorológicas. Ahora bien, para las previsiones a largo plazo (dentro de unos años) no está claro que el comportamiento de la demanda vaya a ser similar al observado en el pasado: la sustitución en el hogar por equipamiento eléctrico más eficiente, la aparición de nuevo equipamiento electrónico, la penetración de dispositivos de movilidad individual eléctricos, entre otros elementos, pueden modificar notablemente el consumo eléctrico residencial. Por otro lado, si la previsión indica que la demanda eléctrica va a aumentar, es razonable pensar que también lo hará su precio y que los hogares decidan tomar medias para reducir su consumo o autoabastecerse (con paneles solares). El resultado será que la demanda eléctrica no aumentará tanto como las predicciones indicaban.</p>
+<p>Ahora bien, en las previsiones a largo plazo de la demanda de electricidad residencial solo serán razonablemente precisas porque suelen cumplirse las dos primeras condiciones, pero no las dos últimas. La demanda de electricidad está impulsada en gran medida por la temperatura ambiental, con efectos menores por la variación del calendario –como el día de la semana y las vacaciones–, y las condiciones económicas. Por lo general, se dispone de varios años de datos sobre la demanda de electricidad y de muchas décadas de datos sobre las condiciones meteorológicas. Ahora bien, para las previsiones a largo plazo (dentro de unos años) no está claro que el comportamiento de la demanda vaya a ser similar al observado en el pasado: la sustitución en el hogar del equipamiento eléctrico por otro más eficiente, la aparición de nuevos aparatos electrónicos, la penetración de dispositivos de movilidad individual eléctricos, entre otros elementos, pueden modificar notablemente el consumo eléctrico residencial. Por otro lado, si la previsión indica que la demanda eléctrica va a aumentar, es razonable pensar que también lo hará su precio y que los hogares y empresas decidan tomar medias para reducir su consumo o autoabastecerse (con paneles solares o cogeneradores). El resultado será que la demanda eléctrica no aumentará tanto como las predicciones indicaban.</p>
 <p>Para el valor en bolsa de las acciones de una empresa tenemos muchos datos, pero no nos van a ayudar mucho en la predicción porque somos incapaces de adivinar el comportamiento de los inversores.</p>
-<p>Es muy conveniente saber cuándo se puede pronosticar algo con precisión (consumo eléctrico en el corto plazo) y cuándo las previsiones no serán mejores que lanzar una moneda (evolución de la bolsa).</p>
+<p>Es muy conveniente saber cuándo se puede pronosticar algo con precisión (consumo eléctrico en el corto plazo) y cuándo las previsiones no serán mejores que lanzar una moneda al aire (evolución de la bolsa).</p>
 <p><br>
 <br>
 </p>
@@ -397,7 +443,7 @@ div.csl-indent {
 <section id="métodos-de-previsión" class="level1" data-number="3">
 <h1 data-number="3"><span class="header-section-number">3</span> Métodos de previsión</h1>
 <p>Un método de previsión es un proceso detallado que describe los pasos a seguir desde que se plantea el problema hasta que se obtiene la previsión: recogida de la información, procesamiento de la información, estimación de la previsión, medida de incertidumbre…</p>
-<p>El método de predicción dependerá de las características del acontecimiento que deseamos predecir. Hay métodos de previsión muy sencillos, como utilizar la observación más reciente como previsión (lo que se denomina método ingenuo), o muy complejos, como las redes neuronales. A veces, no se dispone de ningún dato porque, por ejemplo, queremos predecir las ventas de un producto totalmente nuevo. En situaciones como ésta última, utilizamos la previsión de juicio o los modelos de Bass.</p>
+<p>El método de predicción dependerá de las características del acontecimiento que deseamos predecir. Hay métodos de previsión muy sencillos, como utilizar la observación más reciente como previsión, o muy complejos, como las redes neuronales. A veces, no se dispone de ningún dato porque, por ejemplo, queremos predecir las ventas de un producto totalmente nuevo y utilizamos la previsión de juicio o los modelos de Bass.</p>
 <p>La literatura agrupa los métodos de previsión en dos grandes categorías:</p>
 <ul>
 <li>Métodos subjetivos</li>
@@ -448,21 +494,43 @@ div.csl-indent {
 <p>Dentro de los métodos objetivos distinguiremos entre:</p>
 <ul>
 <li><p><strong>No paramétricos</strong>, donde no se asume ninguna hipótesis estadística y las predicciones se obtienen a partir de los datos pasados con cálculos <em>sencillos</em> que no comportan estimar ningún parámetro. Por ejemplo <span class="math inline">\(\hat y_{t+1} = y_t\)</span> (método ingenuo I).</p>
-<p>Veremos estas técnicas en los temas 3 a 5: métodos ingenuos, medias móviles y métodos de alisado exponencial.</p></li>
-<li><p><strong>Paramétricos</strong>, se asume una estructura estocástica en la generación de los datos, es necesario que se verifiquen ciertos supuestos estadísticos y hay que estimar parámetros. Por ejemplo <span class="math inline">\(\hat y_{t+1} = \hat \mu + \hat \phi_1 y_t\)</span> (modelo autorregresivo de orden 1).</p>
-<p>Veremos estas técnicas en los temas 6 y 7: modelos ARIMA.</p></li>
+<p>Dentro de este grupo, en los próximos temas veremos los métodos ingenuos, medias móviles y métodos de alisado exponencial.</p></li>
+<li><p><strong>Paramétricos</strong>, se asume una estructura estocástica en la generación de los datos, es necesario que se verifiquen ciertos supuestos estadísticos y hay que estimar parámetros. Por ejemplo <span class="math inline">\(\hat y_{t+1} = \mu + \phi_1 y_t\)</span> (modelo autorregresivo de orden 1), donde los parámetros <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\phi_1\)</span> deben ser estimados.</p>
+<p>A este categoría pertenecen los modelos ARIMA.</p></li>
+</ul>
+<p>En el tema 3 haremos una breve introducción tanto de las técnicas no paramétricas (métodos ingenuos, medias móviles y métodos de alisado exponencial) como paramétricas (ARIMA) que veremos en el curso. En los temas 4 a 8 aprenderemos a utilizarlas.</p>
+<p><br>
+<br>
+</p>
+</section>
+</section>
+<section id="para-qué-predecir" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> ¿Para qué predecir?</h1>
+<p>Algunas de las razones por las que empresas y organismos necesitan hacer predicciones son:</p>
+<ul>
+<li><p><strong>Tomar decisiones en el presente sobre el futuro</strong> con más información reduciendo la incertidumbre.</p>
+<p>Red eléctrica española predice la demanda de electricidad de los próximos días para gestionar el complejo sistema producción de electricidad y ajustar la demanda a la oferta.</p>
+<p>Un supermercado predice la demanda de sus productos para evitar tanto rupturas de stock en el lineal como pérdidas por caducidad.</p>
+<p>Una aerolínea predice la demanda asientos en sus vuelos para gestionar su flota de aviones y ajustar los precios de los billetes.</p></li>
+<li><p><strong>Medir el efecto de un shock en el mercado</strong>, un cambio en la regulación o una política empresarial.</p>
+<p>¿La Covid-19 ha producido un cambio en la decisión de las parejas de tener hijos? ¿Se ha reducido o aumentado la natalidad tras la Covid-19?</p>
+<p>La nueva regulación de apartamentos turísticos en la ciudad, ¿cómo afecta la ocupación hotelera?</p>
+<p>¿En que medida un cambio en los parámetros o características de un juego de ordenador aumenta el tiempo de juego?</p></li>
+<li><p><strong>Evaluar un efecto calendario</strong>.</p>
+<p>La variación en el número de turistas en marzo y abril, según como caiga la Semana Santa.</p>
+<p>El efecto de un febrero bisiesto sobre las ventas.</p>
+<p>El efecto de la temperatura sobre un enfermedad respiratoria o el consumo de electricidad.</p></li>
 </ul>
 <p><br>
 <br>
 </p>
 </section>
-</section>
-<section id="qué-haremos-y-qué-no-haremos-en-este-curso" class="level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span> ¿Qué haremos y qué no haremos en este curso?</h1>
+<section id="qué-haremos-y-qué-no-haremos-en-este-curso" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> ¿Qué haremos y qué no haremos en este curso?</h1>
 <p>En este curso <strong>nos vamos a centrar en los métodos objetivos</strong> más fiables para obtener predicciones. Métodos que son replicables, cuyos resultados –las predicciones– son verificables y que son usados ampliamente por parte de organizaciones y empresas.</p>
 <p><strong>No podremos ver todos los métodos existentes</strong>, ¡ni aunque hubiera un grado solo para predicciones! Pero los que veremos te darán la base para aprender otros métodos de previsión: alisado exponencial con doble estacionalidad, el vecino más próximo, vectores autorregresivos, redes neuronales; y para aprender otros enfoques a la hora de hacer previsiones: modelos jerárquicos de series, boostrapping, bagging…</p>
-<p><strong>No vamos a aprender a predecir cotizaciones de bolsa</strong>. La metodología para predecir estas series es completamente diferente y muy poco exitosa. Si fuera fácil, estaríamos todos invirtiendo, no dando clases (yo) o recibiéndolas (vosotros).</p>
-<p><strong>Predeciremos las series de una en una, asumiendo que son independientes</strong>. Este supuesto no siempre se da, pero simplifica enórmemente el análisis de una serie. Por ejemplo, predeciremos la serie de pernoctaciones en España en hoteles usando solo datos de esta serie. Sin embargo, seria de ayuda predecir de forma simultánea la serie de turistas porque el volumen de pernoctaciones depende del número de turistas. Otra estrategia sería predecir las pernoctaciones en cada comunidad autónoma y luego sumarlas para obtener el total nacional.</p>
+<p><strong>No vamos a aprender a predecir cotizaciones de bolsa, relaciones entre divisas o ratios financieros</strong>. La metodología para predecir estas series es completamente diferente y muy poco exitosa. Si fuera fácil, estaríamos todos invirtiendo, no dando clases (yo) o recibiéndolas (vosotros).</p>
+<p><strong>Predeciremos las series de una en una, asumiendo que son independientes</strong>. Este supuesto no siempre se da, pero simplifica enormemente el análisis de una serie. Por ejemplo, predeciremos la serie de pernoctaciones en España en hoteles usando solo datos de esta serie. Sin embargo, seria de ayuda predecir de forma simultánea la serie de turistas llegados a España porque el volumen de pernoctaciones depende del número de turistas. Otra estrategia sería predecir las pernoctaciones en cada comunidad autónoma y luego sumarlas para obtener el total nacional.</p>
 <p><br>
 <br>
 <br>
@@ -473,7 +541,7 @@ div.csl-indent {
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-metcalfe2009" class="csl-entry" role="listitem">
 Metcalfe, Andrew V., and Paul S. P. Cowpertwait. 2009. <em>Introductory Time Series with r</em>. Springer New York. <a href="https://doi.org/10.1007/978-0-387-88698-5">https://doi.org/10.1007/978-0-387-88698-5</a>.
 </div>
@@ -560,10 +628,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -573,8 +658,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -586,7 +680,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -630,6 +847,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -655,6 +873,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -717,13 +961,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">© Copyright 2023, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></div>   
+    <div class="nav-footer-left">
+<p>© Copyright 2024, Iván Arribas. If you find any bugs please report them to <a href="mailto:ivan.arribas@uv.es">ivan.arribas@uv.es</a></p>
+</div>   
     <div class="nav-footer-center">
       &nbsp;
     </div>
-    <div class="nav-footer-right">This page is built with <a href="https://quarto.org/">Quarto</a></div>
+    <div class="nav-footer-right">
+<p>This page is built with <a href="https://quarto.org/">Quarto</a></p>
+</div>
   </div>
 </footer>
+
 
 
 
