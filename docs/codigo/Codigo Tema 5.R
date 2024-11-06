@@ -16,432 +16,192 @@ library(ggplot2); theme_set(theme_bw())
 # Importamos series
 #----------------------------------------------------------
 # Libros
-libros <- read.csv2("./series/libros.csv", 
-                    header = TRUE)
-
-libros <- ts(libros[, 2], 
-             start = 1993, 
-             frequency  = 1)
-
-autoplot(libros,
-         xlab = "",
-         ylab = "Títulos",
-         main = "")
-
-# Nacimientos
-nacimientos <- read.csv2("./series/nacimientos.csv", 
+# Alimentos per capita
+alimentospc <- read.csv2("./series/Alimentacionpc.csv", 
                          header = TRUE)
 
-nacimientos <- ts(nacimientos[, 2],
-                  start = c(1975, 1),
-                  frequency = 12)
+alimentospc <- ts(alimentospc, 
+                  start = 1990, 
+                  freq = 1)
 
-nacimientosb <- window(nacimientos, start = 2000)
+autoplot(alimentospc, 
+         main = "", 
+         xlab = "Año", 
+         ylab = "")
 
-autoplot(nacimientosb,
-         xlab = "",
-         ylab = "Nacimientos",
-         main = "")
+# Defunciones
+defunciones <- read.csv2("./series/Defunciones.csv",
+                         header = TRUE)
 
-# Demanda electrica
-electricidad <- read.csv2("./series/Consumo electrico.csv", 
-                          header = TRUE)
+defunciones <- ts(defunciones, 
+                  start = 1, 
+                  freq = 1)
 
-electricidad <- ts(electricidad[, 1],
-                   start = c(1, 6),
-                   frequency = 7)
-
-electricidad <- window(electricidad, start = c(6, 1), end = c(22, 7)) 
-
-electricidadSemanal <- aggregate(electricidad, FUN = sum)
-
-autoplot(electricidadSemanal,
-         xlab = "",
-         ylab = "GWh",
-         main = "")
+autoplot(defunciones, 
+         main = "", 
+         xlab = "Día", 
+         ylab = "")
 #----------------------------------------------------------
 #
-#
-#
-#----------------------------------------------------------
-# Alisado exponencial
-#----------------------------------------------------------
-# Alisado simple
-electricidadEts <- ets(electricidadSemanal, 
-                       model = "ANN")
-
-summary(electricidadEts)
-
-electricidadEts$states
-
-electricidadf <- forecast(electricidadEts,
-                          h = 5, 
-                          level = 95)
-electricidadf
-
-autoplot(electricidadf,
-         xlab = "",
-         ylab = "GWh",
-         main = "")
-
-# Alisado de Holt
-librosEts <- ets(libros, 
-                 model = "AAN",
-                 damped = FALSE)
-
-summary(librosEts)
-
-librosEts$states
-
-librosf <- forecast(librosEts,
-                    h = 5, 
-                    level = 95)
-librosf
-
-autoplot(librosf,
-         xlab = "",
-         ylab = "Títulos",
-         main = "")
-
-# Alisado de Holt con pendiente amortiguada
-librosEtsD <- ets(libros, 
-                  model = "AAN", 
-                  damped = TRUE)
-
-summary(librosEtsD)
-
-librosfD <- forecast(librosEtsD,
-                     h = 15,
-                     level = 95)
-librosfD
-
-autoplot(librosfD,
-         xlab = "",
-         ylab = "Títulos",
-         main = "",
-         PI = FALSE)
-
-# Alisado de HW Aditivo
-electricidadEts <- ets(electricidad, 
-                       model = "AAA", 
-                       damped = FALSE)
-
-summary(electricidadEts)
-
-TT <- nrow(electricidadEts$states)
-electricidadEts$states[TT,]
-
-electricidadEts$states[TT, 1] + (1:7)*electricidadEts$states[TT, 2] + 
-  electricidadEts$states[TT, 9:3]
-
-electricidadf <- forecast(electricidadEts,
-                          h = 14, 
-                          level = 95)
-electricidadf
-
-autoplot(electricidadf,
-         xlab = "",
-         ylab = "GWh",
-         main = "",
-         PI = FALSE)
-
-# Alisado de HW multiplicativo 
-nacimientosbEts <- ets(nacimientosb, 
-                       model = "MAM", 
-                       damped = FALSE)
-
-summary(nacimientosbEts)
-
-TT <- nrow(nacimientosbEts$states)
-nacimientosbEts$states[TT,]
-
-(nacimientosbEts$states[TT, 1] + (1:12)*nacimientosbEts$states[TT, 2]) * 
-  nacimientosbEts$states[TT, 14:3]
-
-nacimientosbf <- forecast(nacimientosbEts,
-                          h = 24, 
-                          level = 95)
-nacimientosbf
-
-autoplot(nacimientosbf,
-         xlab = "",
-         ylab = "Nacimientos",
-         main = "",
-         PI = FALSE)
-
-# Alisado de Holt-Winters con transformacion logaritmica
-nacimientosbEtsl <- ets(nacimientosb, 
-                        model = "AAA",
-                        damped = FALSE,
-                        lambda = 0, 
-                        biasadj = TRUE)
-
-summary(nacimientosbEtsl)
-
-nacimientosbfl <- forecast(nacimientosbEtsl,
-                           h = 24,
-                           level = 95,
-                           biasadj = TRUE)
-nacimientosbfl
-
-autoplot(nacimientosb,
-         xlab = "",
-         ylab = "Nacimientos",
-         main = "") + 
-  autolayer(nacimientosbf, series = "Nacimientos", PI = FALSE) + 
-  autolayer(nacimientosbfl, series = "Nacimientos (log)", PI = FALSE) + 
-  guides(colour = guide_legend(title = "Predicción")) + 
-  theme(legend.position=c(0.98,0.98), legend.justification=c(1,1)) 
-#----------------------------------------------------------
-#
-#
+# CONJUNTO DE ENTRENAMIENTO/PRUEBA: ALIMENTOS
 #
 #----------------------------------------------------------
-# Funcion ets: Libros
+# Ingenuo I
 #----------------------------------------------------------
-# Ajuste
-librosEts <- ets(libros)
-summary(librosEts) 
 
-# Prediccion
-librosEtsPre <- forecast(librosEts, 
-                         h = 5,
-                         level = 95)
-librosEtsPre
+# Definimos las observaciones intra- y extramuestrales
+AlimentospcIntra <- subset(alimentospc, end = length(alimentospc) - 7)
+AlimentospcExtra <- subset(alimentospc, start = length(alimentospc) - 6)
 
-autoplot(librosEtsPre,
-         xlab = "",
-         ylab = "Títulos",
-         main = "")
+# Estimamos el modelo con todos los datos menos los 7 ultimos y
+# predecimos los 7 años que hemos quitado de la serie 
+AlimentospcExtraPre <- naive(AlimentospcIntra,  h = 7)
 
-# Analisis error
-error <- residuals(librosEts)
-sderror <- sd(error)
+# Vemos la calidad del ajuste. Primero la predicción y luego los datos reales
+accuracy(AlimentospcExtraPre, AlimentospcExtra)
+#----------------------------------------------------------
+# Arima
+#----------------------------------------------------------
 
-autoplot(error, series="Error",
-         colour = "black",
-         xlab = "Periodo",
-         ylab = "Error",
-         main = "") +
-  geom_hline(yintercept = c(-3, -2, 2 ,3)*sderror, 
-             colour = c("red", "blue", "blue", "red"), lty = 2) + 
-  scale_x_continuous(breaks= seq(1993, 2019, 2)) 
+# Definimos las observaciones intra- y extramuestrales
+AlimentospcIntra <- subset(alimentospc, end = length(alimentospc) - 7)
+AlimentospcExtra <- subset(alimentospc, start = length(alimentospc) - 6)
 
-# Error extramuestral: training set/test set
-# Definimos las observaciones intra- y extra-muestrales
-librosIntra <- subset(libros, end = length(libros) - 6)
-librosExtra <- subset(libros, start = length(libros) - 5)
+# Estimamos el modelo con todos los datos menos los 7 ultimos y
+# predecimos los 7 años que hemos quitado de la serie 
+ariAlimentospcIntra <- Arima(AlimentospcIntra, 
+                             order = c(1, 0, 0),
+                             include.constant = TRUE)
 
-librosIntraEts <- ets(librosIntra, model = "MNN")
+ariAlimentospcIntraPre <- forecast(ariAlimentospcIntra,  h = 7)
 
-librosExtraPre <- forecast(librosIntraEts, h = 6)
-
-accuracy(librosExtraPre, librosExtra)
+# Vemos la calidad del ajuste. Primero la predicción y luego los datos reales
+accuracy(ariAlimentospcIntraPre, AlimentospcExtra)
 #----------------------------------------------------------
 #
-#
+# ORIGEN DE PREDICCION MOVIL: ALIMENTOS
 #
 #----------------------------------------------------------
-# Funcion ets: Nacimientos
+# Ingenuo I
 #----------------------------------------------------------
-# Ajuste
-nacimientosEts <- ets(nacimientosb, 
-                      damped = FALSE)
+k <- 15                   # Minimo numero de datos para estimar
+h <- 5                    # Horizonte de las prediciciones
+TT <- length(alimentospc) # Longitud serie
+s <- TT - k - h           # Total de estimaciones
 
-summary(nacimientosEts) 
-
-autoplot(nacimientosEts,
-         xlab = "Periodo",
-         main = "")
-
-# Prediccion
-TT <- nrow(nacimientosEts$states)
-nacimientosEts$states[TT,]
-
-nacimientosEts$states[TT, 1] + (1:12) * nacimientosEts$states[TT, 2] + nacimientosEts$states[TT, 14:3]
-
-nacimientosEtsPre <- forecast(nacimientosEts, 
-                              h = 24, 
-                              level = 95)
-nacimientosEtsPre
-
-autoplot(nacimientosEtsPre,
-         xlab = "",
-         ylab = "Nacimientos",
-         main = "")
-
-# Analisis del error
-error <- residuals(nacimientosEts)
-sderror <- sd(error)
-
-autoplot(error, series="Error",
-         colour = "black",
-         xlab = "Periodo",
-         ylab = "Error",
-         main = "") +
-  geom_hline(yintercept = c(-3, -2, 2 ,3)*sderror, 
-             colour = c("red", "blue", "blue", "red"), lty = 2) + 
-  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
-
-abs(error) > 3 * sderror
-time(error)[abs(error) > 3 * sderror]
-
-# Prueba de Tukey
-atipicos <- tsoutliers(error)
-time(error)[atipicos$index]
-
-# Error extramuestral: origen de prediccion movil
-k <- 120                 
-h <- 12                  
-TT <- length(nacimientosb)
-s <- TT - k - h          
-
-mapeAlisado <- matrix(NA, s + 1, h)
+mapeIng <- matrix(NA, s + 1, h)
 for (i in 0:s) {
-  train.set <- subset(nacimientosb, start = i + 1, end = i + k)
-  test.set <-  subset(nacimientosb, start = i + k + 1, end = i + k + h)
+  train.set <- subset(alimentospc, start = i + 1, end = i + k)
+  test.set <-  subset(alimentospc, start = i + k + 1, end = i + k + h)
   
-  fit <- ets(train.set, model = "AAA", damped = FALSE)
-  fcast<-forecast(fit, h = h)
-  mapeAlisado[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  fcast <- naive(train.set, h = h)
+  mapeIng[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
 }
 
-errorAlisado <- colMeans(mapeAlisado)
-errorAlisado
+mapeIngMedia <- colMeans(mapeIng)
+round(mapeIngMedia, 2)
 
-ggplot() +
-  geom_line(aes(x = 1:12, y = errorAlisado)) +
-  ggtitle("") +
-  xlab("Horizonte temporal de predicción") +
-  ylab("MAPE") +
-  scale_x_continuous(breaks= 1:12)
+mapeIngMediana <- apply(mapeIng, MARGIN = 2, FUN = median)
+round(mapeIngMediana, 2)
 #----------------------------------------------------------
-#
-#
-#
+# Arima
 #----------------------------------------------------------
-# Funcion ets: Demanda electrica
-#----------------------------------------------------------
-# Ajuste
-electricidadEts <- ets(electricidad)
-summary(electricidadEts) 
+k <- 15                   # Minimo numero de datos para estimar
+h <- 5                    # Horizonte de las prediciciones
+TT <- length(alimentospc) # Longitud serie
+s <- TT - k - h           # Total de estimaciones
 
-# Prediccion
-TT <- nrow(electricidadEts$states)
-electricidadEts$states[TT,]
-
-electricidadEts$states[TT, 1] + electricidadEts$states[TT, 8:2]
-
-electricidadEtsPre <- forecast(electricidadEts, 
-                               h = 28, 
-                               level = 95)
-electricidadEtsPre
-
-autoplot(electricidadEtsPre,
-         xlab = "",
-         ylab = "GWh",
-         main = "")
-
-# Analisis del error
-error <- residuals(electricidadEts)
-sderror <- sd(error)
-
-autoplot(error, series="Error",
-         colour = "black",
-         xlab = "Semana",
-         ylab = "Error",
-         main = "") +
-  geom_hline(yintercept = c(-3, -2, 2 ,3)*sderror, 
-             colour = c("red", "blue", "blue", "red"), lty = 2) + 
-  scale_x_continuous(breaks= seq(6, 26, 2)) 
-
-abs(error) > 3 * sderror
-time(error)[abs(error) > 3 * sderror]
-
-# Prueba de Tukey.
-
-atipicos <- tsoutliers(error)
-time(error)[atipicos$index]
-
-# Error extramuestral: origen de prediccion movil
-k <- 70                
-h <- 14                  
-TT <- length(electricidad)
-s <- TT - k - h          
-
-mapeAlisado <- matrix(NA, s + 1, h)
+mapeAri <- matrix(NA, s + 1, h)
 for (i in 0:s) {
-  train.set <- subset(electricidad, start = i + 1, end = i + k)
-  test.set <-  subset(electricidad, start = i + k + 1, end = i + k + h)
+  train.set <- subset(alimentospc, start = i + 1, end = i + k)
+  test.set <-  subset(alimentospc, start = i + k + 1, end = i + k + h)
   
-  fit <- ets(train.set, model = "ANA", damped = FALSE)
-  fcast<-forecast(fit, h = h)
-  mapeAlisado[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  fit <- Arima(train.set, order = c(1, 0, 0), include.constant = TRUE)
+  fcast<- forecast(fit, h = h)
+  mapeAri[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
 }
 
-errorAlisado <- colMeans(mapeAlisado)
-errorAlisado
+mapeAriMedia <- colMeans(mapeAri)
+round(mapeAriMedia, 2)
 
+mapeAriMediana <- apply(mapeAri, MARGIN = 2, FUN = median)
+round(mapeAriMediana, 2)
+#----------------------------------------------------------
+# Comparacion entre modelos
+#----------------------------------------------------------
 ggplot() +
-  geom_line(aes(x = 1:14, y = errorAlisado)) +
+  geom_line(aes(x = 1:5, y = mapeIngMediana, colour = "blue")) + 
+  geom_line(aes(x = 1:5, y = mapeAriMediana, colour = "red")) + 
   ggtitle("") +
-  xlab("Horizonte temporal de predicción") +
-  ylab("MAPE") +
-  scale_x_continuous(breaks= 1:14)
-
+  xlab("") +
+  ylab("%") +
+  scale_color_discrete(name = "Método", 
+                       labels = c("Ingenuo I", "Arima")) +
+  theme(legend.position=c(0.2,0.8))
 #----------------------------------------------------------
 #
-#
+# DEFUNCIONES (Alisado y Arima)
 #
 #----------------------------------------------------------
-# Otras alternativas para predecir Nacimientos
+# Conjunto de entrenamiento/prueba
 #----------------------------------------------------------
-# Serie Nacimientos
-accuracy(ets(nacimientosb))[5]
+DefuncionesIntra <- subset(defunciones, end = length(defunciones) - 14)
+DefuncionesExtra <- subset(defunciones, start = length(defunciones) - 13)
 
-accuracy(ets(nacimientosb, 
-             opt.crit = "mse"))[5]
+# Estimamos el modelo de Alisado MNN y predecimos
+fit <- ets(DefuncionesIntra, 
+           model = "MNN")
 
-accuracy(ets(nacimientosb, 
-             opt.crit = "amse",
-             nmse = 4))[5]
+DefuncionesExtraPreAli <- forecast(fit, h = 14)
 
-# Transformación logarítmica
-accuracy(ets(nacimientosb, 
-             lambda = 0))[5]
+# Estimamos el modelo de Arima(2, 0 ,0) y predecimos
+fit <- Arima(DefuncionesIntra, 
+             order = c(2, 0 ,0), 
+             include.constant = TRUE)
 
-accuracy(ets(nacimientosb, 
-             lambda = 0, 
-             opt.crit = "mse"))[5]
+DefuncionesExtraPreAri <- forecast(fit, h = 14)
 
-accuracy(ets(nacimientosb, 
-             lambda = 0, 
-             opt.crit = "amse",
-             nmse = 4))[5]
+accuracy(DefuncionesExtraPreAli, DefuncionesExtra)
+accuracy(DefuncionesExtraPreAri, DefuncionesExtra)
 
-# Transformación logarítmica insesgada
-accuracy(ets(nacimientosb, 
-             lambda = 0,
-             biasadj = TRUE))[5]
+#----------------------------------------------------------
+# Origen de prediccion movil
+#----------------------------------------------------------
+k <- 140                  # Minimo numero de datos para estimar
+h <- 14                   # Horizonte de las prediciciones
+TT <- length(defunciones) # Longitud serie
+s <- TT - k - h           # Total de estimaciones
 
-accuracy(ets(nacimientosb, 
-             lambda = 0, 
-             biasadj = TRUE,
-             opt.crit = "mse"))[5]
+rmseAli <- matrix(NA, s + 1, h)
+rmseAri <- matrix(NA, s + 1, h)
 
-accuracy(ets(nacimientosb, 
-             lambda = 0, 
-             biasadj = TRUE,
-             opt.crit = "amse",
-             nmse = 4))[5]
+for (i in 0:s) {
+  train.set <- subset(defunciones, start = i + 1, end = i + k)
+  test.set <-  subset(defunciones, start = i + k + 1, end = i + k + h)
+  
+  fit <- ets(train.set, model = "MNN")
+  fcast <- forecast(fit, h = h)
+  rmseAli[i + 1,] <- (test.set - fcast$mean)^2
+  
+  fit <- Arima(train.set, order = c(2, 0, 0), include.constant = TRUE)
+  fcast <- forecast(fit, h = h)
+  rmseAri[i + 1,] <- (test.set - fcast$mean)^2
+}
 
-# Nacimientos por dia
-accuracy(ets(nacimientosb/monthdays(nacimientosb)))[5]
+rmseAli <- sqrt(colMeans(rmseAli))
+round(rmseAli, 2)
 
-accuracy(ets(nacimientosb/monthdays(nacimientosb), 
-             opt.crit = "mse"))[5]
-
-accuracy(ets(nacimientosb/monthdays(nacimientosb), 
-             opt.crit = "amse",
-             nmse = 4))[5]
-
+rmseAri <- sqrt(colMeans(rmseAri))
+round(rmseAri, 2)
+#----------------------------------------------------------
+# Comparacion entre modelos
+#----------------------------------------------------------
+ggplot() +
+  geom_line(aes(x = 1:14, y = rmseAli, colour = "blue")) + 
+  geom_line(aes(x = 1:14, y = rmseAri, colour = "red")) + 
+  ggtitle("") +
+  xlab("") +
+  ylab("Defunciones") +
+  scale_color_discrete(name = "Método", 
+                       labels = c("Alisado", "Arima")) +
+  theme(legend.position=c(0.2,0.8))

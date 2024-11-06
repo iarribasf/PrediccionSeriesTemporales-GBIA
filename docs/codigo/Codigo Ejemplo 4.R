@@ -1,5 +1,5 @@
 #----------------------------------------------------------
-# CODIGO EJEMPLO 4
+# CODIGO EJEMPLO 4: ARIMA SIN ESTACIONALIDAD
 #----------------------------------------------------------
 #
 #
@@ -8,6 +8,7 @@
 # Librerias
 library(forecast)
 library(ggplot2); theme_set(theme_bw())
+library(lmtest)
 #----------------------------------------------------------
 #
 #
@@ -18,94 +19,106 @@ library(ggplot2); theme_set(theme_bw())
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
-Pernoctaciones <- ts(Pernoctaciones[, 2], 
+Pernoctaciones <- ts(Pernoctaciones[, 2] / 1000000, 
                      start = 2000, 
                      frequency = 12)
 
-Pernoctaciones <- aggregate(Pernoctaciones/1000000, FUN = sum)
+Pernoctaciones <- aggregate(Pernoctaciones, FUN = sum)
 
-Pernoctacionesb <- window(Pernoctaciones, end = 2019)
-
-autoplot(Pernoctacionesb,
+autoplot(Pernoctaciones,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2020, 2))  
+  scale_x_continuous(breaks= seq(2000, 2024, 2)) 
 #----------------------------------------------------------
 #
 #
 #
 #----------------------------------------------------------
-#  Media movil
+# Transformacion
 #----------------------------------------------------------
-# Funcion
-mmf <- function(x, r = 3, h = 5) {
-  z <- NULL
-  z$x <- x
-  z$orden = r
-  
-  TT <- length(x)
-  inicio <- start(x)
-  frecuencia <-frequency(x)
-  
-  z$mm <- stats::filter(x, rep(1/r, r), side = 1)
-  
-  z$fitted <- ts(c(NA, z$mm[-TT]), 
-                 start = inicio, 
-                 freq = frecuencia)
-  
-  z$mean <- ts(rep(z$mm[TT], h), 
-               start = time(x)[TT] + 1/frecuencia, 
-               freq = frecuencia)
-  
-  z$residuals <- x - z$fitted
-  
-  class(z) <- "forecast"
-  z
-}
+autoplot(Pernoctaciones, xlab = "", ylab = "", main = "")
+autoplot(diff(Pernoctaciones), xlab = "", ylab = "", main = "")
 
-# Ajuste
-mmPernoctaciones <- mmf(Pernoctacionesb, 
-                        r = 4, 
-                        h = 5)
+ndiffs(Pernoctaciones)
+ndiffs(window(Pernoctaciones, end = 2019))
 
-# Prediccion
-autoplot(mmPernoctaciones,
+#----------------------------------------------------------
+#
+#
+#
+#----------------------------------------------------------
+# Identificación
+d2020 <- 1 * (time(Pernoctaciones) == 2020)
+d2021 <- 1 * (time(Pernoctaciones) == 2021)
+
+auto.arima(Pernoctaciones, 
+           d = 1,
+           xreg = cbind(d2020, d2021))
+
+# Estimacion
+arima010 <- Arima(Pernoctaciones, 
+                  order = c(0, 1, 0),
+                  include.constant = FALSE,
+                  xreg = cbind(d2020, d2021))
+
+arima010
+
+# Intervencion
+error <- residuals(arima010)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
          xlab = "",
-         ylab = "Noches",
+         ylab = "Error",
          main = "") +
-  autolayer(mmPernoctaciones$fitted) +
-  theme(legend.position="none")
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  geom_point() +
+  scale_x_continuous(breaks= seq(2000, 2024, 2))
 
-# Error de ajuste
-accuracy(mmPernoctaciones)
+# Valdacion
+accuracy(arima010)
 
-# Impacto de la Covid-19
-Pernoctaciones - mmPernoctaciones$mean
+coeftest(arima010)
 
-# Error con origen de prediccion movil
-k <- 10                   
-h <- 5                    
-TT <- length(Pernoctacionesb)
-s <- TT - k - h           
+# Origen de prevision movil
+k <- 10                  
+h <- 4                    
+T <- length(Pernoctaciones)     
+s <- T - k - h    
 
+mapeArima010 <- matrix(NA, s + 1, h)
 
-for (r in 1:5) {
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h) 
   
-  tmpMape <- matrix(NA, s + 1, h)
+  fit <- Arima(train.set, 
+               include.constant = FALSE,
+               order = c(0, 1, 0))
   
-  for (i in 0:s) {
-    
-    train.set <- subset(Pernoctacionesb, start = i + 1, end = i + k)
-    test.set <-  subset(Pernoctacionesb, start = i + k + 1, end = i + k + h)
-    
-    fit <- mmf(train.set, r = r, h = 5)
-    tmpMape[i + 1, ] <- 100*abs(test.set - fit$mean)/test.set
-  }
-  tmpMape <- colMeans(tmpMape)
+  fcast <- forecast(fit, h = h)
   
-  cat("\nPara un orden de", 
-      r, 
-      "los errores son", 
-      formatC(tmpMape, format = "f", digits = 2))  
+  mapeArima010[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
 }
+
+mapeArima010 <- apply(mapeArima010, MARGIN = 2, FUN = median)
+mapeArima010
+
+# Predicción
+parima010 <- forecast(arima010, 
+                      h = 4, 
+                      level = 95,
+                      xreg = cbind(rep(0, 4), rep(0, 4)))
+
+parima010
+
+autoplot(parima010, 
+         ylab = "Noches (millones)",
+         xlab = "",
+         main = "") +
+  scale_x_continuous(breaks= seq(2000, 2028, 4)) 

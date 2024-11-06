@@ -16,137 +16,143 @@ library(lmtest)
 #----------------------------------------------------------
 # Importamos series
 #----------------------------------------------------------
-# Libros
-libros <- read.csv2("./series/libros.csv", 
-                    header = TRUE)
+# Residuos
+residuos <- read.csv2("./series/Residuos.csv",
+                      header = TRUE)
 
-libros <- ts(libros[, 2], 
-             start = 1993, 
-             frequency = 1)
+residuos <- ts(residuos[, 2],
+               start = 1995, 
+               frequency  = 1)
 
-autoplot(libros,
+autoplot(residuos,
          xlab = "", 
-         ylab = "", 
+         ylab = "Kg por cápita", 
          main = "")
 
 # Aforo vehículos
 aforo <- read.csv2("./series/aforo_oropesa.csv", 
                    header = TRUE)
 
-aforo <- ts(aforo, 
+aforo <- ts(aforo[, 1], 
             start = 1960, 
             freq = 1)
 
 autoplot(aforo, 
          xlab = "", 
-         ylab = "Vehículos (000)",
-         main = "")
-
-# Consumo de alimentos per capita
-alimentospc <- read.csv2("./series/alimentacionpc.csv", 
-                         header = TRUE)
-
-alimentospc <- ts(alimentospc, 
-                  start = 1990, 
-                  freq = 1)
-
-autoplot(alimentospc, 
-         xlab = "", 
-         ylab = "Kg per cápita",
+         ylab = "Vehículos por día",
          main = "")
 
 # Nacimientos
-nacimientos <- read.csv2("./series/nacimientos.csv", 
+nacimientos <- read.csv2("./series/Nacimientos.csv", 
                          header = TRUE)
 
-nacimientos <- ts(nacimientos[, 2],
-                  start = c(1975, 1),
+nacimientos <- ts(nacimientos[, 2]/1000, 
+                  start = 1975, 
                   frequency = 12)
 
-nacimientosAnual <- aggregate(nacimientos, FUN = sum)
+nacimientos <- aggregate(nacimientos, FUN = sum)
 
-autoplot(nacimientosAnual, 
+nacimientos <- window(nacimientos, start = 2000)
+
+autoplot(nacimientos, 
+         main = "", 
          xlab = "", 
-         ylab = "Nacimientos",
+         ylab = "Nacimientos (miles)")
+#----------------------------------------------------------
+#
+# METODO SENCILLO: RESIDUOS
+#
+#----------------------------------------------------------
+#
+#----------------------------------------------------------
+# Metodo de la deriva
+derivaResiduos <- rwf(residuos, 
+                      h = 5, 
+                      drift = TRUE)
+
+summary(derivaResiduos)
+
+autoplot(derivaResiduos, 
+         series = "",
+         xlab = "",
+         ylab = "Kg per cápita",
          main = "")
 #----------------------------------------------------------
 #
-#
+# ALISADO EXPONENCIAL: RESIDUOS
 #
 #----------------------------------------------------------
-# Transformaciones: diff y log
+# Alisado de Holt
 #----------------------------------------------------------
-# Diferencia
-nacimientosAnual
-diff(nacimientosAnual)
-diff(nacimientosAnual, differences = 2)
+# Ajuste
+etsResiduos <- ets(residuos, 
+                   model = "AAN",
+                   damped = FALSE)
 
-cbind("Nacidos" = nacimientosAnual,
-      "Dif. regular" = diff(nacimientosAnual),
-      "Doble dif. regular" = diff(nacimientosAnual, differences = 2)) %>%
-  autoplot(facets = TRUE,
-           xlab = "",
-           ylab = "",
-           main = "")
+summary(etsResiduos)
 
-ndiffs(nacimientosAnual)
+# Prediccion
+tail(etsResiduos$states, 1)
 
-# Log
-nacimientos
-log(nacimientos)
+etsResiduosf <- forecast(etsResiduos,
+                         h = 5, 
+                         level = 95)
 
-cbind("Nacidos" = nacimientos,
-      "log(Nacidos)" = log(nacimientos)) %>%
-  autoplot(facets = TRUE,
-           xlab = "",
-           ylab = "",
-           main = "Serie Nacimientos y su transformaciones logarítmica")
+etsResiduosf
+
+autoplot(etsResiduosf,
+         xlab = "",
+         ylab = "Kg. per cápita",
+         main = "")
+
+#----------------------------------------------------------
+# Alisado de Holt con amortiguamiento
+#----------------------------------------------------------
+# Ajuste
+etsDResiduos <- ets(residuos, 
+                    model = "AAN", 
+                    damped = TRUE)
+
+summary(etsDResiduos)
+
+# Prediccion
+etsDResiduosf <- forecast(etsDResiduos, 
+                          h = 15,
+                          level = 95)
+
+etsDResiduosf
+
+autoplot(etsDResiduosf,
+         xlab = "",
+         ylab = "kg per cápita",
+         main = "",
+         PI = FALSE)
+#----------------------------------------------------------
+# Ajuste sin restricciones
+#----------------------------------------------------------
+summary(ets(residuos))
 #----------------------------------------------------------
 #
-#
+# ARIMA: RESIDUOS
 #
 #----------------------------------------------------------
-# Funcion de autocorrelacion
-#----------------------------------------------------------
-ggAcf(nacimientosAnual, lag = 10)
-ggAcf(log(nacimientosAnual), lag = 10)
-ggAcf(diff(nacimientosAnual), lag = 10)
-ggAcf(diff(log(nacimientosAnual)), lag = 10)
-ggAcf(diff(nacimientosAnual, differences = 2), lag = 10)
-ggAcf(diff(log(nacimientosAnual), differences = 2), lag = 10)
+# Diferenciacion
+ndiffs(residuos)
 
-ggAcf(diff(nacimientosAnual, differences = 2), 
-      lag=10, 
-      plot = FALSE)
-#----------------------------------------------------------
-#
-#
-#
-#----------------------------------------------------------
-# Libros
-#----------------------------------------------------------
-# Transformacion
-autoplot(libros, xlab = "", ylab = "", main = "")
-autoplot(diff(libros), xlab = "", ylab = "", main = "")
-
-ggAcf(libros, xlab = "", ylab = "", main = "")
-ggAcf(diff(libros), xlab = "", ylab = "", main = "")
-
-ndiffs(libros)
+autoplot(residuos)
+autoplot(diff(residuos))
 
 # Identificacion
-auto.arima(libros, 
-           d = 1, 
-           trace = TRUE)
+auto.arima(residuos, 
+           d = 1)
 
-# Estimacion
-arima010 <- Arima(libros, 
-                  order=c(0, 1, 0), 
+# Estimacion + Atipicos
+arima110 <- Arima(residuos, 
+                  order = c(1, 1, 0), 
                   include.constant = FALSE)
-arima010
+arima110
 
-# Intervencion
-error <- residuals(arima010)
+error <- residuals(arima110)
 sderror <- sd(error)
 
 autoplot(error, series="Error",
@@ -158,42 +164,129 @@ autoplot(error, series="Error",
              colour = c("red", "green", "green", "red"), 
              lty = 2) + 
   geom_point() +
-  scale_x_continuous(breaks= seq(1993, 2019, 2)) 
+  scale_x_continuous(breaks= seq(1995, 2023, 2)) 
 
-# Error de ajuste
-accuracy(arima010)
+# Validacion
+coeftest(arima110)
+
+accuracy(arima110)
 
 # Prediccion
-parima010 <- forecast(arima010, 
+parima110 <- forecast(arima110, 
                       h = 5, 
                       level = 95)
-parima010
+parima110
 
-autoplot(parima010, 
+autoplot(parima110, 
          xlab = "", 
-         ylab = "Títulos",
+         ylab = "Kg. per cápita",
          main = "") +
-  scale_x_continuous(breaks= seq(1993, 2024, 2)) 
+  scale_x_continuous(breaks= seq(1995, 2028, 2)) 
 #----------------------------------------------------------
 #
-#
+# USO DEL LOGARITMO (EJEMPLO CON ALISADO)
 #
 #----------------------------------------------------------
-# Aforo de vehículos
-#----------------------------------------------------------
-# Transformacion
-autoplot(aforo, xlab = "", ylab = "", main = "")
-autoplot(diff(aforo), xlab = "", ylab = "", main = "")
+# Ajuste
+etsLResiduos <- ets(residuos, 
+                    lambda = 0,
+                    biasadj = TRUE)
 
-ggAcf(aforo, xlab = "", ylab = "", main = "")
-ggAcf(diff(aforo), xlab = "", ylab = "", main = "")
+summary(etsLResiduos)
 
+# Prediccion
+etsLResiduosf <- forecast(etsLResiduos,
+                          h = 15,
+                          level = 95,
+                          biasadj = TRUE)
+
+etsLResiduosf
+
+autoplot(residuos,
+         xlab = "",
+         ylab = "Kg. per cápita",
+         main = "") + 
+  autolayer(etsDResiduosf, series = "Serie original", PI = FALSE) + 
+  autolayer(etsLResiduosf, series = "Trans. logarítmica", PI = FALSE) + 
+  guides(colour = guide_legend(title = "Predicción")) + 
+  theme(legend.position=c(0.98,0.98), legend.justification=c(1,1)) 
+
+#----------------------------------------------------------
+#
+# METODO SENCILLO: AFORO
+#
+#----------------------------------------------------------
+#
+#----------------------------------------------------------
+# Metodo de la deriva
+derivaAforo <- rwf(aforo, 
+                   h = 4, 
+                   drift = TRUE)
+
+summary(derivaAforo)
+
+autoplot(derivaAforo, 
+         series = "",
+         xlab = "",
+         ylab = "",
+         main = "")
+#----------------------------------------------------------
+#
+# ALISADO EXPONENCIAL: AFORO
+#
+#----------------------------------------------------------
+# Ajuste
+etsAforo <- ets(aforo)
+
+summary(etsAforo) 
+
+# Prediccion
+tail(etsAforo$states, 1)
+
+etsResiduosPre <- forecast(etsAforo, 
+                           h = 4,
+                           level = 95)
+etsResiduosPre
+
+autoplot(etsResiduosf,
+         xlab = "",
+         ylab = "Kg. per cápita",
+         main = "")
+
+# Valores atípicos
+error <- residuals(etsAforo)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "Periodo",
+         ylab = "Error",
+         main = "") +
+  geom_hline(yintercept = c(-3, -2, 2 ,3)*sderror, 
+             colour = c("red", "blue", "blue", "red"), lty = 2) + 
+  scale_x_continuous(breaks= seq(1960, 2022, 4)) 
+
+fechas <- format(seq(as.Date("1960-01-01"), as.Date("2022-01-01"), "year"), "%Y")
+fechas[abs(error) > 2.5 * sderror]
+
+atipicos <- tsoutliers(error)
+fechas[atipicos$index]
+#----------------------------------------------------------
+#
+# ARIMA: AFORO
+#
+#----------------------------------------------------------
+# Diferenciacion
 ndiffs(aforo)
 
-# Identificacion, Intervencion y Estimacion
-auto.arima(aforo,
+autoplot(aforo)
+autoplot(diff(aforo))
+
+# Identificacion
+auto.arima(aforo, 
            d = 1)
 
+# Estimacion + Atipicos (1 de 2)
 arima010 <- Arima(aforo, 
                   order = c(0, 1, 0),
                   include.constant = FALSE)
@@ -212,15 +305,16 @@ autoplot(error, series="Error",
   geom_point() +
   scale_x_continuous(breaks= seq(1960, 2020, 4)) 
 
-time(error)[abs(error) > 2.5*sderror]
+fechas[abs(error) > 2.5 * sderror]
 
+# Estimacion + Atipicos (2 de 2)
 d1979 <- 1*(time(error) == 1979)
 d2011 <- 1*(time(error) == 2011)
 d2020 <- 1*(time(error) == 2020)
 
 auto.arima(aforo,
            d = 1,
-           xreg = cbind(d1979,  d2011, d2020))
+           xreg = cbind(d1979, d2011, d2020))
 
 arima210 <- Arima(aforo, 
                   order = c(2, 1, 0),
@@ -242,90 +336,128 @@ autoplot(error, series="Error",
   geom_point() +
   scale_x_continuous(breaks= seq(1960, 2020, 4)) 
 
-# Validacion: Coeficientes significativos
+# Validacion
 coeftest(arima210)
 
-# Error de ajuste
 accuracy(arima210)
 
-# Prevision
+# Prediccion
 parima210 <- forecast(arima210, 
-                      h = 5, 
+                      h = 4, 
                       level = 95,
-                      xreg = cbind(d1979=rep(0, 5), d2011=rep(0, 5), d2020=rep(0, 5)))
+                      xreg = cbind(d1979=rep(0, 4), d2011=rep(0, 4), 
+                                   d2020=rep(0, 4)))
 parima210
 
-autoplot(parima210, 
-         xlab = "",
-         ylab = "Vehículos (000)",
+autoplot(parima110, 
+         xlab = "", 
+         ylab = "Kg. per cápita",
          main = "") +
-  scale_x_continuous(breaks= seq(1960, 2026, 4))  
+  scale_x_continuous(breaks= seq(1995, 2028, 2)) 
+#----------------------------------------------------------
+#
+# COMPARACION ENTRE MODELOS: AFORO
+#
+#----------------------------------------------------------
+autoplot(aforo,
+         xlab = "",
+         ylab = "Vehículos por día",
+         main = "") + 
+  autolayer(derivaAforo$mean, series = "Deriva", PI = FALSE) + 
+  autolayer(etsResiduosPre$mean, series = "Alisado", PI = FALSE) + 
+  autolayer(parima210$mean, series = "Arima", PI = FALSE) + 
+  guides(colour = guide_legend(title = "Método")) + 
+  theme(legend.position=c(0.98,0.98), legend.justification=c(1,1)) 
 
-# Validación con origen de predicción movil
-k <- 30                  
-h <- 5                    
-T <- length(aforo)     
-s <- T - k - h    
 
-mapeArima <- matrix(NA, s + 1, h)
+k <- 30
+h <- 4
+TT <- length(aforo)
+s <- TT - k - h
 
-X <- data.frame(cbind(d1979, d2011, d2020))
+rmseDer <- rmseAli <- rmseAri <- matrix(NA, s + 1, h)
 
 for (i in 0:s) {
   train.set <- subset(aforo, start = i + 1, end = i + k)
-  test.set <-  subset(aforo, start = i + k + 1, end = i + k + h) 
+  test.set <-  subset(aforo, start = i + k + 1, end = i + k + h)
   
-  X.train <- data.frame(X[(i + 1):(i + k),])
-  X.test <- data.frame(X[(i + k + 1):(i + k + h),])
+  fcast <- rwf(train.set, h = h, drift = TRUE)
+  rmseDer[i + 1,] <- (test.set - fcast$mean)^2
   
-  hay <- colSums(X.train)  
+  fit <- ets(train.set, model = "MAN", damped = FALSE)
+  fcast <- forecast(fit, h = h)
+  rmseAli[i + 1,] <- (test.set - fcast$mean)^2
   
-  if(sum(hay) == 0) {
-    X.train <- NULL
-    X.test <- NULL
-  } else {
-    X.train <- as.matrix(X.train[, hay>0])
-    X.test <- as.matrix(X.test[, hay>0])
-  }
-  
-  fit <- Arima(train.set, 
-               include.constant = FALSE,
-               order = c(2, 1, 0),
-               xreg = X.train)
-  
-  fcast <- forecast(fit, h = h, xreg = X.test)
-  
-  mapeArima[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
-  
+  fit <- Arima(train.set, order = c(2, 1, 0), include.constant = FALSE)
+  fcast <- forecast(fit, h = h)
+  rmseAri[i + 1,] <- (test.set - fcast$mean)^2
 }
 
-mapeArima <- colMeans(mapeArima)
-mapeArima
+rmseDerMedia <- sqrt(colMeans(rmseDer))
+rmseAliMedia <- sqrt(colMeans(rmseAli))
+rmseAriMedia <- sqrt(colMeans(rmseAri))
+
+round(rmseDerMedia, 2)
+round(rmseAliMedia, 2)
+round(rmseAriMedia, 2)
 #----------------------------------------------------------
 #
-#
+# METODO SENCILLO: NACIMIENTOS
 #
 #----------------------------------------------------------
-# Consumo de alimentos per capita
+#
 #----------------------------------------------------------
-# Transformacion
-autoplot(alimentospc, xlab = "", ylab = "", main = "", ylim = c(0, 700))
-autoplot(diff(alimentospc), xlab = "", ylab = "", main = "")
+# Metodo de la deriva
+derivaNacimientos <- rwf(nacimientos, 
+                         h = 4, 
+                         lambda = 0, 
+                         drift = TRUE)
 
-ggAcf(alimentospc, xlab = "", ylab = "", main = "")
-ggAcf(diff(alimentospc), xlab = "", ylab = "", main = "")
+summary(derivaNacimientos)
+#----------------------------------------------------------
+#
+# ALISADO EXPONENCIAL: NACIMIENTOS (LOG)
+#
+#----------------------------------------------------------
+# Ajuste
+etsNacimientos <- ets(nacimientos, 
+                      lambda = 0)
 
-ndiffs(alimentospc)
+summary(etsNacimientos)
 
-# Identificacion, Intervencion y Estimacion
-auto.arima(alimentospc,
-           d = 0)
+autoplot(etsNacimientos)
 
-arima001 <- Arima(alimentospc, 
-                  include.constant = TRUE,
-                  order = c(0, 0, 1))
+# Prediccion
+tail(etsNacimientos$states, 1)
 
-error <- residuals(arima001)
+etsNacimientosPre <- forecast(etsNacimientos, 
+                              h = 4,
+                              level = 95)
+etsNacimientosPre
+#----------------------------------------------------------
+#
+# ARIMA: NACIMIENTOS
+#
+#----------------------------------------------------------
+# Diferenciacion
+ndiffs(log(nacimientos))
+
+autoplot(log(nacimientos))
+autoplot(diff(log(nacimientos)))
+
+# Identificacion
+auto.arima(nacimientos, 
+           d = 1,
+           lambda = 0)
+
+# Estimacion + Atipicos (1 de 2)
+arima210 <- Arima(nacimientos, 
+                  order = c(2, 1, 0),
+                  include.constant = FALSE)
+
+arima210
+
+error <- residuals(arima210)
 sderror <- sd(error)
 
 autoplot(error, series="Error",
@@ -337,43 +469,105 @@ autoplot(error, series="Error",
              colour = c("red", "green", "green", "red"), 
              lty = 2) + 
   geom_point() +
-  scale_x_continuous(breaks= seq(1990, 2022, 3)) 
+  scale_x_continuous(breaks= seq(2000, 2024, 4)) 
 
-time(alimentospc)[abs(error) > 2.5 * sderror]
+fechas <- format(seq(as.Date("2000-01-01"), as.Date("2023-01-01"), "year"), "%Y")
 
-d2020 <- 1* (time(alimentospc) == 2020)
+fechas[abs(error) > 2.5 * sderror]
 
-auto.arima(alimentospc, 
-           d = 0, 
-           xreg = d2020)
+# Estimacion + Atipicos (2 de 2)
+d2009 <- 1*(time(error) == 2009)
 
-d1993 <- 1* (time(alimentospc) == 1993)
-d1995 <- 1* (time(alimentospc) == 1995)
-d1999 <- 1* (time(alimentospc) == 1999)
-d2022 <- 1* (time(alimentospc) == 2022)
+auto.arima(nacimientos,
+           d = 1,
+           lambda = 0,
+           xreg = cbind(d2009))
 
-arima100 <- Arima(alimentospc, 
-                  order = c(1, 0, 0),
-                  include.constant = TRUE,
-                  xreg = cbind(d1993, d1995, d1999, d2020, d2022))
-arima100
+arima110 <- Arima(nacimientos, 
+                  order = c(1, 1, 0),
+                  include.constant = FALSE,
+                  lambda = 0,
+                  xreg = cbind(d2009))
 
-# Significatividad
-coeftest(arima100)
+arima110
 
-# Error de ajuste
-accuracy(arima100)
+error <- residuals(arima110)
+sderror <- sd(error)
+
+autoplot(error, series="Error",
+         colour = "black",
+         xlab = "",
+         ylab = "Error",
+         main = "") +
+  geom_hline(yintercept = c(-3, -2, 2, 3)*sderror, 
+             colour = c("red", "green", "green", "red"), 
+             lty = 2) + 
+  geom_point() +
+  scale_x_continuous(breaks= seq(2000, 2024, 4)) 
+
+fechas[abs(error) > 2.5 * sderror]
+
+# Validacion
+coeftest(arima110)
+
+accuracy(arima110)
 
 # Prediccion
-parima100 <- forecast(arima100, 
-                      h = 5, 
+parima110 <- forecast(arima110, 
+                      h = 4, 
                       level = 95,
-                      xreg = cbind(rep(0, 5), rep(0, 5), rep(0, 5), 
-                                   rep(0, 5), rep(0, 5)))
-parima100
+                      xreg = cbind(d1979=rep(0, 4)))
+parima110 
+#----------------------------------------------------------
+#
+# COMPARACION ENTRE MODELOS: NACIMIENTOS
+#
+#----------------------------------------------------------
+autoplot(nacimientos,
+         xlab = "",
+         ylab = "Bebés",
+         main = "") + 
+  autolayer(derivaNacimientos$mean, series = "Deriva") + 
+  autolayer(etsNacimientosPre$mean, series = "Alisado") + 
+  autolayer(parima110$mean, series = "Arima") + 
+  guides(colour = guide_legend(title = "Método")) + 
+  theme(legend.position=c(0.98,0.98), legend.justification=c(1,1)) 
 
-autoplot(parima100, 
-         ylab = "Kilos per cápita",
-         main = "") +
-  scale_x_continuous(breaks= seq(1990, 2026, 4)) 
+
+
+k <- 20
+h <- 4
+TT <- length(nacimientos)
+s <- TT - k - h
+
+mapeDer <- mapeAli <- mapeAri <- matrix(NA, s + 1, h)
+
+for (i in 0:s) {
+  train.set <- subset(nacimientos, start = i + 1, end = i + k)
+  test.set <-  subset(nacimientos, start = i + k + 1, end = i + k + h)
+  
+  fcast <- rwf(train.set, h = h, drift = TRUE, lambda = 0)
+  mapeDer[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fit <- ets(train.set, model = "AAN", damped = FALSE, lambda = 0)
+  fcast <- forecast(fit, h = h)
+  mapeAli[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fit <- Arima(train.set, order = c(1, 1, 0), include.constant = FALSE, lambda = 0)
+  fcast <- forecast(fit, h = h)
+  mapeAri[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+}
+
+mapeDerMedia <- colMeans(mapeDer)
+mapeAliMedia <- colMeans(mapeAli)
+mapeAriMedia <- colMeans(mapeAri)
+
+round(mapeDerMedia, 2)
+round(mapeAliMedia, 2)
+round(mapeAriMedia, 2)
+
+
+
+
+
 

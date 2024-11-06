@@ -1,5 +1,5 @@
 #----------------------------------------------------------
-# CODIGO EJEMPLO 3
+# CODIGO EJEMPLO 3: ALISADO EXPONENCIAL
 #----------------------------------------------------------
 #
 #
@@ -18,137 +18,202 @@ library(ggplot2); theme_set(theme_bw())
 Pernoctaciones <- read.csv2("./series/Pernoctaciones.csv", 
                             header = TRUE)
 
-Pernoctaciones <- ts(Pernoctaciones[, 2], 
+Pernoctaciones <- ts(Pernoctaciones[, 2] / 1000000, 
                      start = 2000, 
                      frequency = 12)
 
-autoplot(Pernoctaciones/1000000,
+autoplot(Pernoctaciones,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
+  scale_x_continuous(breaks= seq(2000, 2024, 2)) 
 #----------------------------------------------------------
 #
 #
 #
 #----------------------------------------------------------
-# Metodo ingenuo para la serie anual
+# Alisado exponencial para la serie anual
 #----------------------------------------------------------
-PernoctacionesAnual <- aggregate(Pernoctaciones/1000000, FUN = sum)
-PernoctacionesAnualb <- window(PernoctacionesAnual, end = 2019)
+# Serie anual
+PernoctacionesAnual <- aggregate(Pernoctaciones, FUN = sum)
 
-autoplot(PernoctacionesAnualb,
+autoplot(PernoctacionesAnual,
          xlab = "",
          ylab = "Noches (millones)",
          main = "") +
-  scale_x_continuous(breaks= seq(2000, 2022, 2)) 
+  scale_x_continuous(breaks= seq(2000, 2024, 2)) 
 
-# Ajustes por metodos sencillos
-mediaPernoctaciones <- meanf(PernoctacionesAnualb, h = 5)
-naivePernoctaciones <- naive(PernoctacionesAnualb, h = 5)
-derivaPernoctaciones <- rwf(PernoctacionesAnualb,  h = 5, drift = TRUE)
+# Ajuste
+PernoctacionesAnualEts <- ets(PernoctacionesAnual)
 
-autoplot(PernoctacionesAnualb, series = "Pernoctaciones",
-         xlab = "",
-         ylab = "Noches (millones)",
-         main = "") +
-  autolayer(mediaPernoctaciones, series="Media", PI = FALSE) +
-  autolayer(naivePernoctaciones, series="Ingenuo", PI = FALSE) +
-  autolayer(derivaPernoctaciones, series="Deriva", PI = FALSE) +
-  scale_colour_discrete(limits=c("Pernoctaciones", "Media", "Ingenuo", "Deriva")) +
-  labs(colour="Métodos") + 
-  theme(legend.position=c(0.15,0.7))
+round(accuracy(PernoctacionesAnualEts, test = 1:20), 2)
 
-# Error de ajuste
-accuracy(mediaPernoctaciones)
-accuracy(naivePernoctaciones)
-accuracy(derivaPernoctaciones)
-
-# Error con origen de predicciones movil
-k <- 10                  
-h <- 5                   
-TT <- length(PernoctacionesAnualb) 
-s <- TT - k - h          
-
-mapeNaiveI <- matrix(NA, s + 1, h)
-mapeDeriva <- matrix(NA, s + 1, h)
-
-for (i in 0:s) {
-  train.set <- subset(PernoctacionesAnualb, start = i + 1, end = i + k)
-  test.set <-  subset(PernoctacionesAnualb, start = i + k + 1, end = i + k + h)
-  
-  fcast <- naive(train.set, h = h)
-  mapeNaiveI[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
-  
-  fcast <- rwf(train.set, h = h,  drift = TRUE)
-  mapeDeriva[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
-  
-}
-
-mapeNaiveI <- colMeans(mapeNaiveI)
-mapeDeriva <- colMeans(mapeDeriva)
-
-mapeNaiveI
-mapeDeriva
-
-# Predicciones
-derivaPernoctaciones
-
-# Efecto Covid en pernoctaciones
-PernoctacionesAnual - derivaPernoctaciones$mean
-
-# Efecto Covid en ingresos por pernoctaciones
-150 * (PernoctacionesAnual - derivaPernoctaciones$mean)
+# Prediccion
+forecast(PernoctacionesAnualEts, 
+         h = 4, 
+         level = 95)
 #----------------------------------------------------------
 #
 #
 #
 #----------------------------------------------------------
-# Metodo ingenuo con estacionalidad
+# Alisado exponencial para la serie mensual
 #----------------------------------------------------------
 # Ajuste
-Pernoctacionesb <- window(Pernoctaciones, end = c(2019, 12))
-PernoctacionesPre <- snaive(Pernoctacionesb, 
-                            h = 36, 
-                            level = 0.95)
+PernoctacionesEts <- ets(Pernoctaciones)
+PernoctacionesEts
 
-PernoctacionesPre
-
-# Error de ajuste
-accuracy(PernoctacionesPre)
-
-# Prevision
-autoplot(PernoctacionesPre,
+autoplot(PernoctacionesEts,
          xlab = "",
-         ylab = "Noches",
-         main = "Pernoctaciones (2000-2019) y predicción (2020-2022)",
-         PI = FALSE)
+         main = "")
 
-# Efecto Covid
-aggregate(Pernoctaciones - PernoctacionesPre$mean, FUN = sum)/1000000
+# Ultimos valores
+TT <- nrow(PernoctacionesEts$states)
+PernoctacionesEts$states[TT,]
 
-# Error con origen de prediccion movil
+# Estacionalidad
+componenteEstacional <- PernoctacionesEts$states[TT, 14:3]
+
+ggplot() +
+  geom_line(aes(x = 1:12, y = componenteEstacional)) + 
+  geom_hline(yintercept = 0, colour = "blue", lty = 2) +
+  ggtitle("") +
+  xlab("") +
+  ylab("Efecto estacional") +
+  scale_x_continuous(breaks= 1:12, 
+                     labels = c("Ene", "Feb", "Mar", "Abr", "May", "Jun", 
+                                "Jul", "Ago", "Sep", "Oct", "Nov", "Dic")) 
+
+# Predicción
+PernoctacionesEtsPre <- forecast(PernoctacionesEts, 
+                                 h = 48, 
+                                 level = 95)
+
+PernoctacionesEtsPre
+
+autoplot(PernoctacionesEtsPre,
+         xlab = "",
+         ylab = "Casos",
+         main = "",
+         PI = FALSE)  +
+  scale_x_continuous(breaks= seq(2000, 2028, 2)) 
+
+# Análisis del error
+error <- residuals(PernoctacionesEts)
+sderror <- sd(error)
+
+autoplot(error,
+         xlab = "",
+         ylab = "Error",
+         main = "",
+         colour = "black") +
+  geom_hline(yintercept = c(-3, -2, 2 ,3)*sderror, 
+             colour = c("red", "blue", "blue", "red"), lty = 2) + 
+  scale_x_continuous(breaks= seq(2000, 2024, 2)) 
+
+fechas <- format(seq(as.Date("2000-01-01"), as.Date("2023-12-01"), by = 'month'), "%Y-%m")
+fechas[abs(error) > 3 * sderror]
+
+# Analisis del error precovid
+error <- window(error, end = c(2019, 12))
+sderror <- sd(error)
+
+fechas <- format(seq(as.Date("2000-01-01"), as.Date("2019-12-01"), by = 'month'), "%Y-%m")
+
+fechas[abs(error) > 3 * sderror]
+
+# Prueba de Tukey 
+atipicos <- tsoutliers(error)
+fechas[atipicos$index]
+
+# Error por origen de prediccion movil
 k <- 120                 
 h <- 12                  
-TT <- length(Pernoctaciones)  
+TT <- length(Pernoctaciones)
 s <- TT - k - h          
 
-mapeSnaive <- matrix(NA, s + 1, h)
+mapeAlisado <- matrix(NA, s + 1, h)
 for (i in 0:s) {
   train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
   test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
   
-  fit <- snaive(train.set, h = h)
-  mapeSnaive[i + 1,] <- 100*abs(test.set - fit$mean)/test.set
+  fit <- ets(train.set, model = "AAA", damped = TRUE)
+  fcast<-forecast(fit, h = h)
+  mapeAlisado[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
 }
 
-mapeSnaive <- colMeans(mapeSnaive)
-mapeSnaive
+errorAlisado <- apply(mapeAlisado, MARGIN = 2, FUN = median)
+errorAlisado
 
 ggplot() +
-  geom_line(aes(x = 1:12, y = mapeSnaive)) +
+  geom_line(aes(x = 1:12, y = errorAlisado)) +
   ggtitle("") +
   xlab("Horizonte temporal de predicción") +
   ylab("MAPE") +
+  ylim(0, 14) + 
   scale_x_continuous(breaks= 1:12)
+#----------------------------------------------------------
+#
+#
+#
+#----------------------------------------------------------
+# Modelos alternativos
+#----------------------------------------------------------
+k <- 120                 
+h <- 12                  
+TT <- length(Pernoctaciones)
+s <- TT - k - h
+
+mapeAlisado1 <- mapeAlisado2 <- mapeAlisado3 <- mapeAlisado4 <- 
+  mapeAlisado5 <- mapeAlisado6 <-matrix(NA, s + 1, h)
+
+for (i in 0:s) {
+  train.set <- subset(Pernoctaciones, start = i + 1, end = i + k)
+  test.set <-  subset(Pernoctaciones, start = i + k + 1, end = i + k + h)
+  
+  fit <- ets(train.set, model = "AAA", damped = TRUE)
+  fcast<-forecast(fit, h = h)
+  mapeAlisado1[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fit <- ets(train.set, model = "AAA", damped = TRUE, opt.crit = "amse", nmse = 2)
+  fcast<-forecast(fit, h = h)
+  mapeAlisado2[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fit <- ets(train.set, model = "AAA", damped = TRUE, lambda = 0)
+  fcast<-forecast(fit, h = h, biasadj = TRUE)
+  mapeAlisado3[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fit <- ets(train.set, model = "AAA", damped = TRUE, lambda = 0, opt.crit = "amse", nmse = 2)
+  fcast<-forecast(fit, h = h, biasadj = TRUE)
+  mapeAlisado4[i + 1,] <- 100*abs(test.set - fcast$mean)/test.set
+  
+  fit <- ets(train.set/monthdays(train.set), model = "AAA", damped = TRUE)
+  fcast<-forecast(fit, h = h)
+  mapeAlisado5[i + 1,] <- 100*abs(test.set - fcast$mean * monthdays(fcast$mean))/test.set
+  
+  fit <- ets(train.set/monthdays(train.set), model = "AAA", damped = TRUE, opt.crit = "amse", nmse = 2)
+  fcast<-forecast(fit, h = h)
+  mapeAlisado6[i + 1,] <- 100*abs(test.set - fcast$mean * monthdays(fcast$mean))/test.set
+}
+
+
+errorAlisado1 <- apply(mapeAlisado1, MARGIN = 2, FUN = median)
+errorAlisado2 <- apply(mapeAlisado2, MARGIN = 2, FUN = median)
+errorAlisado3 <- apply(mapeAlisado3, MARGIN = 2, FUN = median)
+errorAlisado4 <- apply(mapeAlisado4, MARGIN = 2, FUN = median)
+errorAlisado5 <- apply(mapeAlisado5, MARGIN = 2, FUN = median)
+errorAlisado6 <- apply(mapeAlisado6, MARGIN = 2, FUN = median)
+
+ggplot() +
+  geom_line(aes(x = 1:12, y = errorAlisado1, colour = "Modelo 1")) +
+  geom_line(aes(x = 1:12, y = errorAlisado2, colour = "Modelo 2")) + 
+  geom_line(aes(x = 1:12, y = errorAlisado3, colour = "Modelo 3")) +
+  geom_line(aes(x = 1:12, y = errorAlisado4, colour = "Modelo 4")) +
+  geom_line(aes(x = 1:12, y = errorAlisado5, colour = "Modelo 5")) +
+  geom_line(aes(x = 1:12, y = errorAlisado6, colour = "Modelo 6")) +
+  ggtitle("") +
+  xlab("") +
+  ylab("MedAPE") +
+  scale_x_continuous(breaks= 1:12) +
+  scale_color_discrete(name = "Modelos")
 

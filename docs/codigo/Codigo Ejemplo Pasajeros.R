@@ -19,10 +19,10 @@ library(knitr)
 #----------------------------------------------------------
 # Importamos datos
 #----------------------------------------------------------
-Pasajeros <- read.csv2("./series/Pasajeros.csv", 
+Pasajeros <- read.csv2("./series/Pasajeros.csv",
                        header = TRUE)
 
-Pasajeros <- ts(Pasajeros/1000, 
+Pasajeros <- ts(Pasajeros[, 1]/1000, 
                 start = 1996, 
                 freq = 12)
 
@@ -30,7 +30,7 @@ autoplot(Pasajeros, colour = "darkblue",
          xlab = "",
          ylab = "Millones de pasajeros",
          main = "") +
-  scale_x_continuous(breaks= seq(1996, 2022, 2)) 
+  scale_x_continuous(breaks= seq(1996, 2024, 2)) 
 
 Pasajeros <- window(Pasajeros, end = c(2019, 12))
 #----------------------------------------------------------
@@ -82,13 +82,14 @@ tail(DiasNoLaborables, n = 60)
 # Lunes navidad
 fechas <- as.POSIXlt(seq(from = as.Date("1996-1-1"), 
                          to = as.Date("2024-12-31"), 
-                         by = 1))
+                         by = "day"))
 LunesNavidad <- 1*(fechas$wday == 1 & fechas$mon == 11 & fechas$mday == 25)
 fechas <- format(fechas, format = "%Y-%m")
 LunesNavidad <- tapply(LunesNavidad, fechas, sum)
 LunesNavidad <- ts(LunesNavidad, start = 1996, frequency = 12)
 pLunesNavidad <- subset(LunesNavidad, start = length(LunesNavidad) - 59)
 LunesNavidad <- subset(LunesNavidad, end = length(LunesNavidad) - 60)
+
 LunesNavidad[LunesNavidad == 1]
 
 # Seamana Santa y Pascua
@@ -136,6 +137,7 @@ tail(DiasPascua, n = 60)
 #----------------------------------------------------------
 # Tendencia
 PasajerosAnual <- aggregate(Pasajeros, FUN = sum)
+
 autoplot(PasajerosAnual, colour = "darkblue",
          xlab = "",
          ylab = "Millones de pasajeros",
@@ -143,11 +145,10 @@ autoplot(PasajerosAnual, colour = "darkblue",
   scale_x_continuous(breaks= seq(1996, 2020, 2))
 
 # Esquema
-MediaAnual <- aggregate(Pasajeros, FUN = mean)
 DesviacionAnual <- aggregate(Pasajeros, FUN = sd)
 
 ggplot() +
-  geom_point(aes(x = MediaAnual, y = DesviacionAnual), size = 2) +
+  geom_point(aes(x = PasajerosAnual, y = DesviacionAnual), size = 2) +
   xlab("Media de pasajeros por año") + 
   ylab("Desviación típica de pasajeros por año") + 
   ggtitle("")
@@ -165,11 +166,11 @@ ggsubseriesplot(PasajerosDL) +
   xlab("") +
   ggtitle("")
 
-PasajerosStl <- stl(Pasajeros[,1], 
+PasajerosStl <- stl(Pasajeros, 
                     s.window = "periodic", 
                     robust = TRUE)
 
-PasajerosDLStl <- stl(PasajerosDL[,1], 
+PasajerosDLStl <- stl(PasajerosDL, 
                       s.window = "periodic", 
                       robust = TRUE)
 
@@ -181,7 +182,7 @@ kable(datos,
       digits = 2)
 
 
-# Intervención
+# Intervención Pasajeros
 error <- remainder(PasajerosStl)
 sderror <- sd(error)
 
@@ -195,7 +196,16 @@ autoplot(error,
              lty = 2) + 
   scale_x_continuous(breaks= seq(1996, 2020, 2))
 
+fechasMes <- format(seq(from = as.Date("1996-01-01"), 
+                        to = as.Date("2019-12-01"), 
+                        "month"), 
+                    "%Y-%m")
+fechasMes[abs(error) > 3 * sderror]
 
+atipicos <- tsoutliers(error)
+fechasMes[atipicos$index]
+
+# Intervención Pasajeros por dia laborable
 error <- remainder(PasajerosDLStl)
 sderror <- sd(error)
 
@@ -208,6 +218,8 @@ autoplot(error,
              colour = c("red", "green", "green", "red"),
              lty = 2) + 
   scale_x_continuous(breaks= seq(1996, 2020, 2))
+
+fechasMes[abs(error) > 3 * sderror]
 #----------------------------------------------------------
 #
 #
@@ -239,6 +251,7 @@ summary(PasajerosEts)
 # Estacionalidad
 PasajerosEtsEst <- PasajerosEts$states[nrow(PasajerosEts$states), 14:3]
 names(PasajerosEtsEst) <- meses
+
 round(PasajerosEtsEst, 2)
 
 ggplot() +
@@ -252,8 +265,7 @@ ggplot() +
 
 # Predicción
 PasajerosEtsPre <- forecast(PasajerosEts, 
-                            h = 60, 
-                            level = 95)
+                            h = 60)
 
 autoplot(PasajerosEtsPre,
          xlab = "",
@@ -272,6 +284,8 @@ autoplot(error,
   geom_hline(yintercept = c(-3, -2, 2 ,3)*sderror, 
              colour = c("red", "green", "green", "red"), lty = 2) + 
   scale_x_continuous(breaks= seq(1996, 2020, 2))
+
+fechasMes[abs(error) > 3 * sderror]
 
 # Analisis alternativos
 PasajerosDM <- Pasajeros/monthdays(Pasajeros)
@@ -317,10 +331,10 @@ for (i in 0:s) {
   mapeAlisadoPasDM[i + 1,] <- 100*abs(testDM.set - fcast$mean)/testDM.set
 }
 
-errorAlisadoPas <- colMeans(mapeAlisadoPas)
-errorAlisadoLogPas <- colMeans(mapeAlisadoLogPas)
-errorAlisadoPasDL <- colMeans(mapeAlisadoPasDL)
-errorAlisadoPasDM <- colMeans(mapeAlisadoPasDM)
+errorAlisadoPas <- apply(mapeAlisadoPas, MARGIN = 2, FUN = median)
+errorAlisadoLogPas <- apply(mapeAlisadoLogPas, MARGIN = 2, FUN = median)
+errorAlisadoPasDL <- apply(mapeAlisadoPasDL, MARGIN = 2, FUN = median)
+errorAlisadoPasDM <- apply(mapeAlisadoPasDM, MARGIN = 2, FUN = median)
 
 datos <- data.frame(
   factor = c(rep("Pasajeros", 12), 
@@ -337,9 +351,9 @@ ggplot(datos, aes(x = x, y = y,  colour= factor)) +
   xlab("Horizonte temporal de predicción") +
   ylab("%") +
   scale_x_continuous(breaks= 1:12) +
-  scale_y_continuous(breaks= seq(2.6, 4, .2)) +
+  scale_y_continuous(breaks= seq(2, 4, .2)) +
   labs(colour = "Métodos") + 
-  theme(legend.position=c(0.15,0.7))
+  theme(legend.position=c(0.15, 0.7))
 #----------------------------------------------------------
 #
 #
@@ -384,7 +398,6 @@ PasajerosAri <- Arima(Pasajeros,
                       seasonal = c(0, 1, 1),
                       xreg = cbind(DiasLaborables, DiasNoLaborables, 
                                    LunesNavidad, DiasPreSanta, DiasPascua))
-
 PasajerosAri
 
 error <- residuals(PasajerosAri)
@@ -399,6 +412,8 @@ autoplot(error, series="Error",
              colour = c("red", "blue", "black", "blue", "red"), 
              lty = 2) + 
   scale_x_continuous(breaks= seq(1996, 2020, 2))
+
+fechasMes[abs(error) > 3 * sderror]
 
 d0402 <- 1*(trunc(time(Pasajeros)) == 2002 & cycle(Pasajeros) == 4)
 d0805 <- 1*(trunc(time(Pasajeros)) == 2005 & cycle(Pasajeros) == 8)
@@ -427,6 +442,8 @@ autoplot(error, series="Error",
              lty = 2) + 
   scale_x_continuous(breaks= seq(1996, 2020, 2))
 
+fechasMes[abs(error) > 2.8 * sderror]
+
 # Validacion
 coeftest(PasajerosAri)
 
@@ -441,27 +458,22 @@ s<-T - k - h
 
 mapeArima <- matrix(NA, s + 1, h)
 
-X <- cbind(DiasLaborables, DiasNoLaborables, 
-           LunesNavidad, DiasPreSanta, DiasPascua,
-           d0402, d0805, d0806, d0310)
+X <- data.frame(cbind(DiasLaborables, DiasNoLaborables, 
+                      LunesNavidad, DiasPreSanta, DiasPascua))
 
 for (i in 0:s) {
   train.set <- subset(Pasajeros, start = i + 1, end = i + k)
   test.set <-  subset(Pasajeros, start = i + k + 1, end = i + k + h) 
   
-  X.train <- X[(i + 1):(i + k),]
-  X.test <- X[(i + k + 1):(i + k + h),]
-  
-  hay <- colSums(X.train)
-  
-  X.train <- X.train[, hay>0]
-  X.test <- X.test[, hay>0]
+  X.train <- as.matrix(X[(i + 1):(i + k),])
+  X.test <- as.matrix(X[(i + k + 1):(i + k + h),])
   
   fit <- try(Arima(train.set, 
                    lambda = 0,
                    order = c(0, 1, 1),
                    seasonal = c(0, 1, 1),
-                   xreg=X.train), silent = TRUE)
+                   xreg=X.train), 
+             silent = TRUE)
   
   if (!is.element("try-error", class(fit))) {
     fcast <- forecast(fit, h = h, xreg = X.test)
@@ -469,7 +481,7 @@ for (i in 0:s) {
   }
 }
 
-errorArima <- colMeans(mapeArima, na.rm = TRUE)
+errorArima <- apply(mapeArima, MARGIN = 2, FUN = median, na.rm = TRUE)
 round(errorArima, 2)
 
 # Predicción 

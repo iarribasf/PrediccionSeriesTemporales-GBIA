@@ -16,20 +16,20 @@ library(ggplot2); theme_set(theme_bw())
 # Importamos series
 #----------------------------------------------------------
 # Libros
-libros <- read.csv2("./series/libros.csv", 
-                    header = TRUE)
+residuos <- read.csv2("./series/Residuos.csv", 
+                      header = TRUE)
 
-libros <- ts(libros[, 2], 
-             start = 1993, 
-             frequency  = 1)
+residuos <- ts(residuos[, 2], 
+               start = 1995, 
+               frequency  = 1)
 
-autoplot(libros,
+autoplot(residuos,
          xlab = "",
-         ylab = "Títulos",
+         ylab = "Kg per cápita",
          main = "")
 
 # Nacimientos
-nacimientos <- read.csv2("./series/nacimientos.csv", 
+nacimientos <- read.csv2("./series/Nacimientos.csv", 
                          header = TRUE)
 
 nacimientos <- ts(nacimientos[, 2],
@@ -42,9 +42,11 @@ autoplot(nacimientos,
          main = "")
 
 # Demanda eléctrica
-electricidad <- read.csv2("./series/Consumo electrico.csv", header = TRUE)
+electricidad <- read.csv("./series/Consumo electrico.csv", 
+                         header = TRUE)
+
 electricidad <- ts(electricidad[, 1],
-                   start = c(1, 6),
+                   start = c(1, 7),
                    frequency = 7)
 
 autoplot(electricidad,
@@ -77,7 +79,7 @@ DesviacionSemana = aggregate(electricidad, FUN = sd)
 ggplot() +
   geom_point(aes(x = CasosSemana, y = DesviacionSemana), size = 2) +
   xlab("Consumo semanal") + 
-  ylab("Des. Tip. intra-semanal")
+  ylab("Des. tip. intrasemanal")
 
 # Multiplicativo: nacimientos
 CasosAno = aggregate(nacimientos, FUN = sum)
@@ -86,7 +88,7 @@ DesviacionAno = aggregate(nacimientos, FUN = sd)
 ggplot() +
   geom_point(aes(x = CasosAno, y = DesviacionAno), size = 2) +
   xlab("Nacimientos anuales") + 
-  ylab("Des. Tip. intra-anual")
+  ylab("Des. tip. intraanual")
 #----------------------------------------------------------
 #
 #
@@ -116,15 +118,15 @@ autoplot(electricidadSemanal,
 # Estacionalidad
 #----------------------------------------------------------
 # Graficas
-nacimientosb <- window(nacimientos, start = 2000, end = c(2019, 12))
+nacimientosb <- window(nacimientos, start = 2000)
 
 ggsubseriesplot(nacimientosb) +
   ylab("Nacimientos") +
   xlab("") +
   ggtitle("")
 
-ggseasonplot(nacimientosb, 
-             year.labels=TRUE, 
+ggseasonplot(window(nacimientos, start = 2018),
+             year.labels = TRUE, 
              xlab = "",
              ylab = "Nacimientos",
              main = "")
@@ -133,11 +135,13 @@ ggseasonplot(nacimientosb,
 componenteEstacional <- tapply(nacimientosb/mean(nacimientosb), 
                                cycle(nacimientosb), 
                                FUN = mean)
+
 round(componenteEstacional, 2)
 
 componenteEstacional <- tapply(electricidad - mean(electricidad), 
                                cycle(electricidad), 
                                FUN = mean)
+
 round(componenteEstacional, 2)
 #----------------------------------------------------------
 #
@@ -149,7 +153,7 @@ round(componenteEstacional, 2)
 window(nacimientos, start = c(2000, 1), end = c(2009, 12))
 window(nacimientos, start = c(2010, 3))
 window(nacimientos, end = c(1999, 12))
-window(nacimientos, start = c(2000, 3))
+window(nacimientos, start = c(2000, 3), freq = TRUE)
 
 subset(nacimientos, start = 10, end = 34)
 subset(nacimientos, start = 121)
@@ -174,18 +178,20 @@ autoplot(eleDesAdi,
 tmp <- trendcycle(eleDesAdi) + seasonal(eleDesAdi) + remainder(eleDesAdi)
 summary(electricidad - tmp)
 
-autoplot(electricidad, series="Demanda eléctrica",
+autoplot(electricidad, 
+         series="Demanda eléctrica",
          xlab = "",
          ylab = "MWh",
          main = "") +
-  autolayer(trendcycle(eleDesAdi), series="Tendencia") +
+  autolayer(trendcycle(eleDesAdi), 
+            series="Tendencia") +
   scale_colour_manual(values=c("Demanda eléctrica"="black","Tendencia"="red"),
                       breaks=c("Demanda eléctrica","Tendencia"))
 
 eleDesAdi$figure
 sum(eleDesAdi$figure)
 
-compEstacional <- eleDesAdi$figure[c(3:7, 1:2)]
+compEstacional <- eleDesAdi$figure[c(2:7, 1)]
 ggplot() +
   geom_line(aes(x = 1:7, y = compEstacional)) + 
   geom_hline(yintercept = 0, colour = "blue", lty = 2) +
@@ -193,12 +199,14 @@ ggplot() +
   xlab("") +
   ylab("Componente estacional") +
   scale_x_continuous(breaks= 1:7, 
-                     labels = c("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo")) 
+                     labels = c("Lunes", "Martes", "Miércoles", "Jueves", 
+                                "Viernes", "Sábado", "Domingo")) 
 
 
 # Esquema multiplicativo
 nacDesMul <- decompose(nacimientos, 
                        type = "mult")
+
 autoplot(nacDesMul,
          xlab = "",
          main = "")
@@ -226,23 +234,20 @@ eleStl <- stl(electricidad,
               s.window = "periodic",
               robust = TRUE)
 
-head(eleStl$time.series)
+head(eleStl$time.series, n = 7)
 
 autoplot(eleStl,
          xlab = "",
          main = "")
 
-head(seasonal(eleStl), 7)
 sum(head(seasonal(eleStl), 7))
 
-# tapply
+#tapply
 round(as.numeric(componenteEstacional), 2)
-
 # decompose
-round(seasonal(eleDesAdi)[c(3:7, 1:2)], 2)
-
+round(seasonal(eleDesAdi)[c(2:7, 1)], 2)
 # stl
-round(seasonal(eleStl)[c(3:7, 1:2)], 2)
+round(seasonal(eleStl)[c(2:7, 1)], 2)
 
 
 # Estacionalidad no fija
@@ -253,8 +258,10 @@ eleStl11 <- stl(electricidad,
 xx <- window(seasonal(eleStl), start = 20, end = 40)
 yy <- window(seasonal(eleStl11), start = 20, end = 40)
 autoplot(xx, series="s.window = 'periodic'",
-         ylab = "Componente estacional",
+         xlab = "",
+         ylab = "GWh",
          main = "") +
-  autolayer(yy, series="s.window = 11") +
+  autolayer(yy, 
+            series="s.window = 11") +
   scale_colour_manual(values=c("s.window = 'periodic'"="black","s.window = 11"="red"))
 
