@@ -1343,14 +1343,20 @@ Figura&nbsp;7: Error de predicción (MedAPE) según horizonte temporal
 <h3 class="unnumbered anchored" data-anchor-id="interpretación">Interpretación</h3>
 <p>El <em>modelo teórico</em> es <span class="math inline">\(log(nacimientos) \sim ARIMA_{12}(0, 1, 1)(0, 1, 1) + AI\)</span>,</p>
 <p><span class="math display">\[(1 - L^{12})(1 - L)\log(nacimientos_t) = (1 + \theta_1 L)(1 + \theta_{12} L^{12})\varepsilon_t + AI.\]</span></p>
-<p>Si sustituimos <span class="math inline">\((1 - L^{12})\log(nacimientos_t)\)</span> por <span class="math inline">\(TVA_{nacimientos_t}\)</span>, la tasa de variación anual de los nacimientos, y desarrollamos queda</p>
-<p><span class="math display">\[TVA_{nacimientos_t} = TVA_{nacimientos_{t-1}} + \theta_1 \varepsilon_{t-1} + \theta_{12} \varepsilon_{t-12} + \theta_1\theta_{12} \varepsilon_{t-13} +  \varepsilon_{t}+\]</span></p>
-<p><span class="math display">\[\gamma_1 \cdot DiasMes_t + \gamma_2 \cdot SemanaSanta +\gamma_3 \cdot d1206_t + \gamma_4 \cdot d12100111_t + \]</span></p>
-<p><span class="math display">\[\gamma_5 \cdot d0416_t + \gamma_6 \cdot d11200221_t + \gamma_7 \cdot d12200121_t + \gamma_8 \cdot d1122_t.\]</span></p>
-<p>Finalmente, el <em>modelo estimado</em> es,</p>
-<p><span class="math display">\[\widehat{TVA}_{nacimientos_{t}} = TVA_{nacimientos_{t-1}}  - 0.51\varepsilon_{t-1} - 0.76\varepsilon_{t-12} + 0.39\varepsilon_{t-13} + \]</span></p>
-<p><span class="math display">\[0.028 \cdot DiasMes_t - 0.022 \cdot SemanaSanta - 0.046 \cdot d1206_t + 0.058 \cdot d12100111_t\]</span></p>
-<p><span class="math display">\[- 0.054 \cdot d0416_t - 0.071 \cdot d11200221_t - 0.20  \cdot d12200121_t + 0.042 \cdot d1122.\]</span></p>
+<p>Si sustituimos <span class="math inline">\((1 - L^{12})\log(nacimientos_t)\)</span> por <span class="math inline">\(TVA_{nacimientos_t}\)</span>, la tasa de variación anual de los nacimientos, y desarrollamos queda <span class="math display">\[
+\begin{aligned}
+TVA\_nac_t  = &amp; TVA\_nac_{t - 1} + \theta_1 \varepsilon_{t-1} + \theta_{12} \varepsilon_{t-12} + \theta_1\theta_{12} \varepsilon_{t-13} +  \varepsilon_{t}+ \\
+&amp; \gamma_1 \cdot DiasMes_t + \gamma_2 \cdot SemanaSanta +\gamma_3 \cdot d1206_t + \gamma_4 \cdot d12100111_t + \\
+&amp; \gamma_5 \cdot d0416_t + \gamma_6 \cdot d11200221_t + \gamma_7 \cdot d12200121_t + \gamma_8 \cdot d1122_t.
+\end{aligned}
+\]</span></p>
+<p>Finalmente, el <em>modelo estimado</em> es, <span class="math display">\[
+\begin{aligned}
+\widehat{TVA}\_nac_t = &amp; TVA\_nac_{t-1}  - 0.51\varepsilon_{t-1} - 0.76\varepsilon_{t-12} + 0.39\varepsilon_{t-13} + \\
+&amp; 0.028 \cdot DiasMes_t - 0.022 \cdot SemanaSanta - 0.046 \cdot d1206_t + 0.058 \cdot d12100111_t \\
+&amp; - 0.054 \cdot d0416_t - 0.071 \cdot d11200221_t - 0.20  \cdot d12200121_t + 0.042 \cdot d1122.
+\end{aligned}
+\]</span></p>
 <ul>
 <li><p>En cada mes, <strong>la tasa de variación anual de los nacimientos es la misma que la del mes pasado</strong> (<span class="math inline">\(\widehat{TVA}_{nacimientos_t} = TVA_{nacimientos_{t-1}}\)</span>).</p></li>
 <li><p>Además, si algunos de los meses necesarios para predecir fue anómalo, el error hay que tenerlo en cuenta para afinar la previsión.</p></li>
@@ -1443,7 +1449,8 @@ Figura&nbsp;9: Exportaciones de España a la EU27
 </div>
 <section id="transformación-de-la-serie-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="transformación-de-la-serie-1">Transformación de la serie</h3>
-<p>La <a href="#fig-Exportaciones" class="quarto-xref">Figura&nbsp;9</a> deja claro que la serie precisa ser diferenciada para ser estacionaria. La <a href="#fig-ExpFAC" class="quarto-xref">Figura&nbsp;10</a>, realizada sobre el logaritmo de las exportaciones, evidencia que es necesaria la doble diferenciación, regular y estacional.</p>
+<p>La <a href="#fig-Exportaciones" class="quarto-xref">Figura&nbsp;9</a> deja claro que la serie debe ser diferenciada para ser estacionaria. También muestra dos periodos con una marcada intervención: al inicio de la Gran Recesión (2008-2014) y durante el periodo más duro de la Covid-19 en el año 2020. Además, por la naturaleza de la serie es previsible que exista un efecto días del mes o días laborables y un efecto Semana Santa.</p>
+<p>Por otro lado, la <a href="#fig-Exportaciones" class="quarto-xref">Figura&nbsp;9</a> muestra que la serie tiene un esquema multiplicativa, así que trabajaremos con la transformación logarítmica.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggAcf</span>(<span class="fu">log</span>(exportaciones), <span class="at">lag =</span> <span class="dv">48</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>),</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>      <span class="at">xlab =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">main =</span> <span class="st">""</span>)</span>
@@ -1517,7 +1524,6 @@ Figura&nbsp;10: FAC para Exportaciones (log)
 </figure>
 </div>
 </div>
-<p>También las funciones de apoyo <code>ndiffs</code> y <code>nsdiffs</code> aconsejan la doble diferenciación.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ndiffs</span>(<span class="fu">log</span>(exportaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1528,12 +1534,11 @@ Figura&nbsp;10: FAC para Exportaciones (log)
 <pre><code>[1] 1</code></pre>
 </div>
 </div>
-<p>Para que la serie sea estacionaria y ergódica es necesaria la doble diferenciación regular y estacional. Es decir, trabajaremos con la siguiente serie transformada <span class="math display">\[\nabla\nabla_{12}\log(exportaciones_t) \sim I(0)I_{12}(0).\]</span></p>
+<p>El análisis de la <a href="#fig-ExpFAC" class="quarto-xref">Figura&nbsp;10</a> revela la necesidad de la doble diferenciación, que es confirmada por las funciones <code>ndiffs</code> y <code>nsdiffs</code>. Concluimos que para que la serie sea estacionaria y ergódica es necesaria la doble diferenciación regular y estacional. Es decir, trabajaremos con la siguiente serie transformada <span class="math display">\[\nabla\nabla_{12}\log(exportaciones_t) \sim I(0)I_{12}(0).\]</span></p>
 </section>
 <section id="identificación-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="identificación-1">Identificación</h3>
-<p>La <a href="#fig-Exportaciones" class="quarto-xref">Figura&nbsp;9</a> muestra dos periodos con una marcada intervención: al inicio de la Gran Recesión (2008-2014) y durante el periodo más duro de la Covid-19 en el año 2020. Además, por la naturaleza de la serie es previsible que exista un efecto días del mes o días laborables y un efecto Semana Santa.</p>
-<p>Si probamos con la función <code>auto.arima</code>, indicando la doble diferenciación, los días del mes y la Semana Santa, nos sugiere <span class="math inline">\(ARIMA_{12}(1,1,2)(2,1,2)\)</span>. Demasiado complejo.</p>
+<p>Si probamos con la función <code>auto.arima</code>, indicando la doble diferenciación y añadiendo el efecto de los días del mes y la Semana Santa, nos sugiere <span class="math inline">\(ARIMA_{12}(2,1,2)(2,1,2)\)</span>. Demasiado complejo.</p>
 <p>Veamos qué nos indica <code>seas</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">seas</span>(exportaciones))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1572,16 +1577,16 @@ Warnings:
 </div>
 <p>El modelo identificado es el de las aerolíneas para la transformación logarítmica de Exportaciones. Respecto de la intervención, identifica dos efectos calendario: uno por cada día laboral y Semana Santa. También se identifican cinco intervenciones no asociadas a efectos calendario: tres pulsos –intervenciones que afectan un solo mes (AO)– y dos cambios permanentes –intervenciones que afectan un rango elevado de meses (LS):</p>
 <ul>
-<li>Un cambio permanente (<em>level shift</em> o LS) empieza en diciembre de 2008. Es decir, la Gran Recesión generó una caída permanente de las exportaciones españolas a la UE27.</li>
-<li>El otro cambio permanente empieza en abril de 2023 y corrige el elevado nivel de las exportaciones observado tras la pandemia.</li>
+<li>Un cambio permanente (<em>level shift</em> o LS) empieza en diciembre de 2008 y el coeficiente estimado es negativo. Es decir, la Gran Recesión generó una caída permanente de las exportaciones españolas a la UE27.</li>
+<li>El otro cambio permanente, también de signo negativo, empieza en abril de 2023 y corrige a la baja el elevado nivel de las exportaciones observado tras la pandemia.</li>
 <li>También asociado a la Covid-19 están los pulsos de marzo, abril y mayo de 2020.</li>
 </ul>
 </section>
 <section id="estimación-y-valores-extremos-1" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="estimación-y-valores-extremos-1">Estimación (y valores extremos)</h3>
 <p>Vamos a estimar el modelo identificado con <code>seas</code>, incluidas las variables de intervención. A este respecto unas palabras sobre como obtener los días laborables de un mes.</p>
-<p>Entenderemos por días laborables los lunes a viernes de cada mes, menos los días festivos. Este valor se puede obtener con la función <code>bizdays</code>. Un inconveniente de esta función, es que su valor depende de los festivos de cada país. Por ejemplo, en Estados Unidos el día del trabajador se celebra el primer lunes de septiembre, en Reino Unido el primer lunes de mayo y en España el 1 de mayo.</p>
-<p>La función <code>bizdays</code> devuelve el número de días laborables de cada mes para determinados centros financieros (equivalentes a países). Por proximidad <em>geográfica</em>, usaremos el calendario de Londres para España.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Entenderemos por días laborables los lunes a viernes de cada mes, menos los días festivos. Un inconveniente de este efecto es que los festivos que afectan a una serie dependen de su naturaleza y ámbito geográfico. Por ejemplo, en Estados Unidos el día del trabajador se celebra el primer lunes de septiembre, en Reino Unido el primer lunes de mayo y en España el 1 de mayo. Además, para la serie de transporte de pasajeros urbanos de Valencia los festivos relevantes serán diferentes que para la misma serie para Madrid.</p>
+<p>Para el ámbito geográfico nacional, los días laborables se puede obtener con la función <code>bizdays</code>. Esta función devuelve el número de días laborables de cada mes para determinados centros financieros (equivalentes a países). Por proximidad <em>geográfica</em>, usaremos el calendario de Londres para España.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>DiasLaborables <span class="ot">&lt;-</span> <span class="fu">bizdays</span>(exportaciones, <span class="at">FinCenter =</span> <span class="st">"London"</span>)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>SemanaSanta <span class="ot">&lt;-</span> <span class="fu">easter</span>(exportaciones)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1739,7 +1744,7 @@ Training set -10.34 456.31 327.43 -0.25 2.82  0.3 -0.04</code></pre>
  [9] 4.935492 4.797301 4.768106 5.412510</code></pre>
 </div>
 </div>
-<p>Para evitar el efecto sobre los errores de predicción de la no inclusión de las variables ficticias se ha calculado el error mediano. La <a href="#fig-ExpMAPE" class="quarto-xref">Figura&nbsp;12</a> revela que el error de predicción aumenta lentamente según aumenta el horizonte de predicción, pasando del 2.5% a un mes vista hasta el 5.4% a 12 meses vista (véase <a href="#fig-ExpMAPE" class="quarto-xref">Figura&nbsp;12</a>).</p>
+<p>Para evitar el efecto sobre los errores de predicción de la no inclusión de las variables ficticias se ha calculado el error mediano. La <a href="#fig-ExpMAPE" class="quarto-xref">Figura&nbsp;12</a> revela que el error de predicción aumenta lentamente según aumenta el horizonte de predicción, pasando del 2.5% a un mes vista hasta el 5.4% a 12 meses vista.</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, <span class="at">y =</span> errorArima), <span class="at">colour =</span> <span class="st">"Blue"</span>) <span class="sc">+</span></span>
@@ -1769,7 +1774,7 @@ Figura&nbsp;12: Error de predicción (MedAPE) según horizonte temporal
 <li>Cada día laborable adicional en un mes aumenta las exportaciones en un 3.1% (coeficiente <span class="math inline">\(0.0315\)</span> de <code>DiasLAborables</code>)</li>
 <li>El mes en que cae la Semana Santa las exportaciones caen un 2.1%. (coeficiente <span class="math inline">\(-0.0206\)</span> de <code>SemanaSanta</code>)</li>
 <li>A raíz de la Gran Recesión, las exportaciones se redujeron de forma permanente un 19.6% desde diciembre de 2008. Es decir, sin la Gran Recesión, las exportaciones ahora serían un 19.6% superiores (coeficiente <span class="math inline">\(-0.1956\)</span> de <code>l1208</code>)</li>
-<li>A raíz de la Covid-19, las exportaciones se redujeron de forma temporal entre los meses de marzo y abril un 18%, 51% y 27%.</li>
+<li>A raíz de la Covid-19, las exportaciones se redujeron de forma temporal en los meses de marzo, abril y mayo de 2020 un 18%, 51% y 27%, respectivamente.</li>
 <li>Además, el nivel de las exportaciones se ha corregido a la baja desde abril de 2023 un 12.8% (coeficiente <span class="math inline">\(-0.1277\)</span> de <code>l0423</code>).</li>
 </ul>
 </section>
@@ -2161,25 +2166,31 @@ Training set -0.15 16.59 11.96 -0.05 1.81 0.38 0.07</code></pre>
 <span id="cb88-25"><a href="#cb88-25" aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb88-26"><a href="#cb88-26" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb88-27"><a href="#cb88-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb88-28"><a href="#cb88-28" aria-hidden="true" tabindex="-1"></a>errorArima <span class="ot">&lt;-</span> <span class="fu">colMeans</span>(mapeArima, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb88-28"><a href="#cb88-28" aria-hidden="true" tabindex="-1"></a>errorArima <span class="ot">&lt;-</span> <span class="fu">apply</span>(mapeArima, <span class="at">MARGIN =</span> <span class="dv">2</span>, <span class="at">FUN =</span> median, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb88-29"><a href="#cb88-29" aria-hidden="true" tabindex="-1"></a>errorArima</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 1.924821 2.879708 3.499902 3.949543 4.203161 4.352709 4.440381</code></pre>
+<pre><code>[1] 1.349262 2.111647 2.435318 2.716222 3.116016 3.311760 3.234447</code></pre>
 </div>
 </div>
-<p>El error de predicción parte del 1.9% para previsiones a un día vista (superior al error de ajuste) y aumenta progresivamente según aumenta el horizonte de predicción, pasando al 4.4% a 7 días vista.</p>
+<p>El error de predicción parte del 1.3% para previsiones a un día vista (algo inferior al error de ajuste) y aumenta progresivamente según aumenta el horizonte de predicción, pasando al 3.2% a 7 días vista.</p>
 </section>
 <section id="interpretación-2" class="level3 unnumbered">
 <h3 class="unnumbered anchored" data-anchor-id="interpretación-2">Interpretación</h3>
 <p>El <em>modelo teórico</em> es <span class="math inline">\(electricidad_t \sim ARIMA_{7}(0, 1, 0)(1, 1, 0) + AI\)</span>,</p>
 <p><span class="math display">\[(1 - L^{7})(1 - L)electricidad_t = (1 + \theta_{7} L^{7})\varepsilon_t + AI.\]</span></p>
-<p>Si desarrollamos queda</p>
-<p><span class="math display">\[electricidad_t = electricidad_{t-1} + (electricidad_{t-7} - electricidad_{t-8})  + \theta_{7} \varepsilon_{t-7} + \varepsilon_{t}+\]</span></p>
-<p><span class="math display">\[\gamma_1 \cdot festivos +\gamma_2 \cdot excesotemperatura_t.\]</span> Finalmente, el <em>modelo estimado</em> es,</p>
-<p><span class="math display">\[\widehat{electricidad_t} = electricidad_{t-1} + (electricidad_{t-7} - electricidad_{t-8}) - 0.55 \varepsilon_{t-7} +\]</span></p>
-<p><span class="math display">\[-74.2 \cdot festivos_t + 2.8 \cdot excesotemperatura_t.\]</span></p>
+<p>Si desarrollamos queda <span class="math display">\[
+\begin{aligned}
+electricidad_t &amp; = electricidad_{t-1} + (electricidad_{t-7} - electricidad_{t-8})  + \theta_{7} \varepsilon_{t-7} + \varepsilon_{t}+ \\
+&amp; \gamma_1 \cdot festivos +\gamma_2 \cdot excesotemperatura_t
+\end{aligned}
+\]</span> Finalmente, el <em>modelo estimado</em> es, <span class="math display">\[
+\begin{aligned}
+\widehat{electricidad_t} &amp; = electricidad_{t-1} + (electricidad_{t-7} - electricidad_{t-8}) - 0.55 \varepsilon_{t-7}  \\
+&amp; -74.2 \cdot festivos_t + 2.8 \cdot excesotemperatura_t
+\end{aligned}
+\]</span></p>
 <ul>
-<li>El consumo de electricidad de un día es el mismo que el del día anterior más el incremento observado entre estos dos días la semana pasada. Por ejemplo, el consumo un miércoles es el del martes pasado más el incremento observado entre el martes y el miércoles de la semana previa.</li>
+<li>El consumo de electricidad de un día es el mismo que el del día anterior más la variación observada entre estos dos días la semana pasada. Por ejemplo, el consumo un miércoles es el del martes pasado más la variación observada entre el martes y el miércoles de la semana previa.</li>
 <li>Los días festivos el consumo cae en 74.2 GWh respecto de la demanda en un día no festivo.</li>
 <li>Por cada grado centígrado de desviación de la temperatura sobre la media anual, el consumo aumenta en 2.8 GWh.</li>
 </ul>
@@ -2233,7 +2244,7 @@ Figura&nbsp;18: Demanda eléctrica y predicción
 </div>
 </div>
 </div>
-<p>La <a href="#fig-ElePre" class="quarto-xref">Figura&nbsp;18</a> muestra la serie Electricidad y su predicción para la primera semana de 2024, junto con el intervalo de confianza. La calidad de ajuste es ta buena que el intervalo de confianza de las predicciones es muy estrecho.</p>
+<p>La <a href="#fig-ElePre" class="quarto-xref">Figura&nbsp;18</a> muestra la serie Electricidad y su predicción para la primera semana de 2024, junto con el intervalo de confianza. La calidad de ajuste es tan buena que el intervalo de confianza de las predicciones es muy estrecho.</p>
 <p><br>
 </p>
 </section>
